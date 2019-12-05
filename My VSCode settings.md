@@ -11,8 +11,6 @@
     "explorer.confirmDragAndDrop": false,
     "workbench.colorTheme": "Visual Studio Dark",
     "python.pythonPath": "C:\\Users\\Jake\\Anaconda3\\python.exe",
-    // "telemetry.enableTelemetry": false,
-    // "telemetry.enableCrashReporter": false,
     "matlab.mlintpath": "C:\\Program Files\\MATLAB\\R2019b\\bin\\win64\\mlint.exe",
     "[matlab]": {
         "editor.rulers": [75]
@@ -95,5 +93,28 @@ oliversturm.fix-json
 PKief.material-icon-theme
 stkb.rewrap
 v4run.transpose
-vscode-icons-team.vscode-icons
+```
+
+## `c_cpp_properties.json`
+
+```json
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "compilerPath": "C:\\cygwin64\bin\\gcc.exe",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "_GNU_SOURCE"
+            ],
+            "intelliSenseMode": "msvc-x64"
+        }
+    ],
+    "version": 4
+}
 ```
