@@ -47,7 +47,7 @@
     },
     {
         "key": "ctrl+d",
-        "command": "diff.file"
+        "command": "compareSelected"
     },
     {
         "key": "ctrl+oem_5",
