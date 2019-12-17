@@ -105,6 +105,7 @@ v4run.transpose
             "compilerPath": "C:\\cygwin64\bin\\gcc.exe",
             "includePath": [
                 "${workspaceFolder}/**"
+                "C:/Program Files/MATLAB/R2019b/extern/include"
             ],
             "defines": [
                 "_DEBUG",
