@@ -11,6 +11,11 @@
     "explorer.confirmDragAndDrop": false,
     "workbench.colorTheme": "Visual Studio Dark",
     "python.pythonPath": "C:\\Users\\Jake\\Anaconda3\\python.exe",
+    "python.linting.pylintArgs": [
+        "--disable", "E1130", // Thinking numpy array doesn't support unary operator
+        "--disable", "C", // ignore conventions
+        "--disable", "W" // ignore warnings
+    ],
     "matlab.mlintpath": "C:\\Program Files\\MATLAB\\R2019b\\bin\\win64\\mlint.exe",
     "[matlab]": {
         "editor.rulers": [75]
@@ -56,6 +61,16 @@
     },
     {
         "key": "ctrl+shift+oem_5",
+        "command": "editor.action.blockComment",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+shift+oem_2",
+        "command": "editor.action.blockComment",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+alt+oem_5",
         "command": "workbench.action.splitEditor"
     },
     {
