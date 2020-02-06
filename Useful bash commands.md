@@ -16,6 +16,12 @@ This will print every directory on the system path, separated by a colon. To pri
 echo -e "${PATH//:/'\n'}"
 ```
 
+To add a new directory to the path ([source](https://unix.stackexchange.com/questions/26047/how-to-correctly-add-a-path-to-path)):
+
+```bash
+PATH=$PATH:~/new/dir
+```
+
 ## Changing access mode
 
 Use `chmod` ("change mode") to change the access of a file or folder. The 3-digit octal number which follows `chmod` and precedes the file/folder which is being modified decides whether reading, writing, and execution is available to the user (the owner that created the file/folder), the group (the users from group that owner is member) and other (all other users) ([source](https://superuser.com/questions/295591/what-is-the-meaning-of-chmod-666)).
