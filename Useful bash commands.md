@@ -26,6 +26,17 @@ PATH=$PATH:~/new/dir
 
 Use `chmod` ("change mode") to change the access of a file or folder. The 3-digit octal number which follows `chmod` and precedes the file/folder which is being modified decides whether reading, writing, and execution is available to the user (the owner that created the file/folder), the group (the users from group that owner is member) and other (all other users) ([source](https://superuser.com/questions/295591/what-is-the-meaning-of-chmod-666)).
 
+## Viewing the Linux distribution details
+
+The command `lsb_release` is used to view details about the current Linux distribution under the Linux Standard Base (LSB), and optionally any LSB modules that the system supports. Using this command with flags `lsb_release -irc` will show the distributer ID of the Linux distribution which is running, the release number of the distribution, and the code name of the distribution, EG:
+
+```
+$ lsb_release -irc
+Distributor ID: Ubuntu
+Release:        18.04
+Codename:       bionic
+```
+
 
 ```bash
 ```
