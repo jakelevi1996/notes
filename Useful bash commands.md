@@ -49,6 +49,9 @@ To connect to a serial device using WSL (see above), the COM port for the serial
 $ sudo chmod 666 /dev/ttyS3 && stty -F /dev/ttyS3 115200 && sudo screen /dev/ttyS3 115200
 ```
 
+## Seeing available disk space
+
+To see how much disk space is available, use the command `df`. To view the output in a human-readable format which chooses appropriate memory units for each file system (GB, MB, etc.), use the `-h` flag, as in `df -h`.
 
 ```bash
 ```
