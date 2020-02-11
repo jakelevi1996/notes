@@ -57,5 +57,9 @@ To see how much disk space is available, use the command `df`. To view the outpu
 
 A machine can be rebooted from terminal with the command `sudo reboot`.
 
+## Add user to group
+
+To add a user to a group (which may be necessary for obtaining permissions to complete other tasks), do `sudo usermod -aG groupname username`
+
 ```bash
 ```
