@@ -1,6 +1,6 @@
 # Useful `bash` commands
 
-This is just a random collection of commands which are useful in Bash. This Gist is expected to grow over time (until I have mastered the whole of Bash). Another useful resource is this [list of Unix commands on Wikipedia](https://en.wikipedia.org/wiki/List_of_Unix_commands#List).
+This is just a random collection of commands which are useful in Bash. This Gist is expected to grow over time (until I have mastered the whole of Bash). Another useful resource is this [list of Unix commands on Wikipedia](https://en.wikipedia.org/wiki/List_of_Unix_commands#List). Hyperlinked bash commands in general lead to relevant Man (manual) pages.
 
 ## Viewing the system path
 
@@ -61,5 +61,12 @@ A machine can be rebooted from terminal with the command `sudo reboot`.
 
 To add a user to a group (which may be necessary for obtaining permissions to complete other tasks), do `sudo usermod -aG groupname username` (see the [`usermod` Man page](https://linux.die.net/man/8/usermod) for a description of the `a` and `G` flags).
 
+## Check if user is part of a group
+
+To see the groups of which a user is a member of, use the command [`id`](http://man7.org/linux/man-pages/man1/id.1.html)` -nG username`. To see if the user is a member of a particular group, pipe the output from the `id` command into `grep` followed by the name of the relevant group; if the user is a member of this group, then a line of text from the output of `id` containing the name of that group will be printed; otherwise nothing will be printed. NB this can be used as an `if` condition, EG ([source](https://stackoverflow.com/questions/18431285/check-if-a-user-is-in-a-group)):
+
 ```bash
+if id -nG "$USER" | grep -qw "$GROUP"; then echo $USER belongs to $GROUP; fi
 ```
+
+NB the `q` and `w` flags are being used to make `grep` quiet, and only match whole words.
