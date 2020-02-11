@@ -53,5 +53,9 @@ $ sudo chmod 666 /dev/ttyS3 && stty -F /dev/ttyS3 115200 && sudo screen /dev/tty
 
 To see how much disk space is available, use the command `df`. To view the output in a human-readable format which chooses appropriate memory units for each file system (GB, MB, etc.), use the `-h` flag, as in `df -h`.
 
+## Reboot machine
+
+A machine can be rebooted from terminal with the command `sudo reboot`.
+
 ```bash
 ```
