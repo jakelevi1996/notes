@@ -63,7 +63,7 @@ To add a user to a group (which may be necessary for obtaining permissions to co
 
 ## Check if user is part of a group
 
-To see the groups of which a user is a member of, use the command [`id`](http://man7.org/linux/man-pages/man1/id.1.html)` -nG username`. To see if the user is a member of a particular group, pipe the output from the `id` command into `grep` followed by the name of the relevant group; if the user is a member of this group, then a line of text from the output of `id` containing the name of that group will be printed; otherwise nothing will be printed. NB this can be used as an `if` condition, EG ([source](https://stackoverflow.com/questions/18431285/check-if-a-user-is-in-a-group)):
+To see the groups of which a user is a member of, use the [`id`](http://man7.org/linux/man-pages/man1/id.1.html) command, as in `id -nG username`. To see if the user is a member of a particular group, pipe the output from the `id` command into `grep` followed by the name of the relevant group; if the user is a member of this group, then a line of text from the output of `id` containing the name of that group will be printed; otherwise nothing will be printed. NB this can be used as an `if` condition, EG ([source](https://stackoverflow.com/questions/18431285/check-if-a-user-is-in-a-group)):
 
 ```bash
 if id -nG "$USER" | grep -qw "$GROUP"; then echo $USER belongs to $GROUP; fi
