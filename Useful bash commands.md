@@ -59,7 +59,7 @@ A machine can be rebooted from terminal with the command `sudo reboot`.
 
 ## Add user to group
 
-To add a user to a group (which may be necessary for obtaining permissions to complete other tasks), do `sudo usermod -aG groupname username`
+To add a user to a group (which may be necessary for obtaining permissions to complete other tasks), do `sudo usermod -aG groupname username` (see the [`usermod` Man page](https://linux.die.net/man/8/usermod) for a description of the `a` and `G` flags).
 
 ```bash
 ```
