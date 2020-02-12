@@ -70,3 +70,19 @@ if id -nG "$USER" | grep -qw "$GROUP"; then echo $USER belongs to $GROUP; fi
 ```
 
 NB the `q` and `w` flags are being used to make `grep` quiet, and only match whole words.
+
+## Search for files anywhere on the path
+
+To search for a file `file_to_search_for` in the directory `path/to/search`, use the [`find`](https://linux.die.net/man/1/find) command, EG:
+
+```
+sudo find `path/to/search` -name file_to_search_for
+```
+
+Note that the `find` command will automatically search recursively through subdirectories; sudo is used to allow access to restricted directories. Patterns can be used to search for any filename ending or file extension:
+
+```
+sudo find `path/to/search` -name file_to_search_for*
+```
+
+To search the entire filesystem, replace `path/to/search` with `/`; this can be useful to check if a library is installed anywhere on the system, and return the location of that library.
