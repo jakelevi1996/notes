@@ -57,29 +57,48 @@ Codename:       bionic
 
 WSL is the Windows Subsytem for Linux, which "[allows Linux binaries to run in Windows unmodified](https://www.petri.com/bash-out-of-beta-in-windows-10)", by adding a compatability layer which presumably allows Windows to interpret Linux binary [Executable Formats and Application Binary Interfaces](https://stackoverflow.com/questions/2059605/why-an-executable-program-for-a-specific-cpu-does-not-work-on-linux-and-windows).
 
+To open a Windows path in WSL, open a Windows command prompt (Powershell or CMD) in that location, and run `bash` (with no arguments).
+
 ## Connecting to a serial device using WSL
 
 To connect to a serial device using WSL (see above), the COM port for the serial device must be found in Windows Device Manager. Say the device is connected to COM3, it can be connected to from WSL with a baud rate of 115200 using the following command ([source 1](https://docs.microsoft.com/en-gb/archive/blogs/wsl/serial-support-on-the-windows-subsystem-for-linux), [source 2](https://www.scivision.dev/usb-tty-windows-subsystem-for-linux/)):
 
 ```bash
-$ sudo chmod 666 /dev/ttyS3 && stty -F /dev/ttyS3 115200 && sudo screen /dev/ttyS3 115200
+sudo chmod 666 /dev/ttyS3 && stty -F /dev/ttyS3 115200 && sudo screen /dev/ttyS3 115200
 ```
 
 ## Seeing available disk space
 
-To see how much disk space is available, use the command `df`. To view the output in a human-readable format which chooses appropriate memory units for each file system (GB, MB, etc.), use the `-h` flag, as in `df -h`.
+To see how much disk space is available, use the command `df`. To view the output in a human-readable format which chooses appropriate memory units for each file system (GB, MB, etc.), use the `-h` flag:
+
+```
+df -h
+```
 
 ## Reboot machine
 
-A machine can be rebooted from terminal with the command `sudo reboot`.
+A machine can be rebooted from terminal using `reboot`:
+
+```
+sudo reboot
+```
 
 ## Add user to group
 
-To add a user to a group (which may be necessary for obtaining permissions to complete other tasks), do `sudo usermod -aG groupname username` (see the [`usermod` Man page](https://linux.die.net/man/8/usermod) for a description of the `a` and `G` flags).
+To add a user to a group (which may be necessary for obtaining permissions to complete other tasks), use [`usermod`](https://linux.die.net/man/8/usermod):
+
+```
+sudo usermod -aG groupname username
+```
 
 ## Check if user is part of a group
 
-To see the groups of which a user is a member of, use the [`id`](http://man7.org/linux/man-pages/man1/id.1.html) command, as in `id -nG username`. To see if the user is a member of a particular group, pipe the output from the `id` command into `grep` followed by the name of the relevant group; if the user is a member of this group, then a line of text from the output of `id` containing the name of that group will be printed; otherwise nothing will be printed. NB this can be used as an `if` condition, EG ([source](https://stackoverflow.com/questions/18431285/check-if-a-user-is-in-a-group)):
+To see the groups of which a user is a member of, use the [`id`](http://man7.org/linux/man-pages/man1/id.1.html) command:
+```
+id -nG username
+```
+
+To see if the user is a member of a particular group, pipe the output from the `id` command into `grep` followed by the name of the relevant group; if the user is a member of this group, then a line of text from the output of `id` containing the name of that group will be printed; otherwise nothing will be printed. NB this can be used as an `if` condition, EG ([source](https://stackoverflow.com/questions/18431285/check-if-a-user-is-in-a-group)):
 
 ```bash
 if id -nG "$USER" | grep -qw "$GROUP"; then echo $USER belongs to $GROUP; fi
