@@ -2,6 +2,22 @@
 
 This is just a random collection of commands which are useful in Bash. This Gist is expected to grow over time (until I have mastered the whole of Bash). Another useful resource is this [list of Unix commands on Wikipedia](https://en.wikipedia.org/wiki/List_of_Unix_commands#List). Hyperlinked bash commands in general lead to relevant Man (manual) pages.
 
+## Search for files anywhere
+
+To search for a file `file_to_search_for` in the directory `path/to/search`, use the [`find`](https://linux.die.net/man/1/find) command, EG:
+
+```
+sudo find `path/to/search` -name file_to_search_for
+```
+
+Note that the `find` command will automatically search recursively through subdirectories; sudo is used to allow access to restricted directories. Patterns can be used to search for any filename ending or file extension:
+
+```
+sudo find `path/to/search` -name file_to_search_for*
+```
+
+To search the entire filesystem, replace `path/to/search` with `/`; this can be useful to check if a library is installed anywhere on the system, and return the location of that library, in case it is not on the system path (if it is on the system path, it can be found with [`which`](https://linux.die.net/man/1/which).
+
 ## Viewing the system path
 
 To view the system path (directories in which executables can be run from any other directory without need to specify the path to the executable):
@@ -70,19 +86,3 @@ if id -nG "$USER" | grep -qw "$GROUP"; then echo $USER belongs to $GROUP; fi
 ```
 
 NB the `q` and `w` flags are being used to make `grep` quiet, and only match whole words.
-
-## Search for files anywhere on the path
-
-To search for a file `file_to_search_for` in the directory `path/to/search`, use the [`find`](https://linux.die.net/man/1/find) command, EG:
-
-```
-sudo find `path/to/search` -name file_to_search_for
-```
-
-Note that the `find` command will automatically search recursively through subdirectories; sudo is used to allow access to restricted directories. Patterns can be used to search for any filename ending or file extension:
-
-```
-sudo find `path/to/search` -name file_to_search_for*
-```
-
-To search the entire filesystem, replace `path/to/search` with `/`; this can be useful to check if a library is installed anywhere on the system, and return the location of that library.
