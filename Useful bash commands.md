@@ -16,7 +16,7 @@ Note that the `find` command will automatically search recursively through subdi
 sudo find `path/to/search` -name file_to_search_for*
 ```
 
-To search the entire filesystem, replace `path/to/search` with `/`; this can be useful to check if a library is installed anywhere on the system, and return the location of that library, in case it is not on the system path (if it is on the system path, it can be found with [`which`](https://linux.die.net/man/1/which).
+To search the entire filesystem, replace `path/to/search` with `/`; this can be useful to check if a library is installed anywhere on the system, and return the location of that library, in case it is not on the system path (if it is on the system path, it can be found with [`which`](https://linux.die.net/man/1/which)).
 
 ## Viewing the system path
 
