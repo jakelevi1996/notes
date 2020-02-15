@@ -5,6 +5,7 @@
 ```json
 {
     "window.zoomLevel": 0,
+    "workbench.panel.defaultLocation": "right",
     "explorer.confirmDelete": false,
     "git.enableSmartCommit": true,
     "editor.rulers": [80, 160],
