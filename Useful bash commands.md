@@ -18,7 +18,7 @@ sudo find `path/to/search` -name file_to_search_for*
 
 To search the entire filesystem, replace `path/to/search` with `/`; this can be useful to check if a library is installed anywhere on the system, and return the location of that library, in case it is not on the system path (if it is on the system path, it can be found with [`which`](https://linux.die.net/man/1/which)).
 
-## Viewing the system path
+## Viewing and editing the system path
 
 To view the system path (directories in which executables can be run from any other directory without need to specify the path to the executable):
 
@@ -26,7 +26,13 @@ To view the system path (directories in which executables can be run from any ot
 echo $PATH
 ```
 
-This will print every directory on the system path, separated by a colon. To print each directory on a new line, use a [shell parameter expansion](https://stackoverflow.com/questions/13210880/replace-one-substring-for-another-string-in-shell-script/13210909):
+This will print every directory on the system path, separated by a colon. To print each directory on a new line, there are multiple options; one option is to use a global (`g`) regular-expression substitution (`s`) using the Unix program [`sed`](https://en.wikipedia.org/wiki/Sed) (short for Stream EDitor) as follows, where `:` is the regular expression to be matched, and `\n` is what it is to be replaced with:
+
+```bash
+echo $PATH | sed 's/:/\n/g'
+```
+
+Another option is to use a [shell parameter expansion](https://stackoverflow.com/questions/13210880/replace-one-substring-for-another-string-in-shell-script/13210909):
 
 ```bash
 echo -e "${PATH//:/'\n'}"
