@@ -15,7 +15,8 @@
     "python.linting.pylintArgs": [
         "--disable", "E1130", // Thinking numpy array doesn't support unary operator
         "--disable", "C", // ignore conventions
-        "--disable", "W" // ignore warnings
+        "--disable", "W", // ignore warnings
+        "--disable", "R" // ignore refactor suggestions
     ],
     "matlab.mlintpath": "C:\\Program Files\\MATLAB\\R2019b\\bin\\win64\\mlint.exe",
     "[matlab]": {
@@ -33,6 +34,8 @@
 ```
 
 ## `keybindings.json`
+
+Note that the `"ctrl+oem_8"` (`ctrl + \``, ctrl + backtick) shortcuts are specifically for my laptop, which has a non-standard keyboard layout, with the backslash moved to the right hand side of the keyboard, preventing me from toggling comments with my left hand.
 
 ```json
 // Place your key bindings in this file to overwrite the defaults
@@ -75,8 +78,19 @@
         "command": "workbench.action.splitEditor"
     },
     {
+        "key": "ctrl+oem_8",
+        "command": "editor.action.commentLine",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+shift+oem_8",
+        "command": "editor.action.blockComment",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
         "key": "ctrl+enter",
-        "command": "workbench.action.terminal.runSelectedText"
+        "command": "workbench.action.terminal.runSelectedText",
+        "when": "editorTextFocus"
     },
     {
         "key": "alt+delete",
