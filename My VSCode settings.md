@@ -40,10 +40,37 @@ Note that the `"ctrl+oem_8"` (`ctrl + \``, ctrl + backtick) shortcuts are specif
 ```json
 // Place your key bindings in this file to overwrite the defaults
 // Place your key bindings in this file to override the defaultsauto[]
+// Place your key bindings in this file to override the defaultsauto[]
 [
     {
+        "key": "alt+r",
+        "command": "python.execInTerminal",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "alt+c",
+        "command": "editor.action.commentLine",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "alt+s",
+        "command": "extension.transpose",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "alt+d",
+        "command": "editor.action.deleteLines",
+        "when": "textInputFocus && !editorReadonly"
+    },
+    {
+        "key": "alt+delete",
+        "command": "editor.action.deleteLines",
+        "when": "textInputFocus && !editorReadonly"
+    },
+    {
         "key": "f5",
-        "command": "python.execInTerminal"
+        "command": "python.execInTerminal",
+        "when": "editorTextFocus"
     },
     {
         "key": "ctrl+f5",
@@ -51,12 +78,12 @@ Note that the `"ctrl+oem_8"` (`ctrl + \``, ctrl + backtick) shortcuts are specif
         "when": "editorTextFocus"
     },
     {
-        "key": "alt+s",
-        "command": "extension.transpose"
-    },
-    {
         "key": "ctrl+d",
         "command": "compareSelected"
+    },
+    {
+        "key": "ctrl+enter",
+        "command": "workbench.action.terminal.runSelectedText"
     },
     {
         "key": "ctrl+oem_5",
@@ -87,21 +114,20 @@ Note that the `"ctrl+oem_8"` (`ctrl + \``, ctrl + backtick) shortcuts are specif
         "command": "editor.action.blockComment",
         "when": "editorTextFocus && !editorReadonly"
     },
-    {
-        "key": "ctrl+enter",
-        "command": "workbench.action.terminal.runSelectedText",
-        "when": "editorTextFocus"
-    },
-    {
-        "key": "alt+delete",
-        "command": "editor.action.deleteLines",
-        "when": "textInputFocus && !editorReadonly"
-    },
-    {
-        "key": "ctrl+shift+k",
-        "command": "-editor.action.deleteLines",
-        "when": "textInputFocus && !editorReadonly"
-    }
+    // {
+    //     "key": "ctrl+shift+k",
+    //     "command": "-editor.action.deleteLines",
+    //     "when": "textInputFocus && !editorReadonly"
+    // },
+    // {
+    //     "key": "ctrl+oem_5",
+    //     "command": "-workbench.action.splitEditor"
+    // },
+    // {
+    //     "key": "ctrl+oem_2",
+    //     "command": "editor.action.commentLine",
+    //     "when": "editorTextFocus && !editorReadonly"
+    // },
 ]
 ```
 
