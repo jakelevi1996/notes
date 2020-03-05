@@ -39,8 +39,6 @@ Note that the `"ctrl+oem_8"` (`ctrl + \``, ctrl + backtick) shortcuts are specif
 
 ```json
 // Place your key bindings in this file to overwrite the defaults
-// Place your key bindings in this file to override the defaultsauto[]
-// Place your key bindings in this file to override the defaultsauto[]
 [
     {
         "key": "alt+r",
@@ -114,20 +112,6 @@ Note that the `"ctrl+oem_8"` (`ctrl + \``, ctrl + backtick) shortcuts are specif
         "command": "editor.action.blockComment",
         "when": "editorTextFocus && !editorReadonly"
     },
-    // {
-    //     "key": "ctrl+shift+k",
-    //     "command": "-editor.action.deleteLines",
-    //     "when": "textInputFocus && !editorReadonly"
-    // },
-    // {
-    //     "key": "ctrl+oem_5",
-    //     "command": "-workbench.action.splitEditor"
-    // },
-    // {
-    //     "key": "ctrl+oem_2",
-    //     "command": "editor.action.commentLine",
-    //     "when": "editorTextFocus && !editorReadonly"
-    // },
 ]
 ```
 
