@@ -81,12 +81,29 @@ To see how much disk space is available, use the command `df`. To view the outpu
 df -h
 ```
 
+## View filesize
+
+The command `ls` will list files and subdirectories in the directory that is specified as an argument (with no argument, the current directory is used by default). The `-l` flag is used to specify a long-list format, which gives extra data such as permissions, file-size in bytes, time of last edit, and more. The option `--block-size MB` can be used with the `-l` flag to specify file-sizes in megabytes. In this case, a single filename can be used as the main argument to `ls`, in which case only the details for the specified file will be listed. In summary, the syntax for viewing the size of a file in megabytes is:
+
+```
+ls -l --block-size MB path/to/file
+```
+
 ## Reboot machine
 
 A machine can be rebooted from terminal using `reboot`:
 
 ```
 sudo reboot
+```
+
+
+## Shutdown machine
+
+A machine can be shut down from terminal using `shutdown`:
+
+```
+sudo shutdown now
 ```
 
 ## Add user to group
