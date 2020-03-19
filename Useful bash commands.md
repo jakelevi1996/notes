@@ -98,9 +98,9 @@ sudo reboot
 ```
 
 
-## Shutdown machine
+## [Shutdown](https://youtu.be/MQOG5BkY2Bc) machine
 
-A machine can be shut down from terminal using `shutdown`:
+A machine can be shut down from terminal using [`shutdown`](https://youtu.be/MQOG5BkY2Bc):
 
 ```
 sudo shutdown now
