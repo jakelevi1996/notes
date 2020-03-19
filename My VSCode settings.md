@@ -66,6 +66,15 @@ Note that the `"ctrl+oem_8"` (`ctrl + \``, ctrl + backtick) shortcuts are specif
         "when": "textInputFocus && !editorReadonly"
     },
     {
+        "key": "alt+t",
+        "command": "workbench.action.terminal.focus"
+    },
+    {
+        "key": "alt+t",
+        "command": "workbench.action.focusActiveEditorGroup",
+        "when": "terminalFocus"
+    },
+    {
         "key": "f5",
         "command": "python.execInTerminal",
         "when": "editorTextFocus"
