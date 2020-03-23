@@ -51,6 +51,11 @@ Note that the `"ctrl+oem_8"` (`ctrl + \``, ctrl + backtick) shortcuts are specif
         "when": "editorTextFocus && !editorReadonly"
     },
     {
+        "key": "shift+alt+c",
+        "command": "editor.action.blockComment",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
         "key": "alt+s",
         "command": "extension.transpose",
         "when": "editorTextFocus && !editorReadonly"
