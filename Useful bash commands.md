@@ -2,6 +2,26 @@
 
 This is just a random collection of commands which are useful in Bash. This Gist is expected to grow over time (until I have mastered the whole of Bash). Another useful resource is this [list of Unix commands on Wikipedia](https://en.wikipedia.org/wiki/List_of_Unix_commands#List). Hyperlinked bash commands in general lead to relevant Man (manual) pages.
 
+## Iterating through files which match a file pattern
+
+It is possible to iterate through files which match a file pattern by using a `for`/`in`/`do`/`done` loop, using the `*` syntax as a wildcard character for string comparisons, and using the `$` syntax to access the loop-variable ([source](https://stackoverflow.com/a/2305537/8477566)). For example, the following loop will print out all the files whose names start with `cnn_mnist_`:
+
+```
+for FILE in cnn_mnist_*; do echo $FILE; done
+```
+
+The following will do a "dry-run" (showing what will happen without actually executing the command) of `git`-moving all the files that start with `cnn_mnist_` into a subfolder called `cnn_mnist` (the `-n` flag tells `git` to do a dry-run; remove the `-n` flag to to actually perform the `git mv` command):
+
+```
+for FILE in cnn_mnist_*; do git mv -n $FILE cnn_mnist/$FILE; done
+```
+
+The following will do the above, but removing the `cnn_mnist_` from the start of each string:
+
+```
+for FILE in cnn_mnist_*; do NEW_FILE=${FILE//cnn_mnist_/}; git mv -n $FILE cnn_mnist/$NEW_FILE; done
+```
+
 ## Search for files anywhere
 
 To search for a file `file_to_search_for` in the directory `path/to/search`, use the [`find`](https://linux.die.net/man/1/find) command, EG:
@@ -105,6 +125,8 @@ A machine can be shut down from terminal using [`shutdown`](https://youtu.be/MQO
 ```
 sudo shutdown now
 ```
+
+This is useful for example for a [Coral Dev Board](https://coral.ai/products/dev-board/); as stated at the bottom of the [getting started guide](https://coral.ai/docs/dev-board/get-started/), the power cable should not be removed from the Dev Board while the device is still on, because this risks corrupting the system image if any write-operations are in progress. The Dev Board can be safely shutdown by calling in terminal `sudo shutdown now`; when the red LED on the Dev Board turns off, the power cable can be unplugged.
 
 ## Add user to group
 
