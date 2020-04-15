@@ -10,13 +10,15 @@ It is possible to iterate through files which match a file pattern by using a `f
 for FILE in cnn_mnist_*; do echo $FILE; done
 ```
 
-The following will do a "dry-run" (showing what will happen without actually executing the command) of `git`-moving all the files that start with `cnn_mnist_` into a subfolder called `cnn_mnist` (the `-n` flag tells `git` to do a dry-run; remove the `-n` flag to to actually perform the `git mv` command):
+## `git`-moving files in a loop
+
+The example above about "iterating through files which match a file pattern" can be modified to `git`-move all the files that start with `cnn_mnist_` into a subfolder called `cnn_mnist`. The `-n` flag tells `git` to do a "dry-run" (showing what will happen/checking validity of the command without actually executing the command); remove the `-n` flag to to actually perform the `git mv` command:
 
 ```
 for FILE in cnn_mnist_*; do git mv -n $FILE cnn_mnist/$FILE; done
 ```
 
-The following will do the above, but removing the `cnn_mnist_` from the start of each string:
+The following will do the above, but removing the `cnn_mnist_` from the start of each string using a bash parameter expansion:
 
 ```
 for FILE in cnn_mnist_*; do NEW_FILE=${FILE//cnn_mnist_/}; git mv -n $FILE cnn_mnist/$NEW_FILE; done
