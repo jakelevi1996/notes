@@ -1,6 +1,6 @@
 # Calling a C function from Python
 
-The [`ctypes` module](https://docs.python.org/3/library/ctypes.html) in Python can be used to call a function written and compiled using C. This Gist demonstrates a simple example of a C-function which takes an argument of type `in_struct` and returns a value of type `out_struct` (both of these types are defined in the source code), which is compiled into a DLL and called from a Python script.
+The [`ctypes` module](https://docs.python.org/3/library/ctypes.html) in Python can be used to call a function which has been written and compiled using C. This Gist demonstrates a simple example of a C-function which takes an argument of type `in_struct` and returns a value of type `out_struct` (both of these types are defined in the source code), which is compiled into a DLL and called from a Python script.
 
 There are a few quirks to bear in mind when using `ctypes`:
 
@@ -8,7 +8,7 @@ There are a few quirks to bear in mind when using `ctypes`:
 - If using 64-bit Python, then only 64-bit DLLs can be loaded using `ctypes` (and similarly for 32-bit Python and 32-bit DLLs); one way to compile 64-bit DLLs in Windows is to use the `x86_64-w64-mingw32-gcc` C compiler, which can be installed via [Cygwin](https://cygwin.com/install.html)
 - Functions in C++ executables can also be called from Python, but they must be wrapped in an `extern "C"` block, as described in [this Stack Overflow answer](https://stackoverflow.com/a/145649/8477566); the reason for using `extern "C"` is to do with the name-mangling that C++ performs during compilation in order to allow function overloading, as described in [this Stack Overflow answer](https://stackoverflow.com/a/1041880/8477566)
 
-Without further ado...
+Below is the C source code, and the Python script which calls the resulting binary DLL.
 
 ## `lib.c`
 
@@ -29,13 +29,13 @@ typedef struct {
     int max;
 } out_struct;
 
-out_struct calc_answer(in_struct is) {
-    out_struct os;
-    os.add = is.a + is.b;
-    os.subtract = is.a - is.b;
-    os.multiply = is.a * is.b;
-    os.max = is.a > is.b ? is.a : is.b;
-    return os;
+out_struct calc_answer(in_struct i_s) {
+    out_struct o_s;
+    o_s.add = i_s.a + i_s.b;
+    o_s.subtract = i_s.a - i_s.b;
+    o_s.multiply = i_s.a * i_s.b;
+    o_s.max = i_s.a > i_s.b ? i_s.a : i_s.b;
+    return o_s;
 }
 ```
 
