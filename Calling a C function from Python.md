@@ -6,7 +6,7 @@ There are a few quirks to bear in mind when using `ctypes`:
 
 - From the section ["Return types"](https://docs.python.org/3/library/ctypes.html#return-types) of the `ctypes` documentation: "By default functions are assumed to return the C int type. Other return types can be specified by setting the `restype` attribute of the function object"
 - If using 64-bit Python, then only 64-bit DLLs can be loaded using `ctypes` (and similarly for 32-bit Python and 32-bit DLLs); one way to compile 64-bit DLLs in Windows is to use the `x86_64-w64-mingw32-gcc` C compiler, which can be installed via [Cygwin](https://cygwin.com/install.html)
-- Functions in C++ executables can also be called from Python, but they must be wrapped in an `extern "C"` block, as described in [this Stack Overflow answer](https://stackoverflow.com/a/145649/8477566); the reason for using `extern "C"` is to do with the name-mangling that C++ performs during compilation in order to allow function overloading, as described in [this Stack Overflow answer](https://stackoverflow.com/a/1041880/8477566)
+- Functions compiled from C++ source code can also be called from Python, but they must be wrapped in an `extern "C"` block, as described in [this Stack Overflow answer](https://stackoverflow.com/a/145649/8477566); the reason for using `extern "C"` is to do with the name-mangling that C++ performs during compilation in order to allow function overloading, as described in [this Stack Overflow answer](https://stackoverflow.com/a/1041880/8477566)
 
 Below is the C source code, and the Python script which calls the resulting binary DLL.
 
