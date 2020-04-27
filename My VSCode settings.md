@@ -2,26 +2,25 @@
 
 ## `settings.json`
 
-```json
+```
 {
     "window.zoomLevel": 0,
     "workbench.panel.defaultLocation": "right",
+    "workbench.list.horizontalScrolling": true,
+
     "explorer.confirmDelete": false,
     "git.enableSmartCommit": true,
     "editor.rulers": [80, 160],
     "explorer.confirmDragAndDrop": false,
     "workbench.colorTheme": "Visual Studio Dark",
-    "python.pythonPath": "C:\\Users\\Jake\\Anaconda3\\python.exe",
     "python.linting.pylintArgs": [
         "--disable", "E1130", // Thinking numpy array doesn't support unary operator
+        "--disable", "E0401", // Can't find modules that exist
+        "--disable", "E1137", // 'a.flat' does not support item assignment
         "--disable", "C", // ignore conventions
         "--disable", "W", // ignore warnings
-        "--disable", "R" // ignore refactor suggestions
+        "--disable", "R", // ignore refactor suggestions
     ],
-    "matlab.mlintpath": "C:\\Program Files\\MATLAB\\R2019b\\bin\\win64\\mlint.exe",
-    "[matlab]": {
-        "editor.rulers": [75]
-    },
     "workbench.iconTheme": "material-icon-theme",
     "material-icon-theme.files.associations": {
         "*.m": "Matlab",
