@@ -65,14 +65,14 @@ sudo find path/to/search -name file_to_search_for
 Note that the `find` command will automatically search recursively through subdirectories; sudo must be used to allow access to restricted directories. Patterns can be used, EG to search for any filename ending or file extension, but it may be necessary to put the `names` argument in single-quotes, to prevent a wildcard expansion to be applied before the program is called, as described in [this Stack Overflow answer](https://stackoverflow.com/a/6495536/8477566):
 
 ```
-sudo find `path/to/search` -name 'file_to_search_for*'
+sudo find path/to/search -name 'file_to_search_for*'
 ```
 
 Similarly, to check for Python scripts or shared object files:
 
 ```
-sudo find `path/to/search` -name '*.py'
-sudo find `path/to/search` -name '*.so'
+sudo find path/to/search -name '*.py'
+sudo find path/to/search -name '*.so'
 ```
 
 To search the entire filesystem, replace `path/to/search` with `/`; this can be useful to check if a library is installed anywhere on the system, and return the location of that library, in case it is not on the system path (if it is on the system path, it can be found with [`which`](https://linux.die.net/man/1/which)).
