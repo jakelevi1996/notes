@@ -28,19 +28,6 @@ $ PS1=$DEFAULT
 jake@Jakes-laptop:/mnt/c/Users/Jake/Documents$
 ```
 
-## Viewing the properties of a file
-
-The `file` command can be used to view the properties of a file, EG whether a shared library is 32-bit or 64-bit, and which platform it was compiled for:
-
-```
-$ file lib.c
-lib.c: ASCII text, with CRLF line terminators
-$ file lib.dll
-lib.dll: PE32 executable (DLL) (console) Intel 80386, for MS Windows
-$ file lib64.dll
-lib64.dll: PE32+ executable (DLL) (console) x86-64, for MS Windows
-```
-
 ## Iterating through files which match a file pattern
 
 It is possible to iterate through files which match a file pattern by using a `for`/`in`/`do`/`done` loop, using the `*` syntax as a wildcard character for string comparisons, and using the `$` syntax to access the loop-variable ([source](https://stackoverflow.com/a/2305537/8477566)). For example, the following loop will print out all the files whose names start with `cnn_mnist_`:
@@ -78,6 +65,33 @@ sudo find `path/to/search` -name file_to_search_for*
 ```
 
 To search the entire filesystem, replace `path/to/search` with `/`; this can be useful to check if a library is installed anywhere on the system, and return the location of that library, in case it is not on the system path (if it is on the system path, it can be found with [`which`](https://linux.die.net/man/1/which)).
+
+## Connect to a WiFi network from the command line
+
+As described in Part 3 of [this Stack Overflow answer](https://askubuntu.com/a/16588/1078405), a WiFi network can be easily connected to from the command line using the `nmcli` command:
+
+```
+nmcli dev wifi connect ESSID_NAME password ESSID_PASSWORD
+```
+
+To simply view a list of available WiFi networks:
+
+```
+nmcli dev wifi
+```
+
+## Viewing the properties of a file
+
+The `file` command can be used to view the properties of a file, EG whether a shared library is 32-bit or 64-bit, and which platform it was compiled for:
+
+```
+$ file lib.c
+lib.c: ASCII text, with CRLF line terminators
+$ file lib.dll
+lib.dll: PE32 executable (DLL) (console) Intel 80386, for MS Windows
+$ file lib64.dll
+lib64.dll: PE32+ executable (DLL) (console) x86-64, for MS Windows
+```
 
 ## Viewing and editing the system path
 
@@ -191,8 +205,3 @@ if id -nG "$USER" | grep -qw "$GROUP"; then echo $USER belongs to $GROUP; fi
 ```
 
 NB the `q` and `w` flags are being used to make `grep` quiet, and only match whole words.
-
-## Find the properties of an executable
-
-
-
