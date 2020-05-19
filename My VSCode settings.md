@@ -79,9 +79,8 @@ Note that the `"ctrl+oem_8"` (`ctrl + \``, ctrl + backtick) shortcuts are specif
         "when": "terminalFocus"
     },
     {
-        "key": "f5",
-        "command": "python.execInTerminal",
-        "when": "editorTextFocus"
+        "key": "shift+alt+r",
+        "command": "revealFileInOS",
     },
     {
         "key": "ctrl+f5",
