@@ -216,3 +216,11 @@ if id -nG "$USER" | grep -qw "$GROUP"; then echo $USER belongs to $GROUP; fi
 ```
 
 NB the `q` and `w` flags are being used to make `grep` quiet, and only match whole words.
+
+## View directory contents in a single column
+
+To view directory contents in a single column (as opposed to the default table view of `ls`), using the `-1` flag (as in numerical one, not a letter L or I):
+
+```
+ls -1
+```
