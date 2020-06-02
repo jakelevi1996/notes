@@ -102,14 +102,22 @@ To search the entire filesystem, replace `path/to/search` with `/`; this can be 
 As described in Part 3 of [this Stack Overflow answer](https://askubuntu.com/a/16588/1078405), a WiFi network can be easily connected to from the command line using the `nmcli` command:
 
 ```
-nmcli dev wifi connect ESSID_NAME password ESSID_PASSWORD
+nmcli device wifi connect ESSID_NAME password ESSID_PASSWORD
 ```
 
 To simply view a list of available WiFi networks:
 
 ```
-nmcli dev wifi
+nmcli device wifi
 ```
+
+To view a list of *all* available internet connections (ethernet, wifi, etc):
+
+```
+nmcli device
+```
+
+Note that when running `nmcli` commands, `device`, `dev`, and `d` are all synonymous, and can be used interchangeably.
 
 ## View the hostname
 
