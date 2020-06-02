@@ -201,7 +201,7 @@ The command `ls` will list files and subdirectories in the directory that is spe
 ls -l --block-size MB path/to/file
 ```
 
-## Reboot machine
+## Reboot/restart machine
 
 A machine can be rebooted from terminal using `reboot`:
 
