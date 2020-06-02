@@ -42,6 +42,12 @@ As described in [this Stack Overflow answer](https://askubuntu.com/a/222352/1078
 sudo apt-get update && sudo apt-get dist-upgrade
 ```
 
+As described in [this Stack Overflow answer](https://askubuntu.com/a/226213/1078405), as to why you would ever want to use `apt-get upgrade` instead of `apt-get dist-upgrade`:
+
+> Using upgrade keeps to the rule: under no circumstances are currently installed packages removed, or packages not already installed retrieved and installed. If that's important to you, use `apt-get upgrade`. If you want things to "just work", you probably want `apt-get dist-upgrade` to ensure dependencies are resolved
+
+In summary, `apt-get upgrade` is likely to be safer if it works, but if not, `apt-get dist-upgrade` is more likely to work.
+
 ## Clear the console window
 
 The console window can be cleared using the command `clear`.
