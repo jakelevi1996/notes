@@ -119,10 +119,24 @@ nmcli device
 
 Note that when running `nmcli` commands, `device`, `dev`, and `d` are all synonymous, and can be used interchangeably.
 
-## View the hostname
+## View the hostname and IP address
+
+To view the hostname, use the following command:
+
+```
+hostname
+```
+
+An alternative command is:
 
 ```
 echo $HOSTNAME
+```
+
+To view the IP address, use the following command (see [this Stack Overflow answer](https://stackoverflow.com/a/13322549/8477566) for details):
+
+```
+hostname -I
 ```
 
 ## Viewing the properties of a file
