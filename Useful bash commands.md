@@ -28,6 +28,19 @@ $ PS1=$DEFAULT
 jake@Jakes-laptop:/mnt/c/Users/Jake/Documents$
 ```
 
+## `apt-get update` vs `apt-get upgrade`
+
+As described in [this Stack Overflow answer](https://askubuntu.com/a/222352/1078405):
+
+> - `apt-get update` downloads the **package lists** from the repositories and "updates" them to get information on the newest versions of packages and their dependencies for all repositories and PPAs (doesn't actually install new versions of software)
+> - `apt-get upgrade` will fetch new versions of packages existing on the machine if APT knows about these new versions by way of `apt-get update`
+> - `apt-get dist-upgrade` will do the same job which is done by `apt-get upgrade`, plus it will also intelligently handle the dependencies, so it might remove obsolete packages or add new ones
+> You can combine commands with && as follows:
+
+```
+sudo apt-get update && sudo apt-get dist-upgrade
+```
+
 ## Clear the console window
 
 The console window can be cleared using the command `clear`.
