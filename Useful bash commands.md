@@ -91,6 +91,12 @@ To simply view a list of available WiFi networks:
 nmcli dev wifi
 ```
 
+## View the hostname
+
+```
+echo $HOSTNAME
+```
+
 ## Viewing the properties of a file
 
 The `file` command can be used to view the properties of a file, EG whether a shared library is 32-bit or 64-bit, and which platform it was compiled for:
