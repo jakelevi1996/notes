@@ -36,7 +36,7 @@ As described in [this Stack Overflow answer](https://askubuntu.com/a/222352/1078
 > - `apt-get upgrade` will fetch new versions of packages existing on the machine if APT knows about these new versions by way of `apt-get update`
 > - `apt-get dist-upgrade` will do the same job which is done by `apt-get upgrade`, plus it will also intelligently handle the dependencies, so it might remove obsolete packages or add new ones
 > 
-> You can combine commands with && as follows:
+> You can combine commands with `&&` as follows:
 
 ```
 sudo apt-get update && sudo apt-get dist-upgrade
