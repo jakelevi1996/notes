@@ -10,6 +10,7 @@
 
     "explorer.confirmDelete": false,
     "git.enableSmartCommit": true,
+    "debug.console.historySuggestions": false,
     "editor.rulers": [80, 160],
     "explorer.confirmDragAndDrop": false,
     "workbench.colorTheme": "Visual Studio Dark",
@@ -125,6 +126,25 @@ Note that the `"ctrl+oem_8"` (`ctrl + \``, ctrl + backtick) shortcuts are specif
         "when": "editorTextFocus && !editorReadonly"
     },
 ]
+```
+
+## `./.vscode/settings.json`
+
+These are the workspace settings, included here in particular for the `pytestArgs`:
+
+```
+{
+    "python.pythonPath": "env\\Scripts\\python.exe",
+    "python.testing.pytestArgs": [
+        ".",
+        "-o", "junit_family=xunit1",
+        "--durations=5",
+        // "-s"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.pytestEnabled": true
+}
 ```
 
 ## Installed extensions
