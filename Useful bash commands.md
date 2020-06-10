@@ -52,6 +52,30 @@ In summary, `apt-get upgrade` is likely to be safer if it works, but if not, `ap
 
 To view the version of a installed package which is available through `apt` (Advanced Package Tool), use the command `apt list <package-name>` for a concise description, or `apt show <package-name>` for a more verbose output. (A similar command, `apt policy <package-name>` is also available, although currently I'm not sure what the difference is between `apt show` and `apt policy` is).
 
+To view a list of all installed packages, use the command
+
+```
+apt list --installed
+```
+
+This list can be very large, so it might be sensible to redirect the output into a text file. To do this and then display the first 100 lines of the text file:
+
+```
+apt list --installed > aptlistinstalled.txt && head -n100 aptlistinstalled.txt
+```
+
+To achieve the same thing but without saving to a text file:
+
+```
+apt list --installed | head -n100
+```
+
+To list all installed packages which contain the string "`cuda`":
+
+```
+apt list --installed | grep cuda
+```
+
 ## Clear the console window
 
 The console window can be cleared using the command `clear`.
