@@ -48,6 +48,10 @@ As described in [this Stack Overflow answer](https://askubuntu.com/a/226213/1078
 
 In summary, `apt-get upgrade` is likely to be safer if it works, but if not, `apt-get dist-upgrade` is more likely to work.
 
+## Checking the version of an installed `apt` package
+
+To view the version of a installed package which is available through `apt` (Advanced Package Tool), use the command `apt list <package-name>` for a concise description, or `apt show <package-name>` for a more verbose output. (A similar command, `apt policy <package-name>` is also available, although currently I'm not sure what the difference is between `apt show` and `apt policy` is).
+
 ## Clear the console window
 
 The console window can be cleared using the command `clear`.
