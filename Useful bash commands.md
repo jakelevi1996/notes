@@ -2,6 +2,44 @@
 
 This is just a random collection of commands which are useful in Bash. This Gist is expected to grow over time (until I have mastered the whole of Bash). Another useful resource is this [list of Unix commands on Wikipedia](https://en.wikipedia.org/wiki/List_of_Unix_commands#List). Hyperlinked bash commands in general lead to relevant Man (manual) pages.
 
+## Counting the number of lines in a file
+
+Use the program `wc` (which is a mandatory UNIX command, and stands for "word count") can be used to count the number of words, lines, characters, or bytes in a file. To count the number of lines in a file, use the `-l` flag, for example in the file `/etc/dhcp/dhclient.conf`:
+
+```
+wc -l /etc/dhcp/dhclient.conf
+```
+
+`wc` can also accept a list of files as separate arguments (separated by spaces).
+
+As described on [the Wikipedia page for `wc`](https://en.wikipedia.org/wiki/Wc_(Unix)#Usage), the `-l`flag prints the line count, the `-c` flag prints the byte count, the `-m` flag prints the character count, the `-L` flag prints the length of the longest line (GNU extension), and the `-w` flag prints the word count. Example:
+
+```
+$ wc -l /etc/dhcp/dhclient.conf
+54 /etc/dhcp/dhclient.conf
+$ wc -w /etc/dhcp/dhclient.conf
+207 /etc/dhcp/dhclient.conf
+$ wc -c /etc/dhcp/dhclient.conf
+1735 /etc/dhcp/dhclient.conf
+$ wc -m /etc/dhcp/dhclient.conf
+1735 /etc/dhcp/dhclient.conf
+```
+
+## Viewing the first n lines of a file
+
+To view the first n lines of a text file, use the `head` command with the `-n` flag, EG:
+
+```
+$ head -n5 /etc/dhcp/dhclient.conf
+# Configuration file for /sbin/dhclient.
+#
+# This is a sample configuration file for dhclient. See dhclient.conf's
+#       man page for more information about the syntax of this file
+#       and a more comprehensive list of the parameters understood by
+```
+
+Similarly, use the `tail` command to view the last n lines of a text file.
+
 ## Changing the bash prompt
 
 The bash prompt can be changed by simply setting a new value to the `PS1` variable; here is an example using WSL:
