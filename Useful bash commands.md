@@ -163,6 +163,14 @@ sudo find path/to/search -name '*.so'
 
 To search the entire filesystem, replace `path/to/search` with `/`; this can be useful to check if a library is installed anywhere on the system, and return the location of that library, in case it is not on the system path (if it is on the system path, it can be found with [`which`](https://linux.die.net/man/1/which)).
 
+Note that an alternative to using the `-name` flag is to pipe the output from `find` into `grep`, EG:
+
+```
+sudo find / | grep nvcc
+```
+
+Unlike using `-name`, `grep` will match the search query anywhere in the filename or directory (instead of an exact filename), without further modifications.
+
 ## Connect to a WiFi network from the command line
 
 As described in Part 3 of [this Stack Overflow answer](https://askubuntu.com/a/16588/1078405), a WiFi network can be easily connected to from the command line using the `nmcli` command:
