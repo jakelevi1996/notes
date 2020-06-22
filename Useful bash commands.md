@@ -12,7 +12,7 @@ This is just a random collection of commands which are useful in Bash. This Gist
 sudo find / | grep -v cpp | grep tensorrt
 ```
 
-   (Hint: put the inverted expression before the non-inverted expression to get the results highlighted in the bash terminal output, if this feature is available and preferred)
+ (Hint: put the inverted expression before the non-inverted expression to get the results highlighted in the bash terminal output, if this feature is available and preferred)
 
 - ...
 
