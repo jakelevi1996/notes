@@ -2,6 +2,20 @@
 
 This is just a random collection of commands which are useful in Bash. This Gist is expected to grow over time (until I have mastered the whole of Bash). Another useful resource is this [list of Unix commands on Wikipedia](https://en.wikipedia.org/wiki/List_of_Unix_commands#List). Hyperlinked bash commands in general lead to relevant Man (manual) pages.
 
+## Useful `grep` commands
+
+`grep` stands for **G**lobal (-ly search for a) **R**egular **E**xpression (and) **P**rint (the results). It is especially useful for filtering the outputs of other command-line tools or files. Here are some useful features of `grep` (`TODO`: make this into a separate Gist?):
+
+- The `-v` ("in**v**ert") flag: instead of searching for the specified string, print only the lines which don't contain the specified string. This can be useful when piping together `grep` commands, to include some search queries and exclude others, EG in the following command:
+
+```
+sudo find / | grep -v cpp | grep tensorrt
+```
+
+   (Hint: put the inverted expression before the non-inverted expression to get the results highlighted in the bash terminal output, if this feature is available and preferred)
+
+- ...
+
 ## Counting the number of lines in a file
 
 Use the program `wc` (which is a mandatory UNIX command, and stands for "word count") can be used to count the number of words, lines, characters, or bytes in a file. To count the number of lines in a file, use the `-l` flag, for example in the file `/etc/dhcp/dhclient.conf`:
@@ -24,6 +38,8 @@ $ wc -c /etc/dhcp/dhclient.conf
 $ wc -m /etc/dhcp/dhclient.conf
 1735 /etc/dhcp/dhclient.conf
 ```
+
+The `wc -l` command is useful for counting the number of lines in a file before printing the first or last N lines of the file using the `head` or `tail` commands (see below), where N ≤ the number of lines in the file.
 
 ## Viewing the first n lines of a file
 
