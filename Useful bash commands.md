@@ -8,9 +8,7 @@ This is just a random collection of commands which are useful in Bash. This Gist
 
 - The `-v` ("in**v**ert") flag: instead of searching for the specified string, print only the lines which don't contain the specified string. This can be useful when piping together `grep` commands, to include some search queries and exclude others, EG in the following command:
 
-```
-sudo find / | grep -v cpp | grep tensorrt
-```
+    sudo find / | grep -v cpp | grep tensorrt
 
    (Hint: put the inverted expression before the non-inverted expression to get the results highlighted in the bash terminal output, if this feature is available and preferred)
 
