@@ -2,6 +2,20 @@
 
 This is just a random collection of commands which are useful in Bash. This Gist is expected to grow over time (until I have mastered the whole of Bash). Another useful resource is this [list of Unix commands on Wikipedia](https://en.wikipedia.org/wiki/List_of_Unix_commands#List). Hyperlinked bash commands in general lead to relevant Man (manual) pages.
 
+## Seeing available disk space and disk usage
+
+To see how much disk space is available, use the command `df`. To view the output in a human-readable format which chooses appropriate memory units for each file system (GB, MB, etc.), use the `-h` flag:
+
+```
+df -h
+```
+
+To see the size of a file or directory, use the `du` command (`du` stands for disk usage) (again, use the `-h` flag for human-readable format):
+
+```
+du -h file1 [file2 dir1 dir2 etc]
+```
+
 ## Useful `grep` commands
 
 `grep` stands for **G**lobal (-ly search for a) **R**egular **E**xpression (and) **P**rint (the results). It is especially useful for filtering the outputs of other command-line tools or files. Here are some useful features of `grep` (`TODO`: make this into a separate Gist?):
@@ -295,14 +309,6 @@ To connect to a serial device using WSL (see above), the COM port for the serial
 
 ```bash
 sudo chmod 666 /dev/ttyS3 && stty -F /dev/ttyS3 115200 && sudo screen /dev/ttyS3 115200
-```
-
-## Seeing available disk space
-
-To see how much disk space is available, use the command `df`. To view the output in a human-readable format which chooses appropriate memory units for each file system (GB, MB, etc.), use the `-h` flag:
-
-```
-df -h
 ```
 
 ## View filesize
