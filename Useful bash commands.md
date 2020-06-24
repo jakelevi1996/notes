@@ -10,7 +10,7 @@ To see how much disk space is available, use the command `df`. To view the outpu
 df -h
 ```
 
-To see the size of a file or directory, use the `du` command (`du` stands for disk usage) (again, use the `-h` flag for human-readable format):
+To see the size of a file or directory, use the `du` command (`du` stands for disk usage) (again, use the `-h` flag for human-readable format). This program can accept multiple files and/or directories in a single command:
 
 ```
 du -h file1 [file2 dir1 dir2 etc]
