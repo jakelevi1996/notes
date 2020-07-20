@@ -94,7 +94,8 @@ Note that the `"ctrl+oem_8"` (`ctrl + \``, ctrl + backtick) shortcuts are specif
     },
     {
         "key": "ctrl+enter",
-        "command": "workbench.action.terminal.runSelectedText"
+        "command": "workbench.action.terminal.runSelectedText",
+        "when": "editorTextFocus"
     },
     {
         "key": "ctrl+oem_5",
