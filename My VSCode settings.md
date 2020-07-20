@@ -7,7 +7,6 @@
     "window.zoomLevel": 0,
     "workbench.panel.defaultLocation": "right",
     "workbench.list.horizontalScrolling": true,
-    "workbench.panel.defaultLocation": "right",
 
     "explorer.confirmDelete": false,
     "git.enableSmartCommit": true,
