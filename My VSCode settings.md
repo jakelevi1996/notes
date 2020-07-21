@@ -96,36 +96,7 @@ Note that the `"ctrl+oem_8"` (`ctrl + \``, ctrl + backtick) shortcuts are specif
         "key": "ctrl+enter",
         "command": "workbench.action.terminal.runSelectedText",
         "when": "editorTextFocus"
-    },
-    {
-        "key": "ctrl+oem_5",
-        "command": "editor.action.commentLine",
-        "when": "editorTextFocus && !editorReadonly"
-    },
-    {
-        "key": "ctrl+shift+oem_5",
-        "command": "editor.action.blockComment",
-        "when": "editorTextFocus && !editorReadonly"
-    },
-    {
-        "key": "ctrl+shift+oem_2",
-        "command": "editor.action.blockComment",
-        "when": "editorTextFocus && !editorReadonly"
-    },
-    {
-        "key": "ctrl+alt+oem_5",
-        "command": "workbench.action.splitEditor"
-    },
-    {
-        "key": "ctrl+oem_8",
-        "command": "editor.action.commentLine",
-        "when": "editorTextFocus && !editorReadonly"
-    },
-    {
-        "key": "ctrl+shift+oem_8",
-        "command": "editor.action.blockComment",
-        "when": "editorTextFocus && !editorReadonly"
-    },
+    }
 ]
 ```
 
