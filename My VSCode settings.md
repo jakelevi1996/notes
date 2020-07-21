@@ -177,7 +177,7 @@ v4run.transpose
             "name": "Win32",
             "compilerPath": "C:\\cygwin64\bin\\gcc.exe",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
                 "C:/Program Files/MATLAB/R2019b/extern/include",
                 "C:/Program Files/MATLAB/R2020a/extern/include",
                 "C:/Program Files/MATLAB/R2020a/sys/lcc64/lcc64/include64"
