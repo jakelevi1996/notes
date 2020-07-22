@@ -28,6 +28,7 @@
         "*.lnk": "Url",
         "*.readme": "Readme",
     },
+    "matlab.mlintpath": "C:/Program Files/MATLAB/R2020a/bin/win64/mlint.exe"
 
 
 }
