@@ -2,6 +2,17 @@
 
 This is just a random collection of commands which are useful in Bash. This Gist is expected to grow over time (until I have mastered the whole of Bash). Another useful resource is this [list of Unix commands on Wikipedia](https://en.wikipedia.org/wiki/List_of_Unix_commands#List). Hyperlinked bash commands in general lead to relevant Man (manual) pages.
 
+## Viewing available memory and swap files using `free`
+
+The `free` command can be used to view available RAM, RAM usage, and available/used memory in swap files. More information about how to create a swap file can be found in [this tutorial](https://linuxize.com/post/create-a-linux-swap-file/). The `-h` flag can be used with the `free` command to produce a more human-readable output:
+
+```
+$ free -h
+              total        used        free      shared  buff/cache   available
+Mem:            15G        8.8G        6.8G         17M        223M        6.9G
+Swap:           29G         56M         29G
+```
+
 ## View running processes
 
 `ps` and `top` are two commands which can be used to view running processes, their CPU usage, process ID, etc. They differ mainly in that "`top` is mostly used interactively", while "`ps` is designed for non-interactive use (scripts, extracting some information with shell pipelines etc.)", as described [in this Stack Overflow answer](https://unix.stackexchange.com/a/62186/421710) (see [here](https://superuser.com/questions/451344/difference-between-ps-output-and-top-output) for more differences).
