@@ -2,6 +2,28 @@
 
 This is just a random collection of commands which are useful in Bash. This Gist is expected to grow over time (until I have mastered the whole of Bash). Another useful resource is this [list of Unix commands on Wikipedia](https://en.wikipedia.org/wiki/List_of_Unix_commands#List). Hyperlinked bash commands in general lead to relevant Man (manual) pages.
 
+## Extract a `.tar.gz` file
+
+As described [here](https://askubuntu.com/a/25348/1078405):
+
+```bash
+tar -xvzf compressed_file_name.tar.gz
+```
+
+To extract into a particular directory:
+
+```bash
+tar -xvzf compressed_file_name.tar.gz -C output_dir_name
+```
+
+Description of flags:
+
+> - `x`: tar can collect files or extract them. x does the latter.
+> - `v`: makes tar talk a lot. Verbose output shows you all the files being extracted.
+> - `z`: tells tar to decompress the archive using gzip
+> - `f`: this must be the last flag of the command, and the tar file must be immediately after. It tells tar the name and path of the compressed file.
+> - `C`: means change to directory DIR. In our example, DIR is my_images.
+
 ## Viewing available memory and swap files using `free`
 
 The `free` command can be used to view available RAM, RAM usage, and available/used memory in swap files. More information about how to create a swap file can be found in [this tutorial](https://linuxize.com/post/create-a-linux-swap-file/). The `-h` flag can be used with the `free` command to produce a more human-readable output:
