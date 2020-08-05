@@ -2,6 +2,16 @@
 
 This is just a random collection of commands which are useful in Bash. This Gist is expected to grow over time (until I have mastered the whole of Bash). Another useful resource is this [list of Unix commands on Wikipedia](https://en.wikipedia.org/wiki/List_of_Unix_commands#List). Hyperlinked bash commands in general lead to relevant Man (manual) pages.
 
+## Fixing `$'\r': command not found` error when running a bash script in WSL
+
+As described [here](https://askubuntu.com/a/1046371/1078405), this is because of a carriage return used in DOS-style line endings. The problem can be solved as follows:
+
+```
+sudo apt-get install dos2unix
+dos2unix name_of_shell_script.sh
+./name_of_shell_script.sh
+```
+
 ## Extract a `.tar.gz` file
 
 As described [here](https://askubuntu.com/a/25348/1078405):
