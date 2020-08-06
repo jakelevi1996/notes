@@ -2,7 +2,7 @@
 
 ## `settings.json`
 
-For more information about C/C++ default include-pathsin VSCode, and how to combine them with local settings, see [Customizing default settings](https://code.visualstudio.com/docs/cpp/customize-default-settings-cpp).
+For more information about C/C++ default include-paths in VSCode, and how to combine them with local settings, see [Customizing default settings](https://code.visualstudio.com/docs/cpp/customize-default-settings-cpp).
 
 ```
 {
