@@ -31,6 +31,7 @@ For more information about C/C++ default include-paths in VSCode, and how to com
         "*.readme": "Readme",
     },
     "C_Cpp.default.includePath": [
+        "C:/Python37/include",
         "C:/Program Files/MATLAB/R2020a/extern/include"
     ],
     "matlab.mlintpath": "C:/Program Files/MATLAB/R2020a/bin/win64/mlint.exe"
