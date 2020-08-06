@@ -2,6 +2,8 @@
 
 ## `settings.json`
 
+For more information about C/C++ default include-pathsin VSCode, and how to combine them with local settings, see [Customizing default settings](https://code.visualstudio.com/docs/cpp/customize-default-settings-cpp).
+
 ```
 {
     "window.zoomLevel": 0,
@@ -28,9 +30,10 @@
         "*.lnk": "Url",
         "*.readme": "Readme",
     },
+    "C_Cpp.default.includePath": [
+        "C:/Program Files/MATLAB/R2020a/extern/include"
+    ],
     "matlab.mlintpath": "C:/Program Files/MATLAB/R2020a/bin/win64/mlint.exe"
-
-
 }
 ```
 
