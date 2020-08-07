@@ -81,6 +81,11 @@ Note that the `"ctrl+oem_8"` (`ctrl + \``, ctrl + backtick) shortcuts are specif
         "when": "terminalFocus"
     },
     {
+        "key": "ctrl+w",
+        "command": "workbench.action.terminal.toggleTerminal",
+        "when": "terminalFocus"
+    },
+    {
         "key": "shift+alt+r",
         "command": "revealFileInOS",
     },
