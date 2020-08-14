@@ -72,18 +72,11 @@ Note that the `"ctrl+oem_8"` (`ctrl + \``, ctrl + backtick) shortcuts are specif
     },
     {
         "key": "alt+t",
-        "command": "workbench.action.terminal.focus",
-        "when": "!terminalFocus"
-    },
-    {
-        "key": "alt+t",
-        "command": "workbench.action.focusActiveEditorGroup",
-        "when": "terminalFocus"
-    },
-    {
-        "key": "ctrl+w",
         "command": "workbench.action.terminal.toggleTerminal",
-        "when": "terminalFocus"
+    },
+    {
+        "key": "alt+m",
+        "command": "workbench.action.toggleMaximizedPanel",
     },
     {
         "key": "shift+alt+r",
