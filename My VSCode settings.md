@@ -40,8 +40,6 @@ For more information about C/C++ default include-paths in VSCode, and how to com
 
 ## `keybindings.json`
 
-Note that the `"ctrl+oem_8"` (`ctrl + \``, ctrl + backtick) shortcuts are specifically for my laptop, which has a non-standard keyboard layout, with the backslash moved to the right hand side of the keyboard, preventing me from toggling comments with my left hand.
-
 ```json
 // Place your key bindings in this file to overwrite the defaults
 [
