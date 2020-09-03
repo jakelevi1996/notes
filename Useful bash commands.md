@@ -219,6 +219,16 @@ The following will do the above, but removing the `cnn_mnist_` from the start of
 for FILE in cnn_mnist_*; do NEW_FILE=${FILE//cnn_mnist_/}; git mv -n $FILE cnn_mnist/$NEW_FILE; done
 ```
 
+## Iteratively and recursively `git`-moving files one directory up
+
+Following the examples above, to recursively `git`-move all files and folders in the current directory up by one directory (the `-n` flag is included here again to perform a dry run; remove the `-n` flag to perform an actual `git`-move command):
+
+```
+for FILE in ./*; do git mv -n $FILE ../$FILE; done
+```
+
+Note that `git` will recursively move the contents of any subdirectories by default.
+
 ## Search for files anywhere
 
 To search for a file `file_to_search_for` in the directory `path/to/search`, use the [`find`](https://linux.die.net/man/1/find) command, EG:
