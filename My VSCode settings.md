@@ -27,6 +27,7 @@ For more information about C/C++ default include-paths in VSCode, and how to com
     "workbench.iconTheme": "material-icon-theme",
     "material-icon-theme.files.associations": {
         "*.m": "Matlab",
+        "*.mexw64": "Matlab",
         "*.lnk": "Url",
         "*.readme": "Readme",
     },
