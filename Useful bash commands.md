@@ -285,7 +285,7 @@ sudo find / | grep nvcc
 
 Unlike using `-name`, `grep` will match the search query anywhere in the filename or directory (instead of an exact filename), without further modifications.
 
-To only return paths to files from `find` and not include paths to directories, use the `-f` flag, EG:
+To only return paths to files from `find` and not include paths to directories, use the `-type f` option, EG:
 
 ```
 sudo find / -type f | grep nvcc | grep -v docker  | wc -l
