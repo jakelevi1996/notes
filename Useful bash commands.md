@@ -285,6 +285,12 @@ sudo find / | grep nvcc
 
 Unlike using `-name`, `grep` will match the search query anywhere in the filename or directory (instead of an exact filename), without further modifications.
 
+To only return paths to files from `find` and not include paths to directories, use the `-f` flag, EG:
+
+```
+sudo find / -type f | grep nvcc | grep -v docker  | wc -l
+```
+
 ## Connect to a WiFi network from the command line
 
 As described in Part 3 of [this Stack Overflow answer](https://askubuntu.com/a/16588/1078405), a WiFi network can be easily connected to from the command line using the `nmcli` command:
