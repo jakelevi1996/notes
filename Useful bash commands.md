@@ -94,13 +94,9 @@ du -h file1 [file2 dir1 dir2 etc]
 
 `grep` stands for **G**lobal (-ly search for a) **R**egular **E**xpression (and) **P**rint (the results). It is especially useful for filtering the outputs of other command-line tools or files. Here are some useful features of `grep` (`TODO`: make this into a separate Gist?):
 
-- The `-v` ("in**v**ert") flag: instead of searching for the specified string, print only the lines which don't contain the specified string. This can be useful when piping together `grep` commands, to include some search queries and exclude others, EG in the following command:
+- The `-v` ("in**v**ert") flag: instead of searching for the specified string, print only the lines which don't contain the specified string. This can be useful when piping together `grep` commands, to include some search queries and exclude others, EG in the command `sudo find / | grep tensorrt | grep -v cpp`
 
-```
-sudo find / | grep tensorrt | grep -v cpp
-```
-
- (Hint: put the inverted expression before the non-inverted expression to get the results highlighted in the bash terminal output, if this feature is available and preferred)
+  - Hint: put the inverted expression before the non-inverted expression to get the results highlighted in the bash terminal output, if this feature is available and preferred
 
 - The `-i` flag can be used for case-**i**nsensitive pattern-matching, IE `grep -i foo` will match `foo`, `FOO`, `fOo`, etc.
 
