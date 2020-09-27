@@ -102,6 +102,10 @@ sudo find / | grep tensorrt | grep -v cpp
 
  (Hint: put the inverted expression before the non-inverted expression to get the results highlighted in the bash terminal output, if this feature is available and preferred)
 
+- The `-i` flag can be used for case-**i**nsensitive pattern-matching, IE `grep -i foo` will match `foo`, `FOO`, `fOo`, etc.
+
+- `grep` can be used to search for strings within a file, using the syntax `grep <pattern> <file>` ([source](https://stackoverflow.com/a/48492465/8477566))
+
 - ...
 
 ## Counting the number of lines in a file
