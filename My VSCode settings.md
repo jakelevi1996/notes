@@ -82,6 +82,10 @@ For more information about C/C++ default include-paths in VSCode, and how to com
         "command": "revealFileInOS",
     },
     {
+        "key": "shift+alt+t",
+        "command": "openInTerminal",
+    },
+    {
         "key": "ctrl+f5",
         "command": "workbench.action.reloadWindow",
         "when": "editorTextFocus"
