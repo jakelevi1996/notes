@@ -78,6 +78,10 @@ For more information about C/C++ default include-paths in VSCode, and how to com
         "command": "workbench.action.toggleMaximizedPanel",
     },
     {
+        "key": "alt+k",
+        "command": "workbench.action.terminal.kill"
+    },
+    {
         "key": "shift+alt+r",
         "command": "revealFileInOS",
     },
