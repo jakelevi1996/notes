@@ -102,7 +102,7 @@ du -h file1 [file2 dir1 dir2 etc]
 
 - `grep` can be used to search for strings within a file, using the syntax `grep <pattern> <file>` ([source](https://stackoverflow.com/a/48492465/8477566))
 
-- The outputs from grep can be used as the input to a program which doesn't usually accept inputs from `stdin` using the `xargs` command, EG `find . | grep svn | xargs rm -rfv` will recursively delete all files and folders in the current directory that contain the string `svn` (good riddance!) (the `-v` flag will also cause `rm` to be verbose about every file and folder which it deletes)
+- The outputs from grep can be used as the input to a program which doesn't usually accept inputs from `stdin` using the `xargs` command, EG `find | grep svn | xargs rm -rfv` will recursively delete all files and folders in the current directory that contain the string `svn` (good riddance!) (the `-v` flag will also cause `rm` to be verbose about every file and folder which it deletes)
 
 - ...
 
@@ -292,6 +292,8 @@ To only return paths to files from `find` and not include paths to directories, 
 ```
 sudo find / -type f | grep nvcc | grep -v docker  | wc -l
 ```
+
+If no args are passed to `find` then it will recursively search through the current directory and print out the names of all files and subdirectories, EG `find | grep svn`.
 
 ## Connect to a WiFi network from the command line
 
