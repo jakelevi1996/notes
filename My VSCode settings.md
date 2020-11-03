@@ -41,70 +41,7 @@ For more information about C/C++ default include-paths in VSCode, and how to com
 
 ## `keybindings.json`
 
-```json
-// Place your key bindings in this file to overwrite the defaults
-[
-    {
-        "key": "alt+r",
-        "command": "python.execInTerminal",
-        "when": "editorTextFocus"
-    },
-    {
-        "key": "alt+c",
-        "command": "editor.action.commentLine",
-        "when": "editorTextFocus && !editorReadonly"
-    },
-    {
-        "key": "shift+alt+c",
-        "command": "editor.action.blockComment",
-        "when": "editorTextFocus && !editorReadonly"
-    },
-    {
-        "key": "alt+s",
-        "command": "extension.transpose",
-        "when": "editorTextFocus && !editorReadonly"
-    },
-    {
-        "key": "alt+d",
-        "command": "editor.action.deleteLines",
-        "when": "textInputFocus && !editorReadonly"
-    },
-    {
-        "key": "alt+t",
-        "command": "workbench.action.terminal.toggleTerminal",
-    },
-    {
-        "key": "alt+m",
-        "command": "workbench.action.toggleMaximizedPanel",
-    },
-    {
-        "key": "alt+k",
-        "command": "workbench.action.terminal.kill"
-    },
-    {
-        "key": "shift+alt+r",
-        "command": "revealFileInOS",
-    },
-    {
-        "key": "shift+alt+t",
-        "command": "openInTerminal",
-    },
-    {
-        "key": "ctrl+f5",
-        "command": "workbench.action.reloadWindow",
-        "when": "editorTextFocus"
-    },
-    {
-        "key": "ctrl+d",
-        "command": "compareSelected"
-    },
-    {
-        "key": "ctrl+enter",
-        "command": "workbench.action.terminal.runSelectedText",
-        "when": "editorTextFocus"
-    }
-]
-```
+See file at the end of this gist.
 
 ## `./.vscode/settings.json`
 
