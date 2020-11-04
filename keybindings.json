@@ -16,6 +16,10 @@
         "when": "editorTextFocus && !editorReadonly"
     },
     {
+        "key": "ctrl+alt+c",
+        "command": "copyRelativeFilePath",
+    },
+    {
         "key": "alt+s",
         "command": "extension.transpose",
         "when": "editorTextFocus && !editorReadonly"
