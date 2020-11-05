@@ -20,6 +20,10 @@
         "command": "copyRelativeFilePath",
     },
     {
+        "key": "ctrl+shift+alt+c",
+        "command": "copyFilePath",
+    },
+    {
         "key": "alt+s",
         "command": "extension.transpose",
         "when": "editorTextFocus && !editorReadonly"
