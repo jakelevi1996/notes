@@ -10,6 +10,8 @@ The following command can be used to recursively find line counts of all files w
 find |  grep "\.py$" | grep -v venv | xargs wc -l
 ```
 
+TODO: turn this into a slightly more sophisticated Python scripy that accepts command line arguments specifying what filename ending to look for, and specifically ignoring directories containg the excluded words, and not filenames as well
+
 ## View all of the most recent bash commands
 
 The `history` command prints out all of the previously recorded bash commands ([source](https://askubuntu.com/a/359125/1078405)). To view the most recent bash commands, the output from `history` can be piped into `tail`. For example, to print the 20 most recent bash commands:
