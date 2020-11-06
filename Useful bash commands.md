@@ -2,6 +2,14 @@
 
 This is just a random collection of commands which are useful in Bash. This Gist is expected to grow over time (until I have mastered the whole of Bash). Another useful resource is this [list of Unix commands on Wikipedia](https://en.wikipedia.org/wiki/List_of_Unix_commands#List). Hyperlinked bash commands in general lead to relevant Man (manual) pages.
 
+## Recursively find word counts of all files with a particular file ending
+
+The following command can be used to recursively find line counts of all files with a particular file ending (in this case `.py` for Python), excluding all files in the `venv` directory (or more specifically, any files containing the substring `venv` in their path). This is achieved by using a `$` character in the regular expression to match a line-ending, and using `\` to escape the `.` character. The sum of the line counts for all matching words is displaying at the bottom:
+
+```
+find |  grep "\.py$" | grep -v venv | xargs wc -l
+```
+
 ## View all of the most recent bash commands
 
 The `history` command prints out all of the previously recorded bash commands ([source](https://askubuntu.com/a/359125/1078405)). To view the most recent bash commands, the output from `history` can be piped into `tail`. For example, to print the 20 most recent bash commands:
