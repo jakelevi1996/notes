@@ -84,7 +84,9 @@ int main(int argc, char *argv[]) {
 
 ## Writing to a file in Matlab
 
-Below is a code snippet for writing to a file in Matlab.
+### Strings and text
+
+Below is a code snippet for writing strings and text to a file in Matlab.
 
 ```matlab
 % Get name of current file, current directory, and output filename
@@ -101,4 +103,29 @@ end
 % Print to file and close
 fprintf(debug_fid, 'Hello world, the answer is %i\n', 42);
 fclose(debug_fid);
+```
+
+### Printing a struct to a file
+
+A struct can be printed to a file using the [`evalc` function](https://uk.mathworks.com/help/matlab/ref/evalc.html), EG:
+
+```matlab
+a = [1 2 3; 4 5 6];
+fprintf(fopen('temp.txt', 'w'), '%s\n', evalc('disp(whos(''a''))'));
+```
+
+Contents of `temp.txt`:
+
+```
+          name: 'a'
+          size: [2 3]
+         bytes: 48
+         class: 'double'
+        global: 0
+        sparse: 0
+       complex: 0
+       nesting: [1×1 struct]
+    persistent: 0
+
+
 ```
