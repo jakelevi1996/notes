@@ -1,6 +1,8 @@
 # Writing to a file in Python, C and Matlab
 
-## Writing and reading integers to/from a text file in Python
+## Writing and reading to/from a text file in Python
+
+### Single integer
 
 Below is a very simple code snippet to write an integer to a text file in Python, then read it out again, and check that the values are consistent:
 
@@ -20,6 +22,28 @@ Console output:
 
 ```
 12345 12345 True
+```
+
+### List of integers
+
+Below is an equivalent snipped for writing a list of integers to a text file in Python:
+
+```python
+x = [1, 2, 3, 4, 5]
+
+with open("temp.txt", "w") as f:
+    print(", ".join(map(str, x)), file=f)
+
+with open("temp.txt", "r") as f:
+    y = [int(i) for i in f.read().split(", ")]
+
+print(x, y, x == y)
+```
+
+Console output:
+
+```
+[1, 2, 3, 4, 5] [1, 2, 3, 4, 5] True
 ```
 
 ## Writing to a file in C
@@ -58,7 +82,7 @@ int main(int argc, char *argv[]) {
 }
 ```
 
-## Writing to a text file in Matlab
+## Writing to a file in Matlab
 
 Below is a code snippet for writing to a file in Matlab.
 
