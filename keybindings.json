@@ -54,6 +54,10 @@
         "command": "revealFileInOS",
     },
     {
+        "key": "ctrl+alt+r",
+        "command": "workbench.files.action.showActiveFileInExplorer",
+    },
+    {
         "key": "shift+alt+t",
         "command": "openInTerminal",
     },
