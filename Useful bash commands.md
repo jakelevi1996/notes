@@ -4,7 +4,7 @@ This is just a random collection of commands which are useful in Bash. This Gist
 
 ## Change users using `su`
 
-To change to the root user, use the command `sudo su`. This can alleviate some permission problems that are not solved even by using the `sudo` command. To return to the previous user, either use the command `sudo <username>`, or just use the command `exit`. EG:
+To change to the root user, use the command `sudo su`. This can alleviate some permission problems that are not solved even by using the `sudo` command. To return to the previous user, either use the command `sudo <username>`, or just use the command `exit`, EG:
 
 ```
 $ tail -n1 /etc/iproute2/rt_tables
