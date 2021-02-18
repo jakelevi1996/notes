@@ -30,7 +30,7 @@ Therefore, `-rw-r--r--` says that this is a regular file, which is readable and 
 
 ## Changing access permissions using `chmod`
 
-Use `chmod` ("change mode") to change the access permissions of a file or folder. As described in the [`chmod` man page](https://ss64.com/bash/chmod.html), the access permissions can be specified using letters (as described above) or in octal.
+Use `chmod` ("change mode") to change the access permissions of a file or folder. As described in the [`chmod` man page](https://ss64.com/bash/chmod.html), the access permissions can be specified using letters (as described above in "Finding access permissions using `stat`") or in octal.
 
 Alternatively, `chmod` can be used in symbolic mode, EG `chmod u+x file` to make a file executable by the user/owner, `chmod a+r file` to allow read permission to everyone, `chmod a-x file` to deny execute permission to everyone, and `chmod go+rw file` to make a file readable and writable by the group and others (these examples are taken from the [`chmod` man page](https://ss64.com/bash/chmod.html)).
 
