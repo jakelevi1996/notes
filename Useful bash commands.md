@@ -2,6 +2,36 @@
 
 This is just a random collection of commands which are useful in Bash. This Gist is expected to grow over time (until I have mastered the whole of Bash). Another useful resource is this [list of Unix commands on Wikipedia](https://en.wikipedia.org/wiki/List_of_Unix_commands#List). Hyperlinked bash commands in general lead to relevant Man (manual) pages.
 
+## Finding and changing access mode
+
+Use the `stat` command to find the status of a file, including its permissions, EG:
+
+```
+$ stat /etc/iproute2/rt_tables
+  File: /etc/iproute2/rt_tables
+  Size: 87              Blocks: 0          IO Block: 512    regular file
+Device: 2h/2d   Inode: 1125899908643251  Links: 1
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-05-21 15:43:05.544609577 +0100
+Modify: 2018-01-29 16:08:52.000000000 +0000
+Change: 2020-02-06 15:48:13.093754700 +0000
+ Birth: -
+```
+
+For the permissions (next to `access`):
+- As described in [Unix file types on Wikipedia](https://en.wikipedia.org/wiki/Unix_file_types):
+  - The first character describes the file type
+- As described in the [`chmod` man page](https://ss64.com/bash/chmod.html):
+  - The next three characters (characters 2-4) describe read/write/execute permissions for the user who owns the file
+  - The next three characters (characters 5-7) describe read/write/execute permissions for other users in the file's group
+  - The next three characters (characters 8-10) describe read/write/execute permissions for other users NOT in the file's group
+
+Therefore, `-rw-r--r--` says that this is a regular file, which is readable and writeable for the user who owns the file, and readable for everyone else.
+
+Use `chmod` ("change mode") to change the access permissions of a file or folder. As described in the [`chmod` man page](https://ss64.com/bash/chmod.html), the access permissions can be specified using letters (as described above) or in octal.
+
+Alternatively, `chmod` can be used in symbolic mode, EG `chmod u+x file` to make a file executable by the user/owner, `chmod a+r file` to allow read permission to everyone, `chmod a-x file` to deny execute permission to everyone, and `chmod go+rw file` to make a file readable and writable by the group and others.
+
 ## Recursively find word counts of all files with a particular file ending
 
 The following command can be used to recursively find line counts of all files with a particular file ending (in this case `.py` for Python), excluding all files in the `venv` directory (or more specifically, any files containing the substring `venv` in their path). This is achieved by using a `$` character in the regular expression to match a line-ending, and using `\` to escape the `.` character. The sum of the line counts for all matching words is displaying at the bottom:
@@ -385,10 +415,6 @@ To add a new directory to the path ([source](https://unix.stackexchange.com/ques
 ```bash
 PATH=$PATH:~/new/dir
 ```
-
-## Changing access mode
-
-Use `chmod` ("change mode") to change the access of a file or folder. The 3-digit octal number which follows `chmod` and precedes the file/folder which is being modified decides whether reading, writing, and execution is available to the user (the owner that created the file/folder), the group (the users from group that owner is member) and other (all other users) ([source](https://superuser.com/questions/295591/what-is-the-meaning-of-chmod-666)).
 
 ## Viewing the Linux distribution details
 
