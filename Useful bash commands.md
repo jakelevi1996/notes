@@ -2,6 +2,23 @@
 
 This is just a random collection of commands which are useful in Bash. This Gist is expected to grow over time (until I have mastered the whole of Bash). Another useful resource is this [list of Unix commands on Wikipedia](https://en.wikipedia.org/wiki/List_of_Unix_commands#List). Hyperlinked bash commands in general lead to relevant Man (manual) pages.
 
+## Change users using `su`
+
+To change to the root user, use the command `sudo su`. This can alleviate some permission problems that are not solved even by using the `sudo` command. To return to the previous user, either use the command `sudo <username>`, or just use the command `exit`. EG:
+
+```
+$ tail -n1 /etc/iproute2/rt_tables
+103 vlan3
+$ sudo echo "105 vlan5" >> /etc/iproute2/rt_tables
+bash: /etc/iproute2/rt_tables: Permission denied
+$ sudo su
+root# echo "105 vlan5" >> /etc/iproute2/rt_tables
+root# exit
+exit
+$ tail -n1 /etc/iproute2/rt_tables
+105 vlan5
+```
+
 ## Finding access permissions using `stat`
 
 Use the `stat` command to find the status of a file, including its access permissions, EG:
