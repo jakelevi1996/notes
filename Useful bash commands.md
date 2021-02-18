@@ -2,9 +2,9 @@
 
 This is just a random collection of commands which are useful in Bash. This Gist is expected to grow over time (until I have mastered the whole of Bash). Another useful resource is this [list of Unix commands on Wikipedia](https://en.wikipedia.org/wiki/List_of_Unix_commands#List). Hyperlinked bash commands in general lead to relevant Man (manual) pages.
 
-## Finding and changing access mode
+## Finding access permissions using `stat`
 
-Use the `stat` command to find the status of a file, including its permissions, EG:
+Use the `stat` command to find the status of a file, including its access permissions, EG:
 
 ```
 $ stat /etc/iproute2/rt_tables
@@ -28,9 +28,11 @@ For the permissions (next to `access`):
 
 Therefore, `-rw-r--r--` says that this is a regular file, which is readable and writeable for the user who owns the file, and readable for everyone else.
 
+## Changing access permissions using `chmod`
+
 Use `chmod` ("change mode") to change the access permissions of a file or folder. As described in the [`chmod` man page](https://ss64.com/bash/chmod.html), the access permissions can be specified using letters (as described above) or in octal.
 
-Alternatively, `chmod` can be used in symbolic mode, EG `chmod u+x file` to make a file executable by the user/owner, `chmod a+r file` to allow read permission to everyone, `chmod a-x file` to deny execute permission to everyone, and `chmod go+rw file` to make a file readable and writable by the group and others.
+Alternatively, `chmod` can be used in symbolic mode, EG `chmod u+x file` to make a file executable by the user/owner, `chmod a+r file` to allow read permission to everyone, `chmod a-x file` to deny execute permission to everyone, and `chmod go+rw file` to make a file readable and writable by the group and others (these examples are taken from the [`chmod` man page](https://ss64.com/bash/chmod.html)).
 
 ## Recursively find word counts of all files with a particular file ending
 
