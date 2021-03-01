@@ -96,7 +96,7 @@ dos2unix name_of_shell_script.sh
 ./name_of_shell_script.sh
 ```
 
-## Extract a `.tar.gz` file
+## Extract (unzip) a `.tar.gz` file
 
 As described [here](https://askubuntu.com/a/25348/1078405):
 
