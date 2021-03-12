@@ -91,6 +91,7 @@ $ realpath ~
 As described [here](https://askubuntu.com/a/1046371/1078405), this is because of a carriage return used in DOS-style line endings. The problem can be solved as follows:
 
 ```
+sudo apt-get update
 sudo apt-get install dos2unix
 dos2unix name_of_shell_script.sh
 ./name_of_shell_script.sh
