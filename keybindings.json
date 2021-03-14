@@ -1,11 +1,6 @@
 // Place your key bindings in this file to overwrite the defaults
 [
     {
-        "key": "alt+r",
-        "command": "python.execInTerminal",
-        "when": "editorTextFocus"
-    },
-    {
         "key": "alt+c",
         "command": "editor.action.commentLine",
         "when": "editorTextFocus && !editorReadonly"
@@ -50,6 +45,11 @@
         "command": "workbench.action.terminal.kill"
     },
     {
+        "key": "alt+r",
+        "command": "python.execInTerminal",
+        "when": "editorTextFocus"
+    },
+    {
         "key": "shift+alt+r",
         "command": "revealFileInOS",
     },
@@ -60,6 +60,10 @@
     {
         "key": "shift+alt+t",
         "command": "openInTerminal",
+    },
+    {
+        "key": "alt+enter",
+        "command": "editor.action.selectHighlights",
     },
     {
         "key": "ctrl+f5",
