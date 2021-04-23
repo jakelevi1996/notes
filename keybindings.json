@@ -62,8 +62,24 @@
         "command": "openInTerminal",
     },
     {
-        "key": "alt+enter",
-        "command": "editor.action.selectHighlights",
+        "key": "alt+n",
+        "command": "workbench.action.editor.nextChange",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "alt+n",
+        "command": "workbench.action.compareEditor.nextChange",
+        "when": "textCompareEditorVisible"
+    },
+    {
+        "key": "alt+b",
+        "command": "workbench.action.editor.previousChange",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "alt+b",
+        "command": "workbench.action.compareEditor.previousChange",
+        "when": "textCompareEditorVisible"
     },
     {
         "key": "ctrl+f5",
