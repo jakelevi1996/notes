@@ -32,5 +32,14 @@
     "matlab.mlintpath": "C:/Program Files/MATLAB/R2020a/bin/win64/mlint.exe",
     // "diffEditor.ignoreTrimWhitespace": false,
     "diffEditor.ignoreTrimWhitespace": true,
-    "workbench.editor.wrapTabs": true
+    "workbench.editor.wrapTabs": true,
+    "workbench.editorAssociations": [
+        {
+            "viewType": "jupyter.notebook.ipynb",
+            "filenamePattern": "*.ipynb"
+        }
+    ],
+    "gitlens.hovers.currentLine.over": "line",
+    "gitlens.currentLine.enabled": false,
+    "gitlens.codeLens.enabled": false,
 }
