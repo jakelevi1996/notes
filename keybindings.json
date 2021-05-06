@@ -82,6 +82,16 @@
         "when": "textCompareEditorVisible"
     },
     {
+        "key": "shift+alt+down",
+        "command": "editor.action.copyLinesDownAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "shift+alt+up",
+        "command": "editor.action.copyLinesUpAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
         "key": "ctrl+f5",
         "command": "workbench.action.reloadWindow",
         "when": "editorTextFocus"
