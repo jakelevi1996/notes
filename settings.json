@@ -42,4 +42,7 @@
     "gitlens.hovers.currentLine.over": "line",
     "gitlens.currentLine.enabled": false,
     "gitlens.codeLens.enabled": false,
+    "files.exclude": {
+        ".git": true
+    }
 }
