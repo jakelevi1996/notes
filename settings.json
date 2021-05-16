@@ -44,5 +44,7 @@
     "gitlens.codeLens.enabled": false,
     "files.exclude": {
         ".git": true
-    }
+    },
+    "search.useGlobalIgnoreFiles": false,
+    "search.useIgnoreFiles": false
 }
