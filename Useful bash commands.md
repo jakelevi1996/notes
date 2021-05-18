@@ -2,6 +2,21 @@
 
 This is just a random collection of commands which are useful in Bash. This Gist is expected to grow over time (until I have mastered the whole of Bash). Another useful resource is this [list of Unix commands on Wikipedia](https://en.wikipedia.org/wiki/List_of_Unix_commands#List). Hyperlinked bash commands in general lead to relevant Man (manual) pages.
 
+## Serial communication using `minicom`
+
+To install `minicom`:
+
+```
+sudo apt-get update
+sudo apt install minicom
+```
+
+To use `minicom` with a device whose name is `$DEVICE_NAME` in the `/dev/` folder and with a baud-rate of `$BAUD_RATE`:
+
+```
+minicom --device /dev/$DEVICE_NAME --baudrate $BAUD_RATE
+```
+
 ## Change users using `su`
 
 To change to the root user, use the command `sudo su`. This can alleviate some permission problems that are not solved even by using the `sudo` command. To return to the previous user, either use the command `sudo <username>`, or just use the command `exit`, EG:
