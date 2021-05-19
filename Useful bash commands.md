@@ -2,6 +2,30 @@
 
 This is just a random collection of commands which are useful in Bash. This Gist is expected to grow over time (until I have mastered the whole of Bash). Another useful resource is this [list of Unix commands on Wikipedia](https://en.wikipedia.org/wiki/List_of_Unix_commands#List). Hyperlinked bash commands in general lead to relevant Man (manual) pages.
 
+## Use stdout from one command as a command-line argument in another
+
+The stdout from one command can be used as a command-line argument in another using `$()` notation, as shown in the following examples:
+
+```
+$ echo $(ls -p)
+gui_testing_data/ gui_test.py package.json package-lock.json README.md requirements.txt src/
+$ wc -l $(ls -p | grep -v "/")
+    39 gui_test.py
+    24 package.json
+  9671 package-lock.json
+     9 README.md
+     0 requirements.txt
+  9743 total
+```
+
+The next example automatically finds the name of the serial device to use with `minicom`:
+
+```
+$ minicom --device $(ls -d /dev/serial/by-id/*) --baudrate 115200
+```
+
+(Note that the `-p` flag in `ls -p` is used "to append / indicator to directories", so that this can be piped into the `grep -v "/"` which removes all directories from the list, and the `-d` flag is used along with the `*` wildcard to print the full path to the serial device, instead of the relative path to `/dev/serial/by-id/`)
+
 ## Serial communication using `minicom`
 
 To install `minicom`:
