@@ -26,6 +26,7 @@
     -   [What are the best ways to automate a GDB debugging session?](https://stackoverflow.com/questions/10748501/what-are-the-best-ways-to-automate-a-gdb-debugging-session)
     -   [Gdb dump memory in specific region, save formatted output into a file](https://stackoverflow.com/questions/16095948/gdb-dump-memory-in-specific-region-save-formatted-output-into-a-file)
     -   [Gdb print to file instead of stdout](https://stackoverflow.com/questions/5941158/gdb-print-to-file-instead-of-stdout)
+    -   [Printing all global variables/local variables](https://stackoverflow.com/questions/6261392/printing-all-global-variables-local-variables)
 
 ## Compiling and opening a program in `gdb`
 
