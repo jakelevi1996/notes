@@ -119,6 +119,7 @@ Full command | Abbreviation | Description
 `dump memory filename start_addr end_addr` | | Copy binary data starting at `start_addr` and ending at `end_addr` (not including `end_addr`) into a binary file called `filename`. `start_addr` and `end_addr` can refer to variables and use array and pointer operators, EG `dump memory x.bin x &x[20]`. See section [Using `dump` (and loading a binary file from Python)](#using-dump-and-loading-a-binary-file-from-python) below for an example of how to load this memory in Python
 `dump value filename expr` | | Copy binary data starting from `expr` into a binary file called `filename`. If `expr` is the name of an array, then the whole array is copied, EG `dump value x.bin x` is the same as `dump memory x.bin x &x[20]` if x is an array of length 20
 `restore filename binary bias start end` | | Restore the contents of binary file `filename` into memory
+`set max-value-size unlimited` | | Remove the limit on the maximum value size. This can be useful when trying to use the `dump` command on a value which is too big, in which case an error message will be displayed which says `value requires 115202 bytes, which is more than max-value-size` (or similar)
 `set logging on` | | Enable logging
 `set logging file filename` | | Tell `gdb` to store logging outputs in a file called `filename` (without calling this command, the default filename for logging outputs is `gdb.txt`)
 `quit` | | Exit `gdb`
@@ -238,6 +239,8 @@ $ gdb temp --command=gdb_script.cmd -batch-silent`
 ```
 
 See [sourceware.org](https://sourceware.org/) for more information on [invoking GDB](https://sourceware.org/gdb/current/onlinedocs/gdb/Invoking-GDB.html#Invoking-GDB), [file options](https://sourceware.org/gdb/current/onlinedocs/gdb/File-Options.html#File-Options), and [mode options](https://sourceware.org/gdb/current/onlinedocs/gdb/Mode-Options.html#Mode-Options).
+
+`gdb` command files can include comments (which are not executed) by starting a line with `#`.
 
 ### Open `gdb` with a core file
 
