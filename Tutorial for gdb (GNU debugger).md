@@ -113,6 +113,9 @@ Full command | Abbreviation | Description
 `watch x` | | Place a watchpoint on variable `x`, meaning that the program will pause whenever the value of `x` is modified, and the old and new values of `x` will be printed (if `x` is an array, then the program will pause and print out the old and new values of the whole array whenever any element of `x` is modified)
 `condition N COND` | | Specify breakpoint number `N` to break only if `COND` is true (this can also be achieved using `break` in a single command using the syntax `break file.c:N if COND`)
 `info breakpoints` | | Display information about all declared breakpoints
+`info variables` | | List all global and static variable names
+`info locals` | | List local variables of current stack frame (names and values), including static variables in that function.
+`info args` | | List arguments of the current stack frame (names and values)
 `delete` | | Delete all breakpoints that have been set
 `delete n` | | Delete breakpoint number `n`
 `clear function_name` | | Deletes the breakpoint set in that function
