@@ -13,6 +13,7 @@
     - [Scripting `gdb` from the command line](#scripting-gdb-from-the-command-line)
     - [Open `gdb` with a core file](#open-gdb-with-a-core-file)
     - [Attach `gdb` to a running process](#attach-gdb-to-a-running-process)
+    - [Printing `struct` types](#printing-struct-types)
 
 ## References
 
@@ -107,7 +108,7 @@ Full command | Abbreviation | Description
 | | | [No command] Repeat the previous command (useful if repeating the same command repeatedly, EG stepping through a loop)
 `list` | | Print the current line, and a few lines above and below
 `backtrace` | `bt` | List all the function calls in the stack frame at the current location
-`print x` | | Print the value of the variable `x`. If it is an array, the whole array is printed. The `->`, `*` and `.` operators can be used in case `x` is a struct/pointer/pointer to a struct, or even print the entire contents of the struct
+`print x` | | Print the value of the variable `x`. If it is an array, the whole array is printed. The `->`, `*` and `.` operators can be used in case `x` is a struct/pointer/pointer to a struct, or even print the entire contents of the struct (see section [Printing `struct` types](#printing-struct-types) below for an example of printing out struct types)
 `print/x x` | | Print the value of the variable `x` in hexadecimal
 `x addr` | | Print value at memory location `addr`
 `x/nfu addr` | | Examine memory in the specified format (see [sourceware.org: "Examining Memory"](https://sourceware.org/gdb/current/onlinedocs/gdb/Memory.html))
@@ -233,7 +234,7 @@ $ gdb temp --command=gdb_script.cmd
 Batch mode can be used to disable pagination and exit once the command files have finished processing with zero/nonzero status depending on if an error occurs in executing the GDB commands (meaning `quit` does not have to be included at the end of `gdb_script.cmd`) using the `-batch` command line argument:
 
 ```
-$ gdb temp --command=gdb_script.cmd -batch`
+$ gdb temp --command=gdb_script.cmd -batch
 ```
 
 To run in batch mode and also prevent all output from `gdb` to `stdout`, use the `-batch-silent` command line argument:
@@ -272,3 +273,77 @@ gdb -p 1234
 With option `-p` you can omit the program filename.
 
 Taking advantage of the second command-line argument requires a fairly complete operating system; when you use `gdb` as a remote debugger attached to a bare board, there may not be any notion of "process", and there is often no way to get a core dump. `gdb` will warn you if it is unable to attach or to read core dumps.
+
+### Printing `struct` types
+
+`struct` type variables can be nicely printed by `gdb`. Consider the following C program:
+
+```c
+#include <stdio.h>
+
+typedef struct {
+    int x;
+    int y;
+    char* name;
+    float price;
+} C;
+
+C init_c(int x, int y, char* name, float price) {
+    C c = {
+        .x = x,
+        .y = y,
+        .name = name,
+        .price = price
+    };
+    return c;
+}
+
+int main() {
+    C c = init_c(3, 4, "c struct", 3.99);
+    C d = init_c(5, 6, "d struct", 4.99);
+    C e = init_c(7, 8, "e struct", 5.99);
+    printf("3 structs have been created\n");
+}
+```
+
+The following `gdb` script can be used to run to the final `printf` statement, and then nicely print out the fields of the `struct` variables:
+
+```
+break main
+break init_c
+run
+continue
+continue
+continue
+finish
+print c
+print d
+print e
+```
+
+The following commands can be used to compile the program, open it in the debugger, and execute the debugging script, producing the following output:
+
+```
+$ gcc .temp.c -o temp -g
+$ gdb temp --command=gdb_script.cmd -batch
+Breakpoint 1 at 0x11c3: file .temp.c, line 37.
+Breakpoint 2 at 0x1169: file .temp.c, line 27.
+
+Breakpoint 1, main () at .temp.c:37
+37      int main() {
+
+Breakpoint 2, init_c (x=0, y=0, name=0x0, price=0) at .temp.c:27
+27      C init_c(int x, int y, char* name, float price) {
+
+Breakpoint 2, init_c (x=3, y=4, name=0x555555556004 "c struct", price=3.99000001) at .temp.c:27
+27      C init_c(int x, int y, char* name, float price) {
+
+Breakpoint 2, init_c (x=5, y=6, name=0x55555555600d "d struct", price=4.98999977) at .temp.c:27
+27      C init_c(int x, int y, char* name, float price) {
+main () at .temp.c:48
+48          printf("3 structs have been created\n");
+Value returned is $1 = {x = 7, y = 8, name = 0x555555556016 "e struct", price = 5.98999977}
+$2 = {x = 3, y = 4, name = 0x555555556004 "c struct", price = 3.99000001}
+$3 = {x = 5, y = 6, name = 0x55555555600d "d struct", price = 4.98999977}
+$4 = {x = 7, y = 8, name = 0x555555556016 "e struct", price = 5.98999977}
+```
