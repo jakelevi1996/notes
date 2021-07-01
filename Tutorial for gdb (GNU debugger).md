@@ -239,7 +239,7 @@ $ gdb temp --command=gdb_script.cmd -batch`
 To run in batch mode and also prevent all output from `gdb` to `stdout`, use the `-batch-silent` command line argument:
 
 ```
-$ gdb temp --command=gdb_script.cmd -batch-silent`
+$ gdb temp --command=gdb_script.cmd -batch-silent
 ```
 
 See [sourceware.org](https://sourceware.org/) for more information on [invoking GDB](https://sourceware.org/gdb/current/onlinedocs/gdb/Invoking-GDB.html#Invoking-GDB), [file options](https://sourceware.org/gdb/current/onlinedocs/gdb/File-Options.html#File-Options), and [mode options](https://sourceware.org/gdb/current/onlinedocs/gdb/Mode-Options.html#Mode-Options).
