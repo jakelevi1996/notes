@@ -108,8 +108,11 @@ Full command | Abbreviation | Description
 | | | [No command] Repeat the previous command (useful if repeating the same command repeatedly, EG stepping through a loop)
 `list` | | Print the current line, and a few lines above and below
 `backtrace` | `bt` | List all the function calls in the stack frame at the current location
-`print x` | | Print the value of the variable `x`. If it is an array, the whole array is printed. The `->`, `*` and `.` operators can be used in case `x` is a struct/pointer/pointer to a struct, or even print the entire contents of the struct (see section [Printing `struct` types](#printing-struct-types) below for an example of printing out struct types)
-`print/x x` | | Print the value of the variable `x` in hexadecimal
+`print x` | `p x` | Print the value of the variable `x`. If it is an array, the whole array is printed. The `->`, `*` and `.` operators can be used in case `x` is a struct/pointer/pointer to a struct, or even print the entire contents of the struct (see section [Printing `struct` types](#printing-struct-types) below for an example of printing out struct types)
+`print/x x` | `p/x x` | Print the value of the variable `x` in hexadecimal
+`print x[0]@4` | `p x[0]@4` | Print the first 4 values in the array pointed to by `x`. This is equivalent to the `gdb` command `print *x@4`. For more information, see [10.4 Artificial Arrays on sourceware.org](https://sourceware.org/gdb/current/onlinedocs/gdb/Arrays.html)
+`ptype x` | | Print a detailed description of the type `x` (EG a `typdef struct`), or the type of a variable `x`, or the type of an expression `x`. Contrary to `whatis`, `ptype` always unrolls any typedefs in its argument declaration, whether the argument is a variable, expression, or a data type
+`whatis x` | | Print the data type of `x`, which can be either an expression or a name of a data type. With no argument, print the data type of `$`, the last value in the value history. If `x` is a variable or an expression, `whatis` prints its literal type as it is used in the source code. If `x` is a type name that was defined using `typedef`, whatis unrolls only one level of that `typedef`.
 `x addr` | | Print value at memory location `addr`
 `x/nfu addr` | | Examine memory in the specified format (see [sourceware.org: "Examining Memory"](https://sourceware.org/gdb/current/onlinedocs/gdb/Memory.html))
 `watch x` | | Place a watchpoint on variable `x`, meaning that the program will pause whenever the value of `x` is modified, and the old and new values of `x` will be printed (if `x` is an array, then the program will pause and print out the old and new values of the whole array whenever any element of `x` is modified)
