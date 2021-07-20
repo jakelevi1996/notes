@@ -8,9 +8,9 @@
   - [Compiling and opening a program in `gdb`](#compiling-and-opening-a-program-in-gdb)
   - [Useful `gdb` commands](#useful-gdb-commands)
   - [Examples](#examples)
+    - [Scripting `gdb` from the command line](#scripting-gdb-from-the-command-line)
     - [Using `backtrace`/`bt`](#using-backtracebt)
     - [Using `dump` (and loading a binary file from Python)](#using-dump-and-loading-a-binary-file-from-python)
-    - [Scripting `gdb` from the command line](#scripting-gdb-from-the-command-line)
     - [Open `gdb` with a core file](#open-gdb-with-a-core-file)
     - [Attach `gdb` to a running process](#attach-gdb-to-a-running-process)
     - [Printing `struct` types](#printing-struct-types)
@@ -140,6 +140,46 @@ Full command | Abbreviation | Description
 
 ## Examples
 
+### Scripting `gdb` from the command line
+
+To automatically run a series of commands in `gdb` without having to enter them manually one by one, start of by saving the commands in a text file, separated by new lines, called `gdb_script.cmd`:
+
+```
+file temp
+break f
+run
+backtrace
+finish
+continue
+finish
+backtrace
+dump memory x.bin x &x[20]
+quit
+```
+
+To compile `temp.c`, open it in `gdb`, and run the commands in `gdb_script.cmd`, use the following commands in a bash terminal:
+
+```
+$ gcc temp.c -o temp -g
+$ gdb temp --command=gdb_script.cmd
+```
+
+Batch mode can be used to disable pagination and exit once the command files have finished processing with zero/nonzero status depending on if an error occurs in executing the GDB commands (meaning `quit` does not have to be included at the end of `gdb_script.cmd`) using the `-batch` command line argument:
+
+```
+$ gdb temp --command=gdb_script.cmd -batch
+```
+
+To run in batch mode and also prevent all output from `gdb` to `stdout`, use the `-batch-silent` command line argument:
+
+```
+$ gdb temp --command=gdb_script.cmd -batch-silent
+```
+
+See [sourceware.org](https://sourceware.org/) for more information on [invoking GDB](https://sourceware.org/gdb/current/onlinedocs/gdb/Invoking-GDB.html#Invoking-GDB), [file options](https://sourceware.org/gdb/current/onlinedocs/gdb/File-Options.html#File-Options), and [mode options](https://sourceware.org/gdb/current/onlinedocs/gdb/Mode-Options.html#Mode-Options).
+
+`gdb` command files can include comments (which are not executed) by starting a line with `#`.
+
 ### Using `backtrace`/`bt`
 
 ```
@@ -215,46 +255,6 @@ x = struct.unpack("20i", b)
 print(x)
 # >>> (100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119)
 ```
-
-### Scripting `gdb` from the command line
-
-To automatically run a series of commands in `gdb` without having to enter them manually one by one, start of by saving the commands in a text file, separated by new lines, called `gdb_script.cmd`:
-
-```
-file temp
-break f
-run
-backtrace
-finish
-continue
-finish
-backtrace
-dump memory x.bin x &x[20]
-quit
-```
-
-To compile `temp.c`, open it in `gdb`, and run the commands in `gdb_script.cmd`, use the following commands in a bash terminal:
-
-```
-$ gcc temp.c -o temp -g
-$ gdb temp --command=gdb_script.cmd
-```
-
-Batch mode can be used to disable pagination and exit once the command files have finished processing with zero/nonzero status depending on if an error occurs in executing the GDB commands (meaning `quit` does not have to be included at the end of `gdb_script.cmd`) using the `-batch` command line argument:
-
-```
-$ gdb temp --command=gdb_script.cmd -batch
-```
-
-To run in batch mode and also prevent all output from `gdb` to `stdout`, use the `-batch-silent` command line argument:
-
-```
-$ gdb temp --command=gdb_script.cmd -batch-silent
-```
-
-See [sourceware.org](https://sourceware.org/) for more information on [invoking GDB](https://sourceware.org/gdb/current/onlinedocs/gdb/Invoking-GDB.html#Invoking-GDB), [file options](https://sourceware.org/gdb/current/onlinedocs/gdb/File-Options.html#File-Options), and [mode options](https://sourceware.org/gdb/current/onlinedocs/gdb/Mode-Options.html#Mode-Options).
-
-`gdb` command files can include comments (which are not executed) by starting a line with `#`.
 
 ### Open `gdb` with a core file
 
@@ -418,6 +418,3 @@ run
 Note that, if there were any other `gdb` commands in `gdb_commands.txt` after `continue` and before `end`, then they would not be executed. More generally, as desribed in [Breakpoint Command Lists](https://sourceware.org/gdb/current/onlinedocs/gdb/Break-Commands.html) on [sourceware.org](https://sourceware.org/):
 
 > Any other commands in the command list, after a command that resumes execution, are ignored. This is because any time you resume execution (even with a simple next or step), you may encounter another breakpoint - which could have its own command list, leading to ambiguities about which list to execute.
-
-
-
