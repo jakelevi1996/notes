@@ -103,7 +103,7 @@ Full command | Abbreviation | Description
 `continue` | `c` | Continue running until the end of the program/the program crashes/the next breakpoint/the next watchpoint
 `next` | `n` | Execute the current command, and move to the next command in the program (if the current command is a function call, then execute the whole function and return from it)
 `step` | `s` | Step through the current command, but if this command is a function call, then go to the first line of that function
-`finish` | | Run until the current function is finished
+`finish` | | Run until the current function is finished and has returned
 `until` | `u` | This is like `n`, except that if we are in a loop, `u` will continue execution until the loop is exited
 | | | [No command] Repeat the previous command (useful if repeating the same command repeatedly, EG stepping through a loop)
 `list` | | Print the current line, and a few lines above and below
