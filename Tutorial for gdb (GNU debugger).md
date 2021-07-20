@@ -14,6 +14,7 @@
     - [Open `gdb` with a core file](#open-gdb-with-a-core-file)
     - [Attach `gdb` to a running process](#attach-gdb-to-a-running-process)
     - [Printing `struct` types](#printing-struct-types)
+    - [Performing a list of commands when a breakpoint is reached using `commands`](#performing-a-list-of-commands-when-a-breakpoint-is-reached-using-commands)
 
 ## References
 
@@ -355,3 +356,68 @@ $2 = {x = 3, y = 4, name = 0x555555556004 "c struct", price = 3.99000001}
 $3 = {x = 5, y = 6, name = 0x55555555600d "d struct", price = 4.98999977}
 $4 = {x = 7, y = 8, name = 0x555555556016 "e struct", price = 5.98999977}
 ```
+
+### Performing a list of commands when a breakpoint is reached using `commands`
+
+A list of commands can be run automatically when a breakpoint is reached using the `gdb` command `commands`. Consider the following C program, `temp.c`:
+
+```c
+#include "stdio.h"
+
+void f(int x) {
+    printf("The value of x is %i\n", x);
+}
+
+void main() {
+    int x, y, i;
+
+    for (i = 0; i < 10; i++) {
+        x = i * i;
+        y = x + 3;
+        f(x);
+    }
+}
+```
+
+Say for example it is desirable to print the value of `y` each time `f` is called using `gdb`, without stopping at each breakpoint and manually continuing. This can be achieved using the following `gdb` commands, saved in a file called `gdb_commands.txt`:
+
+```
+break f
+
+commands
+up
+printf "y = %i\n", y
+continue
+end
+
+run
+```
+
+The following terminal commands can be used to compile `temp.c` with debugging symbols, and run the `gdb` commands in `gdb_commands.txt`:
+
+```
+$ gcc -g .temp.c -o temp
+$ gdb ./temp --command=gdb_commands.txt -batch
+```
+
+It is possible to avoid printing some of the statements that are printed by `gdb` when the breakpoint is reached and when changing stack frames. As described in [Breakpoint Command Lists](https://sourceware.org/gdb/current/onlinedocs/gdb/Break-Commands.html) on [sourceware.org](https://sourceware.org/), if the first command you specify in a command list is `silent`, the usual message about stopping at a breakpoint is not printed. This may be desirable for breakpoints for which the intention is to print a specific message and then continue. Also, `up-silently` can be used instead of `up` to move up one stack frame without printing information about the stack frame. With these modifications, the new `gdb_commands.txt` looks like this:
+
+```
+break f
+
+commands
+silent
+up-silent
+printf "y = %i\n", y
+continue
+end
+
+run
+```
+
+Note that, if there were any other `gdb` commands in `gdb_commands.txt` after `continue` and before `end`, then they would not be executed. More generally, as desribed in [Breakpoint Command Lists](https://sourceware.org/gdb/current/onlinedocs/gdb/Break-Commands.html) on [sourceware.org](https://sourceware.org/):
+
+> Any other commands in the command list, after a command that resumes execution, are ignored. This is because any time you resume execution (even with a simple next or step), you may encounter another breakpoint - which could have its own command list, leading to ambiguities about which list to execute.
+
+
+
