@@ -23,6 +23,7 @@
 -   [sourceware.org](https://sourceware.org/):
     -   [Examining Memory](https://sourceware.org/gdb/current/onlinedocs/gdb/Memory.html)
     -   [Copy Between Memory and a File](https://sourceware.org/gdb/current/onlinedocs/gdb/Dump_002fRestore-Files.html)
+    -   [Breakpoint Command Lists](https://sourceware.org/gdb/current/onlinedocs/gdb/Break-Commands.html)
 -   Stack Overflow questions:
     -   [What are the best ways to automate a GDB debugging session?](https://stackoverflow.com/questions/10748501/what-are-the-best-ways-to-automate-a-gdb-debugging-session)
     -   [Gdb dump memory in specific region, save formatted output into a file](https://stackoverflow.com/questions/16095948/gdb-dump-memory-in-specific-region-save-formatted-output-into-a-file)
@@ -108,6 +109,9 @@ Full command | Abbreviation | Description
 | | | [No command] Repeat the previous command (useful if repeating the same command repeatedly, EG stepping through a loop)
 `list` | | Print the current line, and a few lines above and below
 `backtrace` | `bt` | List all the function calls in the stack frame at the current location
+`frame N` | `f N` | Examine stack frame `N`, which gives access to the local variables in that stack frame. Frame zero is the innermost (currently executing) frame, frame one is the frame that called the innermost one, and so on. The highest level frame is usually the one for the `main` function. The frame numbers correspond to the numbers printed by the `backtrace` function.
+`up N` | | Move `N` frames up the stack. `N` defaults to 1.
+`down N` | | Move `N` frames down the stack. `N` defaults to 1.
 `print x` | `p x` | Print the value of the variable `x`. If it is an array, the whole array is printed. The `->`, `*` and `.` operators can be used in case `x` is a struct/pointer/pointer to a struct, or even print the entire contents of the struct (see section [Printing `struct` types](#printing-struct-types) below for an example of printing out struct types)
 `print/x x` | `p/x x` | Print the value of the variable `x` in hexadecimal
 `print x[0]@4` | `p x[0]@4` | Print the first 4 values in the array pointed to by `x`. This is equivalent to the `gdb` command `print *x@4`. For more information, see [10.4 Artificial Arrays on sourceware.org](https://sourceware.org/gdb/current/onlinedocs/gdb/Arrays.html)
@@ -117,6 +121,7 @@ Full command | Abbreviation | Description
 `x/nfu addr` | | Examine memory in the specified format (see [sourceware.org: "Examining Memory"](https://sourceware.org/gdb/current/onlinedocs/gdb/Memory.html))
 `watch x` | | Place a watchpoint on variable `x`, meaning that the program will pause whenever the value of `x` is modified, and the old and new values of `x` will be printed (if `x` is an array, then the program will pause and print out the old and new values of the whole array whenever any element of `x` is modified)
 `condition N COND` | | Specify breakpoint number `N` to break only if `COND` is true (this can also be achieved using `break` in a single command using the syntax `break file.c:N if COND`)
+`commands N` | | Specify a list of commands to run when breakpoint `N` is reached. If `N` is omitted, then `commands` refers to the last breakpoint, watchpoint, or catchpoint set (not to the breakpoint most recently encountered). The commands themselves appear on the following lines. Type a line containing just `end` to terminate the commands. You can use breakpoint commands to start your program up again, EG by using the `continue` command, or `step`, or any other command that resumes execution. See [Breakpoint Command Lists](https://sourceware.org/gdb/current/onlinedocs/gdb/Break-Commands.html) for more.
 `info breakpoints` | | Display information about all declared breakpoints
 `info variables` | | List all global and static variable names
 `info locals` | | List local variables of current stack frame (names and values), including static variables in that function.
