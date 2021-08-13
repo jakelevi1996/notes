@@ -557,3 +557,20 @@ To view directory contents in a single column (as opposed to the default table v
 ```
 ls -1
 ```
+
+## Storing `git` credentials
+
+As stated in [this StackOverflow answer](https://stackoverflow.com/a/52298381/8477566) to the question entitled [Visual Studio Code always asking for git credentials](https://stackoverflow.com/q/34400272/8477566), a simple but non-ideal solution to the problem is to use the following command:
+
+```
+git config --global credential.helper store
+```
+
+Note that this method is unsafe, because the credentials are stored in plain text in the file `~/.git-credentials`, and these credentials can become compromised if the system becomes hacked. Another solution, as stated in [this answer](https://stackoverflow.com/a/34627954/8477566), is to use the `git` credential helper to store the credentials in memory with a timeout (default is 15 minutes), EG:
+
+```
+git config --global credential.helper 'cache --timeout=3600'
+# Set the cache to timeout after 1 hour (setting is in seconds)
+```
+
+Yet another solution, as stated in [this answer to a post on Reddit](https://www.reddit.com/r/vscode/comments/832xbj/how_to_stop_the_git_login_popup_in_vscode/dvf94cb?utm_source=share&utm_medium=web2x&context=3), is to use "Git Credential Manager Core (GCM Core)", as described in [these instructions](https://docs.github.com/en/get-started/getting-started-with-git/caching-your-github-credentials-in-git).
