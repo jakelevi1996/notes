@@ -594,3 +594,21 @@ As stated in [this StackOverflow answer](https://superuser.com/a/67766/1098000),
 ```
 echo <password> | sudo -S <command>
 ```
+
+## Sort `$PATH` and remove duplicates
+
+These Python commands can be used on Linux to organise `$PATH` into alphabetical order and remove duplicates, and print the result to `stdout`:
+
+```python
+import os
+
+path_list = os.getenv("PATH").split(":")
+no_final_slash = lambda s: s[:-1] if (s[-1] == "/") else s
+unique_path_set = set(no_final_slash(os.path.abspath(p)) for p in path_list)
+sorted_unique_path_list = sorted(unique_path_set, key=lambda s: s.lower())
+
+print("*** Separated by newlines ***")
+print("\n".join(sorted_unique_path_list))
+print("*** Separated by colons ***")
+print(":".join(sorted_unique_path_list))
+```
