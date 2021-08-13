@@ -581,6 +581,8 @@ Yet another solution, as stated in [this answer to a post on Reddit](https://www
 git config --global --unset credential.helper
 ```
 
+Note that the command `rm ~/.git-credentials` should also be used after the above command in order to delete the saved credentials.
+
 This answer also states that:
 
 > You may also need to do `git config --system --unset credential.helper` if this has been set in the system configuration file (for example, Git for Windows 2).
