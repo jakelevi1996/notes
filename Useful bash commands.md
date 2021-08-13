@@ -574,3 +574,13 @@ git config --global credential.helper 'cache --timeout=3600'
 ```
 
 Yet another solution, as stated in [this answer to a post on Reddit](https://www.reddit.com/r/vscode/comments/832xbj/how_to_stop_the_git_login_popup_in_vscode/dvf94cb?utm_source=share&utm_medium=web2x&context=3), is to use "Git Credential Manager Core (GCM Core)", as described in [these instructions](https://docs.github.com/en/get-started/getting-started-with-git/caching-your-github-credentials-in-git).
+
+[This StackOverflow answer](https://stackoverflow.com/a/15382950/8477566) provides instructrions for how to unset the `git` credentials, using the following command:
+
+```
+git config --global --unset credential.helper
+```
+
+This answer also states that:
+
+> You may also need to do `git config --system --unset credential.helper` if this has been set in the system configuration file (for example, Git for Windows 2).
