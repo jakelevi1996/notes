@@ -586,3 +586,11 @@ Note that the command `rm ~/.git-credentials` should also be used after the abov
 This answer also states that:
 
 > You may also need to do `git config --system --unset credential.helper` if this has been set in the system configuration file (for example, Git for Windows 2).
+
+## Automatically providing password to `sudo`
+
+As stated in [this StackOverflow answer](https://superuser.com/a/67766/1098000), `sudo` can be used with the `-S` switch, which causes `sudo` to read the password from `stdin`:
+
+```
+echo <password> | sudo -S <command>
+```
