@@ -1,6 +1,6 @@
 # Setting up a Gitlab CI runner on Ubuntu
 
-Sometimes it might be desirable to run CI jobs on a specific local PC instead of using using cloud computing resources, for example, in case specific hardware needs to be connected to the machine that will run the CI jobs. This Gist describes how to set up and configure a Gitlab runner on an Ubuntu PC.
+Sometimes it might be desirable to run CI jobs on a specific local PC instead of using using cloud computing resources, for example, in case specific hardware needs to be connected to the machine that will run the CI jobs. This Gist describes how to set up and configure a Gitlab runner on an Ubuntu PC or VM.
 
 Make sure `curl` is installed, using the following commands:
 
@@ -46,6 +46,7 @@ sudo gitlab-runner uninstall
 sudo gitlab-runner install --user custom_username
 sudo gitlab-runner start
 rm ~/.bash_logout
+sudo reboot
 ```
 
 ## Useful resources
