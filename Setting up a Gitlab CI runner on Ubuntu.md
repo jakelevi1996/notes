@@ -51,8 +51,9 @@ sudo reboot
 
 ## Useful resources
 
-- [Documentation for "GitLab Runner"](https://docs.gitlab.com/runner/)
+- [Documentation for "GitLab CI/CD"](https://docs.gitlab.com/ee/ci/)
 - [Documentation for "Pipeline schedules"](https://docs.gitlab.com/ee/ci/pipelines/schedules.html)
+- [Documentation for "GitLab Runner"](https://docs.gitlab.com/runner/)
 - ["Keyword reference for the .gitlab-ci.yml file"](https://docs.gitlab.com/ee/ci/yaml/)
 - Youtube tutorials by Valentin Despa:
   - ["Gitlab CI pipeline tutorial for beginners"](https://youtu.be/Jav4vbUrqII)
