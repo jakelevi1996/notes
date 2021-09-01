@@ -2,6 +2,92 @@
 
 This is just a random collection of commands which are useful in Bash. This Gist is expected to grow over time (until I have mastered the whole of Bash). Another useful resource is this [list of Unix commands on Wikipedia](https://en.wikipedia.org/wiki/List_of_Unix_commands#List). Hyperlinked bash commands in general lead to relevant Man (manual) pages.
 
+## Contents
+
+- [Useful `bash` commands](#useful-bash-commands)
+  - [Contents](#contents)
+  - [Seeing available disk space (using `df`) and disk usage (using `du`)](#seeing-available-disk-space-using-df-and-disk-usage-using-du)
+  - [View the return code of the most recent command using `$?`](#view-the-return-code-of-the-most-recent-command-using-)
+  - [Use stdout from one command as a command-line argument in another](#use-stdout-from-one-command-as-a-command-line-argument-in-another)
+  - [Serial communication using `minicom`](#serial-communication-using-minicom)
+  - [Change users using `su`](#change-users-using-su)
+  - [Finding access permissions using `stat`](#finding-access-permissions-using-stat)
+  - [Changing access permissions using `chmod`](#changing-access-permissions-using-chmod)
+  - [Recursively find word counts of all files with a particular file ending](#recursively-find-word-counts-of-all-files-with-a-particular-file-ending)
+  - [View all of the most recent bash commands](#view-all-of-the-most-recent-bash-commands)
+  - [View the full path to a file](#view-the-full-path-to-a-file)
+  - [Fixing `$'\r': command not found` error when running a bash script in WSL](#fixing-r-command-not-found-error-when-running-a-bash-script-in-wsl)
+  - [Extract (unzip) a `.tar.gz` file](#extract-unzip-a-targz-file)
+  - [Viewing available memory and swap files using `free`](#viewing-available-memory-and-swap-files-using-free)
+  - [View running processes](#view-running-processes)
+  - [Useful `grep` commands](#useful-grep-commands)
+  - [Counting the number of lines in a file](#counting-the-number-of-lines-in-a-file)
+  - [Viewing the first n lines of a file](#viewing-the-first-n-lines-of-a-file)
+  - [Changing the bash prompt](#changing-the-bash-prompt)
+  - [`apt-get update` vs `apt-get upgrade`](#apt-get-update-vs-apt-get-upgrade)
+  - [Checking the version of an installed `apt` package](#checking-the-version-of-an-installed-apt-package)
+  - [Clear the console window](#clear-the-console-window)
+  - [Iterating through files which match a file pattern](#iterating-through-files-which-match-a-file-pattern)
+  - [`git`-moving files in a loop](#git-moving-files-in-a-loop)
+  - [Iteratively and recursively `git`-moving files one directory up](#iteratively-and-recursively-git-moving-files-one-directory-up)
+  - [Search for files anywhere](#search-for-files-anywhere)
+  - [Connect to a WiFi network from the command line](#connect-to-a-wifi-network-from-the-command-line)
+  - [View the hostname and IP address](#view-the-hostname-and-ip-address)
+  - [Viewing the properties of a file](#viewing-the-properties-of-a-file)
+  - [Viewing and editing the system path](#viewing-and-editing-the-system-path)
+  - [Viewing the Linux distribution details](#viewing-the-linux-distribution-details)
+  - [WSL](#wsl)
+  - [Connecting to a serial device using WSL](#connecting-to-a-serial-device-using-wsl)
+  - [View filesize using `ls -l`](#view-filesize-using-ls--l)
+  - [Reboot/restart machine using `reboot`](#rebootrestart-machine-using-reboot)
+  - [Shutdown machine](#shutdown-machine)
+  - [Add user to group](#add-user-to-group)
+  - [Check if user is part of a group](#check-if-user-is-part-of-a-group)
+  - [View directory contents in a single column](#view-directory-contents-in-a-single-column)
+  - [Storing `git` credentials](#storing-git-credentials)
+  - [Automatically providing password to `sudo`](#automatically-providing-password-to-sudo)
+  - [Sort `$PATH` and remove duplicates](#sort-path-and-remove-duplicates)
+
+## Seeing available disk space (using `df`) and disk usage (using `du`)
+
+To see how much disk space is available, use the command `df`. To view the output in a human-readable format which chooses appropriate memory units for each file system (GB, MB, etc.), use the `-h` flag:
+
+```
+df -h
+```
+
+To see the size of a file or directory, use the `du` command (`du` stands for disk usage) (again, use the `-h` flag for human-readable format). This program can accept multiple files and/or directories in a single command:
+
+```
+du -h file1 [file2 dir1 dir2 etc]
+```
+
+If a directory is given to `du`, `du` will recursively search through the directory and print the size of all files in the directory. To only print the total size of the directory, use the `-s` flag (short for `--summarize`).
+
+`du` can also accept wildcards. For example, to print the sizes of all files and directories in the user's home directory (printing the size of directories, but not the files and subdirectories within), use the following command:
+
+```
+du -sh ~/*
+```
+
+Note that this is different to `du -sh ~` or `du -sh ~/`, which would only print the size of the home directory.
+
+To print the sizes of all directories in the root directory (note that this command runs surprisngly quickly):
+
+```
+sudo du -sh /*
+```
+
+## View the return code of the most recent command using `$?`
+
+View the return code of the most recent command run in the current `bash` process using the following command:
+
+```
+echo $?
+```
+
+It is also possible to use `$?` as a regular `bash` variable, EG it can be compared in logical conditions.
+
 ## Use stdout from one command as a command-line argument in another
 
 The stdout from one command can be used as a command-line argument in another using `$()` notation, as shown in the following examples:
@@ -88,7 +174,15 @@ Therefore, `-rw-r--r--` says that this is a regular file, which is readable and 
 
 Use `chmod` ("change mode") to change the access permissions of a file or folder. As described in the [`chmod` man page](https://ss64.com/bash/chmod.html), the access permissions can be specified using letters (as described above in "Finding access permissions using `stat`") or in octal.
 
-Alternatively, `chmod` can be used in symbolic mode, EG `chmod u+x file` to make a file executable by the user/owner, `chmod a+r file` to allow read permission to everyone, `chmod a-x file` to deny execute permission to everyone, and `chmod go+rw file` to make a file readable and writable by the group and others (these examples are taken from the [`chmod` man page](https://ss64.com/bash/chmod.html)).
+Alternatively, `chmod` can be used in symbolic mode, EG:
+- `chmod u+x file` to make a file executable by the user/owner
+- `chmod a+r file` to allow read permission to everyone
+- `chmod a-x file` to deny execute permission to everyone
+- `chmod go+rw file` to make a file readable and writable by the group and others
+
+The examples above are taken from the [`chmod` man page](https://ss64.com/bash/chmod.html).
+
+To make a file executable for all users, use the command `chmod +x /path/to/file`.
 
 ## Recursively find word counts of all files with a particular file ending
 
@@ -174,20 +268,6 @@ Swap:           29G         56M         29G
 `ps` and `top` are two commands which can be used to view running processes, their CPU usage, process ID, etc. They differ mainly in that "`top` is mostly used interactively", while "`ps` is designed for non-interactive use (scripts, extracting some information with shell pipelines etc.)", as described [in this Stack Overflow answer](https://unix.stackexchange.com/a/62186/421710) (see [here](https://superuser.com/questions/451344/difference-between-ps-output-and-top-output) for more differences).
 
 One thing to notice in `top` is that some processes are suffixed by `d` to denote that they are daemon processes ([as described here](https://unix.stackexchange.com/a/72590)), and some processes are prefixe by `k` to denote that they are kernel threads ([as described here](https://superuser.com/a/1087716/1098000)).
-
-## Seeing available disk space and disk usage
-
-To see how much disk space is available, use the command `df`. To view the output in a human-readable format which chooses appropriate memory units for each file system (GB, MB, etc.), use the `-h` flag:
-
-```
-df -h
-```
-
-To see the size of a file or directory, use the `du` command (`du` stands for disk usage) (again, use the `-h` flag for human-readable format). This program can accept multiple files and/or directories in a single command:
-
-```
-du -h file1 [file2 dir1 dir2 etc]
-```
 
 ## Useful `grep` commands
 
@@ -500,7 +580,7 @@ To connect to a serial device using WSL (see above), the COM port for the serial
 sudo chmod 666 /dev/ttyS3 && stty -F /dev/ttyS3 115200 && sudo screen /dev/ttyS3 115200
 ```
 
-## View filesize
+## View filesize using `ls -l`
 
 The command `ls` will list files and subdirectories in the directory that is specified as an argument (with no argument, the current directory is used by default). The `-l` flag is used to specify a long-list format, which gives extra data such as permissions, file-size in bytes, time of last edit, and more. The option `--block-size MB` can be used with the `-l` flag to specify file-sizes in megabytes. In this case, a single filename can be used as the main argument to `ls`, in which case only the details for the specified file will be listed. In summary, the syntax for viewing the size of a file in megabytes is:
 
@@ -508,7 +588,7 @@ The command `ls` will list files and subdirectories in the directory that is spe
 ls -l --block-size MB path/to/file
 ```
 
-## Reboot/restart machine
+## Reboot/restart machine using `reboot`
 
 A machine can be rebooted from terminal using `reboot`:
 
