@@ -6,36 +6,37 @@ This is just a random collection of commands which are useful in Bash. This Gist
 
 - [Useful `bash` commands](#useful-bash-commands)
   - [Contents](#contents)
+  - [Updating and upgrading packages using `apt update` and `apt upgrade`](#updating-and-upgrading-packages-using-apt-update-and-apt-upgrade)
   - [Seeing available disk space (using `df`) and disk usage (using `du`)](#seeing-available-disk-space-using-df-and-disk-usage-using-du)
   - [View the return code of the most recent command using `$?`](#view-the-return-code-of-the-most-recent-command-using-)
-  - [Use stdout from one command as a command-line argument in another](#use-stdout-from-one-command-as-a-command-line-argument-in-another)
+  - [Use stdout from one command as a command-line argument in another using `$()` notation](#use-stdout-from-one-command-as-a-command-line-argument-in-another-using--notation)
   - [Serial communication using `minicom`](#serial-communication-using-minicom)
   - [Change users using `su`](#change-users-using-su)
   - [Finding access permissions using `stat`](#finding-access-permissions-using-stat)
   - [Changing access permissions using `chmod`](#changing-access-permissions-using-chmod)
   - [Recursively find word counts of all files with a particular file ending](#recursively-find-word-counts-of-all-files-with-a-particular-file-ending)
-  - [View all of the most recent bash commands](#view-all-of-the-most-recent-bash-commands)
-  - [View the full path to a file](#view-the-full-path-to-a-file)
-  - [Fixing `$'\r': command not found` error when running a bash script in WSL](#fixing-r-command-not-found-error-when-running-a-bash-script-in-wsl)
-  - [Extract (unzip) a `.tar.gz` file](#extract-unzip-a-targz-file)
+  - [View all of the most recent bash commands using `history`](#view-all-of-the-most-recent-bash-commands-using-history)
+  - [View the full path to a file using `realpath`](#view-the-full-path-to-a-file-using-realpath)
+  - [Fixing `$'\r': command not found` error when running a bash script in WSL using `dos2unix`](#fixing-r-command-not-found-error-when-running-a-bash-script-in-wsl-using-dos2unix)
+  - [Extract (unzip) a `.tar.gz` file using `tar -xvzf`](#extract-unzip-a-targz-file-using-tar--xvzf)
   - [Viewing available memory and swap files using `free`](#viewing-available-memory-and-swap-files-using-free)
-  - [View running processes](#view-running-processes)
+  - [View running processes using `ps aux`](#view-running-processes-using-ps-aux)
   - [Useful `grep` commands](#useful-grep-commands)
-  - [Counting the number of lines in a file](#counting-the-number-of-lines-in-a-file)
-  - [Viewing the first n lines of a file](#viewing-the-first-n-lines-of-a-file)
+  - [Counting the number of lines in a file using `wc`](#counting-the-number-of-lines-in-a-file-using-wc)
+  - [Viewing the first/last `n` lines of a file using `head`/`tail`](#viewing-the-firstlast-n-lines-of-a-file-using-headtail)
   - [Changing the bash prompt](#changing-the-bash-prompt)
   - [`apt-get update` vs `apt-get upgrade`](#apt-get-update-vs-apt-get-upgrade)
-  - [Checking the version of an installed `apt` package](#checking-the-version-of-an-installed-apt-package)
-  - [Clear the console window](#clear-the-console-window)
+  - [Checking the version of an installed `apt` package using `apt list`](#checking-the-version-of-an-installed-apt-package-using-apt-list)
+  - [Clear the console window using `clear`](#clear-the-console-window-using-clear)
   - [Iterating through files which match a file pattern](#iterating-through-files-which-match-a-file-pattern)
   - [`git`-moving files in a loop](#git-moving-files-in-a-loop)
   - [Iteratively and recursively `git`-moving files one directory up](#iteratively-and-recursively-git-moving-files-one-directory-up)
-  - [Search for files anywhere](#search-for-files-anywhere)
-  - [Connect to a WiFi network from the command line](#connect-to-a-wifi-network-from-the-command-line)
-  - [View the hostname and IP address](#view-the-hostname-and-ip-address)
-  - [Viewing the properties of a file](#viewing-the-properties-of-a-file)
+  - [Search for files anywhere using `find`](#search-for-files-anywhere-using-find)
+  - [Connect to a WiFi network from the command line using `nmcli`](#connect-to-a-wifi-network-from-the-command-line-using-nmcli)
+  - [View the hostname and IP address using `hostname`](#view-the-hostname-and-ip-address-using-hostname)
+  - [Viewing the properties of a file using `file`](#viewing-the-properties-of-a-file-using-file)
   - [Viewing and editing the system path](#viewing-and-editing-the-system-path)
-  - [Viewing the Linux distribution details](#viewing-the-linux-distribution-details)
+  - [Viewing the Linux distribution details using `lsb_release`](#viewing-the-linux-distribution-details-using-lsb_release)
   - [WSL](#wsl)
   - [Connecting to a serial device using WSL](#connecting-to-a-serial-device-using-wsl)
   - [View filesize using `ls -l`](#view-filesize-using-ls--l)
@@ -47,6 +48,19 @@ This is just a random collection of commands which are useful in Bash. This Gist
   - [Storing `git` credentials](#storing-git-credentials)
   - [Automatically providing password to `sudo`](#automatically-providing-password-to-sudo)
   - [Sort `$PATH` and remove duplicates](#sort-path-and-remove-duplicates)
+
+## Updating and upgrading packages using `apt update` and `apt upgrade`
+
+To update `apt` package lists, use the command `sudo apt update`. This command doesn't modify, upgrade or install any new or existing packages, but should be run before upgrading or installing any new or existing packages, to make sure that the most recent versions of those packages are used.
+
+To upgrade all existing packages to their most recent versions, use the command `sudo apt upgrade`. This should be called before installing any new packages using `sudo apt install package-name`, to avoid any dependency issues.
+
+These commands are often used one after the other, before installing a new package, as follows:
+
+```
+sudo apt update
+sudo apt upgrade
+```
 
 ## Seeing available disk space (using `df`) and disk usage (using `du`)
 
@@ -88,7 +102,7 @@ echo $?
 
 It is also possible to use `$?` as a regular `bash` variable, EG it can be compared in logical conditions.
 
-## Use stdout from one command as a command-line argument in another
+## Use stdout from one command as a command-line argument in another using `$()` notation
 
 The stdout from one command can be used as a command-line argument in another using `$()` notation, as shown in the following examples:
 
@@ -194,7 +208,7 @@ find |  grep "\.py$" | grep -v venv | xargs wc -l
 
 TODO: turn this into a slightly more sophisticated Python scripy that accepts command line arguments specifying what filename ending to look for, and specifically ignoring directories containg the excluded words, and not filenames as well
 
-## View all of the most recent bash commands
+## View all of the most recent bash commands using `history`
 
 The `history` command prints out all of the previously recorded bash commands ([source](https://askubuntu.com/a/359125/1078405)). To view the most recent bash commands, the output from `history` can be piped into `tail`. For example, to print the 20 most recent bash commands:
 
@@ -210,7 +224,7 @@ $ history | grep realpath
   505  history | grep realpath
 ```
 
-## View the full path to a file
+## View the full path to a file using `realpath`
 
 To view the full path to a file, use the `realpath` command, EG:
 
@@ -219,7 +233,7 @@ $ realpath ~
 /home/jol
 ```
 
-## Fixing `$'\r': command not found` error when running a bash script in WSL
+## Fixing `$'\r': command not found` error when running a bash script in WSL using `dos2unix`
 
 As described [here](https://askubuntu.com/a/1046371/1078405), this is because of a carriage return used in DOS-style line endings. The problem can be solved as follows:
 
@@ -230,7 +244,7 @@ dos2unix name_of_shell_script.sh
 ./name_of_shell_script.sh
 ```
 
-## Extract (unzip) a `.tar.gz` file
+## Extract (unzip) a `.tar.gz` file using `tar -xvzf`
 
 As described [here](https://askubuntu.com/a/25348/1078405):
 
@@ -263,11 +277,23 @@ Mem:            15G        8.8G        6.8G         17M        223M        6.9G
 Swap:           29G         56M         29G
 ```
 
-## View running processes
+## View running processes using `ps aux`
 
 `ps` and `top` are two commands which can be used to view running processes, their CPU usage, process ID, etc. They differ mainly in that "`top` is mostly used interactively", while "`ps` is designed for non-interactive use (scripts, extracting some information with shell pipelines etc.)", as described [in this Stack Overflow answer](https://unix.stackexchange.com/a/62186/421710) (see [here](https://superuser.com/questions/451344/difference-between-ps-output-and-top-output) for more differences).
 
 One thing to notice in `top` is that some processes are suffixed by `d` to denote that they are daemon processes ([as described here](https://unix.stackexchange.com/a/72590)), and some processes are prefixe by `k` to denote that they are kernel threads ([as described here](https://superuser.com/a/1087716/1098000)).
+
+When using `ps`, the following flags are useful, as described [here](https://unix.stackexchange.com/a/106848/421710):
+
+- `a` - show processes for all users
+- `u` - display the process's user/owner
+- `x` - also show processes not attached to a terminal
+
+It is often useful to pipe the output from `ps` into `grep` to narrow down the list of processes to those of interest, for example:
+
+```
+ps aux | grep -i cron
+```
 
 ## Useful `grep` commands
 
@@ -285,7 +311,7 @@ One thing to notice in `top` is that some processes are suffixed by `d` to denot
 
 - ...
 
-## Counting the number of lines in a file
+## Counting the number of lines in a file using `wc`
 
 Use the program `wc` (which is a mandatory UNIX command, and stands for "word count") can be used to count the number of words, lines, characters, or bytes in a file. To count the number of lines in a file, use the `-l` flag, for example in the file `/etc/dhcp/dhclient.conf`:
 
@@ -310,7 +336,7 @@ $ wc -m /etc/dhcp/dhclient.conf
 
 The `wc -l` command is useful for counting the number of lines in a file before printing the first or last N lines of the file using the `head` or `tail` commands (see below), where N ≤ the number of lines in the file.
 
-## Viewing the first n lines of a file
+## Viewing the first/last `n` lines of a file using `head`/`tail`
 
 To view the first n lines of a text file, use the `head` command with the `-n` flag, EG:
 
@@ -371,7 +397,7 @@ As described in [this Stack Overflow answer](https://askubuntu.com/a/226213/1078
 
 In summary, `apt-get upgrade` is likely to be safer if it works, but if not, `apt-get dist-upgrade` is more likely to work.
 
-## Checking the version of an installed `apt` package
+## Checking the version of an installed `apt` package using `apt list`
 
 To view the version of a installed package which is available through `apt` (Advanced Package Tool), use the command `apt list <package-name>` for a concise description, or `apt show <package-name>` for a more verbose output. (A similar command, `apt policy <package-name>` is also available, although currently I'm not sure what the difference is between `apt show` and `apt policy` is).
 
@@ -399,7 +425,7 @@ To list all installed packages which contain the string "`cuda`":
 apt list --installed | grep cuda
 ```
 
-## Clear the console window
+## Clear the console window using `clear`
 
 The console window can be cleared using the command `clear`.
 
@@ -435,7 +461,7 @@ for FILE in ./*; do git mv -n $FILE ../$FILE; done
 
 Note that `git` will recursively move the contents of any subdirectories by default.
 
-## Search for files anywhere
+## Search for files anywhere using `find`
 
 To search for a file `file_to_search_for` in the directory `path/to/search`, use the [`find`](https://linux.die.net/man/1/find) command, EG:
 
@@ -474,7 +500,7 @@ sudo find / -type f | grep nvcc | grep -v docker  | wc -l
 
 If no args are passed to `find` then it will recursively search through the current directory and print out the names of all files and subdirectories, EG `find | grep svn`.
 
-## Connect to a WiFi network from the command line
+## Connect to a WiFi network from the command line using `nmcli`
 
 As described in Part 3 of [this Stack Overflow answer](https://askubuntu.com/a/16588/1078405), a WiFi network can be easily connected to from the command line using the `nmcli` command:
 
@@ -496,7 +522,7 @@ nmcli device
 
 Note that when running `nmcli` commands, `device`, `dev`, and `d` are all synonymous, and can be used interchangeably.
 
-## View the hostname and IP address
+## View the hostname and IP address using `hostname`
 
 To view the hostname, use the following command:
 
@@ -516,7 +542,7 @@ To view the IP address, use the following command (see [this Stack Overflow answ
 hostname -I
 ```
 
-## Viewing the properties of a file
+## Viewing the properties of a file using `file`
 
 The `file` command can be used to view the properties of a file, EG whether a shared library is 32-bit or 64-bit, and which platform it was compiled for:
 
@@ -555,7 +581,7 @@ To add a new directory to the path ([source](https://unix.stackexchange.com/ques
 PATH=$PATH:~/new/dir
 ```
 
-## Viewing the Linux distribution details
+## Viewing the Linux distribution details using `lsb_release`
 
 The command `lsb_release` is used to view details about the current Linux distribution under the Linux Standard Base (LSB), and optionally any LSB modules that the system supports. Using this command with flags `lsb_release -irc` will show the distributer ID of the Linux distribution which is running, the release number of the distribution, and the code name of the distribution, EG:
 
