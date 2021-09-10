@@ -22,6 +22,7 @@ This is just a random collection of commands which are useful in Bash. This Gist
   - [Viewing available memory and swap files using `free`](#viewing-available-memory-and-swap-files-using-free)
   - [View running processes using `ps aux`](#view-running-processes-using-ps-aux)
   - [Useful `grep` commands](#useful-grep-commands)
+  - [Useful `gcc` flags](#useful-gcc-flags)
   - [Counting the number of lines in a file using `wc`](#counting-the-number-of-lines-in-a-file-using-wc)
   - [Viewing the first/last `n` lines of a file using `head`/`tail`](#viewing-the-firstlast-n-lines-of-a-file-using-headtail)
   - [Changing the bash prompt](#changing-the-bash-prompt)
@@ -310,6 +311,14 @@ ps aux | grep -i cron
 - The outputs from grep can be used as the input to a program which doesn't usually accept inputs from `stdin` using the `xargs` command, EG `find | grep svn | xargs rm -rfv` will recursively delete all files and folders in the current directory that contain the string `svn` (good riddance!) (the `-v` flag will also cause `rm` to be verbose about every file and folder which it deletes)
 
 - ...
+
+## Useful `gcc` flags
+
+Flag | Meaning
+--- | ---
+`-H` | "Print the full path of include files in a format which shows which header includes which" (note that the header file paths are printed to `stderr`) ([source](https://stackoverflow.com/a/18593344/8477566))
+`-M` | "Output a rule suitable for `make` describing the dependencies of the main source file. The preprocessor outputs one make rule containing the object file name for that source file, a colon, and the names of all the included files" (the dependencies include both the header files and source files) ([source 1](https://gcc.gnu.org/onlinedocs/gcc/Preprocessor-Options.html#Preprocessor-Options), [source 2](https://stackoverflow.com/a/42513/8477566))
+`-MM` | "Like `-M` but do not mention header files that are found in system header directories" ([source](https://gcc.gnu.org/onlinedocs/gcc/Preprocessor-Options.html#Preprocessor-Options))
 
 ## Counting the number of lines in a file using `wc`
 
