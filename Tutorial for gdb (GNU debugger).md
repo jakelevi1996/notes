@@ -15,6 +15,7 @@
     - [Attach `gdb` to a running process](#attach-gdb-to-a-running-process)
     - [Printing `struct` types](#printing-struct-types)
     - [Performing a list of commands when a breakpoint is reached using `commands`](#performing-a-list-of-commands-when-a-breakpoint-is-reached-using-commands)
+    - [Extract data from a program during a loop](#extract-data-from-a-program-during-a-loop)
 
 ## References
 
@@ -116,6 +117,11 @@ Full command | Abbreviation | Description
 `print x` | `p x` | Print the value of the variable `x`. If it is an array, the whole array is printed. The `->`, `*` and `.` operators can be used in case `x` is a struct/pointer/pointer to a struct, or even print the entire contents of the struct (see section [Printing `struct` types](#printing-struct-types) below for an example of printing out struct types)
 `print/x x` | `p/x x` | Print the value of the variable `x` in hexadecimal
 `print x[0]@4` | `p x[0]@4` | Print the first 4 values in the array pointed to by `x`. This is equivalent to the `gdb` command `print *x@4`. For more information, see [10.4 Artificial Arrays on sourceware.org](https://sourceware.org/gdb/current/onlinedocs/gdb/Arrays.html)
+`printf` | | Print formatted text to the console window. The first argument should be a format string (using the same syntax as the format string in the [C `printf` function](https://www.cplusplus.com/reference/cstdio/printf/)), and subsequent arguments should be expressions, which can include [convenience variables](https://sourceware.org/gdb/onlinedocs/gdb/Convenience-Vars.html). The arguments to this function should be separated by commas, EG `printf "$x + 10 = %i\n", $x + 10` (assuming `$x` is an integer)
+`eval` | | Send a command to `gdb`, using `printf` syntax to format the command. This is useful if the command depends on convenience variables, EG `eval "dump memory %s &multiples[0] &multiples[10]", $filename`. It can also be used to set convenience variables that depend on other convenience variables, EG `eval "set $filename = \"data/data_%i.bin\"", $i`
+`set` | | Set a [convenience variable](https://sourceware.org/gdb/onlinedocs/gdb/Convenience-Vars.html). The name of the convenience variable should always start with `$`, including when it is set and every time it is used, EG `set $x = 5`, `printf "$x + 10 = %i\n", $x + 10`
+`set var` | | Set the value of a variable in the program being debugged, EG `set var width=47`. Equivalent to `print width=47`, except that the return value is not printed ([source](https://sourceware.org/gdb/current/onlinedocs/gdb/Assignment.html))
+`define` | | Create a user-defined command, which is essentially a user-defined function containing `gdb` commands. A user-defined command can contain any number (or even a variable number) of arguments. See [User-defined Commands](https://sourceware.org/gdb/current/onlinedocs/gdb/Define.html) for more information and examples
 `ptype x` | | Print a detailed description of the type `x` (EG a `typdef struct`), or the type of a variable `x`, or the type of an expression `x`. Contrary to `whatis`, `ptype` always unrolls any typedefs in its argument declaration, whether the argument is a variable, expression, or a data type
 `whatis x` | | Print the data type of `x`, which can be either an expression or a name of a data type. With no argument, print the data type of `$`, the last value in the value history. If `x` is a variable or an expression, `whatis` prints its literal type as it is used in the source code. If `x` is a type name that was defined using `typedef`, whatis unrolls only one level of that `typedef`.
 `x addr` | | Print value at memory location `addr`
@@ -123,11 +129,11 @@ Full command | Abbreviation | Description
 `watch x` | | Place a watchpoint on variable `x`, meaning that the program will pause whenever the value of `x` is modified, and the old and new values of `x` will be printed (if `x` is an array, then the program will pause and print out the old and new values of the whole array whenever any element of `x` is modified)
 `condition N COND` | | Specify breakpoint number `N` to break only if `COND` is true (this can also be achieved using `break` in a single command using the syntax `break file.c:N if COND`)
 `commands N` | | Specify a list of commands to run when breakpoint `N` is reached. If `N` is omitted, then `commands` refers to the last breakpoint, watchpoint, or catchpoint set (not to the breakpoint most recently encountered). The commands themselves appear on the following lines. Type a line containing just `end` to terminate the commands. You can use breakpoint commands to start your program up again, EG by using the `continue` command, or `step`, or any other command that resumes execution. See [Breakpoint Command Lists](https://sourceware.org/gdb/current/onlinedocs/gdb/Break-Commands.html) for more.
-`info breakpoints` | | Display information about all declared breakpoints
+`info breakpoints` | `info b` | Display information about all declared breakpoints
 `info variables` | | List all global and static variable names
 `info locals` | | List local variables of current stack frame (names and values), including static variables in that function.
 `info args` | | List arguments of the current stack frame (names and values)
-`delete` | | Delete all breakpoints that have been set
+`delete breakpoints` | `delete` | Delete all breakpoints that have been set
 `delete n` | | Delete breakpoint number `n`
 `clear function_name` | | Deletes the breakpoint set in that function
 `dump memory filename start_addr end_addr` | | Copy binary data starting at `start_addr` and ending at `end_addr` (not including `end_addr`) into a binary file called `filename`. `start_addr` and `end_addr` can refer to variables and use array and pointer operators, EG `dump memory x.bin x &x[20]`. See section [Using `dump` (and loading a binary file from Python)](#using-dump-and-loading-a-binary-file-from-python) below for an example of how to load this memory in Python
@@ -418,3 +424,83 @@ run
 Note that, if there were any other `gdb` commands in `gdb_commands.txt` after `continue` and before `end`, then they would not be executed. More generally, as desribed in [Breakpoint Command Lists](https://sourceware.org/gdb/current/onlinedocs/gdb/Break-Commands.html) on [sourceware.org](https://sourceware.org/):
 
 > Any other commands in the command list, after a command that resumes execution, are ignored. This is because any time you resume execution (even with a simple next or step), you may encounter another breakpoint - which could have its own command list, leading to ambiguities about which list to execute.
+
+### Extract data from a program during a loop
+
+Consider the following C program, `temp.c`:
+
+```C
+#include <stdint.h>
+#include <stdio.h>
+
+#define N_MULTIPLES (10)
+
+int16_t multiples[N_MULTIPLES];
+
+void f(int x) {
+    for (int i = 0; i < N_MULTIPLES; i++) {
+        multiples[i] = (int16_t) x * (i + 1);
+    }
+}
+
+int main() {
+    printf("Times tables up to 100:");
+    for (int i = 1; i <= 100; i++) {
+        printf("\n%3i: ", i);
+        f(i);
+        for (int j = 0; j < N_MULTIPLES; j++) {
+            printf("%3i, ", multiples[j]);
+        }
+
+    }
+
+    return 0;
+}
+```
+
+Say it is desirable to run this until the `f` function has been called 20 or so times, then extract the `multiples` buffer the next 10 times that `f` is called into separate binary data files, and then quit. This can be achieved with the following `gdb` script, `gdb.txt`:
+
+```
+break f
+run
+continue 20
+
+set $i = 0
+
+while $i < 10
+    eval "set $filename = \"data/data_%i.bin\"", $i
+    printf "filename = %s\n", $filename
+    finish
+    eval "dump memory %s &multiples[0] &multiples[10]", $filename
+    set $i = $i + 1
+    continue
+end
+```
+
+Use the following commands to compile and run the program and debugger script (note that the `mkdir data` command is used because if the `data` directory doesn't exist when the `eval "dump memory %s &multiples[0] &multiples[10]", $filename` command is used, then `gdb` will crash and exit, because it does not automatically create directories that don't exist when calling the `dump` command):
+
+```
+gcc temp.c -o temp.exe -g
+mkdir data
+gdb temp.exe --command=gdb.txt -batch
+```
+
+Below is an example Python script to read and print the contents of each of these files:
+
+```python
+import os
+import struct
+
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+for i in range(10):
+    data_path = os.path.join(CURRENT_DIR, "data", "data_%i.bin" % i)
+    with open(data_path, "rb") as f:
+        b = f.read()
+
+    sizeof_int16_t = 2
+    num_elements = len(b) / sizeof_int16_t
+    struct_fmt_str = "%ih" % num_elements
+    x = struct.unpack(struct_fmt_str, b)
+    print("i = %i, x = %s" % (i, x))
+```
