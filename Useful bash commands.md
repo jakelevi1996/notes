@@ -19,6 +19,7 @@ This is just a random collection of commands which are useful in Bash. This Gist
   - [View the full path to a file using `realpath`](#view-the-full-path-to-a-file-using-realpath)
   - [Fixing `$'\r': command not found` error when running a bash script in WSL using `dos2unix`](#fixing-r-command-not-found-error-when-running-a-bash-script-in-wsl-using-dos2unix)
   - [Extract (unzip) a `.tar.gz` file using `tar -xvzf`](#extract-unzip-a-targz-file-using-tar--xvzf)
+  - [Compress (zip) a file or directory using `tar -czvf`](#compress-zip-a-file-or-directory-using-tar--czvf)
   - [Viewing available memory and swap files using `free`](#viewing-available-memory-and-swap-files-using-free)
   - [View running processes using `ps aux`](#view-running-processes-using-ps-aux)
   - [Useful `grep` commands](#useful-grep-commands)
@@ -49,6 +50,7 @@ This is just a random collection of commands which are useful in Bash. This Gist
   - [Storing `git` credentials](#storing-git-credentials)
   - [Automatically providing password to `sudo`](#automatically-providing-password-to-sudo)
   - [Sort `$PATH` and remove duplicates](#sort-path-and-remove-duplicates)
+  - [Download VSCode](#download-vscode)
 
 ## Updating and upgrading packages using `apt update` and `apt upgrade`
 
@@ -247,7 +249,7 @@ dos2unix name_of_shell_script.sh
 
 ## Extract (unzip) a `.tar.gz` file using `tar -xvzf`
 
-As described [here](https://askubuntu.com/a/25348/1078405):
+To extract a file or direcrory ([source](https://askubuntu.com/a/25348/1078405)):
 
 ```bash
 tar -xvzf compressed_file_name.tar.gz
@@ -266,6 +268,22 @@ Description of flags:
 > - `z`: tells tar to decompress the archive using gzip
 > - `f`: this must be the last flag of the command, and the tar file must be immediately after. It tells tar the name and path of the compressed file.
 > - `C`: means change to directory DIR. In our example, DIR is my_images.
+
+## Compress (zip) a file or directory using `tar -czvf`
+
+To zip up a file ([source](https://www.howtogeek.com/248780/how-to-compress-and-extract-files-using-the-tar-command-on-linux/)):
+
+```
+tar -czvf name-of-archive.tar.gz /path/to/directory-or-file
+```
+
+> Here’s what those switches actually mean:
+> 
+> - `c`: Create an archive.
+> - `z`: Compress the archive with gzip.
+> - `v`: Display progress in the terminal while creating the archive, also known as "verbose" mode. The v is always optional in these commands, but it’s helpful.
+> - `f`: Allows you to specify the filename of the archive.
+
 
 ## Viewing available memory and swap files using `free`
 
@@ -726,4 +744,14 @@ print("*** Separated by newlines ***")
 print("\n".join(sorted_unique_path_list))
 print("*** Separated by colons ***")
 print(":".join(sorted_unique_path_list))
+```
+
+## Download VSCode
+
+[Source](https://code.visualstudio.com/docs/setup/linux)
+
+```
+sudo apt update
+sudo apt upgrade
+sudo snap install --classic code # or code-insiders
 ```
