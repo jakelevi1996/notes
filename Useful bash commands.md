@@ -89,10 +89,22 @@ du -sh ~/*
 
 Note that this is different to `du -sh ~` or `du -sh ~/`, which would only print the size of the home directory.
 
-To print the sizes of all directories in the root directory (note that this command runs surprisngly quickly):
+To print the sizes of all directories in the root directory (note that this command runs surprisngly quickly compared to searching through the filesystem on Windows):
 
 ```
 sudo du -sh /*
+```
+
+To sort the output from `du`, pipe the input into `sort`, and [as described here](https://serverfault.com/a/156648/620693), if using the `-h` flag for `du`, then also provide the `-h` flag to `sort`, so that `sort` will sort according to human-readable file-sizes, as shown below:
+
+```
+du -sh /path/to/dir/* | sort -h
+```
+
+To view the `N` biggest file-sizes, pipe the output from the previous command into `tail`, for example:
+
+```
+du -sh /path/to/dir/* | sort -h | tail -n10
 ```
 
 ## View the return code of the most recent command using `$?`
