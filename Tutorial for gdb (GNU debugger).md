@@ -123,6 +123,7 @@ Full command | Abbreviation | Description
 `set var` | | Set the value of a variable in the program being debugged, EG `set var width=47`. Equivalent to `print width=47`, except that the return value is not printed ([source](https://sourceware.org/gdb/current/onlinedocs/gdb/Assignment.html))
 `define` | | Create a user-defined command, which is essentially a user-defined function containing `gdb` commands. A user-defined command can contain any number (or even a variable number) of arguments. See [User-defined Commands](https://sourceware.org/gdb/current/onlinedocs/gdb/Define.html) for more information and examples
 `ptype x` | | Print a detailed description of the type `x` (EG a `typdef struct`), or the type of a variable `x`, or the type of an expression `x`. Contrary to `whatis`, `ptype` always unrolls any typedefs in its argument declaration, whether the argument is a variable, expression, or a data type
+`ptype /o x` | | If `x` is a struct, then print the sizes and offsets (in bytes) of each element in the struct
 `whatis x` | | Print the data type of `x`, which can be either an expression or a name of a data type. With no argument, print the data type of `$`, the last value in the value history. If `x` is a variable or an expression, `whatis` prints its literal type as it is used in the source code. If `x` is a type name that was defined using `typedef`, whatis unrolls only one level of that `typedef`.
 `x addr` | | Print value at memory location `addr`
 `x/nfu addr` | | Examine memory in the specified format (see [sourceware.org: "Examining Memory"](https://sourceware.org/gdb/current/onlinedocs/gdb/Memory.html))
@@ -133,6 +134,7 @@ Full command | Abbreviation | Description
 `info variables` | | List all global and static variable names
 `info locals` | | List local variables of current stack frame (names and values), including static variables in that function.
 `info args` | | List arguments of the current stack frame (names and values)
+`info symbol addr` | | Print the name of a symbol which is stored at the address `addr`. If no symbol is stored exactly at `addr`, GDB prints the nearest symbol and an offset from it
 `delete breakpoints` | `delete` | Delete all breakpoints that have been set
 `delete n` | | Delete breakpoint number `n`
 `clear function_name` | | Deletes the breakpoint set in that function
@@ -361,6 +363,33 @@ Value returned is $1 = {x = 7, y = 8, name = 0x555555556016 "e struct", price = 
 $2 = {x = 3, y = 4, name = 0x555555556004 "c struct", price = 3.99000001}
 $3 = {x = 5, y = 6, name = 0x55555555600d "d struct", price = 4.98999977}
 $4 = {x = 7, y = 8, name = 0x555555556016 "e struct", price = 5.98999977}
+```
+
+It is also possible to use `ptype` to print the generic fields of a `struct` type:
+
+```
+(gdb) ptype C
+type = struct {
+    int x;
+    int y;
+    char *name;
+    float price;
+}
+```
+
+Using the `/o` option for `ptype` will also print the sizes and offsets in bytes for each field in the struct:
+
+```
+(gdb) ptype /o C
+type = struct {
+/*    0      |     4 */    int x;
+/*    4      |     4 */    int y;
+/*    8      |     8 */    char *name;
+/*   16      |     4 */    float price;
+/* XXX  4-byte padding  */
+
+                           /* total size (bytes):   24 */
+                         }
 ```
 
 ### Performing a list of commands when a breakpoint is reached using `commands`
