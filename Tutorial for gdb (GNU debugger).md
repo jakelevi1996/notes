@@ -16,6 +16,7 @@
     - [Printing `struct` types](#printing-struct-types)
     - [Performing a list of commands when a breakpoint is reached using `commands`](#performing-a-list-of-commands-when-a-breakpoint-is-reached-using-commands)
     - [Extract data from a program during a loop](#extract-data-from-a-program-during-a-loop)
+    - [Export data from `gdb` in YAML format](#export-data-from-gdb-in-yaml-format)
 
 ## References
 
@@ -196,14 +197,14 @@ Reading symbols from temp...
 (gdb) b f
 Breakpoint 1 at 0x1169: file .temp.c, line 14.
 (gdb) r
-Starting program: /home/airport/fac_receiver/temp 
+Starting program: /home/airport/fac_receiver/temp
 
 Breakpoint 1, f (x=0) at .temp.c:14
 14      void f(int x) {
 (gdb) bt
 #0  f (x=0) at .temp.c:14
 #1  0x00005555555551de in main () at .temp.c:23
-(gdb) 
+(gdb)
 ```
 
 ### Using `dump` (and loading a binary file from Python)
@@ -216,7 +217,7 @@ Reading symbols from temp...
 (gdb) b f
 Breakpoint 1 at 0x1169: file .temp.c, line 14.
 (gdb) r
-Starting program: /home/airport/fac_receiver/temp 
+Starting program: /home/airport/fac_receiver/temp
 
 Breakpoint 1, f (x=0) at .temp.c:14
 14      void f(int x) {
@@ -532,4 +533,105 @@ for i in range(10):
     struct_fmt_str = "%ih" % num_elements
     x = struct.unpack(struct_fmt_str, b)
     print("i = %i, x = %s" % (i, x))
+```
+
+### Export data from `gdb` in YAML format
+
+If a lot of structured data is to be exported from a C program, then exporting the data from `gdb` in YAML format can make it easier to process the data within a Python script. Below is an example of a `gdb` script that exports data in a YAML format (with the exception of the `@@@` strings, which are explained afterwards):
+
+```
+break func_1
+commands
+silent
+up-silently
+printf "@@@- \n"
+continue
+end
+
+break func_2
+commands
+silent
+up-silently
+printf "  - a: %d\n", a
+printf "    b: %d\n", b
+up-silently
+printf "    c: %d@@@\n", c
+continue
+end
+
+run
+```
+
+To install yaml for Python, use the following command-line commands (replace `python` with `python3` on Linux):
+
+```
+python -m pip install -U pip
+python -m pip install pyyaml
+```
+
+A useful trick for figuring out the correct YAML format is to define some example data in the desired Python formats (EG lists and dictionaries), convert the data to YAML format, and then print it out, and replicate that format in the `gdb` script. Below is an example of 2 different Python formats (run the commands to see the YAML formt):
+
+```python
+import yaml
+
+results = {
+    "Group 0": {"subgroup 0": {"a": 1, "b": 2}, "subgroup 1": {"a": 3, "b": 4}},
+    "Group 1": {"subgroup 0": {"a": 5, "b": 6}, "subgroup 1": {"a": 7, "b": 8}},
+}
+print(yaml.dump(results))
+
+results = [
+    [{"a": 1, "b": 2}, {"a": 3, "b": 4}],
+    [{"a": 5, "b": 6}, {"a": 7, "b": 8}],
+]
+print(yaml.dump(results))
+print(results)
+print(yaml.safe_load(yaml.dump(results)))
+print(yaml.safe_load(yaml.dump(results)) == results)
+```
+
+A marker such as `@@@` can be used to separate the generic `gdb` output to `stdout` from the desired YAML output, and the marker can be processed and removed from the output in Python using the following function (`s` is the `gdb` output as a string, `marker` is the marker as a string, EG `"@@@"`):
+
+```python
+def trim_str_marker(s, marker):
+    substr_start_ind = s.index(marker)
+    substr_end_ind = s.rindex(marker)
+    substr = s[substr_start_ind:substr_end_ind]
+    substr_clean = substr.replace(marker, "")
+    return substr_clean
+```
+
+Additionally, the following function and commands can be used to call the `gdb` script and parse the output into the desired format in Python:
+
+```python
+import subprocess
+import yaml
+
+def call_cmd(arg_list, print_cmd=True, print_stdout=True):
+    if print_cmd:
+        print("> %s" % " ".join(arg_list))
+
+    completed_process = subprocess.run(
+        arg_list,
+        check=True,
+        stdout=subprocess.PIPE,
+        # stderr=subprocess.PIPE,
+    )
+    cmd_stdout = completed_process.stdout.decode()
+
+    if print_stdout:
+        print(cmd_stdout)
+
+    return cmd_stdout
+
+gdb_cmd_list = [
+    "gdb",
+    exe_path,
+    "--command",
+    gdb_script_path,
+    "-batch",
+]
+gdb_output = call_cmd(gdb_cmd_list, print_stdout=False)
+gdb_output_clean = trim_str_marker(gdb_output, "@@@")
+test_info_list = yaml.safe_load(gdb_output_clean)
 ```
