@@ -608,6 +608,10 @@ import subprocess
 import yaml
 
 def call_cmd(arg_list, print_cmd=True, print_stdout=True):
+    """ Run a command, described by a list of strings in arg_list referring to
+    the different arguments to the command. Return the output to stdout from
+    the command. Optionally print the command before running it, and the output
+    to stdout from the command """
     if print_cmd:
         print("> %s" % " ".join(arg_list))
 
