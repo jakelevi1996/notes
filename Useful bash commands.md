@@ -349,6 +349,7 @@ Flag | Meaning
 `-H` | "Print the full path of include files in a format which shows which header includes which" (note that the header file paths are printed to `stderr`) ([source](https://stackoverflow.com/a/18593344/8477566))
 `-M` | "Output a rule suitable for `make` describing the dependencies of the main source file. The preprocessor outputs one make rule containing the object file name for that source file, a colon, and the names of all the included files" (the dependencies include both the header files and source files) ([source 1](https://gcc.gnu.org/onlinedocs/gcc/Preprocessor-Options.html#Preprocessor-Options), [source 2](https://stackoverflow.com/a/42513/8477566))
 `-MM` | "Like `-M` but do not mention header files that are found in system header directories" ([source](https://gcc.gnu.org/onlinedocs/gcc/Preprocessor-Options.html#Preprocessor-Options))
+`-fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero -fno-sanitize-recover` | "Enable AddressSanitizer, a fast memory error detector", and other useful Program Instrumentation Options ([source 1](https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html)) ([source 2](https://man7.org/linux/man-pages/man1/gcc.1.html)). Note that it is necessary "to add `-fsanitize=address` to compiler flags (both `CFLAGS` and `CXXFLAGS`) and linker flags (`LDFLAGS`)" ([source](https://stackoverflow.com/a/40215639/8477566))
 
 ## Counting the number of lines in a file using `wc`
 
