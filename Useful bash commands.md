@@ -51,6 +51,7 @@ This is just a random collection of commands which are useful in Bash. This Gist
   - [Automatically providing password to `sudo`](#automatically-providing-password-to-sudo)
   - [Sort `$PATH` and remove duplicates](#sort-path-and-remove-duplicates)
   - [Download VSCode](#download-vscode)
+  - [Get the absolute path to the current `bash` script and its directory using `$BASH_SOURCE`](#get-the-absolute-path-to-the-current-bash-script-and-its-directory-using-bash_source)
 
 ## Updating and upgrading packages using `apt update` and `apt upgrade`
 
@@ -767,4 +768,17 @@ print(":".join(sorted_unique_path_list))
 sudo apt update
 sudo apt upgrade
 sudo snap install --classic code # or code-insiders
+```
+
+## Get the absolute path to the current `bash` script and its directory using `$BASH_SOURCE`
+
+Use the variable `$BASH_SOURCE` to get the path to the current `bash` script. Use this with `realpath` and `dirname` to get the absolute path of the script, and its parent directory. For example:
+
+```bash
+X1=$BASH_SOURCE
+X2=$(realpath $BASH_SOURCE)
+X3=$(dirname $(realpath $BASH_SOURCE))
+echo $X1
+echo $X2
+echo $X3
 ```
