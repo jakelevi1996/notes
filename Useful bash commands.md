@@ -23,7 +23,7 @@ This is just a random collection of commands which are useful in Bash. This Gist
   - [Viewing available memory and swap files using `free`](#viewing-available-memory-and-swap-files-using-free)
   - [View running processes using `ps aux`](#view-running-processes-using-ps-aux)
   - [Useful `grep` commands](#useful-grep-commands)
-  - [Useful `gcc` flags](#useful-gcc-flags)
+  - [Useful `gcc` flags (including profiling with `gprof`)](#useful-gcc-flags-including-profiling-with-gprof)
   - [Counting the number of lines in a file using `wc`](#counting-the-number-of-lines-in-a-file-using-wc)
   - [Viewing the first/last `n` lines of a file using `head`/`tail`](#viewing-the-firstlast-n-lines-of-a-file-using-headtail)
   - [Changing the bash prompt](#changing-the-bash-prompt)
@@ -343,7 +343,7 @@ ps aux | grep -i cron
 
 - ...
 
-## Useful `gcc` flags
+## Useful `gcc` flags (including profiling with `gprof`)
 
 Flag | Meaning
 --- | ---
@@ -351,6 +351,7 @@ Flag | Meaning
 `-M` | "Output a rule suitable for `make` describing the dependencies of the main source file. The preprocessor outputs one make rule containing the object file name for that source file, a colon, and the names of all the included files" (the dependencies include both the header files and source files) ([source 1](https://gcc.gnu.org/onlinedocs/gcc/Preprocessor-Options.html#Preprocessor-Options), [source 2](https://stackoverflow.com/a/42513/8477566))
 `-MM` | "Like `-M` but do not mention header files that are found in system header directories" ([source](https://gcc.gnu.org/onlinedocs/gcc/Preprocessor-Options.html#Preprocessor-Options))
 `-fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero -fno-sanitize-recover` | "Enable AddressSanitizer, a fast memory error detector", and other useful Program Instrumentation Options ([source 1](https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html)) ([source 2](https://man7.org/linux/man-pages/man1/gcc.1.html)). Note that it is necessary "to add `-fsanitize=address` to compiler flags (both `CFLAGS` and `CXXFLAGS`) and linker flags (`LDFLAGS`)" ([source](https://stackoverflow.com/a/40215639/8477566))
+`-pg` | "From the man page of `gcc`": "Generate extra code to write profile information suitable for the analysis program `gprof`. You must use this option when compiling the source files you want data about, **and you must also use it when linking**." After compiling and linking using the `-pg` flags, execute the program, EG `./name_of_exe`, which should produce a file called `gmon.out`, and then use `gprof` to generate formatted profiling information as follows: `gprof name_of_exe gmon.out > analysis.txt`
 
 ## Counting the number of lines in a file using `wc`
 
