@@ -52,6 +52,7 @@ This is just a random collection of commands which are useful in Bash. This Gist
   - [Sort `$PATH` and remove duplicates](#sort-path-and-remove-duplicates)
   - [Download VSCode](#download-vscode)
   - [Get the absolute path to the current `bash` script and its directory using `$BASH_SOURCE`](#get-the-absolute-path-to-the-current-bash-script-and-its-directory-using-bash_source)
+  - [Synchronise remote files and directories with `rsync`](#synchronise-remote-files-and-directories-with-rsync)
 
 ## Updating and upgrading packages using `apt update` and `apt upgrade`
 
@@ -784,3 +785,22 @@ echo $X1
 echo $X2
 echo $X3
 ```
+
+## Synchronise remote files and directories with `rsync`
+
+To synchronise a local directory with a remote directory, use the following command:
+
+```
+rsync -Cavz /path/to/local/dir username@hostname:~/path/to/remote
+```
+
+Description of flags:
+
+Flag | Meaning
+--- | ---
+`-C` | Automatically ignore common temporary files, version control files, etc
+`-a` | Sync recursively and preserves symbolic links, special and device files, modification times, groups, owners, and permissions
+`-v` | Verbose output is printed to `stdout`
+`-z` | Compress files (EG text files) to reduce network transfer
+
+([source 1](https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories)) ([source 2](https://linux.die.net/man/1/rsync))
