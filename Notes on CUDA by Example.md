@@ -27,6 +27,8 @@ The CUDA language features (keywords, function names, etc) specified below are a
 ## General tips about CUDA
 
 - To write a CUDA source file, use the filename suffix `.cu`
+- Use `nvcc` to compile a CUDA source file, EG `nvcc main.cu -o main`
+- A program compiled using `nvcc` is run exactly the same as a normal program, EG `./main`
 - To get information about all GPU devices currently available on a given machine, compile and run `cuda_by_example/chapter03/enum_gpu.cu`, which prints information to `stdout` such as device name, compute capability, clock rate, total global and constant memory, the maximum number of threads per block, the maximum thread dimensions, and the maximum grid size
 
 ## Functions and kernels
