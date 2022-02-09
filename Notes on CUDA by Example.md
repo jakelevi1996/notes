@@ -53,7 +53,7 @@ The CUDA language features (keywords, function names, etc) specified below are a
     - In this example, if there are more elements to be processed than there are threads and blocks, the thread index can be incremented in a loop (EG while `tid` is less than the total number of elements to be processed) using the expression `tid += blockDim.x * gridDim.x;`
   - If there is only 1 thread per block and a 1D array of blocks, we can simply use `int tid = blockIdx.x;`, and increment `tid` in a loop while it is less than the number of elements to be processed using the expression `tid += gridDim.x;`
 - Threads can use memory which is shared between threads, but not between blocks, by declaring the memory using the `__shared__` keyword, EG `__shared__ float cache[threadsPerBlock];`
-- Threads can wait for other threads within the same block to finish processing using the `__syncthreads()` function, which is useful for example for performing reductions (such as dot products)
+- Threads can wait for other threads within the same block to finish processing using the `__syncthreads()` function, which is useful for example for performing reductions (see section [Reductions](#reductions) below)
 - It is possible to define higher dimensional arrays of blocks and threads, by declaring a `dim3` variable (which represents a 3D tuple) and passing it to the kernel call, for example `dim3 blocks(DIM/16,DIM/16); dim3 threads(16,16); kernel<<<blocks,threads>>>( d->dev_bitmap, ticks );`
   - This might be useful for example if processing all pixels of an image in parallel
   - In this case, the offset for each thread can be calculated as follows: `int x = threadIdx.x + blockIdx.x * blockDim.x; int y = threadIdx.y + blockIdx.y * blockDim.y; int offset = x + y * blockDim.x * gridDim.x;`
@@ -72,8 +72,8 @@ The CUDA language features (keywords, function names, etc) specified below are a
 - Summing over all the values in an array to produce a scalar output is a fundamentally different type of operation that cannot be performed in constant time, even with an infinite number of internal parallel processing units
 - This type of computation which takes an input array and operates on all the elements to produce a smaller array is called a reduction
 - Naively, a reduction such as summing an array could be performed by a single thread and a single processing unit by adding up each element one by one, in time which is proportional to the length of the input array
-- Such a reduction can be performed more efficiently in time that is proportional to the logarithm of the length of the input array
-- An example implementation of a dot-product can be found in `cuda_by_example/chapter05/dot.cu`, which demonstrates how to implement a reduction efficiently
+- Such a reduction can be performed more efficiently in time that is proportional to the logarithm of the length of the input array, using shared memory and thread synchronisation (using the `__shared__` keyword and the `__syncthreads()` function mentioned above)
+- An example of a kernel which calculates the dot-product of 2 arrays can be found in `cuda_by_example/chapter05/dot.cu`, which demonstrates how to implement a reduction efficiently
 
 ## Profiling
 
