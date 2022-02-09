@@ -43,7 +43,7 @@ The CUDA language features (keywords, function names, etc) specified below are a
 ## Blocks and threads
 
 - When calling a CUDA kernel using angle bracket notation, the first number in the angle brackets refers to the number of blocks, and the second number refers to the number of threads
-- Often it is useful at the start of a kernel to calculate an index which is specific to each thread, and is used to decide which element of the inputs/outputs to process
+- Often it is useful at the start of a kernel to calculate an index which is specific to each thread, and is used to decide which element of the inputs/outputs to process in the thread which is currently executing
   - This is achieved using:
     - The index of the thread within the block, EG `threadIdx.x`
     - The index of the block within the grid, EG `blockIdx.x`
