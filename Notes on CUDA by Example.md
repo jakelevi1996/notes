@@ -9,6 +9,12 @@
   - [Functions and kernels](#functions-and-kernels)
   - [Blocks and threads](#blocks-and-threads)
   - [Allocating, copying and releasing memory](#allocating-copying-and-releasing-memory)
+  - [Reductions](#reductions)
+  - [Profiling](#profiling)
+  - [Constant memory](#constant-memory)
+  - [Atomics](#atomics)
+  - [Streams](#streams)
+  - [...](#)
 
 ## Introduction
 
@@ -57,4 +63,22 @@ The CUDA language features (keywords, function names, etc) specified below are a
 - To copy memory from an array on the CPU to an array on the GPU, use the `cudaMemcpy` function with the `cudaMemcpyHostToDevice` keyword, EG `int a[N]; cudaMemcpy( dev_a, a, N * sizeof(int), cudaMemcpyHostToDevice ) );` (assuming that `dev_a` has been declared and allocated as described in the previous example)
 - To copy memory from an array on the GPU to an array on the CPU, use the `cudaMemcpy` function with the `cudaMemcpyDeviceToHost` keyword, EG `cudaMemcpy( c, dev_c, N * sizeof(int), cudaMemcpyDeviceToHost ) )`
 - To free allocated GPU memory, use the `cudaFree` function, EG `cudaFree( dev_a )`
-- ...
+
+## Reductions
+
+- When the number of outputs is proportional to the number of inputs (EG when adding two vectors together element-wise, or evaluating a function at every point in an array), a GPU can hypothetically calculate the answer in constant time, independent of the number of inputs, if it has enough internal parallel processing units, by assigning one thread/processing unit to each element of the input/output data
+- Summing over all the values in an array to produce a scalar output is a fundamentally different type of operation that cannot be performed in constant time, even with an infinite number of internal parallel processing units
+- This type of computation which takes an input array and operates on all the elements to produce a smaller array is called a reduction
+- Naively, a reduction such as summing an array could be performed by a single thread and a single processing unit by adding up each element one by one, in time which is proportional to the length of the input array
+- Such a reduction can be performed more efficiently in time that is proportional to the logarithm of the length of the input array
+- An example implementation of a dot-product can be found in `cuda_by_example/chapter05/dot.cu`, which demonstrates how to implement a reduction efficiently
+
+## Profiling
+
+## Constant memory
+
+## Atomics
+
+## Streams
+
+## ...
