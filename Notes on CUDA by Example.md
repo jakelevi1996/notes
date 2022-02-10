@@ -72,6 +72,9 @@ The CUDA language features (keywords, function names, etc) specified below are a
 - It is possible to define higher dimensional arrays of blocks and threads, by declaring a `dim3` variable (which represents a 3D tuple) and passing it to the kernel call, for example `dim3 blocks(DIM/16,DIM/16); dim3 threads(16,16); kernel<<<blocks,threads>>>( d->dev_bitmap, ticks );`
   - This might be useful for example if processing all pixels of an image in parallel
   - In this case, the offset for each thread can be calculated as follows: `int x = threadIdx.x + blockIdx.x * blockDim.x; int y = threadIdx.y + blockIdx.y * blockDim.y; int offset = x + y * blockDim.x * gridDim.x;`
+- There is a limit to the number of blocks and threads that can be launched
+  - The maximum number of blocks is 65,535 (according to section 4.2.1 of the book, this is a hardware-imposed limit)
+  - The maximum number of threads per block is platform-specific (the maximum number of threads on the Jetson Nano is 1024, whereas section 5.2.1 of the book states that "For many of the graphics processors currently available, this limit is 512 threads per block")
 
 ## Reductions (chapter 5)
 
