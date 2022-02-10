@@ -11,9 +11,10 @@
   - [Blocks and threads (chapters 4 and 5)](#blocks-and-threads-chapters-4-and-5)
   - [Reductions (chapter 5)](#reductions-chapter-5)
   - [Profiling (chapter 6)](#profiling-chapter-6)
-  - [Constant memory](#constant-memory)
-  - [Atomics](#atomics)
-  - [Streams](#streams)
+  - [Constant memory (chapter 6)](#constant-memory-chapter-6)
+  - [Atomics (chapter 9)](#atomics-chapter-9)
+  - [Streams (chapter 10)](#streams-chapter-10)
+  - [Multiple GPUs (chapter 11)](#multiple-gpus-chapter-11)
   - [...](#)
 
 ## Introduction
@@ -97,10 +98,12 @@ Calculate the elapsed time | `cudaEventElapsedTime( &elapsedTime, start, stop )`
 Free the memory created by `cudaEventCreate` | `cudaEventDestroy( start ); cudaEventDestroy( stop )`
 Print the elapsed time | `printf( "Time elapsed: %3.1f ms\n", elapsedTime );`
 
-## Constant memory
+## Constant memory (chapter 6)
 
-## Atomics
+## Atomics (chapter 9)
 
-## Streams
+## Streams (chapter 10)
+
+## Multiple GPUs (chapter 11)
 
 ## ...
