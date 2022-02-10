@@ -6,11 +6,11 @@
   - [Contents](#contents)
   - [Introduction](#introduction)
   - [General tips about CUDA](#general-tips-about-cuda)
-  - [Functions and kernels](#functions-and-kernels)
-  - [Blocks and threads](#blocks-and-threads)
-  - [Allocating, copying and releasing memory](#allocating-copying-and-releasing-memory)
-  - [Reductions](#reductions)
-  - [Profiling](#profiling)
+  - [Functions and kernels (chapter 3)](#functions-and-kernels-chapter-3)
+  - [Blocks and threads (chapters 4 and 5)](#blocks-and-threads-chapters-4-and-5)
+  - [Allocating, copying and releasing memory (chapter 3)](#allocating-copying-and-releasing-memory-chapter-3)
+  - [Reductions (chapter 5)](#reductions-chapter-5)
+  - [Profiling (chapter 6)](#profiling-chapter-6)
   - [Constant memory](#constant-memory)
   - [Atomics](#atomics)
   - [Streams](#streams)
@@ -30,17 +30,23 @@ The CUDA language features (keywords, function names, etc) specified below are a
 - Use `nvcc` to compile a CUDA source file, EG `nvcc main.cu -o main`
 - A program compiled using `nvcc` is run exactly the same as a normal program, EG `./main`
 - To get information about all GPU devices currently available on a given machine, compile and run `cuda_by_example/chapter03/enum_gpu.cu`, which prints information to `stdout` such as device name, compute capability, clock rate, total global and constant memory, the maximum number of threads per block, the maximum thread dimensions, and the maximum grid size
+- Error checking is important for calls to built-in Cuda functions
+  - Many built-in Cuda functions (EG for GPU memory allocation) return a variable of type `cudaError_t`, indicating if they were successful or not
+  - If the return code is not equal to `cudaSuccess`, then this indicates that an error occured
+  - If an error occured, an error string can be acquired by passing the return code to `cudaGetErrorString(code)`
+  - For example, within a Cuda error-checking function, this error code might be printed to `stderr`, along with the filename and line of the function call, after which the error-checking function could call `exit( EXIT_FAILURE )` or `exit(code)`
+  - The filename and line number of the error can be passed to the error-checking function by wrapping it in a macro function, accepts the error code and calls the error-checking function with the error code as well as `__FILE__` and `__LINE__`
 
-## Functions and kernels
+## Functions and kernels (chapter 3)
 
 - A normal C-style function in a CUDA source file will run on the CPU unless otherwise specified
 - The `main` function should run on the CPU
 - A CUDA kernel is a function that can run on GPU hardware
-- To define a kernel that can be called from both the CPU and GPU, prepend the function definition with the keyword `__global__`, EG `__global__ void add( int *a, int *b, int *c ) {...`
+- To define a kernel that can be called from both the CPU and GPU, prepend the function definition with the keyword `__global__`, EG `__global__ void add( int *a, int *b, int *c ) {...}`
 - To define a kernel that can only be called from functions running on the GPU, prepend the function definition with the keyword `__device__` (this keyword can also be used for functions defined within a `struct`)
 - To call a global kernel from a CPU function, use triple angle brackets, EG `add<<<N,1>>>( dev_a, dev_b, dev_c );`
 
-## Blocks and threads
+## Blocks and threads (chapters 4 and 5)
 
 - When calling a CUDA kernel using angle bracket notation, the first number in the angle brackets refers to the number of blocks, and the second number refers to the number of threads
 - Often it is useful at the start of a kernel to calculate an index which is specific to each thread, and is used to decide which element of the inputs/outputs to process in the thread which is currently executing
@@ -59,14 +65,15 @@ The CUDA language features (keywords, function names, etc) specified below are a
   - In this case, the offset for each thread can be calculated as follows: `int x = threadIdx.x + blockIdx.x * blockDim.x; int y = threadIdx.y + blockIdx.y * blockDim.y; int offset = x + y * blockDim.x * gridDim.x;`
 
 
-## Allocating, copying and releasing memory
+## Allocating, copying and releasing memory (chapter 3)
 
 - To allocate memory on the GPU, use the `cudaMalloc` function, which accepts the address of a pointer (a pointer to a pointer) for the memory, and the number of bytes to by allocated, EG `int *dev_a; cudaMalloc( (void**)&dev_a, N * sizeof(int) )`
-- To copy memory from an array on the CPU to an array on the GPU, use the `cudaMemcpy` function with the `cudaMemcpyHostToDevice` keyword, EG `int a[N]; cudaMemcpy( dev_a, a, N * sizeof(int), cudaMemcpyHostToDevice ) );` (assuming that `dev_a` has been declared and allocated as described in the previous example)
-- To copy memory from an array on the GPU to an array on the CPU, use the `cudaMemcpy` function with the `cudaMemcpyDeviceToHost` keyword, EG `cudaMemcpy( c, dev_c, N * sizeof(int), cudaMemcpyDeviceToHost ) )`
+  - After calling `cudaMalloc`, `dev_a` will now point to a correctly sized buffer on the GPU
+- To copy memory from an array on the CPU to an array on the GPU, use the `cudaMemcpy` function with the `cudaMemcpyHostToDevice` keyword, EG `int a[N]; cudaMemcpy( dev_a, a, N * sizeof(int), cudaMemcpyHostToDevice );` (assuming that `dev_a` has been declared and allocated as described in the previous example)
+- To copy memory from an array on the GPU to an array on the CPU, use the `cudaMemcpy` function with the `cudaMemcpyDeviceToHost` keyword, EG `cudaMemcpy( c, dev_c, N * sizeof(int), cudaMemcpyDeviceToHost )`
 - To free allocated GPU memory, use the `cudaFree` function, EG `cudaFree( dev_a )`
 
-## Reductions
+## Reductions (chapter 5)
 
 - When the number of outputs is proportional to the number of inputs (EG when adding two vectors together element-wise, or evaluating a function at every point in an array), a GPU can hypothetically calculate the answer in constant time, independent of the number of inputs, if it has enough internal parallel processing units, by assigning one thread/processing unit to each element of the input/output data
 - Summing over all the values in an array to produce a scalar output is a fundamentally different type of operation that cannot be performed in constant time, even with an infinite number of internal parallel processing units
@@ -75,7 +82,21 @@ The CUDA language features (keywords, function names, etc) specified below are a
 - Such a reduction can be performed more efficiently in time that is proportional to the logarithm of the length of the input array, using shared memory and thread synchronisation (using the `__shared__` keyword and the `__syncthreads()` function mentioned above)
 - An example of a kernel which calculates the dot-product of 2 arrays can be found in `cuda_by_example/chapter05/dot.cu`, which demonstrates how to implement a reduction efficiently
 
-## Profiling
+## Profiling (chapter 6)
+
+- To initialise GPU profiling (which can be used to profile kernel calls, copying memory between the CPU and GPU, etc):
+
+Instruction | Code
+--- | ---
+Declare the following variables | `cudaEvent_t start, stop; float elapsedTime;`
+Initialise the Cuda event variables | `cudaEventCreate( &start ); cudaEventCreate( &stop );`
+Record the start of the profiling | `cudaEventRecord( start, 0 );`
+Perform code which is to be profiled |
+Record the end of the profiling | `cudaEventRecord( stop, 0 );`
+Synchronise the CPU with the GPU | `cudaEventSynchronize( stop );`
+Calculate the elapsed time | `cudaEventElapsedTime( &elapsedTime, start, stop )`
+Free the memory created by `cudaEventCreate` | `cudaEventDestroy( start ); cudaEventDestroy( stop )`
+Print the elapsed time | `printf( "Time elapsed: %3.1f ms\n", elapsedTime );`
 
 ## Constant memory
 
