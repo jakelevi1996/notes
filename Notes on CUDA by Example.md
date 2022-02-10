@@ -7,8 +7,8 @@
   - [Introduction](#introduction)
   - [General tips about CUDA](#general-tips-about-cuda)
   - [Functions and kernels (chapter 3)](#functions-and-kernels-chapter-3)
-  - [Blocks and threads (chapters 4 and 5)](#blocks-and-threads-chapters-4-and-5)
   - [Allocating, copying and releasing memory (chapter 3)](#allocating-copying-and-releasing-memory-chapter-3)
+  - [Blocks and threads (chapters 4 and 5)](#blocks-and-threads-chapters-4-and-5)
   - [Reductions (chapter 5)](#reductions-chapter-5)
   - [Profiling (chapter 6)](#profiling-chapter-6)
   - [Constant memory](#constant-memory)
@@ -46,6 +46,14 @@ The CUDA language features (keywords, function names, etc) specified below are a
 - To define a kernel that can only be called from functions running on the GPU, prepend the function definition with the keyword `__device__` (this keyword can also be used for functions defined within a `struct`)
 - To call a global kernel from a CPU function, use triple angle brackets, EG `add<<<N,1>>>( dev_a, dev_b, dev_c );`
 
+## Allocating, copying and releasing memory (chapter 3)
+
+- To allocate memory on the GPU, use the `cudaMalloc` function, which accepts the address of a pointer (a pointer to a pointer) for the memory, and the number of bytes to by allocated, EG `int *dev_a; cudaMalloc( (void**)&dev_a, N * sizeof(int) )`
+  - After calling `cudaMalloc`, `dev_a` will now point to a correctly sized buffer on the GPU
+- To copy memory from an array on the CPU to an array on the GPU, use the `cudaMemcpy` function with the `cudaMemcpyHostToDevice` keyword, EG `int a[N]; cudaMemcpy( dev_a, a, N * sizeof(int), cudaMemcpyHostToDevice );` (assuming that `dev_a` has been declared and allocated as described in the previous example)
+- To copy memory from an array on the GPU to an array on the CPU, use the `cudaMemcpy` function with the `cudaMemcpyDeviceToHost` keyword, EG `cudaMemcpy( c, dev_c, N * sizeof(int), cudaMemcpyDeviceToHost )`
+- To free allocated GPU memory, use the `cudaFree` function, EG `cudaFree( dev_a )`
+
 ## Blocks and threads (chapters 4 and 5)
 
 - When calling a CUDA kernel using angle bracket notation, the first number in the angle brackets refers to the number of blocks, and the second number refers to the number of threads
@@ -63,15 +71,6 @@ The CUDA language features (keywords, function names, etc) specified below are a
 - It is possible to define higher dimensional arrays of blocks and threads, by declaring a `dim3` variable (which represents a 3D tuple) and passing it to the kernel call, for example `dim3 blocks(DIM/16,DIM/16); dim3 threads(16,16); kernel<<<blocks,threads>>>( d->dev_bitmap, ticks );`
   - This might be useful for example if processing all pixels of an image in parallel
   - In this case, the offset for each thread can be calculated as follows: `int x = threadIdx.x + blockIdx.x * blockDim.x; int y = threadIdx.y + blockIdx.y * blockDim.y; int offset = x + y * blockDim.x * gridDim.x;`
-
-
-## Allocating, copying and releasing memory (chapter 3)
-
-- To allocate memory on the GPU, use the `cudaMalloc` function, which accepts the address of a pointer (a pointer to a pointer) for the memory, and the number of bytes to by allocated, EG `int *dev_a; cudaMalloc( (void**)&dev_a, N * sizeof(int) )`
-  - After calling `cudaMalloc`, `dev_a` will now point to a correctly sized buffer on the GPU
-- To copy memory from an array on the CPU to an array on the GPU, use the `cudaMemcpy` function with the `cudaMemcpyHostToDevice` keyword, EG `int a[N]; cudaMemcpy( dev_a, a, N * sizeof(int), cudaMemcpyHostToDevice );` (assuming that `dev_a` has been declared and allocated as described in the previous example)
-- To copy memory from an array on the GPU to an array on the CPU, use the `cudaMemcpy` function with the `cudaMemcpyDeviceToHost` keyword, EG `cudaMemcpy( c, dev_c, N * sizeof(int), cudaMemcpyDeviceToHost )`
-- To free allocated GPU memory, use the `cudaFree` function, EG `cudaFree( dev_a )`
 
 ## Reductions (chapter 5)
 
