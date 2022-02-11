@@ -6,6 +6,7 @@ This is just a random collection of commands which are useful in Bash. This Gist
 
 - [Useful `bash` commands](#useful-bash-commands)
   - [Contents](#contents)
+  - [Get the current date and time with `date`](#get-the-current-date-and-time-with-date)
   - [Updating and upgrading packages using `apt update` and `apt upgrade`](#updating-and-upgrading-packages-using-apt-update-and-apt-upgrade)
   - [Seeing available disk space (using `df`) and disk usage (using `du`)](#seeing-available-disk-space-using-df-and-disk-usage-using-du)
   - [View the return code of the most recent command using `$?`](#view-the-return-code-of-the-most-recent-command-using-)
@@ -53,6 +54,16 @@ This is just a random collection of commands which are useful in Bash. This Gist
   - [Download VSCode](#download-vscode)
   - [Get the absolute path to the current `bash` script and its directory using `$BASH_SOURCE`](#get-the-absolute-path-to-the-current-bash-script-and-its-directory-using-bash_source)
   - [Synchronise remote files and directories with `rsync`](#synchronise-remote-files-and-directories-with-rsync)
+
+## Get the current date and time with `date`
+
+```
+$ date
+Fri Feb 11 14:53:37 GMT 2022
+$ echo $(date) > ~/temp.txt
+$ cat ~/temp.txt
+Fri Feb 11 14:53:39 GMT 2022
+```
 
 ## Updating and upgrading packages using `apt update` and `apt upgrade`
 
@@ -292,7 +303,7 @@ tar -czvf name-of-archive.tar.gz /path/to/directory-or-file
 ```
 
 > Here’s what those switches actually mean:
-> 
+>
 > - `c`: Create an archive.
 > - `z`: Compress the archive with gzip.
 > - `v`: Display progress in the terminal while creating the archive, also known as "verbose" mode. The v is always optional in these commands, but it’s helpful.
@@ -428,7 +439,7 @@ Regarding the difference between these commonly used commands, as described in [
 > - `apt-get update` downloads the *package lists* from the repositories and "updates" them to get information on the newest versions of packages and their dependencies, for all repositories and PPAs (doesn't actually install new versions of software)
 > - `apt-get upgrade` will fetch new versions of packages existing on the machine if APT knows about these new versions by way of `apt-get update`
 > - `apt-get dist-upgrade` will do the same job which is done by `apt-get upgrade`, plus it will also intelligently handle the dependencies, so it might remove obsolete packages or add new ones
-> 
+>
 > You can combine commands with `&&` as follows:
 
 ```
