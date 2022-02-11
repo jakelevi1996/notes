@@ -44,7 +44,7 @@ The CUDA language features (keywords, function names, etc) specified below are a
 - The `main` function should run on the CPU
 - A CUDA kernel is a function that can run on GPU hardware
 - To define a kernel that can be called from both the CPU and GPU, prepend the function definition with the keyword `__global__`, EG `__global__ void add( int *a, int *b, int *c ) {...}`
-- To define a kernel that can only be called from functions running on the GPU, prepend the function definition with the keyword `__device__` (this keyword can also be used for functions defined within a `struct`)
+- To define a kernel that can only be called from functions running on the GPU, prepend the function definition with the keyword `__device__` (this keyword can also be used for functions defined within a `struct`, as demonstrated in section 4.2.2 of the book)
 - To call a global kernel from a CPU function, use triple angle brackets, EG `add<<<N,1>>>( dev_a, dev_b, dev_c );`
 
 ## Allocating, copying and releasing memory (chapter 3)
