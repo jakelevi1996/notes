@@ -6,6 +6,7 @@ This is just a random collection of commands which are useful in Bash. This Gist
 
 - [Useful `bash` commands](#useful-bash-commands)
   - [Contents](#contents)
+  - [Run script in the current shell environment using `source`](#run-script-in-the-current-shell-environment-using-source)
   - [Get the current date and time with `date`](#get-the-current-date-and-time-with-date)
   - [Updating and upgrading packages using `apt update` and `apt upgrade`](#updating-and-upgrading-packages-using-apt-update-and-apt-upgrade)
   - [Seeing available disk space (using `df`) and disk usage (using `du`)](#seeing-available-disk-space-using-df-and-disk-usage-using-du)
@@ -54,6 +55,18 @@ This is just a random collection of commands which are useful in Bash. This Gist
   - [Download VSCode](#download-vscode)
   - [Get the absolute path to the current `bash` script and its directory using `$BASH_SOURCE`](#get-the-absolute-path-to-the-current-bash-script-and-its-directory-using-bash_source)
   - [Synchronise remote files and directories with `rsync`](#synchronise-remote-files-and-directories-with-rsync)
+
+## Run script in the current shell environment using `source`
+
+Given a script called `./script`, running the command `source script` will run `script` in the current shell environment. This means that any environment variables etc set in `script` will persist in the current shell. This is different from running `./script` or `bash script` or `bash ./script`, which will execute the commands in `script` in a new shell environment, so any changes to the shell environment made by `script` will not persist in the current shell (EG if `script` changes an environment variable or sets a new one, the value of that environment variable will not persist once `script` has finished running).
+
+This can be useful EG if making a change to `~/.bashrc` (`bashrc` stands for "Bash Run Commands", which are run every time a bash shell is started) using `nano`, and wanting to apply those changes to the current shell without closing it and starting a new one:
+
+```
+$ nano ~/.bashrc
+$ # <Make changes to the shell in the nano text editor>
+$ source ~/.bashrc
+```
 
 ## Get the current date and time with `date`
 
