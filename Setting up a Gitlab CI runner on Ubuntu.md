@@ -59,3 +59,25 @@ sudo reboot
 - Youtube tutorials by Valentin Despa:
   - ["Gitlab CI pipeline tutorial for beginners"](https://youtu.be/Jav4vbUrqII)
   - ["How to configure your own Gitlab CI Runner"](https://youtu.be/G8ZONHOTAQk)
+
+## A note on scheduled/manual jobs
+
+For some longer-running jobs, it might be desirable for them to run automatically only during scheduled overnight and/or weekend pipelines, but to still have the option to trigger them to run manually during pipelines triggered by a push. This can be achieved using the following syntax in a `.gitlab-ci.yml` file:
+
+```yaml
+job_name:
+    extends: .template_job
+    stage: stage_name
+    tags:
+        - custom_tag
+    script:
+        - python3 my_test_script.py
+    rules:
+        - if: $CI_PIPELINE_SOURCE != "schedule"
+          when: manual
+          allow_failure: true
+        - if: $CI_PIPELINE_SOURCE == "schedule"
+          when: always
+```
+
+Note that when setting the job to be `when: manual` in a branch of `rules`, it is necessary to set `allow_failure: true`, otherwise the job will be considered to have failed every time it is not manually triggered, and therefore in this case the whole pipeline will be considered to have failed.
