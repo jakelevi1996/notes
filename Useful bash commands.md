@@ -55,6 +55,8 @@ This is just a random collection of commands which are useful in Bash. This Gist
   - [Download VSCode](#download-vscode)
   - [Get the absolute path to the current `bash` script and its directory using `$BASH_SOURCE`](#get-the-absolute-path-to-the-current-bash-script-and-its-directory-using-bash_source)
   - [Synchronise remote files and directories with `rsync`](#synchronise-remote-files-and-directories-with-rsync)
+  - [Create an `alias`](#create-an-alias)
+  - [Create a symbolic link using `ln -s`](#create-a-symbolic-link-using-ln--s)
 
 ## Run script in the current shell environment using `source`
 
@@ -828,3 +830,19 @@ Flag | Meaning
 `-z` | Compress files (EG text files) to reduce network transfer
 
 ([source 1](https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories)) ([source 2](https://linux.die.net/man/1/rsync))
+
+## Create an `alias`
+
+Use `alias` to create an alias, EG `alias gcc-7=gcc`. This means that every time `bash` tries to use the command `gcc-7`, instead it will replace `gcc-7` with `gcc` (but the rest of the command will remain unchanged). This might be useful EG if a shell script assumes that `gcc-7` is installed, and keeps trying to call this version specifically with the command `gcc-7`, but instead a later version of `gcc` is installed that works equally well. Instead of installing an earlier version of `gcc`, using the command `alias gcc-7=gcc` will mean that every call to `gcc-7` is replaced with an equivalent call to `gcc`. This can be placed in `~/.bashrc` (short for `bash` Run Commands, which is run every time `bash` starts up) using the command `echo "alias gcc-7=gcc" >> ~/.bashrc`, and then either restarting the console, or running `source ~/.bashrc`.
+
+```bash
+echo "alias gcc-7=gcc" >> ~/.bashrc
+```
+
+## Create a symbolic link using `ln -s`
+
+Use `ln` with the `-s` flag to create a symbolic link. This could be useful EG in the scenario described above in the context of `alias`, if `alias` is not working because the commands are not being run in `bash` (this might be the case in a `makefile` which uses `sh` instead of `bash`, see [here](https://unix.stackexchange.com/a/217245/421710)). Instead of using `alias gcc-7=gcc`, an alternative is to use `sudo ln -s /usr/bin/gcc /usr/bin/gcc-7`, which creates a symbolic link in `/usr/bin/` from `gcc-7` to `gcc`, which is more likely to be portable between different shells (not just `bash`).
+
+```bash
+sudo ln -s /usr/bin/gcc /usr/bin/gcc-7
+```
