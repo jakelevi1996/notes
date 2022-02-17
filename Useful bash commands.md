@@ -54,6 +54,7 @@ This is just a random collection of commands which are useful in Bash. This Gist
   - [Sort `$PATH` and remove duplicates](#sort-path-and-remove-duplicates)
   - [Download VSCode](#download-vscode)
   - [Get the absolute path to the current `bash` script and its directory using `$BASH_SOURCE`](#get-the-absolute-path-to-the-current-bash-script-and-its-directory-using-bash_source)
+  - [Passwordless `ssh` terminals and commands](#passwordless-ssh-terminals-and-commands)
   - [Synchronise remote files and directories with `rsync`](#synchronise-remote-files-and-directories-with-rsync)
   - [Create an `alias`](#create-an-alias)
   - [Create a symbolic link using `ln -s`](#create-a-symbolic-link-using-ln--s)
@@ -811,6 +812,45 @@ echo $X1
 echo $X2
 echo $X3
 ```
+
+## Passwordless `ssh` terminals and commands
+
+To open a terminal session on a remote Linux device on the local network, use the following command:
+
+```
+ssh username@hostname
+```
+
+After using this command, `ssh` should ask for the password for the specified user on the remote device. To configure `ssh` to not request a password when connecting, use the following commands, pressing enter to accept all default settings after each command (even if `ssh-keygen` has previously been called to set up passwordless `ssh` on a different remote device, it can still be called again with all default settings to set up passwordless `ssh` on the new remote device without upsetting the passwordless `ssh` that has been set up on the previous remote device):
+
+```
+ssh-keygen
+ssh-copy-id username@hostname
+```
+
+During the next attempt to connect to the remote device, `ssh` shouldn't ask for a password. If it does, a couple of solutions are to a) call `ssh-copy-id` with the `-f` flag, and b) make sure that the line `PubkeyAuthentication yes` is present in `/etc/ssh/sshd_config`, and not commented out with a `#` (as in `#PubkeyAuthentication yes`) ([source](https://superuser.com/a/904667/1098000)).
+
+To run individual commands on a remote device over `ssh`, use the following syntax (the quotation marks can be ommitted if there are no space characters between the quotation marks):
+
+```
+ssh username@hostname "command_name arg1 arg2 arg3"
+```
+
+It may be found that commands in `~/.bashrc` are not run when before using the above syntax to run single commands over `ssh`, which might be a problem EG if `~/.bashrc` adds certain directories to `$PATH` which are needed by the commands which are being run over `ssh`. This might be because the following lines are present at the start of `~/.bashrc`:
+
+```
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+```
+
+These lines basically tell `~/.bashrc` to exit if it's not being run interactively, which is the case when running single commands over `ssh`. To solve this problem, either put whichever commands that need to be run non-interactively in `~/.bashrc` before the line `case $- in`, or just comment out the lines from `case $- in` to `esac` (inclusive) ([source](https://serverfault.com/a/1062611/620693)).
 
 ## Synchronise remote files and directories with `rsync`
 
