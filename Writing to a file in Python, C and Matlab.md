@@ -105,6 +105,8 @@ fprintf(debug_fid, 'Hello world, the answer is %i\n', 42);
 fclose(debug_fid);
 ```
 
+A convenient function for reading a text file is [`fileread`](https://uk.mathworks.com/help/matlab/ref/fileread.html), which accepts a string containing the filename (as opposed to a file ID, so there is no need to call `fopen` and check the error code), and reads the entire text file (possibly containing multiple lines) into a single string, which is returned by the function.
+
 ### Printing a struct to a file
 
 A struct can be printed to a file using the [`evalc` function](https://uk.mathworks.com/help/matlab/ref/evalc.html), EG:
