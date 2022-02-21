@@ -102,6 +102,48 @@ Calculate the elapsed time | `cudaEventElapsedTime( &elapsedTime, start, stop )`
 Free the memory created by `cudaEventCreate` | `cudaEventDestroy( start ); cudaEventDestroy( stop )`
 Print the elapsed time | `printf( "Time elapsed: %3.1f ms\n", elapsedTime );`
 
+This set of commands can be followed up into 3 macros as follows:
+
+```c
+/* *** PROFILING MACROS *** */
+/* Initialise profiling: use this macro once per function before calling
+PROFILING_START and PROFILING_STOP */
+#define PROFILING_INIT                                              \
+    cudaEvent_t start, stop;                                        \
+    float elapsedTime;
+
+/* Record the start time for profiling: use this macro immediately before any
+call(s) that are to be profiled */
+#define PROFILING_START                                             \
+    cudaEventCreate(&start);                                        \
+    cudaEventCreate(&stop);                                         \
+    cudaEventRecord(start, 0);
+
+/* Record the stop time for profiling: use this macro immediately after any
+call(s) that are to be profiled */
+#define PROFILING_STOP                                              \
+    cudaEventRecord(stop, 0);                                       \
+    cudaEventSynchronize(stop);                                     \
+    cudaEventElapsedTime(&elapsedTime, start, stop);                \
+    printf("Time elapsed:  %.3g ms\n", elapsedTime);
+```
+
+These macros can be used as follows:
+
+```c
+int main() {
+    PROFILING_INIT;
+
+    PROFILING_START;
+    my_kernel<<<4096, 256>>>();
+    PROFILING_STOP;
+
+    PROFILING_START;
+    my_kernel<<<2048, 512>>>();
+    PROFILING_STOP;
+}
+```
+
 ## Constant memory (chapter 6)
 
 ## Atomics (chapter 9)
