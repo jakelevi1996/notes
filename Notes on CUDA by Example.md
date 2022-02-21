@@ -16,6 +16,7 @@
   - [Streams (chapter 10)](#streams-chapter-10)
   - [Multiple GPUs (chapter 11)](#multiple-gpus-chapter-11)
   - [...](#)
+  - [Useful links](#useful-links)
 
 ## Introduction
 
@@ -110,3 +111,9 @@ Print the elapsed time | `printf( "Time elapsed: %3.1f ms\n", elapsedTime );`
 ## Multiple GPUs (chapter 11)
 
 ## ...
+
+## Useful links
+
+- [Unified Memory for CUDA Beginners](https://developer.nvidia.com/blog/unified-memory-cuda-beginners/)
+- [An Even Easier Introduction to CUDA](https://developer.nvidia.com/blog/even-easier-introduction-cuda/) (including profiling with [`nvprof`](https://docs.nvidia.com/cuda/profiler-users-guide/index.html))
+- NVidia official [CUDA Samples](https://github.com/nvidia/cuda-samples)
