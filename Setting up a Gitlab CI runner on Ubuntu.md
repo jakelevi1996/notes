@@ -1,4 +1,11 @@
-# Setting up a Gitlab CI runner on Ubuntu
+# Tips for Gitlab CI
+
+- [Tips for Gitlab CI](#tips-for-gitlab-ci)
+  - [Setting up a Gitlab CI runner on Ubuntu](#setting-up-a-gitlab-ci-runner-on-ubuntu)
+  - [Useful resources](#useful-resources)
+  - [A note on scheduled/manual jobs](#a-note-on-scheduledmanual-jobs)
+
+## Setting up a Gitlab CI runner on Ubuntu
 
 Sometimes it might be desirable to run CI jobs on a specific local PC instead of using using cloud computing resources, for example, in case specific hardware needs to be connected to the machine that will run the CI jobs. This Gist describes how to set up and configure a Gitlab runner on an Ubuntu PC or VM.
 
