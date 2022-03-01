@@ -2,7 +2,10 @@
 
 Some useful tips for Gitlab CI, including useful resources, an example `.gitlab-ci.yml` file, and how to set up a Gitlab CI runner on Ubuntu (EG if CI jobs require local hardware).
 
+## Contents
+
 - [Tips for Gitlab CI](#tips-for-gitlab-ci)
+  - [Contents](#contents)
   - [Useful resources](#useful-resources)
   - [Example `.gitlab-ci.yml` file](#example-gitlab-ciyml-file)
   - [Setting up a Gitlab CI runner on Ubuntu](#setting-up-a-gitlab-ci-runner-on-ubuntu)
@@ -106,7 +109,6 @@ unittest_stage_2_job_1:
         paths:
             - artefact_filename_job_1_*
         when: always
-
 
 ################################ build_stage_1 ################################
 
