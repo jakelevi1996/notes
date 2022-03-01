@@ -1,7 +1,10 @@
 # Tips for Gitlab CI
 
+Some useful tips for Gitlab CI, including useful resources, an example `.gitlab-ci.yml` file, and how to set up a Gitlab CI runner on Ubuntu (EG if CI jobs require local hardware).
+
 - [Tips for Gitlab CI](#tips-for-gitlab-ci)
   - [Useful resources](#useful-resources)
+  - [Example `.gitlab-ci.yml` file](#example-gitlab-ciyml-file)
   - [Setting up a Gitlab CI runner on Ubuntu](#setting-up-a-gitlab-ci-runner-on-ubuntu)
   - [A note on scheduled/manual jobs](#a-note-on-scheduledmanual-jobs)
 
@@ -15,6 +18,141 @@
 - Youtube tutorials by Valentin Despa:
   - ["Gitlab CI pipeline tutorial for beginners"](https://youtu.be/Jav4vbUrqII)
   - ["How to configure your own Gitlab CI Runner"](https://youtu.be/G8ZONHOTAQk)
+
+## Example `.gitlab-ci.yml` file
+
+```yaml
+################################ GLOBAL CONFIG ################################
+
+# Define custom stage names (default names are build, test, deploy)
+stages:
+    - build_stage_1
+    - build_stage_2
+    - unittest_stage_1
+    - unittest_stage_2
+
+############################### unittest_stage_1 ##############################
+
+# Tests that start with `.` are template jobs: they do not run as part of the
+# pipeline, but they can be extended by other jobs using the `extends` keyword,
+# to avoid writing the same configuration for multiple different jobs
+.unittest_stage_1_template:
+    # Specify which stage this job will run in
+    stage: unittest_stage_1
+    # Always run this job, even if jobs in earlier pipelines did not succeed
+    when: always
+    # Use `dependencies` to specify which jobs to fetch artefacts from. In this
+    # case, don't download dependencies from any jobs at all
+    dependencies: []
+    # Specify which jobs in previous stages to wait for before starting this
+    # job. In this case, don't wait for any jobs in previous stages, and start
+    # this job immediately
+    needs: []
+    # Specify tags, which determine which runners will be able to run this job
+    tags:
+        - my_tag_1
+
+unit_test_1:
+    # Extend the template job
+    extends: .unit_test_template
+    script:
+        - test_script arg_1
+
+unit_test_2:
+    extends: .unit_test_template
+    script:
+        # Run multiple commands in this job
+        - test_script arg_2
+        - extra_command
+        # Commands can use extra lines, no backslashes needed
+        - this_command
+            uses_multiple
+            lines
+
+unit_test_3:
+    extends: .unit_test_template
+    # Specify a Docker image
+    image: my.website:project/name:master
+    script:
+        - test_script arg_1
+    # Override tags
+    tags:
+        - my_tag_2_docker
+
+############################### unittest_stage_2 ##############################
+
+.unittest_stage_2_template:
+    stage: unittest_stage_2
+    dependencies: []
+    needs: []
+    tags:
+        - my_tag_3
+    # Configure this job to always run during scheduled pipelines (EG nightly
+    # and weekly pipelines), but to still have the option to be triggered
+    # manually in pipelines triggered by a push
+    rules:
+        - if: $CI_PIPELINE_SOURCE != "schedule"
+          when: manual
+          allow_failure: true
+        - if: $CI_PIPELINE_SOURCE == "schedule"
+          when: always
+
+unittest_stage_2_job_1:
+    extends: .unittest_stage_2_template
+    script:
+        - test_script arg_1 --stage 2
+    # Specify which artefacts to export from this job and when
+    artifacts:
+        paths:
+            - artefact_filename_job_1_*
+        when: always
+
+
+################################ build_stage_1 ################################
+
+.build_stage_1_template:
+    stage: build_stage_1
+    variables:
+        # Specify environment variables here. Note that environment variables
+        # won't be picked up from ~/.bashrc on the runner
+        PATH: "/bin:/home/me/.local/bin:/home/me/dir1/dir2/bin:"
+        ENV_VAR_NAME_1: "ENV_VAR_VALUE_1"
+        ENV_VAR_NAME_2: "ENV_VAR_VALUE_2"
+    tags:
+        - my_tag_4
+    artifacts:
+        paths:
+            # Specify paths to artefacts using glob expression
+            - "**/results.txt"
+        when: always
+    # After running this job, delete all object files (so they won't have to be
+    # deleted automatically at the start of the next job and spam the job log)
+    after_script:
+        - find . -type f -name '*.o' -delete
+
+build_stage_1_job_1:
+    extends: .build_stage_1_template
+    script:
+        - cd dir1/dir2
+        - make
+    artifacts:
+        paths:
+            # Export a whole directory as an artefact
+            - dir1/dir2/
+
+build_stage_1_job_2:
+    extends: .build_stage_1_template
+    script:
+        - scons -j4 platform=linux
+    # Allow this job to fail, without causing later jobs to automatically fail
+    allow_failure: true
+    # Specify time out
+    timeout: 2 hours 30 minutes
+    rules:
+        # CUSTOM_VAR can be set in the schedule configuration on Gitlab (EG to
+        # specify if this is a nightly or a weekly test)
+        - if: '$CI_PIPELINE_SOURCE == "schedule" && $CUSTOM_VAR == "CUSTOM_VAL"'
+```
 
 ## Setting up a Gitlab CI runner on Ubuntu
 
