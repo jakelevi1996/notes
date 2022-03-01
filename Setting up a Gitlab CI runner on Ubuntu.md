@@ -1,9 +1,20 @@
 # Tips for Gitlab CI
 
 - [Tips for Gitlab CI](#tips-for-gitlab-ci)
-  - [Setting up a Gitlab CI runner on Ubuntu](#setting-up-a-gitlab-ci-runner-on-ubuntu)
   - [Useful resources](#useful-resources)
+  - [Setting up a Gitlab CI runner on Ubuntu](#setting-up-a-gitlab-ci-runner-on-ubuntu)
   - [A note on scheduled/manual jobs](#a-note-on-scheduledmanual-jobs)
+
+## Useful resources
+
+- [Documentation for "GitLab CI/CD"](https://docs.gitlab.com/ee/ci/)
+- [Documentation for "Pipeline schedules"](https://docs.gitlab.com/ee/ci/pipelines/schedules.html)
+- [Documentation for "GitLab Runner"](https://docs.gitlab.com/runner/)
+- ["Keyword reference for the .gitlab-ci.yml file"](https://docs.gitlab.com/ee/ci/yaml/)
+- ["Predefined variables reference"](https://docs.gitlab.com/ee/ci/variables/predefined_variables.html)
+- Youtube tutorials by Valentin Despa:
+  - ["Gitlab CI pipeline tutorial for beginners"](https://youtu.be/Jav4vbUrqII)
+  - ["How to configure your own Gitlab CI Runner"](https://youtu.be/G8ZONHOTAQk)
 
 ## Setting up a Gitlab CI runner on Ubuntu
 
@@ -55,17 +66,6 @@ sudo gitlab-runner start
 rm ~/.bash_logout
 sudo reboot
 ```
-
-## Useful resources
-
-- [Documentation for "GitLab CI/CD"](https://docs.gitlab.com/ee/ci/)
-- [Documentation for "Pipeline schedules"](https://docs.gitlab.com/ee/ci/pipelines/schedules.html)
-- [Documentation for "GitLab Runner"](https://docs.gitlab.com/runner/)
-- ["Keyword reference for the .gitlab-ci.yml file"](https://docs.gitlab.com/ee/ci/yaml/)
-- ["Predefined variables reference"](https://docs.gitlab.com/ee/ci/variables/predefined_variables.html)
-- Youtube tutorials by Valentin Despa:
-  - ["Gitlab CI pipeline tutorial for beginners"](https://youtu.be/Jav4vbUrqII)
-  - ["How to configure your own Gitlab CI Runner"](https://youtu.be/G8ZONHOTAQk)
 
 ## A note on scheduled/manual jobs
 
