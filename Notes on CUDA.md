@@ -20,7 +20,9 @@ This Gist contains notes and useful links about programming in Cuda, a language 
     - [Streams (chapter 10)](#streams-chapter-10)
     - [Multiple GPUs (chapter 11)](#multiple-gpus-chapter-11)
     - [...](#)
+  - [Error checking](#error-checking)
   - [Thrust](#thrust)
+    - [Calculating mean and variance using Thrust](#calculating-mean-and-variance-using-thrust)
 
 ## Useful links
 
@@ -168,4 +170,164 @@ int main() {
 
 ### ...
 
+## Error checking
+
+In addition to the notes on error checking mentioned above in the context of the "CUDA By Example" book, [this Stack Overflow answer](https://stackoverflow.com/a/6420012/8477566) provides a useful method for checking if an error occured during a kernel call:
+
+```
+kernel<<<blocks, threads>>>(params);
+cudaError_t err = cudaGetLastError();
+if (err != cudaSuccess)
+    printf("Error: %s\n", cudaGetErrorString(err));
+```
+
+Cuda memory errors can be investigated using [CUDA-MEMCHECK](https://docs.nvidia.com/cuda/cuda-memcheck/index.html), which in the simplest case can be used by just calling `cuda-memcheck` along with the name of the executable:
+
+```
+nvcc app_name.cu -o app_name
+cuda-memcheck app_name
+```
+
 ## Thrust
+
+As stated in the documentation, "Thrust is a C++ template library for CUDA based on the Standard Template Library (STL). Thrust allows you to implement high performance parallel applications with minimal programming effort through a high-level interface that is fully interoperable with CUDA C. Thrust provides a rich collection of data parallel primitives such as scan, sort, and reduce, which can be composed together to implement complex algorithms with concise, readable source code." The API reference guide for Thrust can be found [here](https://docs.nvidia.com/cuda/thrust/index.html).
+
+Note that:
+
+- Thrust functions can't be called from inside a Cuda kernel, they can only be called from host (CPU) functions ([source](https://stackoverflow.com/a/17814466/8477566))
+- Thrust is based on the Standard Template Library (STL), and many Thrust functions correspond to an analogous STL function, EG [`thrust::transform`](https://nvidia.github.io/thrust/api/groups/group__transformations.html#function-transform) and [`std::transform`](https://www.cplusplus.com/reference/algorithm/transform/)
+- Many Thrust functions accept instances of [functors](https://stackoverflow.com/a/356993/8477566), which are essentially classes which define `operator()` (IE are callable, see example below)
+- Generalised inner products and transformed reductions can be performed using [`thrust::inner_product`](https://nvidia.github.io/thrust/api/groups/group__transformed__reductions.html#function-inner-product) and [`thrust::transform_reduce`](https://nvidia.github.io/thrust/api/groups/group__transformed__reductions.html#function-transform-reduce), which might be useful EG if generalising existing Thrust functions to complex numbers
+
+### Calculating mean and variance using Thrust
+
+Below is an example of calculating mean and variance using Thrust:
+
+```c++
+struct square_double {
+    __host__ __device__ double operator()(const double& x) const {
+        return x * x;
+    }
+};
+
+void mean_and_var(double* a, int n, double* p_mean, double* p_var) {
+    double sum = thrust::reduce(a, &a[n], 0.0, thrust::plus<double>());
+    double sum_square = thrust::transform_reduce(
+        a,
+        &a[n],
+        square_double(),
+        0.0,
+        thrust::plus<double>()
+    );
+    double mean = sum / n;
+    *p_mean = mean;
+    *p_var = (sum_square / n) - mean*mean;
+}
+```
+
+Here is that solution in a self-contained source file along with some profiling calculations, comparing CPU versus GPU, and device memory versus host memory in Thrust function calls:
+
+```c++
+#include "stdio.h"
+#include <thrust/reduce.h>
+#include <thrust/device_vector.h>
+
+#define PROFILING_INIT                                              \
+    cudaEvent_t start, stop;                                        \
+    float elapsedTime;
+
+#define PROFILING_START                                             \
+    cudaEventCreate(&start);                                        \
+    cudaEventCreate(&stop);                                         \
+    cudaEventRecord(start, 0);
+
+#define PROFILING_STOP                                              \
+    cudaEventRecord(stop, 0);                                       \
+    cudaEventSynchronize(stop);                                     \
+    cudaEventElapsedTime(&elapsedTime, start, stop);                \
+    printf("Time elapsed:  %.3g ms\n", elapsedTime);
+
+#define N (6*8000)
+// #define N (6*8000*10)
+// #define N (6*8000*100)
+double a[N];
+
+template <typename T> struct square {
+    __host__ __device__ T operator()(const T& x) const {
+        return x * x;
+    }
+};
+
+void mean_and_var_cpu(double* a, int n, double* p_mean, double* p_var) {
+    double sum = 0, sum_square = 0, mean;
+    for (int i = 0; i < n; i++) {
+        sum += a[i];
+        sum_square += (a[i] * a[i]);
+    }
+    mean = sum / n;
+    *p_mean = mean;
+    *p_var = (sum_square / n) - mean*mean;
+}
+
+template <typename T> void mean_and_var(T a, int n, double* p_mean, double* p_var) {
+    double sum = thrust::reduce(a, &a[n], 0.0, thrust::plus<double>());
+    double sum_square = thrust::transform_reduce(a, &a[n], square<double>(), 0.0, thrust::plus<double>());
+    double mean = sum / n;
+    *p_mean = mean;
+    *p_var = (sum_square / n) - mean*mean;
+}
+
+int main() {
+    for (int i = 0; i < N; i++) {
+        a[i] = i;
+    }
+
+    double mean, var;
+
+    PROFILING_INIT;
+
+    printf("With thrust:\n");
+    PROFILING_START;
+    mean_and_var<double*>(a, N, &mean, &var);
+    PROFILING_STOP;
+    printf("Mean = %f, var = %f\n", mean, var);
+
+    printf("With thrust, using device memory:\n");
+    thrust::device_vector<double> a_dev(N);
+    thrust::copy(a, &a[N], a_dev.begin());
+    PROFILING_START;
+    mean_and_var<thrust::device_ptr<double>>(&a_dev[0], N, &mean, &var);
+    PROFILING_STOP;
+    printf("Mean = %f, var = %f\n", mean, var);
+
+    printf("On CPU:\n");
+    PROFILING_START;
+    mean_and_var_cpu(a, N, &mean, &var);
+    PROFILING_STOP;
+    printf("Mean = %f, var = %f\n", mean, var);
+
+}
+```
+
+In all cases, the answers agree with the mean and population variance calculated using the Python `statistics` module:
+
+```python
+import statistics
+x = 8000*6
+print(statistics.mean(list(range(x))))
+# print(statistics.variance(list(range(x))))
+print(statistics.pvariance(list(range(x))))
+```
+
+Here is some profiling information, all of which was performed on a Jetson Nano development board:
+
+N | Time taken for Thrust (ms) | Time taken for Thrust using device memory (ms) | Time taken for naive CPU implementation (ms)
+--- | --- | --- | ---
+6*8000 | 11.2 | 2.38 | 1.11
+6\*8000\*10 | 108 | 7.62 | 11.7
+6\*8000\*100 | 1.12e+03 | 41.7 | 109
+
+Conclusions from profiling:
+- If you're going to use Thrust, make sure you use device memory!
+- For a large enough input size, the GPU is faster than the CPU
+- For smaller input sizes, depending on the platform, it might be faster using the CPU than the GPU
