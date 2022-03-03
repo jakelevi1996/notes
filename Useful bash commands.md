@@ -54,7 +54,9 @@ This is just a random collection of commands which are useful in Bash. This Gist
   - [Sort `$PATH` and remove duplicates](#sort-path-and-remove-duplicates)
   - [Download VSCode](#download-vscode)
   - [Get the absolute path to the current `bash` script and its directory using `$BASH_SOURCE`](#get-the-absolute-path-to-the-current-bash-script-and-its-directory-using-bash_source)
-  - [Passwordless `ssh` terminals and commands](#passwordless-ssh-terminals-and-commands)
+  - [`ssh`](#ssh)
+    - [Passwordless `ssh` terminals](#passwordless-ssh-terminals)
+    - [Scripting individual `ssh` commands](#scripting-individual-ssh-commands)
   - [Synchronise remote files and directories with `rsync`](#synchronise-remote-files-and-directories-with-rsync)
   - [Create an `alias`](#create-an-alias)
   - [Create a symbolic link using `ln -s`](#create-a-symbolic-link-using-ln--s)
@@ -813,30 +815,59 @@ echo $X2
 echo $X3
 ```
 
-## Passwordless `ssh` terminals and commands
+## `ssh`
 
-To open a terminal session on a remote Linux device on the local network, use the following command on the host device:
+To open a terminal session on a remote Linux device on a local network, use the following command on the host device:
 
 ```
 ssh username@hostname
 ```
 
-After using this command, `ssh` should ask for the password for the specified user on the remote device. To configure `ssh` to not request a password when connecting, use the following commands on the local device, pressing enter to accept all default settings after each command (even if `ssh-keygen` has previously been called to set up passwordless `ssh` on a different remote device, it can still be called again with all default settings to set up passwordless `ssh` on the new remote device without upsetting the passwordless `ssh` that has been set up on the previous remote device):
+After using this command, `ssh` should ask for the password for the specified user on the remote device.
+
+### Passwordless `ssh` terminals
+
+To configure `ssh` to not request a password when connecting, use the following commands on the local device, replacing `$(UNIQUE_ID)` with a string which is unique to `username@hostname` (the password for `ssh-keygen` can be left blank, whereas the correct password for `username@hostname` needs to be entered when running `ssh-copy-id`):
 
 ```
-ssh-keygen
-ssh-copy-id username@hostname
+ssh-keygen  -f ~/.ssh/id_rsa_$(UNIQUE_ID)
+ssh-copy-id -i ~/.ssh/id_rsa_$(UNIQUE_ID) username@hostname
 ```
 
-During the next attempt to connect to the remote device, `ssh` shouldn't ask for a password. If it does, a couple of solutions are to a) call `ssh-copy-id` with the `-f` flag on the local device, and b) make sure that the line `PubkeyAuthentication yes` is present in `/etc/ssh/sshd_config` on the remote device, and not commented out with a `#` (as in `#PubkeyAuthentication yes`) ([source](https://superuser.com/a/904667/1098000)).
+Now `username@hostname` can be connected to over `ssh` without needing to enter a password, using the command `ssh -i -i ~/.ssh/id_rsa_$(UNIQUE_ID) username@hostname`. To automate this further such that the path to the SSH key doesn't need to be entered when using `ssh`, edit `~/.ssh/config` using the following command:
 
-To run individual commands on a remote device over `ssh`, use the following syntax (the quotation marks can be ommitted if there are no space characters between the quotation marks):
+```
+nano ~/.ssh/config
+```
+
+Enter the following configuration, replacing $(SHORT_NAME_FOR_REMOTE_USER) with a short name which is unique to `username@hostname`:
+
+```
+Host $(SHORT_NAME_FOR_REMOTE_USER)
+   User username
+   Hostname hostname
+   IdentityFile ~/.ssh/id_rsa_$(UNIQUE_ID)
+```
+
+Save and exit `nano`. `username@hostname` can now be connected to over `ssh` using the following command, without being asked for a password ([source](https://stackoverflow.com/a/41135590/8477566)):
+
+```
+ssh $(SHORT_NAME_FOR_REMOTE_USER)
+```
+
+This should also allow `rsync` to run without requesting a password, again by replacing `username@hostname` with `$(SHORT_NAME_FOR_REMOTE_USER)`.
+
+If the above steps don't work and `ssh` still asks for a password, a couple of solutions are to a) call `ssh-copy-id` with the `-f` flag on the local device, and b) make sure that the line `PubkeyAuthentication yes` is present in `/etc/ssh/sshd_config` on the remote device, and not commented out with a `#` (as in `#PubkeyAuthentication yes`) ([source](https://superuser.com/a/904667/1098000)).
+
+### Scripting individual `ssh` commands
+
+To run individual commands on a remote device over `ssh` without opening up an interactive terminal, use the following syntax (the quotation marks can be ommitted if there are no space characters between the quotation marks):
 
 ```
 ssh username@hostname "command_name arg1 arg2 arg3"
 ```
 
-It may be found that commands in `~/.bashrc` on the remote device are not run before using the above syntax to run single commands over `ssh` on the remote device, which might be a problem EG if `~/.bashrc` adds certain directories to `$PATH` which are needed by the commands which are being run over `ssh`. This might be because the following lines are present at the start of `~/.bashrc` on the remote device:
+It may be found that commands in `~/.bashrc` on the remote device are not run when using the above syntax to run single commands over `ssh` on the remote device, which might be a problem EG if `~/.bashrc` adds certain directories to `$PATH` which are needed by the commands which are being run over `ssh`. This might be because the following lines are present at the start of `~/.bashrc` on the remote device:
 
 ```
 # ~/.bashrc: executed by bash(1) for non-login shells.
@@ -850,7 +881,7 @@ case $- in
 esac
 ```
 
-These lines basically tell `~/.bashrc` to exit if it's not being run interactively, which is the case when running single commands over `ssh`. To solve this problem, either put whichever commands that need to be run non-interactively in `~/.bashrc` before the line `case $- in`, or comment out the lines from `case $- in` to `esac` (inclusive) on the remote device ([source](https://serverfault.com/a/1062611/620693)).
+These lines cause `~/.bashrc` to exit if it's not being run interactively, which is the case when running single commands over `ssh`. To solve this problem, either put whichever commands that need to be run non-interactively in `~/.bashrc` before the line `case $- in`, or comment out the lines from `case $- in` to `esac` (inclusive) on the remote device ([source](https://serverfault.com/a/1062611/620693)).
 
 ## Synchronise remote files and directories with `rsync`
 
@@ -871,7 +902,7 @@ Flag | Meaning
 
 ([source 1](https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories)) ([source 2](https://linux.die.net/man/1/rsync))
 
-To configure `rsync` to not request a password when synchronising directories, follow the instructions in the previous section "[Passwordless `ssh` terminals and commands](#passwordless-ssh-terminals-and-commands)".
+To configure `rsync` to not request a password when synchronising directories, follow the instructions in the previous section "[Passwordless `ssh` terminals and commands](#passwordless-ssh-terminals)".
 
 ## Create an `alias`
 
