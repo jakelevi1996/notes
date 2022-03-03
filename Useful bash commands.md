@@ -57,6 +57,8 @@ This is just a random collection of commands which are useful in Bash. This Gist
   - [`ssh`](#ssh)
     - [Passwordless `ssh` terminals](#passwordless-ssh-terminals)
     - [Scripting individual `ssh` commands](#scripting-individual-ssh-commands)
+    - [Displaying graphical user interfaces over `ssh` using Xming](#displaying-graphical-user-interfaces-over-ssh-using-xming)
+    - [Jump over intermediate `ssh` connections using `ProxyJump`](#jump-over-intermediate-ssh-connections-using-proxyjump)
   - [Synchronise remote files and directories with `rsync`](#synchronise-remote-files-and-directories-with-rsync)
   - [Create an `alias`](#create-an-alias)
   - [Create a symbolic link using `ln -s`](#create-a-symbolic-link-using-ln--s)
@@ -882,6 +884,20 @@ esac
 ```
 
 These lines cause `~/.bashrc` to exit if it's not being run interactively, which is the case when running single commands over `ssh`. To solve this problem, either put whichever commands that need to be run non-interactively in `~/.bashrc` before the line `case $- in`, or comment out the lines from `case $- in` to `esac` (inclusive) on the remote device ([source](https://serverfault.com/a/1062611/620693)).
+
+### Displaying graphical user interfaces over `ssh` using Xming
+
+From WSL on a Windows PC, it is possible to display graphical user interfaces which are running on a remote Linux device using X11 forwarding. To do so:
+
+- Install Xming on the Windows machine from [here](https://sourceforge.net/projects/xming/)
+- Make sure Xming is running on the Windows machine (there should be an icon for Xming in the icon tray in the Windows taskbar when Xming is running)
+- Use the `-X` flag when connecting over `ssh`, EG `ssh -X username@hostname`
+- Test that X11 forwarding is running succesfully by entering the command `xclock` in the `ssh` terminal, which should cause a clock face to appear on the Windows machine
+- If this doesn't work, it may be necessary to use the command `export DISPLAY=localhost:0.0` in WSL, and/or to add this command to the bottom of `~/.bashrc` and restart the WSL terminal
+
+### Jump over intermediate `ssh` connections using `ProxyJump`
+
+Sometimes it is desirable to connect to `username@hostname` over `ssh`, but to do so it is necessary to first connect to `username_proxy@hostname_proxy` over `ssh`, and from `username_proxy@hostname_proxy` connect to `username@hostname` over `ssh`. This can be automated by adding entries into `~/.ssh/config` (see section "[Passwordless `ssh` terminals and commands](#passwordless-ssh-terminals)" above) for `username@hostname` and `username_proxy@hostname_proxy` with aliases `shortname` and `shortname_proxy`, and under the configuration for `shortname`, add the line `ProxyJump shortname_proxy` (following the indentation of the lines above). Now, when using the command `ssh shortname`, `ssh` will automatically connect to `shortname_proxy` first, and from `shortname_proxy` connect to `shortname` over `ssh`.
 
 ## Synchronise remote files and directories with `rsync`
 
