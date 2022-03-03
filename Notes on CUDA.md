@@ -29,8 +29,9 @@ This Gist contains notes and useful links about programming in Cuda, a language 
 - [Unified Memory for CUDA Beginners](https://developer.nvidia.com/blog/unified-memory-cuda-beginners/)
 - [An Even Easier Introduction to CUDA](https://developer.nvidia.com/blog/even-easier-introduction-cuda/) (including profiling with [`nvprof`](https://docs.nvidia.com/cuda/profiler-users-guide/index.html))
 - NVidia official [CUDA Samples](https://github.com/nvidia/cuda-samples)
-- [Thrust](https://docs.nvidia.com/cuda/thrust/index.html)
-  - [Documentation for different Thrust reduction functions](https://nvidia.github.io/thrust/api/groups/group__reductions.html)
+- Thrust
+  - [API reference guide](https://docs.nvidia.com/cuda/thrust/index.html)
+  - [Full API documentation](https://nvidia.github.io/thrust/api.html)
 
 ## Notes on "CUDA by Example" by Jason Sanders and Edward Kandrot
 
@@ -190,14 +191,16 @@ cuda-memcheck app_name
 
 ## Thrust
 
-As stated in the documentation, "Thrust is a C++ template library for CUDA based on the Standard Template Library (STL). Thrust allows you to implement high performance parallel applications with minimal programming effort through a high-level interface that is fully interoperable with CUDA C. Thrust provides a rich collection of data parallel primitives such as scan, sort, and reduce, which can be composed together to implement complex algorithms with concise, readable source code." The API reference guide for Thrust can be found [here](https://docs.nvidia.com/cuda/thrust/index.html).
+As stated in the documentation, "Thrust is a C++ template library for CUDA based on the Standard Template Library (STL). Thrust allows you to implement high performance parallel applications with minimal programming effort through a high-level interface that is fully interoperable with CUDA C. Thrust provides a rich collection of data parallel primitives such as scan, sort, and reduce, which can be composed together to implement complex algorithms with concise, readable source code."
+
+The API reference guide for Thrust can be found [here](https://docs.nvidia.com/cuda/thrust/index.html), and the full API documentation can be found [here](https://nvidia.github.io/thrust/api.html).
 
 Note that:
 
 - Thrust functions can't be called from inside a Cuda kernel, they can only be called from host (CPU) functions ([source](https://stackoverflow.com/a/17814466/8477566))
 - Thrust is based on the Standard Template Library (STL), and many Thrust functions correspond to an analogous STL function, EG [`thrust::transform`](https://nvidia.github.io/thrust/api/groups/group__transformations.html#function-transform) and [`std::transform`](https://www.cplusplus.com/reference/algorithm/transform/)
 - Many Thrust functions accept instances of [functors](https://stackoverflow.com/a/356993/8477566), which are essentially classes which define `operator()` (IE are callable, see example below)
-- Generalised inner products and transformed reductions can be performed using [`thrust::inner_product`](https://nvidia.github.io/thrust/api/groups/group__transformed__reductions.html#function-inner-product) and [`thrust::transform_reduce`](https://nvidia.github.io/thrust/api/groups/group__transformed__reductions.html#function-transform-reduce), which might be useful EG if generalising existing Thrust functions to complex numbers
+- Generalised reductions, transformed reductions, and inner products can be performed using [`thrust::reduce`](https://nvidia.github.io/thrust/api/groups/group__reductions.html#function-reduce), [`thrust::transform_reduce`](https://nvidia.github.io/thrust/api/groups/group__transformed__reductions.html#function-transform-reduce), and [`thrust::inner_product`](https://nvidia.github.io/thrust/api/groups/group__transformed__reductions.html#function-inner-product), which might be useful EG if generalising existing Thrust functions to complex numbers
 - Stream Compaction is an established solved problem which refers to removing all elements from an array which don't satisfy a certain condition, and can be achieved using [`thrust::copy_if`](https://nvidia.github.io/thrust/api/groups/group__stream__compaction.html#function-copy-if), which is found in the [Thrust API documentation](https://nvidia.github.io/thrust/) at API/Algorithms/Reordering/Stream Compaction
 
 ### Calculating mean and variance using Thrust
