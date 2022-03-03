@@ -834,7 +834,7 @@ ssh-keygen  -f ~/.ssh/id_rsa_$(UNIQUE_ID)
 ssh-copy-id -i ~/.ssh/id_rsa_$(UNIQUE_ID) username@hostname
 ```
 
-Now `username@hostname` can be connected to over `ssh` without needing to enter a password, using the command `ssh -i -i ~/.ssh/id_rsa_$(UNIQUE_ID) username@hostname`. To automate this further such that the path to the SSH key doesn't need to be entered when using `ssh`, edit `~/.ssh/config` using the following command:
+Now `username@hostname` can be connected to over `ssh` without needing to enter a password, using the command `ssh -i ~/.ssh/id_rsa_$(UNIQUE_ID) username@hostname`. To automate this further such that the path to the SSH key doesn't need to be entered when using `ssh`, edit `~/.ssh/config` using the following command:
 
 ```
 nano ~/.ssh/config
