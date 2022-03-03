@@ -840,7 +840,7 @@ Now `username@hostname` can be connected to over `ssh` without needing to enter 
 nano ~/.ssh/config
 ```
 
-Enter the following configuration, replacing $(SHORT_NAME_FOR_REMOTE_USER) with a short name which is unique to `username@hostname`:
+Enter the following configuration, replacing `$(SHORT_NAME_FOR_REMOTE_USER)` with a short name which is unique to `username@hostname`:
 
 ```
 Host $(SHORT_NAME_FOR_REMOTE_USER)
