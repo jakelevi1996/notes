@@ -198,6 +198,7 @@ Note that:
 - Thrust is based on the Standard Template Library (STL), and many Thrust functions correspond to an analogous STL function, EG [`thrust::transform`](https://nvidia.github.io/thrust/api/groups/group__transformations.html#function-transform) and [`std::transform`](https://www.cplusplus.com/reference/algorithm/transform/)
 - Many Thrust functions accept instances of [functors](https://stackoverflow.com/a/356993/8477566), which are essentially classes which define `operator()` (IE are callable, see example below)
 - Generalised inner products and transformed reductions can be performed using [`thrust::inner_product`](https://nvidia.github.io/thrust/api/groups/group__transformed__reductions.html#function-inner-product) and [`thrust::transform_reduce`](https://nvidia.github.io/thrust/api/groups/group__transformed__reductions.html#function-transform-reduce), which might be useful EG if generalising existing Thrust functions to complex numbers
+- Stream Compaction is an established solved problem which refers to removing all elements from an array which don't satisfy a certain condition, and can be achieved using [`thrust::copy_if`](https://nvidia.github.io/thrust/api/groups/group__stream__compaction.html#function-copy-if), which is found in the [Thrust API documentation](https://nvidia.github.io/thrust/) at API/Algorithms/Reordering/Stream Compaction
 
 ### Calculating mean and variance using Thrust
 
