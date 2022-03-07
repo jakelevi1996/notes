@@ -897,7 +897,7 @@ From WSL on a Windows PC, it is possible to display graphical user interfaces wh
 - Make sure Xming is running on the Windows machine (there should be an icon for Xming in the icon tray in the Windows taskbar when Xming is running)
 - Use the `-X` flag when connecting over `ssh`, EG `ssh -X username@hostname`
 - Test that X11 forwarding is running succesfully by entering the command `xclock` in the `ssh` terminal, which should cause a clock face to appear on the Windows machine
-- If this doesn't work, it may be necessary to use the command `export DISPLAY=localhost:0.0` in WSL, and/or to add this command to the bottom of `~/.bashrc` and restart the WSL terminal
+- If this doesn't work, it may be necessary to use the command `export DISPLAY=localhost:0.0` in WSL, and/or to add this command to the bottom of `~/.bashrc` (EG using the command `echo "export DISPLAY=localhost:0.0" >> ~/.bashrc`) and restart the WSL terminal
 
 ### Jump over intermediate `ssh` connections using `ProxyJump`
 
