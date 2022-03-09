@@ -871,7 +871,7 @@ If the above steps don't work and `ssh` still asks for a password, the following
 - If the permissions were wrong and have been changed and passwordless `ssh` still doesn't work, consider restarting the `ssh` service with `service ssh restart` ([source](https://superuser.com/a/925859/1098000))
 - Make sure that the line `PubkeyAuthentication yes` is present in `/etc/ssh/sshd_config` on the remote device, and not commented out with a `#` (as in `#PubkeyAuthentication yes`) ([source](https://superuser.com/a/904667/1098000)).
 - Call `ssh-copy-id` with the `-f` flag on the local device
-- Consider checking the permissions of the `id_rsa` files on the local machine ([source](https://serverfault.com/a/434498/620693))
+- Consider checking the permissions of the `id_rsa` files on the local machine ([source 1](https://serverfault.com/a/434498/620693)) ([source 2](https://unix.stackexchange.com/a/36687/421710))
 
 ### Scripting individual `ssh` commands
 
