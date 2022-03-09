@@ -864,7 +864,7 @@ ssh $(SHORT_NAME_FOR_REMOTE_USER)
 This should also allow `rsync` to run without requesting a password, again by replacing `username@hostname` with `$(SHORT_NAME_FOR_REMOTE_USER)`.
 
 If the above steps don't work and `ssh` still asks for a password, the following tips may be useful:
-- Make sure that the `~` and `~/.ssh` directories and the `~/.ssh/authorized_keys` file on the remote machine have the correct permissions ([source 1](https://superuser.com/a/925859/1098000)) ([source 2](https://serverfault.com/a/271054/620693)):
+- Make sure that the `~` and `~/.ssh` directories and the `~/.ssh/authorized_keys` file on the remote machine have the correct permissions ([source 1](https://superuser.com/a/925859/1098000)) ([source 2](https://serverfault.com/a/271054/620693)) ([source 3](https://askubuntu.com/a/90465/1078405)):
   - `~` should not be writable by others. Check with `stat ~` and fix with `chmod go-w ~`
   - `~/.ssh` should have `700` permissions. Check with `stat ~/.ssh` and fix with `chmod 700 ~/.ssh`
   - `~/.ssh/authorized_keys` should have `644` permissions. Check with `stat ~/.ssh/authorized_keys` and fix with `chmod 644 ~/.ssh/authorized_keys`
