@@ -294,6 +294,8 @@ dos2unix name_of_shell_script.sh
 
 ## Extract (unzip) a `.tar.gz` file using `tar -xvzf`
 
+A `.tar.gz` file can be unzipped easily in `bash` on Linux or in WSL.
+
 To extract a file or direcrory ([source](https://askubuntu.com/a/25348/1078405)):
 
 ```bash
@@ -312,9 +314,11 @@ Description of flags:
 > - `v`: makes tar talk a lot. Verbose output shows you all the files being extracted.
 > - `z`: tells tar to decompress the archive using gzip
 > - `f`: this must be the last flag of the command, and the tar file must be immediately after. It tells tar the name and path of the compressed file.
-> - `C`: means change to directory DIR. In our example, DIR is my_images.
+> - `C`: means change to the directory specified by the following argument (NB this directory must already exist, if it doesn't then first create it using `mkdir`)
 
 ## Compress (zip) a file or directory using `tar -czvf`
+
+A `.tar.gz` file can be created easily in `bash` on Linux or in WSL.
 
 To zip up a file ([source](https://www.howtogeek.com/248780/how-to-compress-and-extract-files-using-the-tar-command-on-linux/)):
 
@@ -901,7 +905,7 @@ From WSL on a Windows PC, it is possible to display graphical user interfaces wh
 - Make sure Xming is running on the Windows machine (there should be an icon for Xming in the icon tray in the Windows taskbar when Xming is running)
 - Use the `-X` flag when connecting over `ssh`, EG `ssh -X username@hostname`
 - Test that X11 forwarding is running succesfully by entering the command `xclock` in the `ssh` terminal, which should cause a clock face to appear on the Windows machine
-- If this doesn't work, it may be necessary to use the command `export DISPLAY=localhost:0.0` in WSL, and/or to add this command to the bottom of `~/.bashrc` and restart the WSL terminal
+- If this doesn't work, it may be necessary to use the command `export DISPLAY=localhost:0.0` in WSL, and/or to add this command to the bottom of `~/.bashrc` (EG using the command `echo "export DISPLAY=localhost:0.0" >> ~/.bashrc`) and restart the WSL terminal
 
 ### Jump over intermediate `ssh` connections using `ProxyJump`
 
