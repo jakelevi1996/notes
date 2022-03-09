@@ -859,7 +859,15 @@ ssh $(SHORT_NAME_FOR_REMOTE_USER)
 
 This should also allow `rsync` to run without requesting a password, again by replacing `username@hostname` with `$(SHORT_NAME_FOR_REMOTE_USER)`.
 
-If the above steps don't work and `ssh` still asks for a password, a couple of solutions are to a) call `ssh-copy-id` with the `-f` flag on the local device, and b) make sure that the line `PubkeyAuthentication yes` is present in `/etc/ssh/sshd_config` on the remote device, and not commented out with a `#` (as in `#PubkeyAuthentication yes`) ([source](https://superuser.com/a/904667/1098000)).
+If the above steps don't work and `ssh` still asks for a password, the following tips may be useful:
+- Make sure that the `~` and `~/.ssh` directories and the `~/.ssh/authorized_keys` file on the remote machine have the correct permissions ([source](https://superuser.com/a/925859/1098000)):
+  - `~` should not be writable by others. Check with `stat ~` and fix with `chmod go-w ~`
+  - `~/.ssh` should have `700` permissions. Check with `stat ~/.ssh` and fix with `chmod 700 ~/.ssh`
+  - `~/.ssh/authorized_keys` should have `644` permissions. Check with `stat ~/.ssh/authorized_keys` and fix with `chmod 644 ~/.ssh/authorized_keys`
+- If the permissions were wrong and have been changed and passwordless `ssh` still doesn't work, consider restarting the `ssh` service with `service ssh restart` ([source](https://superuser.com/a/925859/1098000))
+- Make sure that the line `PubkeyAuthentication yes` is present in `/etc/ssh/sshd_config` on the remote device, and not commented out with a `#` (as in `#PubkeyAuthentication yes`) ([source](https://superuser.com/a/904667/1098000)).
+- Call `ssh-copy-id` with the `-f` flag on the local device
+- Consider checking the permissions of the `id_rsa` files on the local machine ([source](https://serverfault.com/a/434498/620693))
 
 ### Scripting individual `ssh` commands
 
