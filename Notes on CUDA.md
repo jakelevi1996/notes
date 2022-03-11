@@ -6,10 +6,12 @@ This Gist contains notes and useful links about programming in Cuda, a language 
 
 - [Notes on Cuda](#notes-on-cuda)
   - [Contents](#contents)
+  - [General tips about CUDA](#general-tips-about-cuda)
+  - [Example Cuda progrm](#example-cuda-progrm)
   - [Useful links](#useful-links)
   - [Notes on "CUDA by Example" by Jason Sanders and Edward Kandrot](#notes-on-cuda-by-example-by-jason-sanders-and-edward-kandrot)
     - [Introduction](#introduction)
-    - [General tips about CUDA](#general-tips-about-cuda)
+    - [General tips about CUDA (specifically from "CUDA by Example")](#general-tips-about-cuda-specifically-from-cuda-by-example)
     - [Functions and kernels (chapter 3)](#functions-and-kernels-chapter-3)
     - [Allocating, copying and releasing memory (chapter 3)](#allocating-copying-and-releasing-memory-chapter-3)
     - [Blocks and threads (chapters 4 and 5)](#blocks-and-threads-chapters-4-and-5)
@@ -24,11 +26,115 @@ This Gist contains notes and useful links about programming in Cuda, a language 
   - [Thrust](#thrust)
     - [Calculating mean and variance using Thrust](#calculating-mean-and-variance-using-thrust)
 
+## General tips about CUDA
+
+- To write a CUDA source file, use the filename suffix `.cu`
+- Use `nvcc` to compile a CUDA source file, EG `nvcc main.cu -o main`
+- A program compiled using `nvcc` is run exactly the same as a normal program, EG `./main`
+- Cuda kernels are prefixed with the keyword `__global__` and must always return `void`
+- Any pointer which is passed to a Cuda kernel should point to device (GPU) memory; otherwise the program may fail silently, and parts of the program may simply not execute
+
+## Example Cuda progrm
+
+Below is an example Cuda program, which calculates the square of each element in a vector of doubles. This example demonstrates some major, commonly used components, such as defining a Cuda kernel, launching a Cuda kernel, device (GPU) memory allocation, copying memory between the device and the host (CPU), freeing GPU memory, and profiling. If the code is saved in a file called `square_vector.cu`, it can be compiled and run with the command `nvcc square_vector.cu -o square_vector && square_vector`. For an input vector size of `N = 10000` on a Jetson Nano dev board this took 0.168 ms vs 0.192 ms for an equivalent program using the CPU, whereas for an input vector size of `N = 100000` this took 0.597 ms on the GPU vs 1.72 ms on the CPU.
+
+```c
+#include "stdio.h"
+
+#define N (10000)
+#define THREADS_PER_BLOCK (256)
+#define CEIL_DIV(a, b) (((a) + (b) - 1) / (b))
+
+/* Define profiling macros */
+#define PROFILING_INIT                                              \
+    cudaEvent_t start, stop;                                        \
+    float elapsedTime;
+
+#define PROFILING_START                                             \
+    cudaEventCreate(&start);                                        \
+    cudaEventCreate(&stop);                                         \
+    cudaEventRecord(start, 0);
+
+#define PROFILING_STOP                                              \
+    cudaEventRecord(stop, 0);                                       \
+    cudaEventSynchronize(stop);                                     \
+    cudaEventElapsedTime(&elapsedTime, start, stop);                \
+    printf("Time elapsed:  %.3g ms\n", elapsedTime);
+
+/* Define the Cuda kernel */
+__global__ void square_vector(double* data_in, double* data_out, int n) {
+    int thread_start_idx = threadIdx.x + blockIdx.x * blockDim.x;
+    int stride = blockDim.x * gridDim.x;
+    for (
+        int i = thread_start_idx;
+        i < n;
+        i += stride
+    ) {
+        data_out[i] = data_in[i] * data_in[i];
+    }
+}
+
+/* Allocate host (CPU) inputs and outputs */
+double data_in[N];
+double data_out[N];
+
+int main() {
+    /* Initialise inputs */
+    for (int i = 0; i < N; i++) {
+        data_in[i] = (double) i;
+    }
+
+    /* Allocate device memory for inputs and outputs, and copy input data from
+    host to device memory */
+    double *dev_data_in;
+    cudaMalloc((void**) &dev_data_in, N * sizeof(double));
+    cudaMemcpy(dev_data_in, data_in, N * sizeof(double), cudaMemcpyHostToDevice);
+
+    double *dev_data_out;
+    cudaMalloc((void**) &dev_data_out, N * sizeof(double));
+
+    /* Initialise profiling */
+    PROFILING_INIT;
+    PROFILING_START;
+
+    /* Call the Cuda kernel */
+    square_vector<<<CEIL_DIV(N, THREADS_PER_BLOCK), THREADS_PER_BLOCK>>>(
+        dev_data_in,
+        dev_data_out,
+        N
+    );
+
+    /* Stop profiling and print the running time */
+    PROFILING_STOP;
+
+    /* Copy output data from device back to host memory */
+    cudaMemcpy(data_out, dev_data_out, N * sizeof(double), cudaMemcpyDeviceToHost);
+
+    /* Compare actual output with expected output */
+    for (int i = 0; i < N; i++) {
+        if (data_out[i] != (data_in[i] * data_in[i])) {
+            printf(
+                "Fail: element %i was %.1f, expected %.1f\n",
+                i,
+                data_out[i],
+                data_in[i] * data_in[i]
+            );
+        }
+    }
+
+    /* Free allocated device memory */
+    cudaFree(dev_data_in);
+    cudaFree(dev_data_out);
+
+}
+```
+
 ## Useful links
 
 - [Unified Memory for CUDA Beginners](https://developer.nvidia.com/blog/unified-memory-cuda-beginners/)
 - [An Even Easier Introduction to CUDA](https://developer.nvidia.com/blog/even-easier-introduction-cuda/) (including profiling with [`nvprof`](https://docs.nvidia.com/cuda/profiler-users-guide/index.html))
 - NVidia official [CUDA Samples](https://github.com/nvidia/cuda-samples)
+- [Homepage for "CUDA by Example"](https://developer.nvidia.com/cuda-example)
 - Thrust
   - [API reference guide](https://docs.nvidia.com/cuda/thrust/index.html)
   - [Full API documentation](https://nvidia.github.io/thrust/api.html)
@@ -43,11 +149,8 @@ Before starting, make sure that `nvcc` is present on your system path. On a fres
 
 The CUDA language features (keywords, function names, etc) specified below are all built-in to CUDA (IE don't require including a specific header file), unless otherwise specified. Filenames are assumed to refer to the source code for the book, which can be downloaded from the above link to the book's website.
 
-### General tips about CUDA
+### General tips about CUDA (specifically from "CUDA by Example")
 
-- To write a CUDA source file, use the filename suffix `.cu`
-- Use `nvcc` to compile a CUDA source file, EG `nvcc main.cu -o main`
-- A program compiled using `nvcc` is run exactly the same as a normal program, EG `./main`
 - To get information about all GPU devices currently available on a given machine, compile and run `cuda_by_example/chapter03/enum_gpu.cu`, which prints information to `stdout` such as device name, compute capability, clock rate, total global and constant memory, the maximum number of threads per block, the maximum thread dimensions, and the maximum grid size
 - Error checking is important for calls to built-in Cuda functions
   - Many built-in Cuda functions (EG for GPU memory allocation) return a variable of type `cudaError_t`, indicating if they were successful or not
