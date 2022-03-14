@@ -322,14 +322,6 @@ Below is an example Cuda program using Thrust, which calculates the mean and var
 
 #define N (10000)
 
-/* Functor to calculate the square of a double, equivalent to
-`thrust::square<double>` */
-struct square_double {
-    __device__ double operator()(const double& x) const {
-        return x * x;
-    }
-};
-
 /* Calculate the mean and variance of a vector */
 void mean_and_var(
     thrust::device_vector<double> data_in,
@@ -348,8 +340,7 @@ void mean_and_var(
         thrust::device,
         data_in.begin(),
         data_in.end(),
-        // thrust::square<double>(),
-        square_double(),  // equivalent to `thrust::square<double>(),`
+        thrust::square<double>(),
         0.0,
         thrust::plus<double>()
     );
@@ -401,7 +392,11 @@ int main() {
     int num_above_threshold = (int) (output_end - &dev_data_out[0]);
 
     /* Copy outputs back to host */
-    thrust::copy(dev_data_out.begin(), dev_data_out.end(), data_out.begin());
+    thrust::copy(
+        &dev_data_out[0],
+        &dev_data_out[num_above_threshold],
+        &data_out[0]
+    );
 
     /* Print outputs */
     printf("Mean = %.1f, std = %.1f\n", mean, sqrt(var));
