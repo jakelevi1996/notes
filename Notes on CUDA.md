@@ -24,6 +24,7 @@ This Gist contains notes and useful links about programming in Cuda, a language 
     - [...](#)
   - [Error checking](#error-checking)
   - [Thrust](#thrust)
+    - [General notes about Thrust](#general-notes-about-thrust)
     - [Calculating mean and variance using Thrust](#calculating-mean-and-variance-using-thrust)
 
 ## General tips about CUDA
@@ -279,7 +280,7 @@ int main() {
 
 In addition to the notes on error checking mentioned above in the context of the "CUDA By Example" book, [this Stack Overflow answer](https://stackoverflow.com/a/6420012/8477566) provides a useful method for checking if an error occured during a kernel call:
 
-```
+```c
 kernel<<<blocks, threads>>>(params);
 cudaError_t err = cudaGetLastError();
 if (err != cudaSuccess)
@@ -299,13 +300,14 @@ As stated in the documentation, "Thrust is a C++ template library for CUDA based
 
 The API reference guide for Thrust can be found [here](https://docs.nvidia.com/cuda/thrust/index.html), and the full API documentation can be found [here](https://nvidia.github.io/thrust/api.html).
 
-Note that:
+### General notes about Thrust
 
 - Thrust functions can't be called from inside a Cuda kernel, they can only be called from host (CPU) functions ([source](https://stackoverflow.com/a/17814466/8477566))
 - Thrust is based on the Standard Template Library (STL), and many Thrust functions correspond to an analogous STL function, EG [`thrust::transform`](https://nvidia.github.io/thrust/api/groups/group__transformations.html#function-transform) and [`std::transform`](https://www.cplusplus.com/reference/algorithm/transform/)
 - Many Thrust functions accept instances of [functors](https://stackoverflow.com/a/356993/8477566), which are essentially classes which define `operator()` (IE are callable, see example below)
 - Generalised reductions, transformed reductions, and inner products can be performed using [`thrust::reduce`](https://nvidia.github.io/thrust/api/groups/group__reductions.html#function-reduce), [`thrust::transform_reduce`](https://nvidia.github.io/thrust/api/groups/group__transformed__reductions.html#function-transform-reduce), and [`thrust::inner_product`](https://nvidia.github.io/thrust/api/groups/group__transformed__reductions.html#function-inner-product), which might be useful EG if generalising existing Thrust functions to complex numbers
 - Stream Compaction is an established solved problem which refers to removing all elements from an array which don't satisfy a certain condition, and can be achieved using [`thrust::copy_if`](https://nvidia.github.io/thrust/api/groups/group__stream__compaction.html#function-copy-if), which is found in the [Thrust API documentation](https://nvidia.github.io/thrust/) at API/Algorithms/Reordering/Stream Compaction
+- If a Thrust vector is initialised (EG with `thrust::device_vector<double> dev_data_in(N);`), sometimes it can be useful to cast this vector to a raw pointer (EG for compatibility with other inputs to a C++ template function), which can be performed with the expression `(double*) thrust::raw_pointer_cast(&dev_data_in[0])`, or the start of the vector can be cast to a `thrust::device_ptr<int>` with the expression `thrust::device_pointer_cast(&dev_data_in[0])`
 
 ### Calculating mean and variance using Thrust
 
