@@ -1,6 +1,6 @@
 # Notes on Cuda
 
-This Gist contains notes and useful links about programming in Cuda, a language based on C/C++ for general purpose programming on Nvidia GPUs. Much of these notes are based on the book ["CUDA by Example"](https://developer.nvidia.com/cuda-example) by Jason Sanders and Edward Kandrot. There are also notes on [Thrust](https://docs.nvidia.com/cuda/thrust/index.html) ("the CUDA C++ template library"), and miscellaneous topics.
+This Gist contains notes and useful links about programming in Cuda, a language based on C/C++ for general purpose programming on Nvidia GPUs. Much of these notes are based on the book ["CUDA by Example"](https://developer.nvidia.com/cuda-example) by Jason Sanders and Edward Kandrot. There is also an example Cuda program, notes on [Thrust](https://docs.nvidia.com/cuda/thrust/index.html) ("the CUDA C++ template library"), and miscellaneous topics.
 
 ## Contents
 
@@ -188,6 +188,7 @@ The CUDA language features (keywords, function names, etc) specified below are a
   - With 1D arrays of blocks and threads, it is possible to get a unique index for each thread in the program using the expression `int tid = threadIdx.x + blockIdx.x * blockDim.x;`
     - In this example, if there are more elements to be processed than there are threads and blocks, the thread index can be incremented in a loop (EG while `tid` is less than the total number of elements to be processed) using the expression `tid += blockDim.x * gridDim.x;`
   - If there is only 1 thread per block and a 1D array of blocks, we can simply use `int tid = blockIdx.x;`, and increment `tid` in a loop while it is less than the number of elements to be processed using the expression `tid += gridDim.x;`
+    - Note that using only 1 thread per block is likely to perform more slowly than using many threads per block (EG 256)
 - Threads can use memory which is shared between threads, but not between blocks, by declaring the memory using the `__shared__` keyword, EG `__shared__ float cache[threadsPerBlock];`
 - Threads can wait for other threads within the same block to finish processing using the `__syncthreads()` function, which is useful for example for performing reductions (see section [Reductions](#reductions) below)
 - It is possible to define higher dimensional arrays of blocks and threads, by declaring a `dim3` variable (which represents a 3D tuple) and passing it to the kernel call, for example `dim3 blocks(DIM/16,DIM/16); dim3 threads(16,16); kernel<<<blocks,threads>>>( d->dev_bitmap, ticks );`
