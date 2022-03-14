@@ -25,6 +25,7 @@ This Gist contains notes and useful links about programming in Cuda, a language 
   - [Error checking](#error-checking)
   - [Thrust](#thrust)
     - [General notes about Thrust](#general-notes-about-thrust)
+    - [Example Thrust program](#example-thrust-program)
     - [Calculating mean and variance using Thrust](#calculating-mean-and-variance-using-thrust)
 
 ## General tips about CUDA
@@ -37,7 +38,7 @@ This Gist contains notes and useful links about programming in Cuda, a language 
 
 ## Example Cuda progrm
 
-Below is an example Cuda program, which calculates the square of each element in a vector of doubles. This example demonstrates some major, commonly used components, such as defining a Cuda kernel, launching a Cuda kernel, device (GPU) memory allocation, copying memory between the device and the host (CPU), freeing GPU memory, and profiling. If the code is saved in a file called `square_vector.cu`, it can be compiled and run with the command `nvcc square_vector.cu -o square_vector && square_vector`. For an input vector size of `N = 10000` on a Jetson Nano dev board this took 0.168 ms vs 0.192 ms for an equivalent program using the CPU, whereas for an input vector size of `N = 100000` this took 0.597 ms on the GPU vs 1.72 ms on the CPU.
+Below is an example Cuda program, which calculates the square of each element in a vector of doubles. This example demonstrates some major, commonly used components of Cuda, such as defining a Cuda kernel, launching a Cuda kernel, device (GPU) memory allocation, copying memory between the device and the host (CPU), freeing GPU memory, and profiling. If the code is saved in a file called `square_vector.cu`, it can be compiled and run with the command `nvcc square_vector.cu -o square_vector && square_vector`. For an input vector size of `N = 10000` on a Jetson Nano dev board this took 0.168 ms vs 0.192 ms for an equivalent program using the CPU, whereas for an input vector size of `N = 100000` this took 0.597 ms on the GPU vs 1.72 ms on the CPU.
 
 ```c
 #include "stdio.h"
@@ -311,7 +312,114 @@ The API reference guide for Thrust can be found [here](https://docs.nvidia.com/c
 - Many Thrust functions are template functions, and can accept many combinations of different input types, including iterators of Thrust vectors and/or raw pointers (as long as they point to the correct location in host or device memory), however often it can be be easier to simply use raw pointers instead of Thrust vectors, as this can alleviate the need to appropriately cast Thrust vectors (EG using `raw_pointer_cast` or `device_pointer_cast` as described above), and also avoids having to debug complicated compiler errors (EG that are >500 lines long and overflow the terminal buffer) due to incompatibility between different template types and overloaded functions
 - Thrust defines a set of [Predefined Function Objects](https://nvidia.github.io/thrust/api/groups/group__predefined__function__objects.html) (including [Arithmetic Operations](https://nvidia.github.io/thrust/api/groups/group__arithmetic__operations.html), [Comparison Operations](https://nvidia.github.io/thrust/api/groups/group__comparison__operations.html), and [Logical Operations](https://nvidia.github.io/thrust/api/groups/group__logical__operations.html)), which can be useful for implementing generalised transformations, reductions, etc
 
+### Example Thrust program
+
+Below is an example Cuda program using Thrust, which calculates the mean and variance of a vector of doubles, and then calculates the indices of all elements in the vector which are more than one standard deviation above the mean of the vector, as well as the number of such elements.
+
+```c++
+#include "stdio.h"
+#include <thrust/device_vector.h>
+
+#define N (10000)
+
+/* Functor to calculate the square of a double, equivalent to
+`thrust::square<double>` */
+struct square_double {
+    __device__ double operator()(const double& x) const {
+        return x * x;
+    }
+};
+
+/* Calculate the mean and variance of a vector */
+void mean_and_var(
+    thrust::device_vector<double> data_in,
+    int n,
+    double* p_mean,
+    double* p_var
+) {
+    double sum = thrust::reduce(
+        thrust::device,
+        data_in.begin(),
+        data_in.end(),
+        0.0,
+        thrust::plus<double>()
+    );
+    double sum_square = thrust::transform_reduce(
+        thrust::device,
+        data_in.begin(),
+        data_in.end(),
+        // thrust::square<double>(),
+        square_double(),  // equivalent to `thrust::square<double>(),`
+        0.0,
+        thrust::plus<double>()
+    );
+    double mean = sum / n;
+    *p_mean = mean;
+    *p_var = (sum_square / n) - mean*mean;
+}
+
+/* Functor to calculate if the input is above a threshold */
+struct above_threshold {
+    const double _threshold;
+
+    above_threshold(double threshold) : _threshold(threshold) {}
+
+    __device__ int operator()(const double& x) const {
+        return x > _threshold;
+    }
+};
+
+int main() {
+    /* Allocate host (CPU) inputs and outputs, and initialise inputs */
+    thrust::host_vector<double> data_in(N);
+    thrust::host_vector<int> data_out(N);
+    for (int i = 0; i < N; i++) {
+        data_in[i] = (double) i;
+    }
+
+    /* Allocate device memory for inputs and outputs, and copy input data from
+    host to device memory */
+    thrust::device_vector<double> dev_data_in(N);
+    thrust::device_vector<int> dev_data_out(N);
+    thrust::copy(data_in.begin(), data_in.end(), dev_data_in.begin());
+
+    /* Calculate the mean and variance of the vector */
+    double mean, var;
+    mean_and_var(dev_data_in, N, &mean, &var);
+
+    /* Calculate the indices of samples which are 1 standard deviation above
+    the mean */
+    thrust::counting_iterator<int> count_start(0);
+    thrust::device_ptr<int> output_end = thrust::copy_if(
+        thrust::device,
+        count_start,
+        count_start + N,
+        thrust::device_pointer_cast(&dev_data_in[0]),
+        thrust::device_pointer_cast(&dev_data_out[0]),
+        above_threshold(mean + sqrt(var))
+    );
+    int num_above_threshold = (int) (output_end - &dev_data_out[0]);
+
+    /* Copy outputs back to host */
+    thrust::copy(dev_data_out.begin(), dev_data_out.end(), data_out.begin());
+
+    /* Print outputs */
+    printf("Mean = %.1f, std = %.1f\n", mean, sqrt(var));
+    printf("data_out[%i] = {", num_above_threshold);
+    for (int i = 0; i < num_above_threshold; i++) {
+        printf("%i, ", data_out[i]);
+        if (i > 20) {
+            printf("..., %i", data_out[num_above_threshold - 1]);
+            break;
+        }
+    }
+    printf("}\nFinished program\n");
+}
+```
+
 ### Calculating mean and variance using Thrust
+
+TODO: replace this section with a program which procides different implementations of a transformation on a vector (EG squaring each element), and profile the running time for inputs of different sizes, and compare between different implementations such as a custom Cuda kernel, a Thrust function (using both host and device memory), and a regular CPU function.
 
 Below is an example of calculating mean and variance using Thrust:
 
