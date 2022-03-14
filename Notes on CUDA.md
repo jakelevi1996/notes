@@ -385,8 +385,8 @@ int main() {
         thrust::device,
         count_start,
         count_start + N,
-        thrust::device_pointer_cast(&dev_data_in[0]),
-        thrust::device_pointer_cast(&dev_data_out[0]),
+        &dev_data_in[0],
+        &dev_data_out[0],
         above_threshold(mean + sqrt(var))
     );
     int num_above_threshold = (int) (output_end - &dev_data_out[0]);
