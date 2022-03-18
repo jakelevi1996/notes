@@ -85,6 +85,16 @@ $ cat ~/temp.txt
 Fri Feb 11 14:53:39 GMT 2022
 ```
 
+This can be useful for timestamping files, and also for quickly approximating how long a command (or multiple commands) take to run, by calling `date` before and after all commands to be run:
+
+```
+$ date && cmd_1 arg_1 && cmd_2 arg_2 && date
+Fri Mar 18 18:09:52 GMT 2022
+... Some output from `cmd_1 arg_1` ...
+... Some output from `cmd_2 arg_2` ...
+Fri Mar 18 18:10:25 GMT 2022
+```
+
 ## Updating and upgrading packages using `apt update` and `apt upgrade`
 
 To update `apt` package lists, use the command `sudo apt update`. This command doesn't modify, upgrade or install any new or existing packages, but should be run before upgrading or installing any new or existing packages, to make sure that the most recent versions of those packages are used.
