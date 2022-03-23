@@ -927,7 +927,7 @@ Sometimes it is desirable to connect to `username@hostname` over `ssh`, but to d
 To synchronise a local directory with a remote directory, use the following command:
 
 ```
-rsync -Cavz /path/to/local/dir username@hostname:~/path/to/remote
+rsync -Chavz /path/to/local/dir username@hostname:~/path/to/remote
 ```
 
 Description of flags:
@@ -935,6 +935,7 @@ Description of flags:
 Flag | Meaning
 --- | ---
 `-C` | Automatically ignore common temporary files, version control files, etc
+`-h` | Use human-readable file sizes (EG `65.49K bytes` instead of `65,422 bytes`)
 `-a` | Sync recursively and preserves symbolic links, special and device files, modification times, groups, owners, and permissions
 `-v` | Verbose output is printed to `stdout`
 `-z` | Compress files (EG text files) to reduce network transfer
@@ -942,6 +943,8 @@ Flag | Meaning
 ([source 1](https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories)) ([source 2](https://linux.die.net/man/1/rsync))
 
 To configure `rsync` to not request a password when synchronising directories, follow the instructions in the previous section "[Passwordless `ssh` terminals and commands](#passwordless-ssh-terminals)".
+
+`rsync` can be used with the `--delete` option to delete extra files in the remote directory that are not present in the local directory ([source](https://askubuntu.com/a/665918/1078405)).
 
 ## Create an `alias`
 
