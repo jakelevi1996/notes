@@ -69,7 +69,7 @@ int main() {
 
 ## Convert an int or float to a C-string in C++
 
-`std::to_string` can be used to convert an `int` or a `float` to a `string`, and the `string.c_str` method can be used to convert a `string` to `char*` (IE a C-string):
+`std::to_string` can be used to convert an `int` or a `float` to a `string`, and the `string.c_str` method can be used to convert a `string` to `char*` (IE a C-string). This can be useful, EG if printing the value of a numeric type within a template function:
 
 ```C++
 /* Compile and run:
@@ -78,14 +78,16 @@ g++ ./.temp.cpp -o ./.temp && ./.temp
 #include "stdio.h"
 #include <string>
 
+template <typename T>
+void f(const char* name, T x) {
+    printf("\"%s\" = %s\n", name, std::to_string(x).c_str());
+}
+
 int main() {
     float a  = 3.7;
     int b = 4;
-    printf(
-        "a = %s, b = %s\n",
-        std::to_string(a).c_str(),
-        std::to_string(b).c_str()
-    );
+    f("a", a);
+    f("b", b);
 
     return 0;
 }
@@ -93,5 +95,6 @@ int main() {
 
 ```
 $ g++ ./.temp.cpp -o ./.temp && ./.temp
-a = 3.700000, b = 4
+"a" = 3.700000
+"b" = 4
 ```
