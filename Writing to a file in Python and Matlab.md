@@ -1,4 +1,4 @@
-# Writing to a file in Python, C and Matlab
+# Writing to a file in Python and Matlab
 
 ## Writing and reading to/from a text file in Python
 
