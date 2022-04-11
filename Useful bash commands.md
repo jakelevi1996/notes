@@ -95,6 +95,16 @@ Fri Mar 18 18:09:52 GMT 2022
 Fri Mar 18 18:10:25 GMT 2022
 ```
 
+Alternatively, to print the start time and finish time next to each other at the end of the console output (which is useful if there is a lot of console output from the program being timed):
+
+```
+$ t0=$(date) && cmd_1 arg_1 && cmd_2 arg_2 && echo $t0 && date
+... Some output from `cmd_1 arg_1` ...
+... Some output from `cmd_2 arg_2` ...
+Fri Mar 18 18:09:52 GMT 2022
+Fri Mar 18 18:10:25 GMT 2022
+```
+
 ## Updating and upgrading packages using `apt update` and `apt upgrade`
 
 To update `apt` package lists, use the command `sudo apt update`. This command doesn't modify, upgrade or install any new or existing packages, but should be run before upgrading or installing any new or existing packages, to make sure that the most recent versions of those packages are used.
