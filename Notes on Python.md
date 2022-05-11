@@ -47,17 +47,32 @@ These notes are mostly made from the [Socket Programming in Python (Guide)](http
   - The second argument to `socket.socket` is `type`, which represents the "socket types", and can be EG `socket.SOCK_STREAM` or `socket.SOCK_DGRAM`
     - `socket.SOCK_STREAM` specifies that the default protocol used by the socket is the [Transmission Control Protocol (TCP)](https://en.wikipedia.org/wiki/Transmission_Control_Protocol), which is reliable ("packets dropped in the network are detected and retransmitted by the sender") and has in-order data delivery ("data is read by your application in the order it was written by the sender")
     - `socket.SOCK_DGRAM` can be used to specify User Datagram Protocol (UDP) sockets, which aren’t reliable, and can deliver data in a different order from that which was sent
-- In a client-server socket application, in order to initialise a 2-way connection, the server's socket object will call the `bind`, `listen`, and `accept` methods, and the client's socket object will call the `connect` method
-  - The `bind` method "is used to associate the socket with a specific network interface and port number"
-    - The values passed to `bind` "depend on the address family of the socket"
-    - When the address family is `socket.AF_INET`, the argument to bind should be a 2-tuple containing the host and the port
-    - The host "can be a hostname, IP address, or empty string"
-      - "If an IP address is used, host should be an IPv4-formatted address string"
-        - "The IP address 127.0.0.1 is the standard IPv4 address for the loopback interface", which can be used to connect to other sockets on the same PC, which "bypasses any local network interface hardware" (see the Wikipedia entry for [`localhost`](https://en.wikipedia.org/wiki/Localhost))
-        - The 24-bit block 10.0.0.0/8 (16777216 addresses), 20-bit block 172.16.0.0/12 (1048576 addresses) and 16-bit block 192.168.0.0/16 (65536 addresses) are reserved for addresses on the private network (see the Wikipedia entry for [Private network](https://en.wikipedia.org/wiki/Private_network))
-      - "If you pass an empty string, the server will accept connections on all available IPv4 interfaces"
-    - The port "represents the TCP port number to accept connections on from clients"
-      - "It should be an integer from 1 to 65535, as 0 is reserved"
-      - "Some systems may require superuser privileges if the port number is less than 1024"
-  -
+- In a client-server socket application, in order to initialise a 2-way connection between the client and the server:
+  - The server's socket object will call the `bind`, `listen`, and `accept` methods
+    - The `bind(address)` method "is used to associate the socket with a specific network interface and port number"
+      - The format of `address` depends on the address family of the socket
+      - When the address family is `socket.AF_INET` (IPv4), `address` should be a 2-tuple containing the host and the port
+      - The host "can be a hostname, IP address, or empty string"
+        - "If an IP address is used, host should be an IPv4-formatted address string"
+          - "The IP address 127.0.0.1 is the standard IPv4 address for the loopback interface", which can be used to connect to other sockets on the same PC, which "bypasses any local network interface hardware" (see the Wikipedia entry for [`localhost`](https://en.wikipedia.org/wiki/Localhost))
+          - The 24-bit block 10.0.0.0/8 (16,777,216 addresses), 20-bit block 172.16.0.0/12 (1,048,576 addresses) and 16-bit block 192.168.0.0/16 (65,536 addresses) are reserved for addresses on the private network (see the Wikipedia entry for [Private network](https://en.wikipedia.org/wiki/Private_network))
+        - "If you pass an empty string, the server will accept connections on all available IPv4 interfaces"
+        - "If you use a hostname in the host portion of IPv4/v6 socket address, the program may show a non-deterministic behavior, as Python uses the first address returned from the DNS resolution... For deterministic behavior use a numeric address in host portion"
+      - The port "represents the TCP port number to accept connections on from clients"
+        - "It should be an integer from 1 to 65535, as 0 is reserved"
+        - "Some systems may require superuser privileges if the port number is less than 1024"
+    - The `listen` method "enables a server to accept connections", and makes the server's socket object a "listening" socket
+      - The `listen` method has an optional backlog parameter, which "specifies the number of unaccepted connections that the system will allow before refusing new connections... If not specified, a default backlog value is chosen"
+      - "If your server receives a lot of connection requests simultaneously, increasing the `backlog` value may help by setting the maximum length of the queue for pending connections"
+    - The `accept()` method "blocks execution and waits for an incoming connection"
+      - When a client socket connects to the server's socket object, the server's socket object's call to the `accept` method returns a 2-tuple containing
+        - A new socket object representing the connection
+        - A tuple holding the address of the client
+          - For IPv4 connections, the tuple holding the address of the client will contain `(host, port)`
+      - Note that the new socket returned by the `accept` method is the socket that will be used to communicate with the client's socket
+        - This is distinct from the listening socket that was previously created by the server (the object from which the `accept` method was called), which is a listening socket that the server can use to accept new connections
+  - The client's socket object will call the `connect` method to connect to the server's socket object
+    - `connect(address)` accepts an address whose format depends on the address family
+    - When the address family is `socket.AF_INET` (IPv4), `address` should be a 2-tuple containing the host and the port
+- ... `send`, `recv`, `close`, context manager...
 
