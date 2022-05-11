@@ -9,6 +9,10 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
 - [Notes on Python](#notes-on-python)
   - [Contents](#contents)
   - [Useful links](#useful-links)
+  - [Useful Python snippets](#useful-python-snippets)
+  - [Python implementations of algorithms](#python-implementations-of-algorithms)
+  - [Notes on built-in and third-party modules](#notes-on-built-in-and-third-party-modules)
+    - [`socket`](#socket)
 
 ## Useful links
 
@@ -19,7 +23,13 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [The Python Standard Library](https://docs.python.org/3/library/index.html) (including all built-in modules)
     - [Built-in Functions](https://docs.python.org/3/library/functions.html)
     - [Built-in Types](https://docs.python.org/3/library/stdtypes.html)
-    - []()
   - [The Python Language Reference](https://docs.python.org/3/reference/index.html)
-  - [Project Euler](https://projecteuler.net/archives) (useful and interesting problems for practising numerical programming, well-suited to Python)
+- [Project Euler](https://projecteuler.net/archives) (useful and interesting problems for practising numerical programming, and useful for practising Python programming)
 
+## Useful Python snippets
+
+## Python implementations of algorithms
+
+## Notes on built-in and third-party modules
+
+### `socket`
