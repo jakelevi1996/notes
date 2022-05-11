@@ -36,6 +36,49 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
 
 These notes are mostly made from the [Socket Programming in Python (Guide)](https://realpython.com/python-sockets/) on [realpython.com](https://realpython.com/). See also the [Python documentation for the `socket` module](https://docs.python.org/3/library/socket.html).
 
+Below are the `echo-server.py` and `echo-client.py` programs from the [Socket Programming in Python (Guide)](https://realpython.com/python-sockets/) on [realpython.com](https://realpython.com/), demonstrating a simple client-server application which communicates using sockets:
+
+Server program:
+
+```python
+# echo-server.py
+
+import socket
+
+HOST = "127.0.0.1"  # Standard loopback interface address (localhost)
+PORT = 65432  # Port to listen on (non-privileged ports are > 1023)
+
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.bind((HOST, PORT))
+    s.listen()
+    conn, addr = s.accept()
+    with conn:
+        print(f"Connected by {addr}")
+        while True:
+            data = conn.recv(1024)
+            if not data:
+                break
+            conn.sendall(data)
+```
+
+Client program:
+
+```python
+# echo-client.py
+
+import socket
+
+HOST = "127.0.0.1"  # The server's hostname or IP address
+PORT = 65432  # The port used by the server
+
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.connect((HOST, PORT))
+    s.sendall(b"Hello, world")
+    data = s.recv(1024)
+
+print(f"Received {data!r}")
+```
+
 - Sockets can be used to communicate between different processes on a single PC, or different PCs connected over a network
 - Sockets "originated with [ARPANET](https://en.wikipedia.org/wiki/ARPANET) in 1971 and later became an API in the [Berkeley Software Distribution (BSD)](https://en.wikipedia.org/wiki/Berkeley_Software_Distribution) operating system released in 1983 called [Berkeley sockets](https://en.wikipedia.org/wiki/Berkeley_sockets)"
 - "All modern operating systems implement a version of the Berkeley socket interface. It became the standard interface for applications running in the Internet" ([source](https://en.wikipedia.org/wiki/Berkeley_sockets))
@@ -65,7 +108,7 @@ These notes are mostly made from the [Socket Programming in Python (Guide)](http
       - The `listen` method has an optional backlog parameter, which "specifies the number of unaccepted connections that the system will allow before refusing new connections... If not specified, a default backlog value is chosen"
       - "If your server receives a lot of connection requests simultaneously, increasing the `backlog` value may help by setting the maximum length of the queue for pending connections"
     - The `accept()` method "blocks execution and waits for an incoming connection"
-      - When a client socket connects to the server's socket object, the server's socket object's call to the `accept` method returns a 2-tuple containing
+      - When a client socket connects to the server's socket object, the server's socket object's call to the `accept` method returns a 2-tuple containing:
         - A new socket object representing the connection
         - A tuple holding the address of the client
           - For IPv4 connections, the tuple holding the address of the client will contain `(host, port)`
@@ -74,5 +117,11 @@ These notes are mostly made from the [Socket Programming in Python (Guide)](http
   - The client's socket object will call the `connect` method to connect to the server's socket object
     - `connect(address)` accepts an address whose format depends on the address family
     - When the address family is `socket.AF_INET` (IPv4), `address` should be a 2-tuple containing the host and the port
-- ... `send`, `recv`, `close`, context manager...
-
+- The client and server can be on different machines connected over a local network, in which case the IP address that the server passes to `socket.bind(address)` and the IP address that the client passes to `socket.connect(address)` should both be set to the IP address of the network adapter of the *server* through which the server will communicate (EG an ethernet connection), and of course the port numbers should also match
+  - The IP address of the desired network adapter can be found in `bash` using the commands `ip a` or `ifconfig`, or in Powershell using the command `ipconfig`
+  - The address in the second element of the tuple returned by the `socket.accept()` method on the server will contain the IP address and port of the network adapter through which the *client* will communicate
+- Both the client and the server can send bytes objects using the `send` or `sendall` methods and receive bytes using the `recv` method
+- When the client has finished sending and receiving information, it can call the `socket.close()` method
+  - Calling `socket.close()` on the client sends an empty bytes object to the server
+  - Therefore, when the server receives an empty bytes object from the `recv` method, it may also wish to call the `socket.close()` method
+  - Python `socket.socket` objects support context managers, which call the `socket.close()` method when the context manager exits, EG with the expression `with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:`, or after `conn, addr = s.accept()`, with the expression `with conn:`
