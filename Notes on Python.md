@@ -117,6 +117,7 @@ print(f"Received {data!r}")
   - The client's socket object will call the `connect` method to connect to the server's socket object
     - `connect(address)` accepts an address whose format depends on the address family
     - When the address family is `socket.AF_INET` (IPv4), `address` should be a 2-tuple containing the host and the port
+- The socket on the client can communicate with the socket returned by `accept` on the server EG by calling `send` and `recv`, while the original socket created on the server which called `listen` remains a listening socket
 - The client and server can be on different machines connected over a local network, in which case the IP address that the server passes to `socket.bind(address)` and the IP address that the client passes to `socket.connect(address)` should both be set to the IP address of the network adapter of the *server* through which the server will communicate (EG an ethernet connection), and of course the port numbers should also match
   - The IP address of the desired network adapter can be found in `bash` using the commands `ip a` or `ifconfig`, or in Powershell using the command `ipconfig`
   - The address in the second element of the tuple returned by the `socket.accept()` method on the server will contain the IP address and port of the network adapter through which the *client* will communicate
