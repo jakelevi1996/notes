@@ -126,3 +126,5 @@ print(f"Received {data!r}")
   - Calling `socket.close()` on the client sends an empty bytes object to the server
   - Therefore, when the server receives an empty bytes object from the `recv` method, it may also wish to call the `socket.close()` method
   - Python `socket.socket` objects support context managers, which call the `socket.close()` method when the context manager exits, EG with the expression `with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:`, or after `conn, addr = s.accept()`, with the expression `with conn:`
+- NB an entire complex Python object can be sent through a socket, by converting the Python object to a bytes object using `pickle.dumps`, sending that bytes object through the socket using `socket.sendall`/`socket.recv`, and then unpickling the bytes object using `pickle.loads` ([source](https://stackoverflow.com/a/53577447/8477566))
+
