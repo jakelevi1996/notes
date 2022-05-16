@@ -1,6 +1,6 @@
-# Useful `bash` commands
+# Notes on `bash`
 
-This is just a random collection of commands which are useful in Bash. This Gist is expected to grow over time (until I have mastered the whole of Bash). Another useful resource is this [list of Unix commands on Wikipedia](https://en.wikipedia.org/wiki/List_of_Unix_commands#List). Hyperlinked bash commands in general lead to relevant Man (manual) pages.
+This is just a random collection of commands which I have found useful in Bash. This Gist is expected to grow over time (until I have mastered the whole of Bash). Another useful resource is this [list of Unix commands on Wikipedia](https://en.wikipedia.org/wiki/List_of_Unix_commands#List). Hyperlinked bash commands in general lead to relevant Man (manual) pages.
 
 ## Contents
 
@@ -84,6 +84,26 @@ Fri Feb 11 14:53:37 GMT 2022
 $ echo $(date) > ~/temp.txt
 $ cat ~/temp.txt
 Fri Feb 11 14:53:39 GMT 2022
+```
+
+This can be useful for timestamping files, and also for quickly approximating how long a command (or multiple commands) take to run, by calling `date` before and after all commands to be run:
+
+```
+$ date && cmd_1 arg_1 && cmd_2 arg_2 && date
+Fri Mar 18 18:09:52 GMT 2022
+... Some output from `cmd_1 arg_1` ...
+... Some output from `cmd_2 arg_2` ...
+Fri Mar 18 18:10:25 GMT 2022
+```
+
+Alternatively, to print the start time and finish time next to each other at the end of the console output (which is useful if there is a lot of console output from the program being timed):
+
+```
+$ t0=$(date) && cmd_1 arg_1 && cmd_2 arg_2 && echo $t0 && date
+... Some output from `cmd_1 arg_1` ...
+... Some output from `cmd_2 arg_2` ...
+Fri Mar 18 18:09:52 GMT 2022
+Fri Mar 18 18:10:25 GMT 2022
 ```
 
 ## Updating and upgrading packages using `apt update` and `apt upgrade`
@@ -917,6 +937,7 @@ From WSL on a Windows PC, it is possible to display graphical user interfaces wh
 - Use the `-X` flag when connecting over `ssh`, EG `ssh -X username@hostname`
 - Test that X11 forwarding is running succesfully by entering the command `xclock` in the `ssh` terminal, which should cause a clock face to appear on the Windows machine
 - If this doesn't work, it may be necessary to use the command `export DISPLAY=localhost:0.0` in WSL, and/or to add this command to the bottom of `~/.bashrc` (EG using the command `echo "export DISPLAY=localhost:0.0" >> ~/.bashrc`) and restart the WSL terminal
+- If an error message is displayed from the remote machine saying `connect localhost port 6000: Connection refused`, then make sure that Xming is running on the local machine
 
 ### Jump over intermediate `ssh` connections using `ProxyJump`
 
@@ -927,7 +948,7 @@ Sometimes it is desirable to connect to `username@hostname` over `ssh`, but to d
 To synchronise a local directory with a remote directory, use the following command:
 
 ```
-rsync -Cavz /path/to/local/dir username@hostname:~/path/to/remote
+rsync -Chavz /path/to/local/dir username@hostname:~/path/to/remote
 ```
 
 Description of flags:
@@ -935,6 +956,7 @@ Description of flags:
 Flag | Meaning
 --- | ---
 `-C` | Automatically ignore common temporary files, version control files, etc
+`-h` | Use human-readable file sizes (EG `65.49K bytes` instead of `65,422 bytes`)
 `-a` | Sync recursively and preserves symbolic links, special and device files, modification times, groups, owners, and permissions
 `-v` | Verbose output is printed to `stdout`
 `-z` | Compress files (EG text files) to reduce network transfer
@@ -942,6 +964,8 @@ Flag | Meaning
 ([source 1](https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories)) ([source 2](https://linux.die.net/man/1/rsync))
 
 To configure `rsync` to not request a password when synchronising directories, follow the instructions in the previous section "[Passwordless `ssh` terminals and commands](#passwordless-ssh-terminals)".
+
+`rsync` can be used with the `--delete` option to delete extra files in the remote directory that are not present in the local directory ([source](https://askubuntu.com/a/665918/1078405)).
 
 ## Create an `alias`
 
