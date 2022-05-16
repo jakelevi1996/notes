@@ -16,6 +16,7 @@ This is just a random collection of commands which are useful in Bash. This Gist
   - [Change users using `su`](#change-users-using-su)
   - [Finding access permissions using `stat`](#finding-access-permissions-using-stat)
   - [Changing access permissions using `chmod`](#changing-access-permissions-using-chmod)
+  - [Change ownership of a file using `chown`](#change-ownership-of-a-file-using-chown)
   - [Recursively find word counts of all files with a particular file ending](#recursively-find-word-counts-of-all-files-with-a-particular-file-ending)
   - [View all of the most recent bash commands using `history`](#view-all-of-the-most-recent-bash-commands-using-history)
   - [View the full path to a file using `realpath`](#view-the-full-path-to-a-file-using-realpath)
@@ -245,6 +246,16 @@ Alternatively, `chmod` can be used in symbolic mode, EG:
 The examples above are taken from the [`chmod` man page](https://ss64.com/bash/chmod.html).
 
 To make a file executable for all users, use the command `chmod +x /path/to/file`.
+
+## Change ownership of a file using `chown`
+
+Change the ownership of a file or directory using `chown`. If changing ownership of a directory, use the `-R` flag to also recursively change ownership of all subdirectories within that directory ([source](https://unix.stackexchange.com/a/119836/421710)). Example:
+
+```
+$ sudo chown username:groupname filename
+$ sudo chown -R username:groupname dirname
+$ sudo chown -R jake:jake dirname
+```
 
 ## Recursively find word counts of all files with a particular file ending
 
