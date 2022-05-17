@@ -79,10 +79,10 @@ $ source ~/.bashrc
 
 ## Display date and time in `bash` history using `HISTTIMEFORMAT`
 
-Using the command `history 10` will display the last 10 `bash` commands that were used, but not when they were used (date and time). To include this information in the bash history in the current bash terminal, use the command `export HISTTIMEFORMAT="%Y-%m-%d %T "`. Note that using the command `history 10` will now display the date and time of commands that were used both before and after setting `HISTTIMEFORMAT`. To make this behaviour persist in future bash terminals, use the following commands:
+Using the command `history 10` will display the last 10 `bash` commands that were used, but not when they were used (date and time). To include this information in the bash history in the current bash terminal, use the command `export HISTTIMEFORMAT="| %Y-%m-%d %T | "`. Note that using the command `history 10` will now display the date and time of commands that were used both before and after setting `HISTTIMEFORMAT`. To make this behaviour persist in future bash terminals, use the following commands ([source](https://stackoverflow.com/a/41975189/8477566)):
 
 ```
-echo 'export HISTTIMEFORMAT="%Y-%m-%d %T "' >> ~/.bash_profile
+echo 'export HISTTIMEFORMAT="| %Y-%m-%d %T | "' >> ~/.bash_profile
 source ~/.bash_profile
 ```
 
@@ -90,11 +90,11 @@ Example:
 
 ```
 $ history 5
-   84  2022-05-17 15:35:07 ls /
-   85  2022-05-17 15:35:12 df -h
-   86  2022-05-17 15:35:24 cd ~
-   87  2022-05-17 15:35:25 ps
-   88  2022-05-17 15:35:44 history 5
+   94  | 2022-05-17 15:48:24 | ls /
+   95  | 2022-05-17 15:48:28 | df -h
+   96  | 2022-05-17 15:48:33 | cd ~
+   97  | 2022-05-17 15:48:36 | ps
+   98  | 2022-05-17 15:48:40 | history 5
 ```
 
 ## Get the current date and time with `date`
@@ -126,6 +126,10 @@ $ t0=$(date) && cmd_1 arg_1 && cmd_2 arg_2 && echo $t0 && date
 Fri Mar 18 18:09:52 GMT 2022
 Fri Mar 18 18:10:25 GMT 2022
 ```
+
+Note that instead of calling `date` or `t0=$(date)` before running a command, it is possible to simply set `HISTTIMEFORMAT` and then call `history` after the command, as described [above](#display-date-and-time-in-bash-history-using-histtimeformat).
+
+Also, if it is possible that any of the commands that are being run might fail, consider using `;` instead of `&&`, as in `cmd_1 arg_1 && cmd_2 arg_2; history 10; date`.
 
 ## Updating and upgrading packages using `apt update` and `apt upgrade`
 
