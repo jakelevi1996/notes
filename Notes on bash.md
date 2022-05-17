@@ -4,9 +4,10 @@ This is just a random collection of commands which I have found useful in Bash. 
 
 ## Contents
 
-- [Useful `bash` commands](#useful-bash-commands)
+- [Notes on `bash`](#notes-on-bash)
   - [Contents](#contents)
   - [Run script in the current shell environment using `source`](#run-script-in-the-current-shell-environment-using-source)
+  - [Display date and time in `bash` history using `HISTTIMEFORMAT`](#display-date-and-time-in-bash-history-using-histtimeformat)
   - [Get the current date and time with `date`](#get-the-current-date-and-time-with-date)
   - [Updating and upgrading packages using `apt update` and `apt upgrade`](#updating-and-upgrading-packages-using-apt-update-and-apt-upgrade)
   - [Seeing available disk space (using `df`) and disk usage (using `du`)](#seeing-available-disk-space-using-df-and-disk-usage-using-du)
@@ -74,6 +75,26 @@ This can be useful EG if making a change to `~/.bashrc` (`bashrc` stands for "Ba
 $ nano ~/.bashrc
 $ # <Make changes to the shell in the nano text editor>
 $ source ~/.bashrc
+```
+
+## Display date and time in `bash` history using `HISTTIMEFORMAT`
+
+Using the command `history 10` will display the last 10 `bash` commands that were used, but not when they were used (date and time). To include this information in the bash history in the current bash terminal, use the command `export HISTTIMEFORMAT="%Y-%m-%d %T "`. Note that using the command `history 10` will now display the date and time of commands that were used both before and after setting `HISTTIMEFORMAT`. To make this behaviour persist in future bash terminals, use the following commands:
+
+```
+echo 'export HISTTIMEFORMAT="%Y-%m-%d %T "' >> ~/.bash_profile
+source ~/.bash_profile
+```
+
+Example:
+
+```
+$ history 5
+   84  2022-05-17 15:35:07 ls /
+   85  2022-05-17 15:35:12 df -h
+   86  2022-05-17 15:35:24 cd ~
+   87  2022-05-17 15:35:25 ps
+   88  2022-05-17 15:35:44 history 5
 ```
 
 ## Get the current date and time with `date`
