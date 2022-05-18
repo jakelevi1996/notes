@@ -7,6 +7,7 @@ This is just a random collection of commands which I have found useful in Bash. 
 - [Notes on `bash`](#notes-on-bash)
   - [Contents](#contents)
   - [Run script in the current shell environment using `source`](#run-script-in-the-current-shell-environment-using-source)
+  - [Calculate running times of commands using `time`](#calculate-running-times-of-commands-using-time)
   - [Display date and time in `bash` history using `HISTTIMEFORMAT`](#display-date-and-time-in-bash-history-using-histtimeformat)
   - [Get the current date and time with `date`](#get-the-current-date-and-time-with-date)
   - [Updating and upgrading packages using `apt update` and `apt upgrade`](#updating-and-upgrading-packages-using-apt-update-and-apt-upgrade)
@@ -75,6 +76,37 @@ This can be useful EG if making a change to `~/.bashrc` (`bashrc` stands for "Ba
 $ nano ~/.bashrc
 $ # <Make changes to the shell in the nano text editor>
 $ source ~/.bashrc
+```
+
+## Calculate running times of commands using `time`
+
+Prepend a `bash` command with `time` to print the running time of that command, EG `time ls /`. Note that arguments to the command being timed don't need to be placed in quotation marks (as is the case with running commands over `ssh`). `time` displays 3 statistics, which are described below ([source](https://stackoverflow.com/a/556411/8477566)):
+
+- `real`: wall clock time, from start to finish of the command being run, including time that the process spends being blocked
+- `user`: amount of CPU time spent in user-mode code (outside the kernel), NOT including time that the process spends being blocked, summed over all CPU cores
+- `sys`: amount of CPU time spent in the kernel within the process (IE CPU time spent in system calls within the kernel, as opposed to library code, which is still running in user-space), NOT including time that the process spends being blocked, summed over all CPU cores
+
+Note that `time` can be used to time multiple sequential commands, including commands which are themselves being timed using `time`, by placing those commands in brackets. For example:
+
+```
+$ time (time ps && time ls /etc/cron.daily)
+  PID TTY          TIME CMD
+ 1035 tty1     00:00:00 bash
+ 1156 tty1     00:00:00 bash
+ 1157 tty1     00:00:00 ps
+
+real    0m0.024s
+user    0m0.000s
+sys     0m0.016s
+apport  apt-compat  bsdmainutils  dpkg  logrotate  man-db  mdadm  mlocate  passwd  popularity-contest  ubuntu-advantage-tools  update-notifier-common
+
+real    0m0.026s
+user    0m0.000s
+sys     0m0.016s
+
+real    0m0.052s
+user    0m0.000s
+sys     0m0.031s
 ```
 
 ## Display date and time in `bash` history using `HISTTIMEFORMAT`
