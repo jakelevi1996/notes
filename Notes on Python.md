@@ -62,7 +62,7 @@ In enter
 Inside context manager
 In exit
 Traceback (most recent call last):
-  File "e:/P4099 - Terbium/terbium_svn_repo/trunk/.temp.py", line 69, in <module>
+  File "~/.temp.py", line 69, in <module>
     raise RuntimeError()
 RuntimeError
 ```
