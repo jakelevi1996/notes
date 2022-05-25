@@ -10,6 +10,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [Contents](#contents)
   - [Useful links](#useful-links)
   - [Useful Python snippets](#useful-python-snippets)
+    - [Custon context managers using `__enter__` and `__exit__`](#custon-context-managers-using-__enter__-and-__exit__)
   - [Python implementations of algorithms](#python-implementations-of-algorithms)
   - [Notes on built-in and third-party modules](#notes-on-built-in-and-third-party-modules)
     - [`socket`](#socket)
@@ -24,9 +25,47 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
     - [Built-in Functions](https://docs.python.org/3/library/functions.html)
     - [Built-in Types](https://docs.python.org/3/library/stdtypes.html)
   - [The Python Language Reference](https://docs.python.org/3/reference/index.html)
+    - [Data model](https://docs.python.org/3/reference/datamodel.html)
 - [Project Euler](https://projecteuler.net/archives) (useful and interesting problems for practising numerical programming, and well-suited to Python)
 
 ## Useful Python snippets
+
+### Custon context managers using `__enter__` and `__exit__`
+
+Inside a class definition, defining the methods `__enter__(self)` and `__exit__(self, exc_type, exc_value, traceback)` allows that class to be used as a context manager. Note that if an exception is raised inside the context manager, the `__exit__` method will be executed before the exception is raised (or not raised, in case `__exit__` returns a true value), as described in the [Python data model](https://docs.python.org/3/reference/datamodel.html):
+
+> Exit the runtime context related to this object. The parameters describe the exception that caused the context to be exited. If the context was exited without an exception, all three arguments will be None.
+
+> If an exception is supplied, and the method wishes to suppress the exception (i.e., prevent it from being propagated), it should return a true value. Otherwise, the exception will be processed normally upon exit from this method.
+
+This is useful EG if some clean-up code is supposed to be run after calling the `main` function, regardless of whether or not an exception is raised in `main` - the `main` function can be put inside a context manager, and the clean-up code can be put inside the `__exit__` method.
+
+Here is a simple example of context managers and exceptions:
+
+```python
+class C:
+    def __enter__(self):
+        print("In enter")
+    def __exit__(self, exc_type, exc_value, traceback):
+        print("In exit")
+
+with C():
+    print("Inside context manager")
+    raise RuntimeError()
+    print("This statement is not reached")
+```
+
+Output:
+
+```
+In enter
+Inside context manager
+In exit
+Traceback (most recent call last):
+  File "e:/P4099 - Terbium/terbium_svn_repo/trunk/.temp.py", line 69, in <module>
+    raise RuntimeError()
+RuntimeError
+```
 
 ## Python implementations of algorithms
 
