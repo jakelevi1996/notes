@@ -62,7 +62,7 @@ In enter
 Inside context manager
 In exit
 Traceback (most recent call last):
-  File "~/.temp.py", line 69, in <module>
+  File "~/.temp.py", line 9, in <module>
     raise RuntimeError()
 RuntimeError
 ```
