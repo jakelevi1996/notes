@@ -15,6 +15,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
     - [Start a parallel subprocess in a new console window](#start-a-parallel-subprocess-in-a-new-console-window)
     - [Run a command using `subprocess` and parse its output to STDOUT](#run-a-command-using-subprocess-and-parse-its-output-to-stdout)
     - [Call a function with a timeout using `multiprocessing`](#call-a-function-with-a-timeout-using-multiprocessing)
+    - [Print the running time of a Python script](#print-the-running-time-of-a-python-script)
   - [Python implementations of algorithms](#python-implementations-of-algorithms)
     - [Find all permutations of a string](#find-all-permutations-of-a-string)
     - [Burrows–Wheeler transform (BWT)](#burrowswheeler-transform-bwt)
@@ -236,6 +237,28 @@ None
 2
 3
 None
+```
+
+### Print the running time of a Python script
+
+```python
+from time import perf_counter
+
+def main():
+    """ Main function for the script """
+    from time import sleep
+    sleep(3)
+
+if __name__ == "__main__":
+    t_start = perf_counter()
+
+    # Call main function
+    main()
+
+    # Print time taken
+    t_total = perf_counter() - t_start
+    mins, secs = divmod(t_total, 60)
+    print("\n\nScript ran in %i mins, %.3f secs" % (mins, secs))
 ```
 
 ## Python implementations of algorithms
