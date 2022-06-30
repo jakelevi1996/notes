@@ -108,6 +108,8 @@ print(find_permutations("1234"))
 
 ### Start a parallel subprocess in a new console window
 
+`create_process.py`
+
 ```python
 import subprocess
 import time
@@ -123,6 +125,8 @@ print("... while the other process is running in a new console...")
 time.sleep(1)
 print("... and both processes are running at the same time")
 ```
+
+`print_slow.py`
 
 ```python
 from time import sleep
