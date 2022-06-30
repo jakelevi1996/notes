@@ -15,6 +15,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
     - [Start a parallel subprocess in a new console window](#start-a-parallel-subprocess-in-a-new-console-window)
   - [Python implementations of algorithms](#python-implementations-of-algorithms)
     - [Find all permutations of a string](#find-all-permutations-of-a-string)
+    - [Burrows–Wheeler transform (BWT)](#burrowswheeler-transform-bwt)
   - [Notes on built-in and third-party modules](#notes-on-built-in-and-third-party-modules)
     - [`socket`](#socket)
 
@@ -156,6 +157,39 @@ print(find_permutations("1234"))
 # >>> ['1234', '1243', '1324', '1342', '1423', '1432', '2134', '2143', '2314',
 #      '2341', '2413', '2431', '3124', '3142', '3214', '3241', '3412', '3421',
 #      '4123', '4132', '4213', '4231', '4312', '4321']
+```
+
+### Burrows–Wheeler transform (BWT)
+
+```python
+""" This is a simple, non-optimised implementation of the Burrows–Wheeler
+transform, described here:
+https://en.wikipedia.org/wiki/Burrows%E2%80%93Wheeler_transform """
+
+def bwt(s_in):
+    all_rotations = [s_in[-i:] + s_in[:-i] for i in range(len(s_in))]
+    sorted_rotations = sorted(all_rotations)
+    list_pos = sorted_rotations.index(s_in)
+    s_out = "".join(s[-1] for s in sorted_rotations)
+
+    return s_out, list_pos
+
+def inverse_bwt(s_out, list_pos):
+    all_rotations = sorted(s_out)
+    for _ in range(len(s_out) - 1):
+        all_rotations = sorted(
+            s_out[i] + all_rotations[i]
+            for i in range(len(s_out))
+        )
+
+    return all_rotations[list_pos]
+
+s, i = bwt("^BANANA|")
+print(s)
+# BNN^AA|A
+s = inverse_bwt(s, i)
+print(s)
+# ^BANANA|
 ```
 
 ## Notes on built-in and third-party modules
