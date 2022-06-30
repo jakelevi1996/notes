@@ -12,9 +12,9 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [Useful Python snippets](#useful-python-snippets)
     - [Custon context managers using `__enter__` and `__exit__`](#custon-context-managers-using-__enter__-and-__exit__)
     - [Extract a substring from a file](#extract-a-substring-from-a-file)
+    - [Start a parallel subprocess in a new console window](#start-a-parallel-subprocess-in-a-new-console-window)
   - [Python implementations of algorithms](#python-implementations-of-algorithms)
     - [Find all permutations of a string](#find-all-permutations-of-a-string)
-    - [Start a parallel subprocess in a new console window](#start-a-parallel-subprocess-in-a-new-console-window)
   - [Notes on built-in and third-party modules](#notes-on-built-in-and-third-party-modules)
     - [`socket`](#socket)
 
@@ -90,6 +90,37 @@ def extract_substr_from_file(filename, prefix=None, suffix=None):
     return s[start_ind:end_ind]
 ```
 
+### Start a parallel subprocess in a new console window
+
+`create_process.py`
+
+```python
+import subprocess
+import time
+
+print("Starting new process...")
+
+cmd = ["python", "print_slow.py"]
+subprocess.Popen(cmd, creationflags=subprocess.CREATE_NEW_CONSOLE)
+
+print("This process runs in parallel...")
+time.sleep(1)
+print("... while the other process is running in a new console...")
+time.sleep(1)
+print("... and both processes are running at the same time")
+```
+
+`print_slow.py`
+
+```python
+from time import sleep
+
+print("Console closing in ", end="\n")
+for i in reversed(range(5)):
+    print("%i..." % (i + 1))
+    sleep(1)
+```
+
 ## Python implementations of algorithms
 
 ### Find all permutations of a string
@@ -125,37 +156,6 @@ print(find_permutations("1234"))
 # >>> ['1234', '1243', '1324', '1342', '1423', '1432', '2134', '2143', '2314',
 #      '2341', '2413', '2431', '3124', '3142', '3214', '3241', '3412', '3421',
 #      '4123', '4132', '4213', '4231', '4312', '4321']
-```
-
-### Start a parallel subprocess in a new console window
-
-`create_process.py`
-
-```python
-import subprocess
-import time
-
-print("Starting new process...")
-
-cmd = ["python", "print_slow.py"]
-subprocess.Popen(cmd, creationflags=subprocess.CREATE_NEW_CONSOLE)
-
-print("This process runs in parallel...")
-time.sleep(1)
-print("... while the other process is running in a new console...")
-time.sleep(1)
-print("... and both processes are running at the same time")
-```
-
-`print_slow.py`
-
-```python
-from time import sleep
-
-print("Console closing in ", end="\n")
-for i in reversed(range(5)):
-    print("%i..." % (i + 1))
-    sleep(1)
 ```
 
 ## Notes on built-in and third-party modules
