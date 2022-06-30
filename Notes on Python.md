@@ -12,6 +12,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [Useful Python snippets](#useful-python-snippets)
     - [Custon context managers using `__enter__` and `__exit__`](#custon-context-managers-using-__enter__-and-__exit__)
   - [Python implementations of algorithms](#python-implementations-of-algorithms)
+    - [Find all permutations of a string](#find-all-permutations-of-a-string)
   - [Notes on built-in and third-party modules](#notes-on-built-in-and-third-party-modules)
     - [`socket`](#socket)
 
@@ -68,6 +69,41 @@ RuntimeError
 ```
 
 ## Python implementations of algorithms
+
+### Find all permutations of a string
+
+Note that this could be made more efficient by storing each 2-tuple (each of which contains the prefix of a valid permutation, and the remaining choices for that permutation) as a single string.
+
+```python
+def find_permutations(s):
+    """ Find all permutations of the string s. This can be performed using
+    itertools.permutations, but implementing it from scratch is an interesting
+    challenge. """
+    # Initialise list of 2-tuples, each of which contains the prefix of a valid
+    # permutation, and the remaining choices for that permutation
+    prefix_choices_tuple_list = [("", s)]
+    # On each iteration we increase the length of each prefix by 1, until each
+    # prefix is the length of a full permutation
+    for _ in range(len(s)):
+        # For each tuple of a valid prefix of a perumutation and the remaining
+        # choices, replace the tuple with all tuples containing the same prefix
+        # extended by one of the remaining choices, and the other remaining
+        # choices
+        prefix_choices_tuple_list = [
+            (prefix + choice, choice_list[:i] + choice_list[i+1:])
+            for prefix, choice_list in prefix_choices_tuple_list
+            for i, choice in enumerate(choice_list)
+        ]
+    # Extract and return all of the prefixes, which are now complete
+    # permutations (with no remaining choices for each prefix)
+    perm_list = [prefix for prefix, _ in prefix_choices_tuple_list]
+    return perm_list
+
+print(find_permutations("1234"))
+# >>> ['1234', '1243', '1324', '1342', '1423', '1432', '2134', '2143', '2314',
+#      '2341', '2413', '2431', '3124', '3142', '3214', '3241', '3412', '3421',
+#      '4123', '4132', '4213', '4231', '4312', '4321']
+```
 
 ## Notes on built-in and third-party modules
 
