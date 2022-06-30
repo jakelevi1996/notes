@@ -14,6 +14,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
     - [Extract a substring from a file](#extract-a-substring-from-a-file)
     - [Start a parallel subprocess in a new console window](#start-a-parallel-subprocess-in-a-new-console-window)
     - [Run a command using `subprocess` and parse its output to STDOUT](#run-a-command-using-subprocess-and-parse-its-output-to-stdout)
+    - [Call a function with a timeout using `multiprocessing`](#call-a-function-with-a-timeout-using-multiprocessing)
   - [Python implementations of algorithms](#python-implementations-of-algorithms)
     - [Find all permutations of a string](#find-all-permutations-of-a-string)
     - [Burrows–Wheeler transform (BWT)](#burrowswheeler-transform-bwt)
@@ -140,6 +141,101 @@ except subprocess.CalledProcessError:
 serial_device_list = [s for s in console_output.split("\n") if len(s) > 0]
 
 print("List of serial devices:\n\n%s" % serial_device_list)
+```
+
+### Call a function with a timeout using `multiprocessing`
+
+`call_func_with_timeout.py`
+
+```python
+from multiprocessing import Process, Queue
+from time import sleep
+
+def call_func_with_timeout(
+    func,
+    timeout,
+    args=None,
+    kwargs=None,
+    timeout_retval=None,
+):
+    """ Call the given function in a subprocess with the given arguments and
+    keyword arguments. If the function takes longer than timeout seconds to
+    return, then terminate the subprocess, and return timeout_retval. Otherwise
+    return the value returned by the function call """
+    # Set default args and kwargs values
+    if args is None:
+        args = list()
+
+    if kwargs is None:
+        kwargs = dict()
+
+    # Initialise the Queue and Process objects
+    result_queue = Queue()
+    p = Process(target=func_wrapper, args=[func, result_queue, args, kwargs])
+
+    # Start the process, wait for timeout seconds, and check the process
+    p.start()
+    p.join(timeout)
+    if p.is_alive():
+        # The function hasn't returned, so terminate the subprocess
+        p.terminate()
+        p.join()
+        p.close()
+        ret_val = timeout_retval
+    else:
+        # The process finished, so close the process and retrieve the results
+        p.close()
+        ret_val = result_queue.get()
+
+    return ret_val
+
+def func_wrapper(func, result_queue, args, kwargs):
+    """ Wrapper for the function passed to call_func_with_timeout, which is
+    started in a subprocess by call_func_with_timeout. Call the target
+    function, and place the result in a queue, which can be retrieved by
+    call_func_with_timeout """
+    ret_val = func(*args, **kwargs)
+    result_queue.put(ret_val)
+```
+
+`test.py`
+
+```python
+from time import sleep
+from call_func_with_timeout import call_func_with_timeout
+
+
+def f(x):
+    for i in range(x):
+        print(i)
+        sleep(1)
+
+    return 42
+
+if __name__ == "__main__":
+    print(call_func_with_timeout(f, timeout=4, args=[2]), end="\n\n")
+    print(call_func_with_timeout(f, timeout=4, args=[6]), end="\n\n")
+    print(call_func_with_timeout(f, timeout=4, kwargs={"x": 6}), end="\n\n")
+```
+
+Output from `test.py`:
+
+```
+0
+1
+42
+
+0
+1
+2
+3
+None
+
+0
+1
+2
+3
+None
 ```
 
 ## Python implementations of algorithms
