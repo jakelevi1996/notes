@@ -14,6 +14,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [Python implementations of algorithms](#python-implementations-of-algorithms)
     - [Find all permutations of a string](#find-all-permutations-of-a-string)
     - [Start a parallel subprocess in a new console window](#start-a-parallel-subprocess-in-a-new-console-window)
+    - [Extract a substring from a file](#extract-a-substring-from-a-file)
   - [Notes on built-in and third-party modules](#notes-on-built-in-and-third-party-modules)
     - [`socket`](#socket)
 
@@ -135,6 +136,26 @@ print("Console closing in ", end="\n")
 for i in reversed(range(5)):
     print("%i..." % (i + 1))
     sleep(1)
+```
+
+### Extract a substring from a file
+
+In Python, given the filename of a text file, read the text file into a string, and extract the substring which begins after the prefix substring and ends before the suffix substring.
+
+```python
+def extract_substr_from_file(filename, prefix=None, suffix=None):
+    """ Given the filename of a text file, read the text file into a string,
+    and extract the substring which begins after the prefix substring and ends
+    before the suffix substring. If prefix is None then the start of the file
+    is used as the prefix. If suffix is None then the end of the file is used
+    as the suffix. """
+    with open(filename) as f:
+        s = f.read()
+
+    start_ind = 0 if (prefix is None) else (s.index(prefix) + len(prefix))
+    end_ind = len(s) if (suffix is None) else (s.index(suffix, start_ind))
+
+    return s[start_ind:end_ind]
 ```
 
 ## Notes on built-in and third-party modules
