@@ -1,10 +1,10 @@
-# Tips for Gitlab CI
+# Notes on Gitlab CI
 
-Some useful tips for Gitlab CI, including useful resources, an example `.gitlab-ci.yml` file, and how to set up a Gitlab CI runner on Ubuntu (EG if CI jobs require local hardware).
+This Gist contains notes on Gitlab CI, including useful resources, an example `.gitlab-ci.yml` file, and how to set up a Gitlab CI runner on Ubuntu (EG if CI jobs require local hardware).
 
 ## Contents
 
-- [Tips for Gitlab CI](#tips-for-gitlab-ci)
+- [Notes on Gitlab CI](#notes-on-gitlab-ci)
   - [Contents](#contents)
   - [Useful resources](#useful-resources)
   - [Example `.gitlab-ci.yml` file](#example-gitlab-ciyml-file)
