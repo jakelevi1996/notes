@@ -1,8 +1,8 @@
-# Tutorial for `gdb` (GNU debugger)
+# Notes on `gdb` (GNU debugger)
 
 ## Contents
 
-- [Tutorial for `gdb` (GNU debugger)](#tutorial-for-gdb-gnu-debugger)
+- [Notes on `gdb` (GNU debugger)](#notes-on-gdb-gnu-debugger)
   - [Contents](#contents)
   - [References](#references)
   - [Compiling and opening a program in `gdb`](#compiling-and-opening-a-program-in-gdb)
