@@ -13,6 +13,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
     - [Custon context managers using `__enter__` and `__exit__`](#custon-context-managers-using-__enter__-and-__exit__)
     - [Extract a substring from a file](#extract-a-substring-from-a-file)
     - [Start a parallel subprocess in a new console window](#start-a-parallel-subprocess-in-a-new-console-window)
+    - [Run a command using `subprocess` and parse its output to STDOUT](#run-a-command-using-subprocess-and-parse-its-output-to-stdout)
   - [Python implementations of algorithms](#python-implementations-of-algorithms)
     - [Find all permutations of a string](#find-all-permutations-of-a-string)
     - [Burrows–Wheeler transform (BWT)](#burrowswheeler-transform-bwt)
@@ -120,6 +121,25 @@ print("Console closing in ", end="\n")
 for i in reversed(range(5)):
     print("%i..." % (i + 1))
     sleep(1)
+```
+
+### Run a command using `subprocess` and parse its output to STDOUT
+
+```python
+""" Run a command in the console, and parse its output to STDOUT """
+
+import subprocess
+
+ls_cmd = ["ls", "/dev/serial/by-id/"]
+try:
+    console_output = subprocess.check_output(ls_cmd).decode()
+except subprocess.CalledProcessError:
+    raise RuntimeError("Error running command \"%s\"" % (" ".join(ls_cmd)))
+
+
+serial_device_list = [s for s in console_output.split("\n") if len(s) > 0]
+
+print("List of serial devices:\n\n%s" % serial_device_list)
 ```
 
 ## Python implementations of algorithms
