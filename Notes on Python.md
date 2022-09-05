@@ -356,7 +356,7 @@ To get more information on the available arguments, use the following command:
     python ./train.py --help
 
 """
-from argparse import ArgumentParser
+import argparse
 
 def main_func(epochs, num_hidden_units, batch_norm):
     s = "epochs = {}, batch_norm = {}, num_hidden_units = {}"
@@ -364,7 +364,7 @@ def main_func(epochs, num_hidden_units, batch_norm):
 
 if __name__ == "__main__":
     # Define CLI using argparse
-    parser = ArgumentParser(description="Script for training a CNN")
+    parser = argparse.ArgumentParser(description="Script for training a CNN")
 
     parser.add_argument(
         "--epochs",
