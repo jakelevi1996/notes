@@ -20,6 +20,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
     - [Find all permutations of a string](#find-all-permutations-of-a-string)
     - [Burrows–Wheeler transform (BWT)](#burrowswheeler-transform-bwt)
   - [Notes on built-in and third-party modules](#notes-on-built-in-and-third-party-modules)
+    - [`argparse`](#argparse)
     - [`socket`](#socket)
 
 ## Useful links
@@ -332,6 +333,114 @@ print(s)
 ```
 
 ## Notes on built-in and third-party modules
+
+### `argparse`
+
+`argparse` is a module in Python for adding command line arguments to a Python script. The official Python documentation contains an [`argparse` tutorial](https://docs.python.org/3/howto/argparse.html), and an [`argparse` API reference](https://docs.python.org/3/library/argparse.html). Below is an example of a script which uses `argparse`, and examples of calling it from the command line.
+
+Note that in the example below, the `-` characters before the argument names specify that those arguments are optional (as opposed to positional). The character used to specify optional arguments can be set using the `prefix_chars` argument of the constructor for the `ArgumentParser` class (the default is "`-`").
+
+```python
+""" This is a dummy script, meant to imitate a script for training a CNN. This
+script has a command-line interface, which allows epochs, num_hidden_units, and
+batch_norm to be specified from the command-line.
+
+Below are some examples of calling this script:
+
+    python ./train.py --epochs 3 --num_hidden_units 15,3,15 --batch_norm
+
+    python ./train.py --num_hidden_units 10,10,10 --epochs 10
+
+To get more information on the available arguments, use the following command:
+
+    python ./train.py --help
+
+"""
+from argparse import ArgumentParser
+
+def main_func(epochs, num_hidden_units, batch_norm):
+    s = "epochs = {}, batch_norm = {}, num_hidden_units = {}"
+    print(s.format(epochs, batch_norm, num_hidden_units))
+
+if __name__ == "__main__":
+    # Define CLI using argparse
+    parser = ArgumentParser(description="Script for training a CNN")
+
+    parser.add_argument(
+        "--epochs",
+        help="Number epochs to train on training data. Default is 1",
+        default=1,
+        type=int,
+    )
+    parser.add_argument(
+        "--num_hidden_units",
+        help="Comma-separated list of hidden units per layer, EG 4,5,6",
+        default="20,20",
+        type=str,
+    )
+    parser.add_argument(
+        "--batch_norm",
+        help="Apply batch-normalisation to layer outputs",
+        action="store_true",
+    )
+
+    # Parse arguments
+    args = parser.parse_args()
+
+    # Convert comma-separated string to list of ints
+    num_hidden_units = [int(i) for i in args.num_hidden_units.split(",")]
+
+    # Call main function using command-line arguments
+    main_func(args.epochs, num_hidden_units, args.batch_norm)
+
+```
+
+The script can be called with or without the [`-m` flag](https://docs.python.org/3/using/cmdline.html#cmdoption-m):
+
+```
+$ python train.py
+epochs = 1, batch_norm = False, num_hidden_units = [20, 20]
+$ python -m train
+epochs = 1, batch_norm = False, num_hidden_units = [20, 20]
+```
+
+A help message can be printed by adding a `-h` or `--help` argument:
+
+```
+$ python train.py -h
+usage: train.py [-h] [--epochs EPOCHS] [--num_hidden_units NUM_HIDDEN_UNITS]
+                [--batch_norm]
+
+Script for training a CNN
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --epochs EPOCHS       Number epochs to train on training data. Default is 1
+  --num_hidden_units NUM_HIDDEN_UNITS
+                        Comma-separated list of hidden units per layer, EG
+                        4,5,6
+  --batch_norm          Apply batch-normalisation to layer outputs
+```
+
+Optional arguments can be specified from the command line in any order, or they can be excluded, in which case the default value will be used:
+
+```
+$ python train.py --epochs 10 --num_hidden_units 10,10,10
+epochs = 10, batch_norm = False, num_hidden_units = [10, 10, 10]
+$ python train.py --num_hidden_units 10,10,10 --epochs 10
+epochs = 10, batch_norm = False, num_hidden_units = [10, 10, 10]
+$ python train.py --batch_norm --num_hidden_units 10,10,10 --epochs 10
+epochs = 10, batch_norm = True, num_hidden_units = [10, 10, 10]
+```
+
+Since the `epochs` argument has been specified as having type `int`, an error will be thrown it is provided with a value which can't be converted directly into an `int`:
+
+```
+$ python train.py  --epochs ten
+usage: train.py [-h] [--epochs EPOCHS] [--num_hidden_units NUM_HIDDEN_UNITS]
+                [--batch_norm]
+train.py: error: argument --epochs: invalid int value: 'ten'
+```
 
 ### `socket`
 
