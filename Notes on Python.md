@@ -184,10 +184,10 @@ python -m cProfile -o profile -m pytest
 
 Note that `pytest` can be followed by the `-k` flag to select which tests to run based on their name, [as described here](https://docs.pytest.org/en/7.1.x/example/markers.html#using-k-expr-to-select-tests-based-on-their-name).
 
-Often when profiling, it might be desirable to change the code, re-profile, and compare against the original profiling information. To this end it can be useful to generate unique timestamped filenames on the command line into which `stdout` can be redirected, for example by appending ` > ('.profile ' + $(date '+%Y-%m-%d %H-%M-%S') + '.txt')` to the end of the `pstats` command, as shown below:
+Often when profiling, it might be desirable to change the code, re-profile, and compare against the original profiling information. To this end it can be useful to generate unique timestamped filenames on the command line into which `stdout` can be redirected, for example by appending ` > ".profile $(date '+%Y-%m-%d %H-%M-%S').txt"` to the end of the `pstats` command, as shown below:
 
 ```
-python -c "import pstats; p = pstats.Stats('.profile'); p.sort_stats('cumtime'); p.print_stats()" > ('.profile ' + $(date '+%Y-%m-%d %H-%M-%S') + '.txt')
+python -c "import pstats; p = pstats.Stats('.profile'); p.sort_stats('cumtime'); p.print_stats()" > ".profile $(date '+%Y-%m-%d %H-%M-%S').txt"
 ```
 
 Note that errors can occur when trying to profile code which uses the `pickle` module. The explanation and a workaround are provided in [this StackOverflow answer](https://stackoverflow.com/a/53890887/8477566). A simple solution is the modify the code being profiled such that it has an option to run without using `pickle`.
