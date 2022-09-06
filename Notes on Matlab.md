@@ -5,6 +5,7 @@
 - [Notes on Matlab](#notes-on-matlab)
   - [Contents](#contents)
   - [Get the directory name of a source file](#get-the-directory-name-of-a-source-file)
+  - [Create a directory if it doesn't exist](#create-a-directory-if-it-doesnt-exist)
   - [Read from and write to a file](#read-from-and-write-to-a-file)
   - [Print a struct to a file](#print-a-struct-to-a-file)
 
@@ -13,6 +14,16 @@
 ```matlab
 current_filename = mfilename('fullpath');
 [current_dir, ~, ~] = fileparts(current_filename);
+```
+
+## Create a directory if it doesn't exist
+
+```matlab
+dir_name = 'new_folder';
+
+if ~exist(dir_name, 'dir')
+    mkdir(dir_name)
+end
 ```
 
 ## Read from and write to a file
