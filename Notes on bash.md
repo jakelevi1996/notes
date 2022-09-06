@@ -6,10 +6,10 @@ This is just a random collection of commands which I have found useful in Bash. 
 
 - [Notes on `bash`](#notes-on-bash)
   - [Contents](#contents)
-  - [Get the current date and time with `date`](#get-the-current-date-and-time-with-date)
+  - [Get the current date and time and generate timestamped filenames with `date`](#get-the-current-date-and-time-and-generate-timestamped-filenames-with-date)
+  - [Display date and time in `bash` history using `HISTTIMEFORMAT`](#display-date-and-time-in-bash-history-using-histtimeformat)
   - [Calculate running times of commands using `time`](#calculate-running-times-of-commands-using-time)
   - [Run script in the current shell environment using `source`](#run-script-in-the-current-shell-environment-using-source)
-  - [Display date and time in `bash` history using `HISTTIMEFORMAT`](#display-date-and-time-in-bash-history-using-histtimeformat)
   - [Updating and upgrading packages using `apt update` and `apt upgrade`](#updating-and-upgrading-packages-using-apt-update-and-apt-upgrade)
   - [Seeing available disk space (using `df`) and disk usage (using `du`)](#seeing-available-disk-space-using-df-and-disk-usage-using-du)
   - [View the return code of the most recent command using `$?`](#view-the-return-code-of-the-most-recent-command-using-)
@@ -66,7 +66,7 @@ This is just a random collection of commands which I have found useful in Bash. 
   - [Create an `alias`](#create-an-alias)
   - [Create a symbolic link using `ln -s`](#create-a-symbolic-link-using-ln--s)
 
-## Get the current date and time with `date`
+## Get the current date and time and generate timestamped filenames with `date`
 
 The command `date` can be used to print the current date and time on the command line, or to get a string variable containing the current date and time which can be used in future commands, for example:
 
@@ -86,6 +86,26 @@ $ ls
 $ echo "Hello, world!" > "Info $(date '+%Y-%m-%d %H-%M-%S').txt"
 $ ls
 'Info 2022-09-06 13-35-13.txt'
+```
+
+## Display date and time in `bash` history using `HISTTIMEFORMAT`
+
+Using the command `history 10` will display the last 10 `bash` commands that were used, but not when they were used (date and time). To include this information in the bash history in the current bash terminal, use the command `export HISTTIMEFORMAT="| %Y-%m-%d %T | "`. Note that using the command `history 10` will now display the date and time of commands that were used both before and after setting `HISTTIMEFORMAT`. To make this behaviour persist in future bash terminals, use the following commands ([source](https://stackoverflow.com/a/41975189/8477566)):
+
+```
+echo 'export HISTTIMEFORMAT="| %Y-%m-%d %T | "' >> ~/.bash_profile
+source ~/.bash_profile
+```
+
+Example:
+
+```
+$ history 5
+   94  | 2022-05-17 15:48:24 | ls /
+   95  | 2022-05-17 15:48:28 | df -h
+   96  | 2022-05-17 15:48:33 | cd ~
+   97  | 2022-05-17 15:48:36 | ps
+   98  | 2022-05-17 15:48:40 | history 5
 ```
 
 ## Calculate running times of commands using `time`
@@ -129,26 +149,6 @@ This can be useful EG if making a change to `~/.bashrc` (`bashrc` stands for "Ba
 $ nano ~/.bashrc
 $ # <Make changes to the shell in the nano text editor>
 $ source ~/.bashrc
-```
-
-## Display date and time in `bash` history using `HISTTIMEFORMAT`
-
-Using the command `history 10` will display the last 10 `bash` commands that were used, but not when they were used (date and time). To include this information in the bash history in the current bash terminal, use the command `export HISTTIMEFORMAT="| %Y-%m-%d %T | "`. Note that using the command `history 10` will now display the date and time of commands that were used both before and after setting `HISTTIMEFORMAT`. To make this behaviour persist in future bash terminals, use the following commands ([source](https://stackoverflow.com/a/41975189/8477566)):
-
-```
-echo 'export HISTTIMEFORMAT="| %Y-%m-%d %T | "' >> ~/.bash_profile
-source ~/.bash_profile
-```
-
-Example:
-
-```
-$ history 5
-   94  | 2022-05-17 15:48:24 | ls /
-   95  | 2022-05-17 15:48:28 | df -h
-   96  | 2022-05-17 15:48:33 | cd ~
-   97  | 2022-05-17 15:48:36 | ps
-   98  | 2022-05-17 15:48:40 | history 5
 ```
 
 ## Updating and upgrading packages using `apt update` and `apt upgrade`
