@@ -135,6 +135,62 @@ Tue Sep  6 12:13:24 2022    .profile
      1000    0.001    0.000    0.036    0.000 C:/Users/Jake/Documents/Programming/Gists/Notes on Python/maths_test.py:7(g)
 ```
 
+To avoid printing directory names in the function listings, call the `strip_dirs` method of the `pstats.Stats` object before calling the `print_stats` method, as shown below (but note that this will prevent matching by directory names in the `print_stats` method):
+
+```
+python -c "import pstats; p = pstats.Stats('.profile'); p.strip_dirs(); p.sort_stats('cumtime'); p.print_stats(10)"
+```
+
+This produces the following output:
+
+```
+Tue Sep  6 12:13:24 2022    .profile
+
+         18413 function calls (18272 primitive calls) in 0.050 seconds
+
+   Ordered by: cumulative time
+   List reduced from 238 to 10 due to restriction <10>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+      8/1    0.000    0.000    0.050    0.050 {built-in method builtins.exec}
+        1    0.000    0.000    0.050    0.050 maths_test.py:1(<module>)
+        1    0.000    0.000    0.041    0.041 maths_test.py:4(f)
+        1    0.000    0.000    0.041    0.041 statistics.py:640(stdev)
+        1    0.000    0.000    0.041    0.041 statistics.py:545(variance)
+     1000    0.001    0.000    0.036    0.000 maths_test.py:7(g)
+     1003    0.036    0.000    0.036    0.000 {built-in method builtins.sum}
+      9/2    0.000    0.000    0.010    0.005 <frozen importlib._bootstrap>:978(_find_and_load)
+      9/2    0.000    0.000    0.009    0.005 <frozen importlib._bootstrap>:948(_find_and_load_unlocked)
+      9/2    0.000    0.000    0.009    0.005 <frozen importlib._bootstrap>:663(_load_unlocked)
+```
+
+When calling the script being profiled using `cProfile`, it is possible to call the script with command line arguments by appending them to the end of the command as usual, for example:
+
+```
+python -m cProfile -o .profile ./maths_test.py --arg1 val1 --arg2 val2
+```
+
+When calling the script being profiled using `cProfile`, instead of calling the script using its path, it is also possible to call the script using `-m` and module syntax (and including any command line arguments, if desired), for example:
+
+```
+python -m cProfile -o .profile -m maths_test
+```
+
+This can also be used to profile unit tests using `pytest`, for example:
+
+```
+python -m cProfile -o profile -m pytest
+```
+
+Note that `pytest` can be followed by the `-k` flag to select which tests to run based on their name, [as described here](https://docs.pytest.org/en/7.1.x/example/markers.html#using-k-expr-to-select-tests-based-on-their-name).
+
+Often when profiling, it might be desirable to change the code, re-profile, and compare against the original profiling information. To this end it can be useful to generate unique timestamped filenames on the command line into which `stdout` can be redirected, for example by appending ` > ('.profile ' + $(date '+%Y-%m-%d %H-%M-%S') + '.txt')` to the end of the `pstats` command, as shown below:
+
+```
+python -c "import pstats; p = pstats.Stats('.profile'); p.sort_stats('cumtime'); p.print_stats()" > ('.profile ' + $(date '+%Y-%m-%d %H-%M-%S') + '.txt')
+```
+
+Note that errors can occur when trying to profile code which uses the `pickle` module. The explanation and a workaround are provided in [this StackOverflow answer](https://stackoverflow.com/a/53890887/8477566). A simple solution is the modify the code being profiled such that it has an option to run without using `pickle`.
 
 ## Useful Python snippets
 
