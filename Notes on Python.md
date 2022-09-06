@@ -9,6 +9,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
 - [Notes on Python](#notes-on-python)
   - [Contents](#contents)
   - [Useful links](#useful-links)
+  - [Profiling Python code](#profiling-python-code)
   - [Useful Python snippets](#useful-python-snippets)
     - [Print the running time of a Python script](#print-the-running-time-of-a-python-script)
     - [Custom context managers using `__enter__` and `__exit__`](#custom-context-managers-using-__enter__-and-__exit__)
@@ -35,6 +36,105 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [The Python Language Reference](https://docs.python.org/3/reference/index.html)
     - [Data model](https://docs.python.org/3/reference/datamodel.html)
 - [Project Euler](https://projecteuler.net/archives) (useful and interesting problems for practising numerical programming, and well-suited to Python)
+
+## Profiling Python code
+
+Profiling a Python script involves 2 stages: collecting profiling information while running the script using the `cProfile` Python module, and then analysing the profiling information using the `pstats` Python module.
+
+Suppose the following script called `maths_test.py` is to be profiled:
+
+```python
+import math
+import statistics
+
+def f(x):
+    return statistics.stdev(g(i) for i in range(x))
+
+def g(x):
+    return sum(math.sqrt(i) for i in range(x))
+
+if __name__ == "__main__":
+    f(1000)
+```
+
+This can be achieved simply using the following two commands:
+
+```
+python -m cProfile -o .profile ./maths_test.py
+python -c "import pstats; p = pstats.Stats('.profile'); p.sort_stats('cumtime'); p.print_stats(15)"
+```
+
+These commands produce the following output:
+
+```
+Tue Sep  6 11:16:20 2022    .profile
+
+         1019409 function calls (1019268 primitive calls) in 0.158 seconds
+
+   Ordered by: cumulative time
+   List reduced from 240 to 15 due to restriction <15>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+      8/1    0.000    0.000    0.158    0.158 {built-in method builtins.exec}
+        1    0.000    0.000    0.158    0.158 ./maths_test.py:1(<module>)
+        1    0.000    0.000    0.150    0.150 ./maths_test.py:4(f)
+        1    0.000    0.000    0.150    0.150 C:\Program Files\Python37\lib\statistics.py:640(stdev)
+        1    0.000    0.000    0.150    0.150 C:\Program Files\Python37\lib\statistics.py:545(variance)
+     1001    0.000    0.000    0.146    0.000 ./maths_test.py:5(<genexpr>)
+     1003    0.032    0.000    0.145    0.000 {built-in method builtins.sum}
+     1000    0.001    0.000    0.145    0.000 ./maths_test.py:7(g)
+   500500    0.068    0.000    0.113    0.000 ./maths_test.py:8(<genexpr>)
+   499501    0.045    0.000    0.045    0.000 {built-in method math.sqrt}
+      9/2    0.000    0.000    0.008    0.004 <frozen importlib._bootstrap>:978(_find_and_load)
+      9/2    0.000    0.000    0.008    0.004 <frozen importlib._bootstrap>:948(_find_and_load_unlocked)
+      9/2    0.000    0.000    0.007    0.004 <frozen importlib._bootstrap>:663(_load_unlocked)
+      6/1    0.000    0.000    0.007    0.007 <frozen importlib._bootstrap_external>:722(exec_module)
+     12/3    0.000    0.000    0.007    0.002 <frozen importlib._bootstrap>:211(_call_with_frames_removed)
+```
+
+The arguments to [`print_stats`](https://docs.python.org/3/library/profile.html#pstats.Stats.print_stats) specifiy restrictions on which lines to print, and the order in which to apply those restrictions. An integer argument `n` prints only the first `n` lines. A string argument `s` only prints lines whose filename (including directory name) matches the regular expression `s`.
+
+For example, to only print the first 10 lines of files in the `Notes on Python` directory, we can call the script using a relative path that includes the string `Notes on Python`, regenerate the profiling information, and then pass the arguments `'Notes on Python', 10` to the `print_stats` method, as shown below:
+
+```
+python -m cProfile -o .profile "../Notes on Python/maths_test.py"
+python -c "import pstats; p = pstats.Stats('.profile'); p.sort_stats('cumtime'); p.print_stats('Notes on Python', 10)"
+```
+
+This produces the following output (only 5 lines are printed because there are only 5 entries which match the pattern `'Jake'`):
+
+```
+Tue Sep  6 11:21:45 2022    .profile
+
+         1019409 function calls (1019268 primitive calls) in 0.160 seconds
+
+   Ordered by: cumulative time
+   List reduced from 240 to 5 due to restriction <'Notes on Python'>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.160    0.160 ../Notes on Python/maths_test.py:1(<module>)
+        1    0.000    0.000    0.152    0.152 ../Notes on Python/maths_test.py:4(f)
+     1001    0.000    0.000    0.148    0.000 ../Notes on Python/maths_test.py:5(<genexpr>)
+     1000    0.001    0.000    0.148    0.000 ../Notes on Python/maths_test.py:7(g)
+   500500    0.071    0.000    0.115    0.000 ../Notes on Python/maths_test.py:8(<genexpr>)
+```
+
+From this we see that the generator expressions are taking up quite a lot of time; replacing `g(i) for i in range(x)` with `map(g, range(x))` and `math.sqrt(i) for i in range(x)` with `map(math.sqrt, range(x))` and re-profiling, the following profiling results are obtained, reducing the overall running time by >50%:
+
+```
+Tue Sep  6 11:22:47 2022    .profile
+
+         18408 function calls (18267 primitive calls) in 0.050 seconds
+
+   Ordered by: cumulative time
+   List reduced from 238 to 3 due to restriction <'Notes on Python'>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.050    0.050 ../Notes on Python/maths_test.py:1(<module>)
+        1    0.000    0.000    0.040    0.040 ../Notes on Python/maths_test.py:4(f)
+     1000    0.000    0.000    0.036    0.000 ../Notes on Python/maths_test.py:7(g)
+```
+
 
 ## Useful Python snippets
 
