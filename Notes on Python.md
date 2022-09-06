@@ -12,6 +12,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [Profiling Python code](#profiling-python-code)
   - [Useful Python snippets](#useful-python-snippets)
     - [Print the running time of a Python script](#print-the-running-time-of-a-python-script)
+    - [Get the directory name of the current source file](#get-the-directory-name-of-the-current-source-file)
     - [Writing to and reading from a text file in Python](#writing-to-and-reading-from-a-text-file-in-python)
     - [Custom context managers using `__enter__` and `__exit__`](#custom-context-managers-using-__enter__-and-__exit__)
     - [Extract a substring from a file](#extract-a-substring-from-a-file)
@@ -215,6 +216,14 @@ if __name__ == "__main__":
     t_total = time.perf_counter() - t_start
     mins, secs = divmod(t_total, 60)
     print("\n\nScript ran in %i mins, %.3f secs" % (mins, secs))
+```
+
+### Get the directory name of the current source file
+
+```python
+import os
+
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 ```
 
 ### Writing to and reading from a text file in Python
