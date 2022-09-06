@@ -10,12 +10,12 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [Contents](#contents)
   - [Useful links](#useful-links)
   - [Useful Python snippets](#useful-python-snippets)
+    - [Print the running time of a Python script](#print-the-running-time-of-a-python-script)
     - [Custon context managers using `__enter__` and `__exit__`](#custon-context-managers-using-__enter__-and-__exit__)
     - [Extract a substring from a file](#extract-a-substring-from-a-file)
     - [Start a parallel subprocess in a new console window](#start-a-parallel-subprocess-in-a-new-console-window)
     - [Run a command using `subprocess` and parse its output to STDOUT](#run-a-command-using-subprocess-and-parse-its-output-to-stdout)
     - [Call a function with a timeout using `multiprocessing`](#call-a-function-with-a-timeout-using-multiprocessing)
-    - [Print the running time of a Python script](#print-the-running-time-of-a-python-script)
   - [Python implementations of algorithms](#python-implementations-of-algorithms)
     - [Find all permutations of a string](#find-all-permutations-of-a-string)
     - [Burrows–Wheeler transform (BWT)](#burrowswheeler-transform-bwt)
@@ -37,6 +37,28 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
 - [Project Euler](https://projecteuler.net/archives) (useful and interesting problems for practising numerical programming, and well-suited to Python)
 
 ## Useful Python snippets
+
+### Print the running time of a Python script
+
+```python
+import time
+
+def main():
+    """ Main function for the script """
+    from time import sleep
+    sleep(3)
+
+if __name__ == "__main__":
+    t_start = time.perf_counter()
+
+    # Call main function
+    main()
+
+    # Print time taken
+    t_total = time.perf_counter() - t_start
+    mins, secs = divmod(t_total, 60)
+    print("\n\nScript ran in %i mins, %.3f secs" % (mins, secs))
+```
 
 ### Custon context managers using `__enter__` and `__exit__`
 
@@ -242,28 +264,6 @@ None
 2
 3
 None
-```
-
-### Print the running time of a Python script
-
-```python
-from time import perf_counter
-
-def main():
-    """ Main function for the script """
-    from time import sleep
-    sleep(3)
-
-if __name__ == "__main__":
-    t_start = perf_counter()
-
-    # Call main function
-    main()
-
-    # Print time taken
-    t_total = perf_counter() - t_start
-    mins, secs = divmod(t_total, 60)
-    print("\n\nScript ran in %i mins, %.3f secs" % (mins, secs))
 ```
 
 ## Python implementations of algorithms
