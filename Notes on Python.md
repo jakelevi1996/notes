@@ -48,17 +48,21 @@ Inside a class definition, defining the methods `__enter__(self)` and `__exit__(
 
 This is useful EG if some clean-up code is supposed to be run after calling the `main` function, regardless of whether or not an exception is raised in `main` - the `main` function can be put inside a context manager, and the clean-up code can be put inside the `__exit__` method.
 
+For example, if some experimental data collected from the `main` function should be saved to disk even if an error is raised in `main`, the context manager can be designed so that it stores a reference to the desired data as an attribute before the `main` function is called, and when the context manager exits, it saves that data to disk (EG using [`pickle.dump`](https://docs.python.org/3/library/pickle.html#pickle.dump)).
+
 Here is a simple example of context managers and exceptions:
 
 ```python
 class C:
     def __enter__(self):
         print("In enter")
-    def __exit__(self, exc_type, exc_value, traceback):
+        return self
+
+    def __exit__(self, *args):
         print("In exit")
 
-with C():
-    print("Inside context manager")
+with C() as c:
+    print("Inside context manager, c = %s" % c)
     raise RuntimeError()
     print("This statement is not reached")
 ```
@@ -67,10 +71,10 @@ Output:
 
 ```
 In enter
-Inside context manager
+Inside context manager, c = <__main__.C object at 0x00000221DED41A88>
 In exit
 Traceback (most recent call last):
-  File "~/.temp.py", line 9, in <module>
+  File "~/.temp.py", line 11, in <module>
     raise RuntimeError()
 RuntimeError
 ```
