@@ -13,6 +13,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [Useful Python snippets](#useful-python-snippets)
     - [Print the running time of a Python script](#print-the-running-time-of-a-python-script)
     - [Get the directory name of the current source file](#get-the-directory-name-of-the-current-source-file)
+    - [Create a directory if it doesn't exist](#create-a-directory-if-it-doesnt-exist)
     - [Writing to and reading from a text file in Python](#writing-to-and-reading-from-a-text-file-in-python)
     - [Custom context managers using `__enter__` and `__exit__`](#custom-context-managers-using-__enter__-and-__exit__)
     - [Extract a substring from a file](#extract-a-substring-from-a-file)
@@ -224,6 +225,15 @@ if __name__ == "__main__":
 import os
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+```
+
+### Create a directory if it doesn't exist
+
+```python
+import os
+
+if not os.path.isdir(dir_name):
+    os.makedirs(dir_name)
 ```
 
 ### Writing to and reading from a text file in Python
