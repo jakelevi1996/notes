@@ -8,6 +8,7 @@
   - [Create a directory if it doesn't exist](#create-a-directory-if-it-doesnt-exist)
   - [Read from and write to a file](#read-from-and-write-to-a-file)
   - [Print a struct to a file](#print-a-struct-to-a-file)
+  - [Recursively search a directory for all files of a certain type](#recursively-search-a-directory-for-all-files-of-a-certain-type)
 
 ## Get the directory name of a source file
 
@@ -72,4 +73,13 @@ Contents of `temp.txt`:
     persistent: 0
 
 
+```
+
+## Recursively search a directory for all files of a certain type
+
+In Matlab, since R2016b ([source](https://uk.mathworks.com/matlabcentral/answers/429891-how-to-recursively-go-through-all-directories-and-sub-directories-and-process-files#answer_346966)):
+
+```matlab
+filelist = dir(fullfile('dir_name', '**\*.wav'));
+filelist = filelist(~[filelist.isdir]);
 ```
