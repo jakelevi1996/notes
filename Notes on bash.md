@@ -68,6 +68,8 @@ This is just a random collection of commands which I have found useful in Bash. 
 
 ## Get the current date and time with `date`
 
+The command `date` can be used to print the current date and time on the command line, or to get a string variable containing the current date and time which can be used in future commands, for example:
+
 ```
 $ date
 Fri Feb 11 14:53:37 GMT 2022
@@ -76,29 +78,15 @@ $ cat ~/temp.txt
 Fri Feb 11 14:53:39 GMT 2022
 ```
 
-This can be useful for timestamping files, and also for quickly approximating how long a command (or multiple commands) take to run, by calling `date` before and after all commands to be run:
+It can also be used to generate a timestamped filename on the command line, for example:
 
 ```
-$ date && cmd_1 arg_1 && cmd_2 arg_2 && date
-Fri Mar 18 18:09:52 GMT 2022
-... Some output from `cmd_1 arg_1` ...
-... Some output from `cmd_2 arg_2` ...
-Fri Mar 18 18:10:25 GMT 2022
+$ mkdir ./temp && cd ./temp
+$ ls
+$ echo "Hello, world!" > "Info $(date '+%Y-%m-%d %H-%M-%S').txt"
+$ ls
+'Info 2022-09-06 13-35-13.txt'
 ```
-
-Alternatively, to print the start time and finish time next to each other at the end of the console output (which is useful if there is a lot of console output from the program being timed):
-
-```
-$ t0=$(date) && cmd_1 arg_1 && cmd_2 arg_2 && echo $t0 && date
-... Some output from `cmd_1 arg_1` ...
-... Some output from `cmd_2 arg_2` ...
-Fri Mar 18 18:09:52 GMT 2022
-Fri Mar 18 18:10:25 GMT 2022
-```
-
-Note that instead of calling `date` or `t0=$(date)` before running a command, it is possible to simply set `HISTTIMEFORMAT` and then call `history` after the command, as described [above](#display-date-and-time-in-bash-history-using-histtimeformat).
-
-Also, if it is possible that any of the commands that are being run might fail, consider using `;` instead of `&&`, as in `cmd_1 arg_1 && cmd_2 arg_2; history 10; date`.
 
 ## Calculate running times of commands using `time`
 
