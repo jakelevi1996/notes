@@ -11,7 +11,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [Useful links](#useful-links)
   - [Useful Python snippets](#useful-python-snippets)
     - [Print the running time of a Python script](#print-the-running-time-of-a-python-script)
-    - [Custon context managers using `__enter__` and `__exit__`](#custon-context-managers-using-__enter__-and-__exit__)
+    - [Custom context managers using `__enter__` and `__exit__`](#custom-context-managers-using-__enter__-and-__exit__)
     - [Extract a substring from a file](#extract-a-substring-from-a-file)
     - [Start a parallel subprocess in a new console window](#start-a-parallel-subprocess-in-a-new-console-window)
     - [Run a command using `subprocess` and parse its output to STDOUT](#run-a-command-using-subprocess-and-parse-its-output-to-stdout)
@@ -60,7 +60,7 @@ if __name__ == "__main__":
     print("\n\nScript ran in %i mins, %.3f secs" % (mins, secs))
 ```
 
-### Custon context managers using `__enter__` and `__exit__`
+### Custom context managers using `__enter__` and `__exit__`
 
 Inside a class definition, defining the methods `__enter__(self)` and `__exit__(self, exc_type, exc_value, traceback)` allows that class to be used as a context manager. Note that if an exception is raised inside the context manager, the `__exit__` method will be executed before the exception is raised (or not raised, in case `__exit__` returns a true value), as described in the documentation for the `__exit__` method in the [Python data model](https://docs.python.org/3/reference/datamodel.html):
 
