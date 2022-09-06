@@ -12,6 +12,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [Profiling Python code](#profiling-python-code)
   - [Useful Python snippets](#useful-python-snippets)
     - [Print the running time of a Python script](#print-the-running-time-of-a-python-script)
+    - [Writing to and reading from a text file in Python](#writing-to-and-reading-from-a-text-file-in-python)
     - [Custom context managers using `__enter__` and `__exit__`](#custom-context-managers-using-__enter__-and-__exit__)
     - [Extract a substring from a file](#extract-a-substring-from-a-file)
     - [Start a parallel subprocess in a new console window](#start-a-parallel-subprocess-in-a-new-console-window)
@@ -214,6 +215,48 @@ if __name__ == "__main__":
     t_total = time.perf_counter() - t_start
     mins, secs = divmod(t_total, 60)
     print("\n\nScript ran in %i mins, %.3f secs" % (mins, secs))
+```
+
+### Writing to and reading from a text file in Python
+
+To write to or read from a file in Python, create a file object using the `open` built-in function, and use the objects `write` and `read` methods (or alternatively, `print(s, file=f)`), for example:
+
+```python
+x = 12345
+
+with open(".temp.txt", "w") as f:
+    f.write(str(x))
+
+with open(".temp.txt", "r") as f:
+    y = int(f.read())
+
+print(x, y, x == y)
+```
+
+Console output:
+
+```
+12345 12345 True
+```
+
+To read/write a list of integers from/to a text file in Python:
+
+```python
+x = [1, 2, 3, 4, 5]
+
+with open(".temp.txt", "w") as f:
+    f.write(", ".join(str(i) for i in x))
+
+with open(".temp.txt", "r") as f:
+    y = [int(s) for s in f.read().split(", ")]
+
+print(x, y, x == y)
+```
+
+Console output:
+
+```
+[1, 2, 3, 4, 5] [1, 2, 3, 4, 5] True
 ```
 
 ### Custom context managers using `__enter__` and `__exit__`
