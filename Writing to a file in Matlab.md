@@ -1,54 +1,6 @@
-# Writing to a file in Python and Matlab
+# Writing to a file in Matlab
 
-## Writing and reading to/from a text file in Python
-
-### Single integer
-
-Below is a very simple code snippet to write an integer to a text file in Python, then read it out again, and check that the values are consistent:
-
-```python
-x = 12345
-
-with open("temp.txt", "w") as f:
-    print(x, file=f)
-
-with open("temp.txt", "r") as f:
-    y = int(f.read())
-
-print(x, y, x == y)
-```
-
-Console output:
-
-```
-12345 12345 True
-```
-
-### List of integers
-
-Below is an equivalent snipped for writing a list of integers to a text file in Python:
-
-```python
-x = [1, 2, 3, 4, 5]
-
-with open("temp.txt", "w") as f:
-    print(", ".join(map(str, x)), file=f)
-
-with open("temp.txt", "r") as f:
-    y = [int(i) for i in f.read().split(", ")]
-
-print(x, y, x == y)
-```
-
-Console output:
-
-```
-[1, 2, 3, 4, 5] [1, 2, 3, 4, 5] True
-```
-
-## Writing to a file in Matlab
-
-### Strings and text
+## Strings and text
 
 Below is a code snippet for writing strings and text to a file in Matlab.
 
@@ -71,7 +23,7 @@ fclose(debug_fid);
 
 A convenient function for reading a text file is [`fileread`](https://uk.mathworks.com/help/matlab/ref/fileread.html), which accepts a string containing the filename (as opposed to a file ID, so there is no need to call `fopen` and check the error code), and reads the entire text file (possibly containing multiple lines) into a single string, which is returned by the function.
 
-### Printing a struct to a file
+## Printing a struct to a file
 
 A struct can be printed to a file using the [`evalc` function](https://uk.mathworks.com/help/matlab/ref/evalc.html), EG:
 
