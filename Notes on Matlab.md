@@ -4,8 +4,16 @@
 
 - [Notes on Matlab](#notes-on-matlab)
   - [Contents](#contents)
+  - [Get the directory name of a source file](#get-the-directory-name-of-a-source-file)
   - [Read from and write to a file](#read-from-and-write-to-a-file)
   - [Print a struct to a file](#print-a-struct-to-a-file)
+
+## Get the directory name of a source file
+
+```matlab
+current_filename = mfilename('fullpath');
+[current_dir, ~, ~] = fileparts(current_filename);
+```
 
 ## Read from and write to a file
 
