@@ -16,6 +16,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
     - [Create a directory if it doesn't exist](#create-a-directory-if-it-doesnt-exist)
     - [Writing to and reading from a text file in Python](#writing-to-and-reading-from-a-text-file-in-python)
     - [Custom context managers using `__enter__` and `__exit__`](#custom-context-managers-using-__enter__-and-__exit__)
+    - [Recursively search a directory for all files of a certain type](#recursively-search-a-directory-for-all-files-of-a-certain-type)
     - [Extract a substring from a file](#extract-a-substring-from-a-file)
     - [Start a parallel subprocess in a new console window](#start-a-parallel-subprocess-in-a-new-console-window)
     - [Run a command using `subprocess` and parse its output to STDOUT](#run-a-command-using-subprocess-and-parse-its-output-to-stdout)
@@ -317,6 +318,40 @@ Traceback (most recent call last):
   File "~/.temp.py", line 11, in <module>
     raise RuntimeError()
 RuntimeError
+```
+
+### Recursively search a directory for all files of a certain type
+
+Using `os.path.walk`:
+
+```python
+import os
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+wav_files = [
+    os.path.join(dir_name, filename)
+    for (dir_name, _, f_list) in os.walk(current_dir)
+    for filename in f_list
+    if filename.endswith(".wav")
+]
+
+print(*wav_files, sep="\n", file=open("filenames.txt", "w"))
+```
+
+Using `glob`:
+
+```python
+import os
+import glob
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+wav_files_glob = [
+    os.path.abspath(f) for f in glob.glob("**/*.wav", recursive=True)
+]
+
+print(*wav_files_glob, sep="\n", file=open("filenames from glob.txt", "w"))
 ```
 
 ### Extract a substring from a file
