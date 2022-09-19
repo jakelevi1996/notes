@@ -598,9 +598,11 @@ print(s)
 Note that in the example below, the `-` characters before the argument names specify that those arguments are optional (as opposed to positional). The character used to specify optional arguments can be set using the `prefix_chars` argument of the constructor for the `ArgumentParser` class (the default is "`-`").
 
 ```python
-""" This is a dummy script, meant to imitate a script for training a CNN. This
-script has a command-line interface, which allows epochs, num_hidden_units, and
-batch_norm to be specified from the command-line.
+"""
+This is a dummy script, meant to imitate a script for training a CNN. This
+script has a command-line interface, which allows epochs, num_hidden_units,
+whether to use batch_norm, and whether to save the model to be specified from
+the command-line.
 
 Below are some examples of calling this script:
 
@@ -608,19 +610,22 @@ Below are some examples of calling this script:
 
     python ./train.py --num_hidden_units 10,10,10 --epochs 10
 
-To get more information on the available arguments, use the following command:
+For more information on the available arguments, use the following command:
 
     python ./train.py --help
 
 """
+
 import argparse
 
-def main_func(epochs, num_hidden_units, batch_norm):
-    s = "epochs = {}, batch_norm = {}, num_hidden_units = {}"
-    print(s.format(epochs, batch_norm, num_hidden_units))
+def main(args):
+    print(
+        "epochs = %s, batch_norm = %s, num_hidden_units = %s, save = %s"
+        % (args.epochs, args.batch_norm, args.num_hidden_units, args.save)
+    )
 
 if __name__ == "__main__":
-    # Define CLI using argparse
+    # Define CLI using argparse and parse command-line arguments
     parser = argparse.ArgumentParser(description="Script for training a CNN")
 
     parser.add_argument(
@@ -640,15 +645,20 @@ if __name__ == "__main__":
         help="Apply batch-normalisation to layer outputs",
         action="store_true",
     )
+    parser.add_argument(
+        "--no_save",
+        help="Don't save the model",
+        action="store_false",
+        dest="save",
+    )
 
-    # Parse arguments
     args = parser.parse_args()
 
     # Convert comma-separated string to list of ints
-    num_hidden_units = [int(i) for i in args.num_hidden_units.split(",")]
+    args.num_hidden_units = [int(i) for i in args.num_hidden_units.split(",")]
 
     # Call main function using command-line arguments
-    main_func(args.epochs, num_hidden_units, args.batch_norm)
+    main(args)
 
 ```
 
@@ -656,9 +666,9 @@ The script can be called with or without the [`-m` flag](https://docs.python.org
 
 ```
 $ python train.py
-epochs = 1, batch_norm = False, num_hidden_units = [20, 20]
+epochs = 1, batch_norm = False, num_hidden_units = [20, 20], save = True
 $ python -m train
-epochs = 1, batch_norm = False, num_hidden_units = [20, 20]
+epochs = 1, batch_norm = False, num_hidden_units = [20, 20], save = True
 ```
 
 A help message can be printed by adding a `-h` or `--help` argument:
@@ -666,7 +676,7 @@ A help message can be printed by adding a `-h` or `--help` argument:
 ```
 $ python train.py -h
 usage: train.py [-h] [--epochs EPOCHS] [--num_hidden_units NUM_HIDDEN_UNITS]
-                [--batch_norm]
+                [--batch_norm] [--no_save]
 
 Script for training a CNN
 
@@ -677,17 +687,20 @@ optional arguments:
                         Comma-separated list of hidden units per layer, EG
                         4,5,6
   --batch_norm          Apply batch-normalisation to layer outputs
+  --no_save             Don't save the model
 ```
 
 Optional arguments can be specified from the command line in any order, or they can be excluded, in which case the default value will be used:
 
 ```
 $ python train.py --epochs 10 --num_hidden_units 10,10,10
-epochs = 10, batch_norm = False, num_hidden_units = [10, 10, 10]
+epochs = 10, batch_norm = False, num_hidden_units = [10, 10, 10], save = True
 $ python train.py --num_hidden_units 10,10,10 --epochs 10
-epochs = 10, batch_norm = False, num_hidden_units = [10, 10, 10]
+epochs = 10, batch_norm = False, num_hidden_units = [10, 10, 10], save = True
 $ python train.py --batch_norm --num_hidden_units 10,10,10 --epochs 10
-epochs = 10, batch_norm = True, num_hidden_units = [10, 10, 10]
+epochs = 10, batch_norm = True, num_hidden_units = [10, 10, 10], save = True
+$ python train.py --batch_norm --num_hidden_units 10,10,10 --epochs 10 --no_save
+epochs = 10, batch_norm = True, num_hidden_units = [10, 10, 10], save = False
 ```
 
 Since the `epochs` argument has been specified as having type `int`, an error will be thrown it is provided with a value which can't be converted directly into an `int`:
@@ -695,7 +708,7 @@ Since the `epochs` argument has been specified as having type `int`, an error wi
 ```
 $ python train.py  --epochs ten
 usage: train.py [-h] [--epochs EPOCHS] [--num_hidden_units NUM_HIDDEN_UNITS]
-                [--batch_norm]
+                [--batch_norm] [--no_save]
 train.py: error: argument --epochs: invalid int value: 'ten'
 ```
 
