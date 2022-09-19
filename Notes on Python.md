@@ -200,6 +200,8 @@ Note that errors can occur when trying to profile code which uses the `pickle` m
 
 ### Print the running time of a Python script
 
+The running time of a Python script can be printed using `time.perf_counter()`, as shown below:
+
 ```python
 import time
 
@@ -217,7 +219,28 @@ if __name__ == "__main__":
     # Print time taken
     t_total = time.perf_counter() - t_start
     mins, secs = divmod(t_total, 60)
-    print("\n\nScript ran in %i mins, %.3f secs" % (mins, secs))
+    print("\n\nScript ran in %i mins, %.1f secs" % (mins, secs))
+```
+
+This can be wrapped up in a reusable function as follows:
+
+```python
+import time
+
+def main(t_sleep):
+    """ Main function for the script """
+    from time import sleep
+    sleep(t_sleep)
+
+def time_func(func, *args, **kwargs):
+    t_start = time.perf_counter()
+    func(*args, **kwargs)
+    t_total = time.perf_counter() - t_start
+
+    print("\nFinished %r function in %.1fs" % (func.__name__, t_total))
+
+if __name__ == "__main__":
+    time_func(main, 3.0)
 ```
 
 ### Get the directory name of the current source file
