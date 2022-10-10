@@ -12,7 +12,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [Profiling Python code](#profiling-python-code)
   - [Useful Python snippets](#useful-python-snippets)
     - [Print the running time of a Python script](#print-the-running-time-of-a-python-script)
-    - [Get a string containing the current date and time (useful for creating timestamped filenames)](#get-a-string-containing-the-current-date-and-time-useful-for-creating-timestamped-filenames)
+    - [Get a timestamped filename](#get-a-timestamped-filename)
     - [Get the directory name of the current source file](#get-the-directory-name-of-the-current-source-file)
     - [Create a directory if it doesn't exist](#create-a-directory-if-it-doesnt-exist)
     - [Clean up a filename string](#clean-up-a-filename-string)
@@ -245,7 +245,7 @@ if __name__ == "__main__":
     time_func(main, 3.0)
 ```
 
-### Get a string containing the current date and time (useful for creating timestamped filenames)
+### Get a timestamped filename
 
 ```python
 import datetime
@@ -253,7 +253,11 @@ import datetime
 s = datetime.datetime.now()
 
 print(s)
-# >>> 2022-10-10 19:15:20.411247
+# >>> 2022-10-10 19:23:18.975783
+
+output_filename = "%s Output.txt" % s
+print(output_filename)
+# >>> 2022-10-10 19:23:18.975783 Output.txt
 ```
 
 ### Get the directory name of the current source file
