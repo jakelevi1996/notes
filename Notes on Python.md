@@ -15,6 +15,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
     - [Get a string containing the current date and time (useful for creating timestamped filenames)](#get-a-string-containing-the-current-date-and-time-useful-for-creating-timestamped-filenames)
     - [Get the directory name of the current source file](#get-the-directory-name-of-the-current-source-file)
     - [Create a directory if it doesn't exist](#create-a-directory-if-it-doesnt-exist)
+    - [Clean up a filename string](#clean-up-a-filename-string)
     - [Writing to and reading from a text file in Python](#writing-to-and-reading-from-a-text-file-in-python)
     - [Custom context managers using `__enter__` and `__exit__`](#custom-context-managers-using-__enter__-and-__exit__)
     - [Recursively search a directory for all files of a certain type](#recursively-search-a-directory-for-all-files-of-a-certain-type)
@@ -270,6 +271,20 @@ import os
 
 if not os.path.isdir(dir_name):
     os.makedirs(dir_name)
+```
+
+### Clean up a filename string
+
+```python
+def clean_filename(filename_str, allowed_non_alnum_chars="-_.,"):
+    filename_str_clean = "".join(
+        c if (c.isalnum() or c in allowed_non_alnum_chars) else "_"
+        for c in str(filename_str)
+    )
+    return filename_str_clean
+
+print(clean_filename("hello/world:!\\.txt"))
+# >>> hello_world___.txt
 ```
 
 ### Writing to and reading from a text file in Python
