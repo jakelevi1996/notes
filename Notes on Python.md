@@ -23,6 +23,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
     - [Start a parallel subprocess in a new console window](#start-a-parallel-subprocess-in-a-new-console-window)
     - [Run a command using `subprocess` and parse its output to STDOUT](#run-a-command-using-subprocess-and-parse-its-output-to-stdout)
     - [Call a function with a timeout using `multiprocessing`](#call-a-function-with-a-timeout-using-multiprocessing)
+    - [Set `numpy` print options (including preventing `numpy` from wrapping lines)](#set-numpy-print-options-including-preventing-numpy-from-wrapping-lines)
   - [Python implementations of algorithms](#python-implementations-of-algorithms)
     - [Find all permutations of a string](#find-all-permutations-of-a-string)
     - [Burrows–Wheeler transform (BWT)](#burrowswheeler-transform-bwt)
@@ -571,6 +572,21 @@ None
 2
 3
 None
+```
+
+### Set `numpy` print options (including preventing `numpy` from wrapping lines)
+
+```python
+import numpy as np
+
+np.set_printoptions(
+    precision=3, linewidth=10000, suppress=True, threshold=10000
+)
+
+print(np.random.normal(size=[3, 15]))
+# >>> [[-0.351 -0.593  1.616  0.333 -1.238 -0.166 -1.251 -0.084 -0.562  2.429  0.715  0.676  1.393 -0.69  -0.992]
+#      [-0.674 -0.276  2.243 -2.216 -0.595 -0.246 -1.241 -0.282 -1.07  -0.183 -0.193  0.028 -0.365 -0.602 -0.893]
+#      [-0.105 -0.082  0.305 -0.207  0.369  0.655 -1.292 -0.629 -0.275 -0.492 -1.085  0.064  0.037  0.428  0.126]]
 ```
 
 ## Python implementations of algorithms
