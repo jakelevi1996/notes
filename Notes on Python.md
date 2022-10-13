@@ -580,7 +580,10 @@ None
 import numpy as np
 
 np.set_printoptions(
-    precision=3, linewidth=10000, suppress=True, threshold=10000
+    precision=3,
+    linewidth=10000,
+    suppress=True,
+    threshold=10000,
 )
 
 print(np.random.normal(size=[3, 15]))
