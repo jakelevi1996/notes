@@ -28,6 +28,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
     - [Find all permutations of a string](#find-all-permutations-of-a-string)
     - [Burrows–Wheeler transform (BWT)](#burrowswheeler-transform-bwt)
   - [Notes on built-in and third-party modules](#notes-on-built-in-and-third-party-modules)
+    - [`pip`](#pip)
     - [`argparse`](#argparse)
     - [`socket`](#socket)
 
@@ -664,6 +665,33 @@ print(s)
 
 ## Notes on built-in and third-party modules
 
+### `pip`
+
+Upgrade `pip` with the following command (on Linux use `python3` instead of `python`):
+
+```
+python -m pip install -U pip
+```
+
+On Ubuntu, if `pip` is not installed, use the following commands to install it:
+
+```
+sudo apt-get update
+sudo apt-get install python3-pip
+```
+
+To install a new package, EG `numpy`, use the following command:
+
+```
+python3 -m pip install numpy
+```
+
+To upgrade an existing package, EG `numpy`, use the following command:
+
+```
+python3 -m pip install -U numpy
+```
+
 ### `argparse`
 
 `argparse` is a module in Python for adding command line arguments to a Python script. The official Python documentation contains an [`argparse` tutorial](https://docs.python.org/3/howto/argparse.html), and an [`argparse` API reference](https://docs.python.org/3/library/argparse.html). Below is an example of a script which uses `argparse`, and examples of calling it from the command line.
@@ -880,4 +908,3 @@ print(f"Received {data!r}")
   - Therefore, when the server receives an empty bytes object from the `recv` method, it may also wish to call the `socket.close()` method
   - Python `socket.socket` objects support context managers, which call the `socket.close()` method when the context manager exits, EG with the expression `with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:`, or after `conn, addr = s.accept()`, with the expression `with conn:`
 - NB an entire complex Python object can be sent through a socket, by converting the Python object to a bytes object using `pickle.dumps`, sending that bytes object through the socket using `socket.sendall`/`socket.recv`, and then unpickling the bytes object using `pickle.loads` ([source](https://stackoverflow.com/a/53577447/8477566))
-
