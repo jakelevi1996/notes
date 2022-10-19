@@ -368,7 +368,15 @@ These are the workspace settings, included here in particular for the `pytestArg
             "type": "python",
             "request": "launch",
             "program": "${file}",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+        },
+        {
+            "name": "Python, including stepping into external libraries",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": false,
         },
         {
             "name": "Specific Python script with args",
