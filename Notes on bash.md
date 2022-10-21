@@ -36,6 +36,7 @@ This is just a random collection of commands which I have found useful in Bash. 
   - [Checking the version of an installed `apt` package using `apt list`](#checking-the-version-of-an-installed-apt-package-using-apt-list)
   - [Clear the console window using `clear`](#clear-the-console-window-using-clear)
   - [Iterating through files which match a file pattern](#iterating-through-files-which-match-a-file-pattern)
+  - [Recursively `git add`-ing files (including files hidden by `.gitignore`)](#recursively-git-add-ing-files-including-files-hidden-by-gitignore)
   - [`git`-moving files in a loop](#git-moving-files-in-a-loop)
   - [Iteratively and recursively `git`-moving files one directory up](#iteratively-and-recursively-git-moving-files-one-directory-up)
   - [Search for files anywhere using `find`](#search-for-files-anywhere-using-find)
@@ -590,6 +591,14 @@ It is possible to iterate through files which match a file pattern by using a `f
 
 ```
 for FILE in cnn_mnist_*; do echo $FILE; done
+```
+
+## Recursively `git add`-ing files (including files hidden by `.gitignore`)
+
+To recursively add all files in the current directory and all its subdirectories, use the following command (the `-f` flag instructs `git` to add files even if they included in `.gitignore`, which is useful EG for committing specific images):
+
+```
+git add ** -f
 ```
 
 ## `git`-moving files in a loop
