@@ -30,6 +30,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [Notes on built-in and third-party modules](#notes-on-built-in-and-third-party-modules)
     - [`pip`](#pip)
     - [`argparse`](#argparse)
+    - [`pickle`](#pickle)
     - [`socket`](#socket)
 
 ## Useful links
@@ -812,6 +813,31 @@ usage: train.py [-h] [--epochs EPOCHS] [--num_hidden_units NUM_HIDDEN_UNITS]
                 [--batch_norm] [--no_save]
 train.py: error: argument --epochs: invalid int value: 'ten'
 ```
+
+### `pickle`
+
+Use `pickle.dump` and `pickle.load` to save and load Python objects in binary files, as shown below.
+
+```python
+import pickle
+
+x = [1, 2, 3, 5]
+with open(".temp.pkl", "wb") as f:
+    pickle.dump(x, f)
+
+with open(".temp.pkl", "rb") as f:
+    y = pickle.load(f)
+
+print(x, y)
+```
+
+Output:
+
+```
+[1, 2, 3, 5] [1, 2, 3, 5]
+```
+
+`pickle.dumps` and `pickle.loads` can also be used to convert a Python object to and from a `bytes` object, which can be useful EG for [sending Python objects over `socket` connections (see below)]((#socket)).
 
 ### `socket`
 
