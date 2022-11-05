@@ -995,7 +995,10 @@ From WSL on a Windows PC, it is possible to display graphical user interfaces wh
 
 ### Jump over intermediate `ssh` connections using `ProxyJump`
 
-Sometimes it is desirable to connect to `username@hostname` over `ssh`, but to do so it is necessary to first connect to `username_proxy@hostname_proxy` over `ssh`, and from `username_proxy@hostname_proxy` connect to `username@hostname` over `ssh`. This can be automated by adding entries into `~/.ssh/config` (see section "[Passwordless `ssh` terminals and commands](#passwordless-ssh-terminals)" above) for `username@hostname` and `username_proxy@hostname_proxy` with aliases `shortname` and `shortname_proxy`, and under the configuration for `shortname`, add the line `ProxyJump shortname_proxy` (following the indentation of the lines above). Now, when using the command `ssh shortname`, `ssh` will automatically connect to `shortname_proxy` first, and from `shortname_proxy` connect to `shortname` over `ssh`.
+- Sometimes it is desirable to connect to `username@hostname` over `ssh`, but to do so it is necessary to first connect to `username_proxy@hostname_proxy` over `ssh`, and from `username_proxy@hostname_proxy` connect to `username@hostname` over `ssh`
+- This can be automated by adding entries into `~/.ssh/config` (see section "[Passwordless `ssh` terminals and commands](#passwordless-ssh-terminals)" above) for `username@hostname` and `username_proxy@hostname_proxy` with aliases `shortname` and `shortname_proxy`, and under the configuration for `shortname`, add the line `ProxyJump shortname_proxy` (following the indentation of the lines above)
+- Now, when using the command `ssh shortname`, `ssh` will automatically connect to `shortname_proxy` first, and from `shortname_proxy` connect to `shortname` over `ssh`
+- Note that if using `ssh-keygen` and `ssh-copy-id` to log into `username@hostname` without a password (described above), then an entry for `username@hostname` should first be added to `~/.ssh/config` on the local machine (including the `ProxyJump` entry described above), then `ssh-keygen` and `ssh-copy-id` should be used on the local machine (not from `username_proxy@hostname_proxy`) to enable passwordless access to `username@hostname` directly from the local machine
 
 ## Synchronise remote files and directories with `rsync`
 
