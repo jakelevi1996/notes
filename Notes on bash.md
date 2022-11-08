@@ -1024,8 +1024,8 @@ Flag | Meaning
 - `rsync` can be used with the `--delete` option to delete extra files in the remote directory that are not present in the local directory ([source](https://askubuntu.com/a/665918/1078405)).
 - To ignore certain files (EG hidden files, `.pyc` files), use the `--exclude=$PATTERN` flag
   - Multiple `--exclude` flags can be included in the same command, EG `rsync -Chavz . hostname:~/target_dir --exclude=".*" --exclude="*.pyc"`
-- To copy the contents of the *current directory on the local machine to* a subdirectory of the home directory called `target_dir` on the remote machine, use the command ``rsync -Chavz . hostname:~/target_dir` (note *no* `/` character after `target_dir`)
-- To copy the contents of a subdirectory of the home directory on the remote machine called `target_dir` *to the current directory on the local machine*, use the command ``rsync -Chavz hostname:~/target_dir/ .` (note that there *is* a `/` character after `target_dir`)
+- To copy the contents of the *current directory on the local machine to* a subdirectory of the home directory called `target_dir` on the remote machine, use the command `rsync -Chavz . hostname:~/target_dir` (note *no* `/` character after `target_dir`)
+- To copy the contents of a subdirectory of the home directory on the remote machine called `target_dir` *to the current directory on the local machine*, use the command `rsync -Chavz hostname:~/target_dir/ .` (note that there *is* a `/` character after `target_dir`)
 
 ## Create an `alias`
 
