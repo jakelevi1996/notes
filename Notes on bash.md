@@ -917,6 +917,8 @@ ssh username@hostname
 
 After using this command, `ssh` should ask for the password for the specified user on the remote device.
 
+If `stdout` is not being flushed over `ssh`, this problem can be fixed by passing the `-t` command to `ssh`, EG `ssh -t username@hostname` ([source](https://serverfault.com/a/437739/620693))
+
 ### Passwordless `ssh` terminals
 
 To configure `ssh` to not request a password when connecting, use the following commands on the local device, replacing `$(UNIQUE_ID)` with a string which is unique to `username@hostname` (the password for `ssh-keygen` can be left blank, whereas the correct password for `username@hostname` needs to be entered when running `ssh-copy-id`):
