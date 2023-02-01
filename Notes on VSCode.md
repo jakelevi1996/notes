@@ -161,6 +161,13 @@ For more information about C/C++ default include-paths in VSCode, and how to com
     "terminal.integrated.defaultProfile.windows": "Ubuntu-18.04 (WSL)",
     "terminal.integrated.scrollback": 1200,
 	"terminal.integrated.wordSeparators": " []{}',\"`─",
+    "[plaintext]": {
+        "editor.language.colorizedBracketPairs": [
+            ["{", "}"],
+            ["[", "]"],
+            ["(", ")"]
+        ],
+    },
 }
 ```
 
