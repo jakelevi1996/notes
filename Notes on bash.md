@@ -63,6 +63,7 @@ This is just a random collection of commands which I have found useful in Bash. 
     - [Scripting individual `ssh` commands](#scripting-individual-ssh-commands)
     - [Displaying graphical user interfaces over `ssh` using Xming](#displaying-graphical-user-interfaces-over-ssh-using-xming)
     - [Jump over intermediate `ssh` connections using `ProxyJump`](#jump-over-intermediate-ssh-connections-using-proxyjump)
+    - [Enable `ssh` server on remote machine](#enable-ssh-server-on-remote-machine)
   - [Synchronise remote files and directories with `rsync`](#synchronise-remote-files-and-directories-with-rsync)
   - [Create an `alias`](#create-an-alias)
   - [Create a symbolic link using `ln -s`](#create-a-symbolic-link-using-ln--s)
@@ -1002,6 +1003,20 @@ From WSL on a Windows PC, it is possible to display graphical user interfaces wh
 - This can be automated by adding entries into `~/.ssh/config` (see section "[Passwordless `ssh` terminals and commands](#passwordless-ssh-terminals)" above) for `username@hostname` and `username_proxy@hostname_proxy` with aliases `shortname` and `shortname_proxy`, and under the configuration for `shortname`, add the line `ProxyJump shortname_proxy` (following the indentation of the lines above)
 - Now, when using the command `ssh shortname`, `ssh` will automatically connect to `shortname_proxy` first, and from `shortname_proxy` connect to `shortname` over `ssh`
 - Note that if using `ssh-keygen` and `ssh-copy-id` to log into `username@hostname` without a password (described above), then an entry for `username@hostname` should first be added to `~/.ssh/config` on the local machine (including the `ProxyJump` entry described above), then `ssh-keygen` and `ssh-copy-id` should be used on the local machine (not from `username_proxy@hostname_proxy`) to enable passwordless access to `username@hostname` directly from the local machine
+
+### Enable `ssh` server on remote machine
+
+Install `ssh` server using the following command ([source](https://askubuntu.com/q/1161579/1078405)):
+
+```
+sudo apt install openssh-server
+```
+
+Activate the `ssh` server ([source](https://www.siteground.co.uk/kb/connection-refused-error-ssh/)):
+
+```
+sudo service ssh start
+```
 
 ## Synchronise remote files and directories with `rsync`
 
