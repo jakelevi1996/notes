@@ -5,6 +5,8 @@
 - [Notes on PyTorch](#notes-on-pytorch)
   - [Contents](#contents)
   - [Installing PyTorch](#installing-pytorch)
+  - [Simple automatic differentiation](#simple-automatic-differentiation)
+  - [Simple gradient descent](#simple-gradient-descent)
   - [Using a DataLoader with a custom dataset](#using-a-dataloader-with-a-custom-dataset)
 
 ## Installing PyTorch
@@ -26,6 +28,123 @@ python -m pip install torch torchvision torchaudio --extra-index-url https://dow
 ```
 
 This installation appears to work fine, and commands such as `torch.cuda.is_available()` and `torch.tensor([2.,3,4], requires_grad=True).cuda()` return results suggesting that GPU support is working successfully.
+
+## Simple automatic differentiation
+
+Gradients can be calculated by calling the `backward` method, and should be set to zero (EG by calling `tensor.grad.fill_(0)`) between gradient calculations to avoid accumulating gradients from previous calculations, for example:
+
+```python
+import numpy as np
+import torch
+
+w = torch.tensor(np.ones(5), requires_grad=True, dtype=torch.float32)
+t = torch.tensor(np.arange(5), requires_grad=False, dtype=torch.float32)
+
+def loss(w, t):
+    return torch.sum(torch.square(w - t))
+
+def init_grad(x):
+    x.sum().backward()
+    zero_grad(x)
+
+def zero_grad(x):
+    x.grad.fill_(0)
+
+def print_tensor(x):
+    grad = x.grad.numpy() if (x.grad is not None) else None
+    print("%s, grad = %s" % (x.detach().numpy(), grad))
+
+print_tensor(w)
+# [1. 1. 1. 1. 1.], grad = None
+print_tensor(t)
+# [0. 1. 2. 3. 4.], grad = None
+init_grad(w)
+print_tensor(w)
+# [1. 1. 1. 1. 1.], grad = [0. 0. 0. 0. 0.]
+loss(w, t).backward()
+print_tensor(w)
+# [1. 1. 1. 1. 1.], grad = [ 2.  0. -2. -4. -6.]
+
+with torch.no_grad():
+    w -= 0.1 * w.grad
+print_tensor(w)
+# [0.8 1.  1.2 1.4 1.6], grad = [ 2.  0. -2. -4. -6.]
+loss(w, t).backward()
+print_tensor(w)
+# [0.8 1.  1.2 1.4 1.6], grad = [  3.6   0.   -3.6  -7.2 -10.8]
+zero_grad(w)
+print_tensor(w)
+# [0.8 1.  1.2 1.4 1.6], grad = [0. 0. 0. 0. 0.]
+loss(w, t).backward()
+print_tensor(w)
+# [0.8 1.  1.2 1.4 1.6], grad = [ 1.6  0.  -1.6 -3.2 -4.8]
+```
+
+Note that `w` is modified in-place within a `torch.no_grad()` context. Trying to modify `w` in-place outside of such a context raises a `RuntimeError`, for example:
+
+```python
+import torch
+import numpy as np
+
+w = torch.tensor(np.ones(5), requires_grad=True)
+w.sum().backward()
+w -= w.grad
+# RuntimeError: a leaf Variable that requires grad is being used in an in-place operation.
+```
+
+## Simple gradient descent
+
+Repeatedly setting gradients to zero, calculating gradients, and updating variables towards the negative gradient direction can be used to define a simple gradient descent loop, for example:
+
+```python
+import numpy as np
+import torch
+import plotting
+
+w = torch.tensor(np.ones(5), requires_grad=True)
+t = torch.tensor(np.arange(5), requires_grad=False)
+
+def loss(w, t):
+    return torch.sum(torch.square(w - t))
+
+def init_grad(x):
+    x.sum().backward()
+    zero_grad(x)
+
+def zero_grad(x):
+    x.grad.fill_(0)
+
+init_grad(w)
+error_list = []
+w_list = [w.detach().clone().numpy()]
+print("Starting optimisation loop...")
+for i in range(100):
+    zero_grad(w)
+    e = loss(w, t)
+    e.backward()
+    with torch.no_grad():
+        w -= 5e-2 * w.grad
+    error_list.append(e.item())
+    w_list.append(w.detach().clone().numpy())
+
+    print("\ri = %i, error = %.5f" % (i, e), end="", flush=True)
+
+print()
+
+plotting.plot(
+    plotting.Line(error_list, c="r"),
+    plot_name="Error vs iteration",
+)
+cp = plotting.ColourPicker(5)
+line_list = [
+    plotting.Line([w[j] for w in w_list], c=cp(j))
+    for j in range(5)
+]
+plotting.plot(*line_list, plot_name="Weights vs iteration")
+```
+
+![](./Error_vs_iteration.png)
+![](./Weights_vs_iteration.png)
 
 ## Using a DataLoader with a custom dataset
 
