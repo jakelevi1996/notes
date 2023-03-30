@@ -69,14 +69,14 @@ if __name__ == "__main__":
 This can be achieved simply using the following two commands:
 
 ```
-python -m cProfile -o .profile ./maths_test.py
-python -c "import pstats; p = pstats.Stats('.profile'); p.sort_stats('cumtime'); p.print_stats(15)"
+python -m cProfile -o .profile_output.bin ./maths_test.py
+python -c "import pstats; p = pstats.Stats('.profile_output.bin'); p.sort_stats('cumtime'); p.print_stats(15)"
 ```
 
 These commands produce the following output:
 
 ```
-Tue Sep  6 12:12:24 2022    .profile
+Tue Sep  6 12:12:24 2022    .profile_output.bin
 
          1019414 function calls (1019273 primitive calls) in 0.166 seconds
 
@@ -106,14 +106,14 @@ The arguments to [`print_stats`](https://docs.python.org/3/library/profile.html#
 For example, to only print the first 10 lines of functions in the current directory (which is called `Notes on Python`), we can call the script using its full path (including the name of the parent directory), regenerate the profiling information, and then pass the arguments `'Notes on Python', 10` to the `print_stats` method, as shown below (note that instead of using the full path we could have just matched the pattern `maths_test` in this case, but the former approach is more robust in cases where the script being profiled calls other modules in the current directory, which are also intended to be profiled):
 
 ```
-python -m cProfile -o .profile "C:/Users/Jake/Documents/Programming/Gists/Notes on Python/maths_test.py"
-python -c "import pstats; p = pstats.Stats('.profile'); p.sort_stats('cumtime'); p.print_stats('Notes on Python', 10)"
+python -m cProfile -o .profile_output.bin "C:/Users/Jake/Documents/Programming/Gists/Notes on Python/maths_test.py"
+python -c "import pstats; p = pstats.Stats('.profile_output.bin'); p.sort_stats('cumtime'); p.print_stats('Notes on Python', 10)"
 ```
 
 This produces the following output (only 5 lines are printed because there are only 5 entries which match the pattern `'Notes on Python'`):
 
 ```
-Tue Sep  6 12:12:48 2022    .profile
+Tue Sep  6 12:12:48 2022    .profile_output.bin
 
          1019414 function calls (1019273 primitive calls) in 0.158 seconds
 
@@ -131,7 +131,7 @@ Tue Sep  6 12:12:48 2022    .profile
 From this we see that the generator expressions are taking up quite a lot of time; replacing `g(i) for i in range(x)` with `map(g, range(x))` and `math.sqrt(i) for i in range(x)` with `map(math.sqrt, range(x))` and re-profiling, the following profiling results are obtained, reducing the overall running time by >50%:
 
 ```
-Tue Sep  6 12:13:24 2022    .profile
+Tue Sep  6 12:13:24 2022    .profile_output.bin
 
          18413 function calls (18272 primitive calls) in 0.050 seconds
 
@@ -147,13 +147,13 @@ Tue Sep  6 12:13:24 2022    .profile
 To avoid printing directory names in the function listings, call the `strip_dirs` method of the `pstats.Stats` object before calling the `print_stats` method, as shown below (but note that this will prevent matching by directory names in the `print_stats` method):
 
 ```
-python -c "import pstats; p = pstats.Stats('.profile'); p.strip_dirs(); p.sort_stats('cumtime'); p.print_stats(10)"
+python -c "import pstats; p = pstats.Stats('.profile_output.bin'); p.strip_dirs(); p.sort_stats('cumtime'); p.print_stats(10)"
 ```
 
 This produces the following output:
 
 ```
-Tue Sep  6 12:13:24 2022    .profile
+Tue Sep  6 12:13:24 2022    .profile_output.bin
 
          18413 function calls (18272 primitive calls) in 0.050 seconds
 
@@ -176,13 +176,13 @@ Tue Sep  6 12:13:24 2022    .profile
 When calling the script being profiled using `cProfile`, it is possible to call the script with command line arguments by appending them to the end of the command as usual, for example:
 
 ```
-python -m cProfile -o .profile ./maths_test.py --arg1 val1 --arg2 val2
+python -m cProfile -o .profile_output.bin ./maths_test.py --arg1 val1 --arg2 val2
 ```
 
 When calling the script being profiled using `cProfile`, instead of calling the script using its path, it is also possible to call the script using `-m` and module syntax (and including any command line arguments, if desired), for example:
 
 ```
-python -m cProfile -o .profile -m maths_test
+python -m cProfile -o .profile_output.bin -m maths_test
 ```
 
 This can also be used to profile unit tests using `pytest`, for example:
@@ -196,7 +196,7 @@ Note that `pytest` can be followed by the `-k` flag to select which tests to run
 Often when profiling, it might be desirable to change the code, re-profile, and compare against the original profiling information. To this end it can be useful to generate unique timestamped filenames on the command line into which `stdout` can be redirected, for example by appending ` > ".profile $(date '+%Y-%m-%d %H-%M-%S').txt"` to the end of the `pstats` command, as shown below:
 
 ```
-python -c "import pstats; p = pstats.Stats('.profile'); p.sort_stats('cumtime'); p.print_stats()" > ".profile $(date '+%Y-%m-%d %H-%M-%S').txt"
+python -c "import pstats; p = pstats.Stats('.profile_output.bin'); p.sort_stats('cumtime'); p.print_stats()" > ".profile $(date '+%Y-%m-%d %H-%M-%S').txt"
 ```
 
 Note that errors can occur when trying to profile code which uses the `pickle` module. The explanation and a workaround are provided in [this StackOverflow answer](https://stackoverflow.com/a/53890887/8477566). A simple solution is the modify the code being profiled such that it has an option to run without using `pickle`.
