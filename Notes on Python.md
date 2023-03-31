@@ -188,7 +188,7 @@ python -m cProfile -o .profile_output.bin -m maths_test
 This can also be used to profile unit tests using `pytest`, for example:
 
 ```
-python -m cProfile -o profile -m pytest
+python -m cProfile -o .profile_output.bin -m pytest
 ```
 
 Note that `pytest` can be followed by the `-k` flag to select which tests to run based on their name, [as described here](https://docs.pytest.org/en/7.1.x/example/markers.html#using-k-expr-to-select-tests-based-on-their-name).
