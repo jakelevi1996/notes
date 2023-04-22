@@ -13,7 +13,7 @@ In particular:
 - [LaTeX](./topics/latex/.notes_on_latex.md)
 - [MATLAB](./topics/matlab/notes_on_matlab.md)
 - [Python](./topics/python/notes_on_python.md)
-- [PyTorch](./topics/pytorch/topics/pytorch/.notes_on_pytorch.md)
+- [PyTorch](./topics/pytorch/.notes_on_pytorch.md)
 - [VS Code](./topics/vscode/notes_on_vscode.md)
 - ...
 
