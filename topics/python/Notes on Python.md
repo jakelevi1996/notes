@@ -24,6 +24,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
     - [Run a command using `subprocess` and parse its output to STDOUT](#run-a-command-using-subprocess-and-parse-its-output-to-stdout)
     - [Call a function with a timeout using `multiprocessing`](#call-a-function-with-a-timeout-using-multiprocessing)
     - [Set `numpy` print options (including preventing `numpy` from wrapping lines)](#set-numpy-print-options-including-preventing-numpy-from-wrapping-lines)
+    - [Rename files programmatically using `os.path.walk` and `os.rename`](#rename-files-programmatically-using-ospathwalk-and-osrename)
   - [Python implementations of algorithms](#python-implementations-of-algorithms)
     - [Find all permutations of a string](#find-all-permutations-of-a-string)
     - [Burrows–Wheeler transform (BWT)](#burrowswheeler-transform-bwt)
@@ -592,6 +593,28 @@ print(np.random.normal(size=[3, 15]))
 # >>> [[-0.351 -0.593  1.616  0.333 -1.238 -0.166 -1.251 -0.084 -0.562  2.429  0.715  0.676  1.393 -0.69  -0.992]
 #      [-0.674 -0.276  2.243 -2.216 -0.595 -0.246 -1.241 -0.282 -1.07  -0.183 -0.193  0.028 -0.365 -0.602 -0.893]
 #      [-0.105 -0.082  0.305 -0.207  0.369  0.655 -1.292 -0.629 -0.275 -0.492 -1.085  0.064  0.037  0.428  0.126]]
+```
+
+### Rename files programmatically using `os.path.walk` and `os.rename`
+
+Below is an example of renaming all files in the current directory (including all subdirectories) not in `.git/` which contain a space, replacing spaces with underscores and converting to lowercase. To simply see what would happen without actually renaming any files (IE perform a dry run), simply comment out the line `os.rename(old_name, new_name)`.
+
+```python
+import os
+
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+for root, dirs, files in os.walk(CURRENT_DIR):
+    if ".git" not in root:
+        for filename in files:
+            if " " in filename:
+                old_name = os.path.join(root, filename)
+                new_name = os.path.join(
+                    root,
+                    filename.replace(" ", "_").lower(),
+                )
+                print("Renaming %120s to %s" % (old_name, new_name))
+                os.rename(old_name, new_name)
 ```
 
 ## Python implementations of algorithms
