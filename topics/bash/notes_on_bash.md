@@ -99,6 +99,18 @@ screen -list
 screen -r $ID_NUMBER
 ```
 
+- To resume a `screen` session "only when it’s unambiguous which one to attach", use the following command ([source](https://www.gnu.org/software/screen/manual/screen.html)):
+
+```bash
+screen -R
+```
+
+- To "resume the first appropriate detached screen session", use the following command ([source](https://www.gnu.org/software/screen/manual/screen.html)):
+
+```bash
+screen -RR
+```
+
 - To start a named session, use the `-S` flag, for example:
 
 ```bash
