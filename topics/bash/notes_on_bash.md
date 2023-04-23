@@ -6,6 +6,7 @@ This is just a random collection of commands which I have found useful in Bash. 
 
 - [Notes on `bash`](#notes-on-bash)
   - [Contents](#contents)
+  - [Run, control and view detached processes using `screen`](#run-control-and-view-detached-processes-using-screen)
   - [Get the current date and time and generate timestamped filenames with `date`](#get-the-current-date-and-time-and-generate-timestamped-filenames-with-date)
   - [Display date and time in `bash` history using `HISTTIMEFORMAT`](#display-date-and-time-in-bash-history-using-histtimeformat)
   - [Calculate running times of commands using `time`](#calculate-running-times-of-commands-using-time)
@@ -68,6 +69,89 @@ This is just a random collection of commands which I have found useful in Bash. 
   - [Create an `alias`](#create-an-alias)
   - [Create a symbolic link using `ln -s`](#create-a-symbolic-link-using-ln--s)
   - [Find CPU details (including model name) using `lscpu`](#find-cpu-details-including-model-name-using-lscpu)
+
+## Run, control and view detached processes using `screen`
+
+- Say you have a long-running script, and you want to start the script running on the server, disconnect from the server without stopping the script, and later reconnect to the server and view the output from the script in real time
+- As an example, consider a script that prints the current date and time once per second, which can be created as follows:
+
+```bash
+echo "while true; do date; sleep 1; done" > temp_script.sh && chmod +x temp_script.sh
+```
+
+- The script can be launched with the GNU program `screen` as follows:
+
+```bash
+screen bash temp_script.sh
+```
+
+- The output from the script will be printed to the terminal
+- To detach from the screen process without killing the process, use the shortcut `ctrl a + d` (it doesn't matter if `ctrl` is still being pressed or not when `d` is pressed)
+- To list currently running `screen` sessions, use the following command, which prints a list of screen sessions, each starting with an ID number:
+
+```bash
+screen -list
+```
+
+- To reattach to the screen session, use the following command (replacing `$ID_NUMBER` with the ID number of the screen session printed by `screen -list`, and entering a valid password if prompted):
+
+```bash
+screen -r $ID_NUMBER
+```
+
+- To start a named session, use the `-S` flag, for example:
+
+```bash
+screen -S temp_session bash temp_script.sh
+```
+
+- After detaching from the session, it can be reattached to using its name (instead of its ID number) as follows:
+
+```bash
+screen -r temp_session
+```
+
+- To kill a session while it is attached, use the shortcut `ctrl + c` as usual
+- To kill a detached session, use the following command (replacing the session name with its ID number if the session is unnamed or if there are multiple sessions with the same name)
+
+```bash
+screen -XS temp_session quit
+```
+
+- Note that an active `screen` session will continue to run after closing the terminal window (or `ssh` session) from which the screen command was started
+- This means that any new (or old) terminal window (or `ssh` session) can be used to reattach to the session at a later point in time
+- This is true regardless of whether the process is attached or detached when the terminal window or (`ssh` session) is killed, as long as the `screen` session itself is not actively terminated (IE using `ctrl + c` while the process is attached, or `screen -XS temp_session quit` while the process is detached)
+- To start a session in detached mode, use the `-dm` flags, for example:
+
+```bash
+screen -dmS temp_session bash temp_script.sh
+```
+
+- To log the output to `stdout` from the `screen` session to a text file, use the flags `-L -Logfile $OUTPUT_FILENAME` (note that `screen` might log to the output file slowly, EG once every 10 seconds), for example:
+
+```bash
+screen -dmS temp_session -L -Logfile screen_output.txt bash temp_script.sh
+```
+
+- To view the output to the log file while it is being updated in real time, use the `tail` command with the `-f` flag, for example:
+
+```bash
+tail -f screen_output.txt
+```
+
+- To run a command after launching a detached `screen` session in a single command, use the syntax `--` to specify an end to the command line arguments for `screen`, for example (note that firstly the following example is a bit pointless because the output could be viewed simply by not launching the session in detached mode instead of afterwards opening the log file `tail`, and secondly the sleep is included because there may be a delay in creating the log file):
+
+```bash
+screen -dmS temp_session -L -Logfile screen_output.txt bash temp_script.sh -- && sleep 1 && tail -f screen_output.txt
+```
+
+- Environment variables can be set with the usual syntax by including the environment name and value before the `screen` command (the process launched by `screen` will inherit all environment variables from the parent process), as follows (after first modifying the dummy script to also print the value of the environment variable)
+
+```bash
+echo "while true; do date; echo \$CUDA_VISIBLE_DEVICES; sleep 1; done" > temp_script.sh && chmod +x temp_script.sh
+
+CUDA_VISIBLE_DEVICES=7 screen -S temp_session -L -Logfile screen_output.txt bash temp_script.sh
+```
 
 ## Get the current date and time and generate timestamped filenames with `date`
 
