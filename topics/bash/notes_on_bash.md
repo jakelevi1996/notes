@@ -165,6 +165,26 @@ echo "while true; do date; echo \$CUDA_VISIBLE_DEVICES; sleep 1; done" > temp_sc
 CUDA_VISIBLE_DEVICES=7 screen -S temp_session -L -Logfile screen_output.txt bash temp_script.sh
 ```
 
+- Environment variables can also be included in the arguments to screen (such as the session name, log file, and command arguments), for example:
+
+```bash
+VAR_1=hello_world VAR_2=another_variable VAR_3=yet_another_variable
+screen -S temp_session_$VAR_1 -L -Logfile screen_output_$VAR_2.txt bash temp_script.sh --arg $VAR_3
+```
+
+- To embed environment variables in the middle of strings (not just at the ends), put the variable names in curly braces (not brackets):
+
+```bash
+screen -S temp_session_${VAR_1}_${VAR_2} -L -Logfile screen_output_${VAR_2}_${VAR_3}.txt bash temp_script.sh --arg ${VAR_3}_${VAR_1}
+```
+
+- If running `screen` returns the error `mkdir: cannot create directory ‘/run/screen’: Permission denied`, use the following commands (with `sudo` privelages), which should fix the problem:
+
+```bash
+sudo mkdir /run/screen
+sudo chmod 777 /run/screen/
+```
+
 ## Get the current date and time and generate timestamped filenames with `date`
 
 The command `date` can be used to print the current date and time on the command line, or to get a string variable containing the current date and time which can be used in future commands, for example:
