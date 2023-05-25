@@ -183,7 +183,7 @@ A good approach for organising commands, session names and log files is to set a
 ```
 DEVICE=2 SEED=3 GAME="IPD" TEST_NAME="unique_test_name_for_game_${GAME}_seed_${SEED}"
 echo ${TEST_NAME}
-CUDA_VISIBLE_DEVICES=$DEVICE screen -S ${TEST_NAME} -L -Logfile screen_output/${TEST_NAME}.txt python3 ~/dir_name/src/python_script.py --game ${GAME} --seed ${SEED} --output_dir output_dir_name/${TEST_NAME}
+CUDA_VISIBLE_DEVICES=${DEVICE} screen -S ${TEST_NAME} -L -Logfile screen_output/${TEST_NAME}.txt python3 ~/dir_name/src/python_script.py --game ${GAME} --seed ${SEED} --output_dir output_dir_name/${TEST_NAME}
 ```
 
 - If running `screen` returns the error `mkdir: cannot create directory ‘/run/screen’: Permission denied`, use the following commands (with `sudo` privelages), which should fix the problem:
