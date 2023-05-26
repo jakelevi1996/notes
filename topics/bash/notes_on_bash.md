@@ -13,6 +13,7 @@ This is just a random collection of commands which I have found useful in Bash. 
     - [Displaying graphical user interfaces over `ssh` using Xming](#displaying-graphical-user-interfaces-over-ssh-using-xming)
     - [Jump over intermediate `ssh` connections using `ProxyJump`](#jump-over-intermediate-ssh-connections-using-proxyjump)
     - [Enable `ssh` server on remote machine](#enable-ssh-server-on-remote-machine)
+    - [Automatically run commands after connection over SSH](#automatically-run-commands-after-connection-over-ssh)
   - [Synchronise remote files and directories with `rsync`](#synchronise-remote-files-and-directories-with-rsync)
   - [Download VSCode](#download-vscode)
   - [Get the current date and time and generate timestamped filenames with `date`](#get-the-current-date-and-time-and-generate-timestamped-filenames-with-date)
@@ -310,6 +311,12 @@ Activate the `ssh` server ([source](https://www.siteground.co.uk/kb/connection-r
 ```
 sudo service ssh start
 ```
+
+### Automatically run commands after connection over SSH
+
+- To automatically run a command on a remote machine after connection over SSH, append that command to the end of `~/.profile`
+- This can be useful, for example, to automatically load a virtual environment when connecting to a server using the VS Code "Remote SSH" extension
+  - Note that after updating `~/.profile`, it may be necessary to run the "Remote-SSH: Kill Current VS Code Server" command from within the VS Code Remote Window, and then restart the VS Code Remote Window, to prevent the VS Code Server from using a cached version of `~/.profile` ([source](https://stackoverflow.com/a/67403476/8477566))
 
 ## Synchronise remote files and directories with `rsync`
 
