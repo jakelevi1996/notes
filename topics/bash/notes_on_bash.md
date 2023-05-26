@@ -1086,6 +1086,14 @@ If the above steps don't work and `ssh` still asks for a password, the following
 - Call `ssh-copy-id` with the `-f` flag on the local device
 - Consider checking the permissions of the `id_rsa` files on the local machine ([source 1](https://serverfault.com/a/434498/620693)) ([source 2](https://unix.stackexchange.com/a/36687/421710))
 
+If the `ssh-copy-id` command isn't available (EG if you're trying to configure SSH for Cygwin on Windows), a straightforward (albeit slightly manual) solution is to:
+
+- Use the `ssh-keygen  -f ~/.ssh/id_rsa_$(UNIQUE_ID)` command as before (in Windows)
+- Open the public key file `~/.ssh/id_rsa_$(UNIQUE_ID).pub` (note that it should be the `.pub` file containing the public key, not ``~/.ssh/id_rsa_$(UNIQUE_ID)` containing the private key)
+- Copy the contents of the public key file (EG `ssh-rsa AAAAB...o45upDR= jake@Jakes-laptop`)
+- SSH into the remote machine
+- Paste the contents of the public key file into the end of `~/.ssh/authorized_keys`
+
 ### Scripting individual `ssh` commands
 
 To run individual commands on a remote device over `ssh` without opening up an interactive terminal, use the following syntax (the quotation marks can be ommitted if there are no space characters between the quotation marks):
