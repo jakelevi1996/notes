@@ -7,6 +7,14 @@ This is just a random collection of commands which I have found useful in Bash. 
 - [Notes on `bash`](#notes-on-bash)
   - [Contents](#contents)
   - [Run, control and view detached processes using `screen`](#run-control-and-view-detached-processes-using-screen)
+  - [`ssh`](#ssh)
+    - [Passwordless `ssh` terminals](#passwordless-ssh-terminals)
+    - [Scripting individual `ssh` commands](#scripting-individual-ssh-commands)
+    - [Displaying graphical user interfaces over `ssh` using Xming](#displaying-graphical-user-interfaces-over-ssh-using-xming)
+    - [Jump over intermediate `ssh` connections using `ProxyJump`](#jump-over-intermediate-ssh-connections-using-proxyjump)
+    - [Enable `ssh` server on remote machine](#enable-ssh-server-on-remote-machine)
+  - [Synchronise remote files and directories with `rsync`](#synchronise-remote-files-and-directories-with-rsync)
+  - [Download VSCode](#download-vscode)
   - [Get the current date and time and generate timestamped filenames with `date`](#get-the-current-date-and-time-and-generate-timestamped-filenames-with-date)
   - [Display date and time in `bash` history using `HISTTIMEFORMAT`](#display-date-and-time-in-bash-history-using-histtimeformat)
   - [Calculate running times of commands using `time`](#calculate-running-times-of-commands-using-time)
@@ -57,15 +65,7 @@ This is just a random collection of commands which I have found useful in Bash. 
   - [Storing `git` credentials](#storing-git-credentials)
   - [Automatically providing password to `sudo`](#automatically-providing-password-to-sudo)
   - [Sort `$PATH` and remove duplicates](#sort-path-and-remove-duplicates)
-  - [Download VSCode](#download-vscode)
   - [Get the absolute path to the current `bash` script and its directory using `$BASH_SOURCE`](#get-the-absolute-path-to-the-current-bash-script-and-its-directory-using-bash_source)
-  - [`ssh`](#ssh)
-    - [Passwordless `ssh` terminals](#passwordless-ssh-terminals)
-    - [Scripting individual `ssh` commands](#scripting-individual-ssh-commands)
-    - [Displaying graphical user interfaces over `ssh` using Xming](#displaying-graphical-user-interfaces-over-ssh-using-xming)
-    - [Jump over intermediate `ssh` connections using `ProxyJump`](#jump-over-intermediate-ssh-connections-using-proxyjump)
-    - [Enable `ssh` server on remote machine](#enable-ssh-server-on-remote-machine)
-  - [Synchronise remote files and directories with `rsync`](#synchronise-remote-files-and-directories-with-rsync)
   - [Create an `alias`](#create-an-alias)
   - [Create a symbolic link using `ln -s`](#create-a-symbolic-link-using-ln--s)
   - [Find CPU details (including model name) using `lscpu`](#find-cpu-details-including-model-name-using-lscpu)
@@ -191,6 +191,161 @@ CUDA_VISIBLE_DEVICES=${DEVICE} screen -S ${TEST_NAME} -L -Logfile screen_output/
 ```bash
 sudo mkdir /run/screen
 sudo chmod 777 /run/screen/
+```
+
+## `ssh`
+
+To open a terminal session on a remote Linux device on a local network, use the following command on the host device:
+
+```
+ssh username@hostname
+```
+
+After using this command, `ssh` should ask for the password for the specified user on the remote device.
+
+If `stdout` is not being flushed over `ssh`, this problem can be fixed by passing the `-t` command to `ssh`, EG `ssh -t username@hostname` ([source](https://serverfault.com/a/437739/620693))
+
+### Passwordless `ssh` terminals
+
+To configure `ssh` to not request a password when connecting, use the following commands on the local device, replacing `$(UNIQUE_ID)` with a string which is unique to `username@hostname` (the password for `ssh-keygen` can be left blank, whereas the correct password for `username@hostname` needs to be entered when running `ssh-copy-id`):
+
+```
+ssh-keygen  -f ~/.ssh/id_rsa_$(UNIQUE_ID)
+ssh-copy-id -i ~/.ssh/id_rsa_$(UNIQUE_ID) username@hostname
+```
+
+Now `username@hostname` can be connected to over `ssh` without needing to enter a password, using the command `ssh -i ~/.ssh/id_rsa_$(UNIQUE_ID) username@hostname`. To automate this further such that the path to the SSH key doesn't need to be entered when using `ssh`, edit `~/.ssh/config` using the following command:
+
+```
+nano ~/.ssh/config
+```
+
+Enter the following configuration, replacing `$(SHORT_NAME_FOR_REMOTE_USER)` with a short name which is unique to `username@hostname`:
+
+```
+Host $(SHORT_NAME_FOR_REMOTE_USER)
+   User username
+   Hostname hostname
+   IdentityFile ~/.ssh/id_rsa_$(UNIQUE_ID)
+```
+
+Save and exit `nano`. `username@hostname` can now be connected to over `ssh` using the following command, without being asked for a password ([source](https://stackoverflow.com/a/41135590/8477566)):
+
+```
+ssh $(SHORT_NAME_FOR_REMOTE_USER)
+```
+
+This should also allow `rsync` to run without requesting a password, again by replacing `username@hostname` with `$(SHORT_NAME_FOR_REMOTE_USER)`.
+
+If the above steps don't work and `ssh` still asks for a password, the following tips may be useful:
+- Make sure that the `~` and `~/.ssh` directories and the `~/.ssh/authorized_keys` file on the remote machine have the correct permissions ([source 1](https://superuser.com/a/925859/1098000)) ([source 2](https://serverfault.com/a/271054/620693)) ([source 3](https://askubuntu.com/a/90465/1078405)):
+  - `~` should not be writable by others. Check with `stat ~` and fix with `chmod go-w ~`
+  - `~/.ssh` should have `700` permissions. Check with `stat ~/.ssh` and fix with `chmod 700 ~/.ssh`
+  - `~/.ssh/authorized_keys` should have `644` permissions. Check with `stat ~/.ssh/authorized_keys` and fix with `chmod 644 ~/.ssh/authorized_keys`
+- If the permissions were wrong and have been changed and passwordless `ssh` still doesn't work, consider restarting the `ssh` service with `service ssh restart` ([source](https://superuser.com/a/925859/1098000))
+- Make sure that the line `PubkeyAuthentication yes` is present in `/etc/ssh/sshd_config` on the remote device, and not commented out with a `#` (as in `#PubkeyAuthentication yes`) ([source](https://superuser.com/a/904667/1098000)).
+- Call `ssh-copy-id` with the `-f` flag on the local device
+- Consider checking the permissions of the `id_rsa` files on the local machine ([source 1](https://serverfault.com/a/434498/620693)) ([source 2](https://unix.stackexchange.com/a/36687/421710))
+
+If the `ssh-copy-id` command isn't available (EG if you're trying to configure SSH for Cygwin on Windows), a straightforward (albeit slightly manual) solution is to:
+
+- Use the `ssh-keygen  -f ~/.ssh/id_rsa_$(UNIQUE_ID)` command as before (in Windows)
+- Open the public key file `~/.ssh/id_rsa_$(UNIQUE_ID).pub` (note that it should be the `.pub` file containing the public key, not ``~/.ssh/id_rsa_$(UNIQUE_ID)` containing the private key)
+- Copy the contents of the public key file (EG `ssh-rsa AAAAB...o45upDR= jake@Jakes-laptop`)
+- SSH into the remote machine
+- Paste the contents of the public key file into the end of `~/.ssh/authorized_keys`
+
+### Scripting individual `ssh` commands
+
+To run individual commands on a remote device over `ssh` without opening up an interactive terminal, use the following syntax (the quotation marks can be ommitted if there are no space characters between the quotation marks):
+
+```
+ssh username@hostname "command_name arg1 arg2 arg3"
+```
+
+It may be found that commands in `~/.bashrc` on the remote device are not run when using the above syntax to run single commands over `ssh` on the remote device, which might be a problem EG if `~/.bashrc` adds certain directories to `$PATH` which are needed by the commands which are being run over `ssh`. This might be because the following lines are present at the start of `~/.bashrc` on the remote device:
+
+```
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+```
+
+These lines cause `~/.bashrc` to exit if it's not being run interactively, which is the case when running single commands over `ssh`. To solve this problem, either put whichever commands that need to be run non-interactively in `~/.bashrc` before the line `case $- in`, or comment out the lines from `case $- in` to `esac` (inclusive) on the remote device ([source](https://serverfault.com/a/1062611/620693)).
+
+### Displaying graphical user interfaces over `ssh` using Xming
+
+From WSL on a Windows PC, it is possible to display graphical user interfaces which are running on a remote Linux device using X11 forwarding. To do so:
+
+- Install Xming on the Windows machine from [here](https://sourceforge.net/projects/xming/)
+- Make sure Xming is running on the Windows machine (there should be an icon for Xming in the icon tray in the Windows taskbar when Xming is running)
+- Use the `-X` flag when connecting over `ssh`, EG `ssh -X username@hostname`
+- Test that X11 forwarding is running succesfully by entering the command `xclock` in the `ssh` terminal, which should cause a clock face to appear on the Windows machine
+- If this doesn't work, it may be necessary to use the command `export DISPLAY=localhost:0.0` in WSL, and/or to add this command to the bottom of `~/.bashrc` (EG using the command `echo "export DISPLAY=localhost:0.0" >> ~/.bashrc`) and restart the WSL terminal
+- If an error message is displayed from the remote machine saying `connect localhost port 6000: Connection refused`, then make sure that Xming is running on the local machine
+
+### Jump over intermediate `ssh` connections using `ProxyJump`
+
+- Sometimes it is desirable to connect to `username@hostname` over `ssh`, but to do so it is necessary to first connect to `username_proxy@hostname_proxy` over `ssh`, and from `username_proxy@hostname_proxy` connect to `username@hostname` over `ssh`
+- This can be automated by adding entries into `~/.ssh/config` (see section "[Passwordless `ssh` terminals and commands](#passwordless-ssh-terminals)" above) for `username@hostname` and `username_proxy@hostname_proxy` with aliases `shortname` and `shortname_proxy`, and under the configuration for `shortname`, add the line `ProxyJump shortname_proxy` (following the indentation of the lines above)
+- Now, when using the command `ssh shortname`, `ssh` will automatically connect to `shortname_proxy` first, and from `shortname_proxy` connect to `shortname` over `ssh`
+- Note that if using `ssh-keygen` and `ssh-copy-id` to log into `username@hostname` without a password (described above), then an entry for `username@hostname` should first be added to `~/.ssh/config` on the local machine (including the `ProxyJump` entry described above), then `ssh-keygen` and `ssh-copy-id` should be used on the local machine (not from `username_proxy@hostname_proxy`) to enable passwordless access to `username@hostname` directly from the local machine
+
+### Enable `ssh` server on remote machine
+
+Install `ssh` server using the following command ([source](https://askubuntu.com/q/1161579/1078405)):
+
+```
+sudo apt install openssh-server
+```
+
+Activate the `ssh` server ([source](https://www.siteground.co.uk/kb/connection-refused-error-ssh/)):
+
+```
+sudo service ssh start
+```
+
+## Synchronise remote files and directories with `rsync`
+
+To synchronise a local directory with a remote directory, use the following command:
+
+```
+rsync -Chavz /path/to/local/dir username@hostname:~/path/to/remote
+```
+
+Description of flags:
+
+Flag | Meaning
+--- | ---
+`-C` | Automatically ignore common temporary files, version control files, etc
+`-h` | Use human-readable file sizes (EG `65.49K bytes` instead of `65,422 bytes`)
+`-a` | Sync recursively and preserves symbolic links, special and device files, modification times, groups, owners, and permissions
+`-v` | Verbose output is printed to `stdout`
+`-z` | Compress files (EG text files) to reduce network transfer
+
+([source 1](https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories)) ([source 2](https://linux.die.net/man/1/rsync))
+
+- To configure `rsync` to not request a password when synchronising directories, follow the instructions in the previous section "[Passwordless `ssh` terminals and commands](#passwordless-ssh-terminals)".
+- `rsync` can be used with the `--delete` option to delete extra files in the remote directory that are not present in the local directory ([source](https://askubuntu.com/a/665918/1078405)).
+- To ignore certain files (EG hidden files, `.pyc` files), use the `--exclude=$PATTERN` flag
+  - Multiple `--exclude` flags can be included in the same command, EG `rsync -Chavz . hostname:~/target_dir --exclude=".*" --exclude="*.pyc"`
+- To copy the contents of the *current directory on the local machine to* a subdirectory of the home directory called `target_dir` on the remote machine, use the command `rsync -Chavz . hostname:~/target_dir` (note *no* `/` character after `target_dir`)
+- To copy the contents of a subdirectory of the home directory on the remote machine called `target_dir` *to the current directory on the local machine*, use the command `rsync -Chavz hostname:~/target_dir/ .` (note that there *is* a `/` character after `target_dir`)
+
+## Download VSCode
+
+[Source](https://code.visualstudio.com/docs/setup/linux)
+
+```
+sudo apt update
+sudo apt upgrade
+sudo snap install --classic code # or code-insiders
 ```
 
 ## Get the current date and time and generate timestamped filenames with `date`
@@ -1009,16 +1164,6 @@ print("*** Separated by colons ***")
 print(":".join(sorted_unique_path_list))
 ```
 
-## Download VSCode
-
-[Source](https://code.visualstudio.com/docs/setup/linux)
-
-```
-sudo apt update
-sudo apt upgrade
-sudo snap install --classic code # or code-insiders
-```
-
 ## Get the absolute path to the current `bash` script and its directory using `$BASH_SOURCE`
 
 Use the variable `$BASH_SOURCE` to get the path to the current `bash` script. Use this with `realpath` and `dirname` to get the absolute path of the script, and its parent directory. For example:
@@ -1031,151 +1176,6 @@ echo $X1
 echo $X2
 echo $X3
 ```
-
-## `ssh`
-
-To open a terminal session on a remote Linux device on a local network, use the following command on the host device:
-
-```
-ssh username@hostname
-```
-
-After using this command, `ssh` should ask for the password for the specified user on the remote device.
-
-If `stdout` is not being flushed over `ssh`, this problem can be fixed by passing the `-t` command to `ssh`, EG `ssh -t username@hostname` ([source](https://serverfault.com/a/437739/620693))
-
-### Passwordless `ssh` terminals
-
-To configure `ssh` to not request a password when connecting, use the following commands on the local device, replacing `$(UNIQUE_ID)` with a string which is unique to `username@hostname` (the password for `ssh-keygen` can be left blank, whereas the correct password for `username@hostname` needs to be entered when running `ssh-copy-id`):
-
-```
-ssh-keygen  -f ~/.ssh/id_rsa_$(UNIQUE_ID)
-ssh-copy-id -i ~/.ssh/id_rsa_$(UNIQUE_ID) username@hostname
-```
-
-Now `username@hostname` can be connected to over `ssh` without needing to enter a password, using the command `ssh -i ~/.ssh/id_rsa_$(UNIQUE_ID) username@hostname`. To automate this further such that the path to the SSH key doesn't need to be entered when using `ssh`, edit `~/.ssh/config` using the following command:
-
-```
-nano ~/.ssh/config
-```
-
-Enter the following configuration, replacing `$(SHORT_NAME_FOR_REMOTE_USER)` with a short name which is unique to `username@hostname`:
-
-```
-Host $(SHORT_NAME_FOR_REMOTE_USER)
-   User username
-   Hostname hostname
-   IdentityFile ~/.ssh/id_rsa_$(UNIQUE_ID)
-```
-
-Save and exit `nano`. `username@hostname` can now be connected to over `ssh` using the following command, without being asked for a password ([source](https://stackoverflow.com/a/41135590/8477566)):
-
-```
-ssh $(SHORT_NAME_FOR_REMOTE_USER)
-```
-
-This should also allow `rsync` to run without requesting a password, again by replacing `username@hostname` with `$(SHORT_NAME_FOR_REMOTE_USER)`.
-
-If the above steps don't work and `ssh` still asks for a password, the following tips may be useful:
-- Make sure that the `~` and `~/.ssh` directories and the `~/.ssh/authorized_keys` file on the remote machine have the correct permissions ([source 1](https://superuser.com/a/925859/1098000)) ([source 2](https://serverfault.com/a/271054/620693)) ([source 3](https://askubuntu.com/a/90465/1078405)):
-  - `~` should not be writable by others. Check with `stat ~` and fix with `chmod go-w ~`
-  - `~/.ssh` should have `700` permissions. Check with `stat ~/.ssh` and fix with `chmod 700 ~/.ssh`
-  - `~/.ssh/authorized_keys` should have `644` permissions. Check with `stat ~/.ssh/authorized_keys` and fix with `chmod 644 ~/.ssh/authorized_keys`
-- If the permissions were wrong and have been changed and passwordless `ssh` still doesn't work, consider restarting the `ssh` service with `service ssh restart` ([source](https://superuser.com/a/925859/1098000))
-- Make sure that the line `PubkeyAuthentication yes` is present in `/etc/ssh/sshd_config` on the remote device, and not commented out with a `#` (as in `#PubkeyAuthentication yes`) ([source](https://superuser.com/a/904667/1098000)).
-- Call `ssh-copy-id` with the `-f` flag on the local device
-- Consider checking the permissions of the `id_rsa` files on the local machine ([source 1](https://serverfault.com/a/434498/620693)) ([source 2](https://unix.stackexchange.com/a/36687/421710))
-
-If the `ssh-copy-id` command isn't available (EG if you're trying to configure SSH for Cygwin on Windows), a straightforward (albeit slightly manual) solution is to:
-
-- Use the `ssh-keygen  -f ~/.ssh/id_rsa_$(UNIQUE_ID)` command as before (in Windows)
-- Open the public key file `~/.ssh/id_rsa_$(UNIQUE_ID).pub` (note that it should be the `.pub` file containing the public key, not ``~/.ssh/id_rsa_$(UNIQUE_ID)` containing the private key)
-- Copy the contents of the public key file (EG `ssh-rsa AAAAB...o45upDR= jake@Jakes-laptop`)
-- SSH into the remote machine
-- Paste the contents of the public key file into the end of `~/.ssh/authorized_keys`
-
-### Scripting individual `ssh` commands
-
-To run individual commands on a remote device over `ssh` without opening up an interactive terminal, use the following syntax (the quotation marks can be ommitted if there are no space characters between the quotation marks):
-
-```
-ssh username@hostname "command_name arg1 arg2 arg3"
-```
-
-It may be found that commands in `~/.bashrc` on the remote device are not run when using the above syntax to run single commands over `ssh` on the remote device, which might be a problem EG if `~/.bashrc` adds certain directories to `$PATH` which are needed by the commands which are being run over `ssh`. This might be because the following lines are present at the start of `~/.bashrc` on the remote device:
-
-```
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
-
-# If not running interactively, don't do anything
-case $- in
-    *i*) ;;
-      *) return;;
-esac
-```
-
-These lines cause `~/.bashrc` to exit if it's not being run interactively, which is the case when running single commands over `ssh`. To solve this problem, either put whichever commands that need to be run non-interactively in `~/.bashrc` before the line `case $- in`, or comment out the lines from `case $- in` to `esac` (inclusive) on the remote device ([source](https://serverfault.com/a/1062611/620693)).
-
-### Displaying graphical user interfaces over `ssh` using Xming
-
-From WSL on a Windows PC, it is possible to display graphical user interfaces which are running on a remote Linux device using X11 forwarding. To do so:
-
-- Install Xming on the Windows machine from [here](https://sourceforge.net/projects/xming/)
-- Make sure Xming is running on the Windows machine (there should be an icon for Xming in the icon tray in the Windows taskbar when Xming is running)
-- Use the `-X` flag when connecting over `ssh`, EG `ssh -X username@hostname`
-- Test that X11 forwarding is running succesfully by entering the command `xclock` in the `ssh` terminal, which should cause a clock face to appear on the Windows machine
-- If this doesn't work, it may be necessary to use the command `export DISPLAY=localhost:0.0` in WSL, and/or to add this command to the bottom of `~/.bashrc` (EG using the command `echo "export DISPLAY=localhost:0.0" >> ~/.bashrc`) and restart the WSL terminal
-- If an error message is displayed from the remote machine saying `connect localhost port 6000: Connection refused`, then make sure that Xming is running on the local machine
-
-### Jump over intermediate `ssh` connections using `ProxyJump`
-
-- Sometimes it is desirable to connect to `username@hostname` over `ssh`, but to do so it is necessary to first connect to `username_proxy@hostname_proxy` over `ssh`, and from `username_proxy@hostname_proxy` connect to `username@hostname` over `ssh`
-- This can be automated by adding entries into `~/.ssh/config` (see section "[Passwordless `ssh` terminals and commands](#passwordless-ssh-terminals)" above) for `username@hostname` and `username_proxy@hostname_proxy` with aliases `shortname` and `shortname_proxy`, and under the configuration for `shortname`, add the line `ProxyJump shortname_proxy` (following the indentation of the lines above)
-- Now, when using the command `ssh shortname`, `ssh` will automatically connect to `shortname_proxy` first, and from `shortname_proxy` connect to `shortname` over `ssh`
-- Note that if using `ssh-keygen` and `ssh-copy-id` to log into `username@hostname` without a password (described above), then an entry for `username@hostname` should first be added to `~/.ssh/config` on the local machine (including the `ProxyJump` entry described above), then `ssh-keygen` and `ssh-copy-id` should be used on the local machine (not from `username_proxy@hostname_proxy`) to enable passwordless access to `username@hostname` directly from the local machine
-
-### Enable `ssh` server on remote machine
-
-Install `ssh` server using the following command ([source](https://askubuntu.com/q/1161579/1078405)):
-
-```
-sudo apt install openssh-server
-```
-
-Activate the `ssh` server ([source](https://www.siteground.co.uk/kb/connection-refused-error-ssh/)):
-
-```
-sudo service ssh start
-```
-
-## Synchronise remote files and directories with `rsync`
-
-To synchronise a local directory with a remote directory, use the following command:
-
-```
-rsync -Chavz /path/to/local/dir username@hostname:~/path/to/remote
-```
-
-Description of flags:
-
-Flag | Meaning
---- | ---
-`-C` | Automatically ignore common temporary files, version control files, etc
-`-h` | Use human-readable file sizes (EG `65.49K bytes` instead of `65,422 bytes`)
-`-a` | Sync recursively and preserves symbolic links, special and device files, modification times, groups, owners, and permissions
-`-v` | Verbose output is printed to `stdout`
-`-z` | Compress files (EG text files) to reduce network transfer
-
-([source 1](https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories)) ([source 2](https://linux.die.net/man/1/rsync))
-
-- To configure `rsync` to not request a password when synchronising directories, follow the instructions in the previous section "[Passwordless `ssh` terminals and commands](#passwordless-ssh-terminals)".
-- `rsync` can be used with the `--delete` option to delete extra files in the remote directory that are not present in the local directory ([source](https://askubuntu.com/a/665918/1078405)).
-- To ignore certain files (EG hidden files, `.pyc` files), use the `--exclude=$PATTERN` flag
-  - Multiple `--exclude` flags can be included in the same command, EG `rsync -Chavz . hostname:~/target_dir --exclude=".*" --exclude="*.pyc"`
-- To copy the contents of the *current directory on the local machine to* a subdirectory of the home directory called `target_dir` on the remote machine, use the command `rsync -Chavz . hostname:~/target_dir` (note *no* `/` character after `target_dir`)
-- To copy the contents of a subdirectory of the home directory on the remote machine called `target_dir` *to the current directory on the local machine*, use the command `rsync -Chavz hostname:~/target_dir/ .` (note that there *is* a `/` character after `target_dir`)
 
 ## Create an `alias`
 
