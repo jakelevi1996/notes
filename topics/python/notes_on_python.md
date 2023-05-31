@@ -25,6 +25,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
     - [Call a function with a timeout using `multiprocessing`](#call-a-function-with-a-timeout-using-multiprocessing)
     - [Set `numpy` print options (including preventing `numpy` from wrapping lines)](#set-numpy-print-options-including-preventing-numpy-from-wrapping-lines)
     - [Rename files programmatically using `os.path.walk` and `os.rename`](#rename-files-programmatically-using-ospathwalk-and-osrename)
+    - [Recursively flatten a list of irregularly nested lists](#recursively-flatten-a-list-of-irregularly-nested-lists)
   - [Python implementations of algorithms](#python-implementations-of-algorithms)
     - [Find all permutations of a string](#find-all-permutations-of-a-string)
     - [Burrows–Wheeler transform (BWT)](#burrowswheeler-transform-bwt)
@@ -615,6 +616,29 @@ for root, dirs, files in os.walk(CURRENT_DIR):
                 )
                 print("Renaming %120s to %s" % (old_name, new_name))
                 os.rename(old_name, new_name)
+```
+
+### Recursively flatten a list of irregularly nested lists
+
+```python
+x = [[0, 1, [2, [3, 4]], 5], 6, [[7]], 8, [[9, 10, 11]], 12, [[13], [14]], 15]
+
+def flatten_list(input_list):
+    flattened_list = [
+        leaf
+        for element in input_list
+        for leaf in (
+            flatten_list(element)
+            if isinstance(element, list)
+            else [element]
+        )
+    ]
+    return flattened_list
+
+print(x, flatten_list(x), flatten_list(list(range(16))), sep="\n")
+# [[0, 1, [2, [3, 4]], 5], 6, [[7]], 8, [[9, 10, 11]], 12, [[13], [14]], 15]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 ```
 
 ## Python implementations of algorithms
