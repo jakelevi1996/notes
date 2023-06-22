@@ -19,6 +19,7 @@ This is just a random collection of commands which I have found useful in Bash. 
     - [What's the difference between `apt` and `apt-get`?](#whats-the-difference-between-apt-and-apt-get)
     - [What's the difference between `apt update`, `apt upgrade`, `apt full-upgrade`, and `apt-get dist-upgrade`?](#whats-the-difference-between-apt-update-apt-upgrade-apt-full-upgrade-and-apt-get-dist-upgrade)
     - [Checking the version of an installed `apt` package using `apt list`](#checking-the-version-of-an-installed-apt-package-using-apt-list)
+    - [Uninstalling packages and their dependencies](#uninstalling-packages-and-their-dependencies)
   - [Download VSCode](#download-vscode)
   - [Get the current date and time and generate timestamped filenames with `date`](#get-the-current-date-and-time-and-generate-timestamped-filenames-with-date)
   - [Display date and time in `bash` history using `HISTTIMEFORMAT`](#display-date-and-time-in-bash-history-using-histtimeformat)
@@ -411,6 +412,21 @@ To list all installed packages which contain the string "`cuda`":
 ```
 apt list --installed | grep cuda
 ```
+
+### Uninstalling packages and their dependencies
+
+([Source](https://askubuntu.com/a/187891/1078405))
+
+- `apt-get remove packagename` will remove the binaries for `packagename`, but not its configuration files, data files (including those in users' home directories), or dependencies that were installed along with `packagename`
+- `apt-get purge packagename` or `apt-get remove --purge packagename` (both commands are equivalent) will remove a package **and its configuration files** (useful for starting over with a package in case its configuration has become messed up), but not its data files (including those in users' home directories), or dependencies that were installed along with `packagename`
+- `apt-get autoremove` removes all packages which were installed as a dependency of some package which is no longer present (useful after removing a package which had installed dependencies which are no longer needed)
+
+Note that some packages are dummy packages, meaning they require very little installation except for several other packages which are installed as dependencies, and those dependencies are not always removed by running `apt autoremove`. Approaches for removing dependencies not removed by `autoremove` include:
+
+- Check the output from `apt install packagename`/`apt-get install packagename` (if available) for all packages listed under the line `The following NEW packages will be installed:` and remove them manually
+- Parse `/var/log/apt/term.log` to extract all dependencies that were installed when `packagename` was installed and remove them manually
+- Run the command `apt show packagename`, and manually remove any packages listed as dependencies in the output from `apt show packagename` (and any dependencies of those dependencies, etc)
+- Run the command `apt list --installed | grep packagename` to view any installed packages which contain `packagename` in their name, which are likely to be dependencies of `packagename`, and remove all such packages (and any dependencies of those packages, etc)
 
 ## Download VSCode
 
