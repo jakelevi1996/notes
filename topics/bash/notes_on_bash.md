@@ -15,12 +15,15 @@ This is just a random collection of commands which I have found useful in Bash. 
     - [Enable `ssh` server on remote machine](#enable-ssh-server-on-remote-machine)
     - [Automatically run commands after connection over SSH](#automatically-run-commands-after-connection-over-ssh)
   - [Synchronise remote files and directories with `rsync`](#synchronise-remote-files-and-directories-with-rsync)
+  - [Package management with `apt`](#package-management-with-apt)
+    - [What's the difference between `apt` and `apt-get`?](#whats-the-difference-between-apt-and-apt-get)
+    - [What's the difference between `apt update`, `apt upgrade`, `apt full-upgrade`, and `apt-get dist-upgrade`?](#whats-the-difference-between-apt-update-apt-upgrade-apt-full-upgrade-and-apt-get-dist-upgrade)
+    - [Checking the version of an installed `apt` package using `apt list`](#checking-the-version-of-an-installed-apt-package-using-apt-list)
   - [Download VSCode](#download-vscode)
   - [Get the current date and time and generate timestamped filenames with `date`](#get-the-current-date-and-time-and-generate-timestamped-filenames-with-date)
   - [Display date and time in `bash` history using `HISTTIMEFORMAT`](#display-date-and-time-in-bash-history-using-histtimeformat)
   - [Calculate running times of commands using `time`](#calculate-running-times-of-commands-using-time)
   - [Run script in the current shell environment using `source`](#run-script-in-the-current-shell-environment-using-source)
-  - [Updating and upgrading packages using `apt update` and `apt upgrade`](#updating-and-upgrading-packages-using-apt-update-and-apt-upgrade)
   - [Seeing available disk space (using `df`) and disk usage (using `du`)](#seeing-available-disk-space-using-df-and-disk-usage-using-du)
   - [View the return code of the most recent command using `$?`](#view-the-return-code-of-the-most-recent-command-using-)
   - [Use stdout from one command as a command-line argument in another using `$()` notation](#use-stdout-from-one-command-as-a-command-line-argument-in-another-using--notation)
@@ -42,8 +45,6 @@ This is just a random collection of commands which I have found useful in Bash. 
   - [Counting the number of lines in a file using `wc`](#counting-the-number-of-lines-in-a-file-using-wc)
   - [Viewing the first/last `n` lines of a file using `head`/`tail`](#viewing-the-firstlast-n-lines-of-a-file-using-headtail)
   - [Changing the bash prompt](#changing-the-bash-prompt)
-  - [`apt-get update` vs `apt-get upgrade`](#apt-get-update-vs-apt-get-upgrade)
-  - [Checking the version of an installed `apt` package using `apt list`](#checking-the-version-of-an-installed-apt-package-using-apt-list)
   - [Clear the console window using `clear`](#clear-the-console-window-using-clear)
   - [Iterating through files which match a file pattern](#iterating-through-files-which-match-a-file-pattern)
   - [Recursively `git add`-ing files (including files hidden by `.gitignore`)](#recursively-git-add-ing-files-including-files-hidden-by-gitignore)
@@ -346,6 +347,71 @@ Flag | Meaning
 - To copy the contents of the *current directory on the local machine to* a subdirectory of the home directory called `target_dir` on the remote machine, use the command `rsync -Chavz . hostname:~/target_dir` (note *no* `/` character after `target_dir`)
 - To copy the contents of a subdirectory of the home directory on the remote machine called `target_dir` *to the current directory on the local machine*, use the command `rsync -Chavz hostname:~/target_dir/ .` (note that there *is* a `/` character after `target_dir`)
 
+## Package management with `apt`
+
+From the Wikipedia page ["APT (software)"](https://en.wikipedia.org/wiki/APT_(software)):
+
+> Advanced package tool, or APT, is a free-software user interface that works with core libraries to handle the installation and removal of software on Debian, and Debian-based Linux distributions.
+
+(Note that Ubuntu is a Debian-based Linux distribution).
+
+### What's the difference between `apt` and `apt-get`?
+
+([Source](https://askubuntu.com/a/446484/1078405))
+
+> `apt-get` may be considered as lower-level and "back-end", and support other APT-based tools. `apt` is designed for end-users (human) and its output may be changed between versions.
+>
+> Note from apt(8):
+>
+> The `apt` command is meant to be pleasant for end users and does not need to be backward compatible like apt-get(8).
+
+### What's the difference between `apt update`, `apt upgrade`, `apt full-upgrade`, and `apt-get dist-upgrade`?
+
+([Source](https://askubuntu.com/a/222352/1078405))
+
+- `apt update` updates `apt`'s package lists, which allows `apt` to know the newest available version of each package and its dependencies, and ensures that the newest available versions are used whenever installing or upgrading any new or existing packages (although note that `apt update` doesn't install, modify or upgrade any new or existing packages)
+- `apt upgrade` updates all possible existing packages to the newest available versions that `apt` knows about from its package lists (which are updated with `apt update`) without removing any existing packages (EG if they are conflicting) or installing any new packages
+- `apt full-upgrade` is equivalent to `apt-get dist-upgrade` ([source](https://superuser.com/a/1557279/1098000))
+- `apt-get dist-upgrade` does everything that `apt-get upgrade` does and additionally intelligently handles dependencies, including removing obsolete packages and adding new packages when necessary
+
+These commands can be combined using `&&`, for example:
+
+```
+sudo apt-get update && sudo apt-get dist-upgrade
+```
+
+As described in [this Stack Overflow answer](https://askubuntu.com/a/226213/1078405), as to why you would ever want to use `apt-get upgrade` instead of `apt-get dist-upgrade`:
+
+> Using upgrade keeps to the rule: under no circumstances are currently installed packages removed, or packages not already installed retrieved and installed. If that's important to you, use `apt-get upgrade`. If you want things to "just work", you probably want `apt-get dist-upgrade` to ensure dependencies are resolved
+
+### Checking the version of an installed `apt` package using `apt list`
+
+To view the version of a installed package which is available through `apt` (Advanced Package Tool), use the command `apt list <package-name>` for a concise description, or `apt show <package-name>` for a more verbose output (see also `apt policy <package-name>`).
+
+To view a list of all installed packages, use the command
+
+```
+apt list --installed
+```
+
+This list can be very large, so it might be sensible to redirect the output into a text file. To do this and then display the first 100 lines of the text file:
+
+```
+apt list --installed > aptlistinstalled.txt && head -n100 aptlistinstalled.txt
+```
+
+To achieve the same thing but without saving to a text file:
+
+```
+apt list --installed | head -n100
+```
+
+To list all installed packages which contain the string "`cuda`":
+
+```
+apt list --installed | grep cuda
+```
+
 ## Download VSCode
 
 [Source](https://code.visualstudio.com/docs/setup/linux)
@@ -439,19 +505,6 @@ This can be useful EG if making a change to `~/.bashrc` (`bashrc` stands for "Ba
 $ nano ~/.bashrc
 $ # <Make changes to the shell in the nano text editor>
 $ source ~/.bashrc
-```
-
-## Updating and upgrading packages using `apt update` and `apt upgrade`
-
-To update `apt` package lists, use the command `sudo apt update`. This command doesn't modify, upgrade or install any new or existing packages, but should be run before upgrading or installing any new or existing packages, to make sure that the most recent versions of those packages are used.
-
-To upgrade all existing packages to their most recent versions, use the command `sudo apt upgrade`. This should be called before installing any new packages using `sudo apt install package-name`, to avoid any dependency issues.
-
-These commands are often used one after the other, before installing a new package, as follows:
-
-```
-sudo apt update
-sudo apt upgrade
 ```
 
 ## Seeing available disk space (using `df`) and disk usage (using `du`)
@@ -820,54 +873,6 @@ $ date
 Fri Apr 24 18:25:49 BST 2020
 $ PS1=$DEFAULT
 jake@Jakes-laptop:/mnt/c/Users/Jake/Documents$
-```
-
-## `apt-get update` vs `apt-get upgrade`
-
-Regarding the difference between these commonly used commands, as described in [this Stack Overflow answer](https://askubuntu.com/a/222352/1078405):
-
-> - `apt-get update` downloads the *package lists* from the repositories and "updates" them to get information on the newest versions of packages and their dependencies, for all repositories and PPAs (doesn't actually install new versions of software)
-> - `apt-get upgrade` will fetch new versions of packages existing on the machine if APT knows about these new versions by way of `apt-get update`
-> - `apt-get dist-upgrade` will do the same job which is done by `apt-get upgrade`, plus it will also intelligently handle the dependencies, so it might remove obsolete packages or add new ones
->
-> You can combine commands with `&&` as follows:
-
-```
-sudo apt-get update && sudo apt-get dist-upgrade
-```
-
-As described in [this Stack Overflow answer](https://askubuntu.com/a/226213/1078405), as to why you would ever want to use `apt-get upgrade` instead of `apt-get dist-upgrade`:
-
-> Using upgrade keeps to the rule: under no circumstances are currently installed packages removed, or packages not already installed retrieved and installed. If that's important to you, use `apt-get upgrade`. If you want things to "just work", you probably want `apt-get dist-upgrade` to ensure dependencies are resolved
-
-In summary, `apt-get upgrade` is likely to be safer if it works, but if not, `apt-get dist-upgrade` is more likely to work.
-
-## Checking the version of an installed `apt` package using `apt list`
-
-To view the version of a installed package which is available through `apt` (Advanced Package Tool), use the command `apt list <package-name>` for a concise description, or `apt show <package-name>` for a more verbose output. (A similar command, `apt policy <package-name>` is also available, although currently I'm not sure what the difference is between `apt show` and `apt policy` is).
-
-To view a list of all installed packages, use the command
-
-```
-apt list --installed
-```
-
-This list can be very large, so it might be sensible to redirect the output into a text file. To do this and then display the first 100 lines of the text file:
-
-```
-apt list --installed > aptlistinstalled.txt && head -n100 aptlistinstalled.txt
-```
-
-To achieve the same thing but without saving to a text file:
-
-```
-apt list --installed | head -n100
-```
-
-To list all installed packages which contain the string "`cuda`":
-
-```
-apt list --installed | grep cuda
 ```
 
 ## Clear the console window using `clear`
