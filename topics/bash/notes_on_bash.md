@@ -20,6 +20,7 @@ This is just a random collection of commands which I have found useful in Bash. 
     - [What's the difference between `apt update`, `apt upgrade`, `apt full-upgrade`, and `apt-get dist-upgrade`?](#whats-the-difference-between-apt-update-apt-upgrade-apt-full-upgrade-and-apt-get-dist-upgrade)
     - [Checking the version of an installed `apt` package using `apt list`](#checking-the-version-of-an-installed-apt-package-using-apt-list)
     - [Uninstalling packages and their dependencies](#uninstalling-packages-and-their-dependencies)
+  - [View the Linux distribution name and version number using `lsb_release`](#view-the-linux-distribution-name-and-version-number-using-lsb_release)
   - [Download VSCode](#download-vscode)
   - [Get the current date and time and generate timestamped filenames with `date`](#get-the-current-date-and-time-and-generate-timestamped-filenames-with-date)
   - [Display date and time in `bash` history using `HISTTIMEFORMAT`](#display-date-and-time-in-bash-history-using-histtimeformat)
@@ -56,7 +57,6 @@ This is just a random collection of commands which I have found useful in Bash. 
   - [View the hostname and IP address using `hostname`](#view-the-hostname-and-ip-address-using-hostname)
   - [Viewing the properties of a file using `file`](#viewing-the-properties-of-a-file-using-file)
   - [Viewing and editing the system path](#viewing-and-editing-the-system-path)
-  - [Viewing the Linux distribution details using `lsb_release`](#viewing-the-linux-distribution-details-using-lsb_release)
   - [WSL](#wsl)
   - [Connecting to a serial device using WSL](#connecting-to-a-serial-device-using-wsl)
   - [View filesize using `ls -l`](#view-filesize-using-ls--l)
@@ -427,6 +427,19 @@ Note that some packages are dummy packages, meaning they require very little ins
 - Parse `/var/log/apt/term.log` to extract all dependencies that were installed when `packagename` was installed and remove them manually
 - Run the command `apt show packagename`, and manually remove any packages listed as dependencies in the output from `apt show packagename` (and any dependencies of those dependencies, etc)
 - Run the command `apt list --installed | grep packagename` to view any installed packages which contain `packagename` in their name, which are likely to be dependencies of `packagename`, and remove all such packages (and any dependencies of those packages, etc)
+
+## View the Linux distribution name and version number using `lsb_release`
+
+The command `lsb_release` is used to view details about the current Linux distribution under the [Linux Standard Base (LSB)](https://en.wikipedia.org/wiki/Linux_Standard_Base), and optionally any LSB modules that the system supports. `lsb_release` accepts flags in order to display various different details (EG the distributer ID of the Linux distribution which is running, the release number of the distribution, the code name of the distribution, etc), but to simply display all details use the `-a` flag, EG:
+
+```
+$ lsb_release -a
+No LSB modules are available.
+Distributor ID: Ubuntu
+Description:    Ubuntu 18.04.2 LTS
+Release:        18.04
+Codename:       bionic
+```
 
 ## Download VSCode
 
@@ -1053,17 +1066,6 @@ To add a new directory to the path ([source](https://unix.stackexchange.com/ques
 
 ```bash
 PATH=$PATH:~/new/dir
-```
-
-## Viewing the Linux distribution details using `lsb_release`
-
-The command `lsb_release` is used to view details about the current Linux distribution under the Linux Standard Base (LSB), and optionally any LSB modules that the system supports. Using this command with flags `lsb_release -irc` will show the distributer ID of the Linux distribution which is running, the release number of the distribution, and the code name of the distribution, EG:
-
-```
-$ lsb_release -irc
-Distributor ID: Ubuntu
-Release:        18.04
-Codename:       bionic
 ```
 
 ## WSL
