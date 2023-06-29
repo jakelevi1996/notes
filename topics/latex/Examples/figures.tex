@@ -1,0 +1,44 @@
+\documentclass{article}
+
+\usepackage{subcaption}
+\usepackage{graphicx}
+\graphicspath{{path/to/image/folder}}
+
+\thispagestyle{empty}
+
+\begin{document}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{example-image}
+    \caption{Example figure}
+    \label{fig:example}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{example-image-a}
+        \caption{Example image A}
+        \label{fig:example A}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{example-image-b}
+        \caption{Example image B}
+        \label{fig:example B}
+    \end{subfigure}
+    \newline
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{example-image-c}
+        \caption{Example image C}
+        \label{fig:example C}
+    \end{subfigure}
+    \caption{Example figure with subfigures}
+    \label{fig:example with subfigures}
+\end{figure}
+
+\end{document}
