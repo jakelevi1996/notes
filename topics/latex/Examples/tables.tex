@@ -1,0 +1,78 @@
+\documentclass{article}
+
+\usepackage{subcaption}
+
+\thispagestyle{empty}
+
+\begin{document}
+
+\begin{table}
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Animal  & Number of eyes    & Number of legs    \\
+        \hline
+        Human   & 2                 & 2                 \\
+        Dog     & 2                 & 4                 \\
+        Spider  & 8                 & 8                 \\
+        \hline
+    \end{tabular}
+    \caption{Learn your animals}
+    \label{table:animals}
+\end{table}
+
+\begin{table}
+    \centering
+    \begin{subtable}[t]{0.5\textwidth}
+        \centering
+        \begin{tabular}[t]{l l l}
+            \hline
+            Operation   & Kneel     & Acceptance    \\
+            \hline
+            Contrast    & Free      & Hospital      \\
+            Draft       & Discovery & Reason        \\
+            Leader      & Scramble  & Fill          \\
+            Forward     & Herb      & Center        \\
+            \hline
+        \end{tabular}
+        \caption{Revenge}
+        \label{table:revenge}
+    \end{subtable}
+    \hfill
+    \begin{subtable}[t]{0.45\textwidth}
+        \centering
+        \begin{tabular}[t]{r|r}
+            \hline
+            Restaurant  & Rule      \\
+            \hline
+            Seminar     & Forecast  \\
+            Brainstorm  & Create    \\
+            \hline
+        \end{tabular}
+        \caption{Heat}
+        \label{table:heat}
+    \end{subtable}
+    \newline
+    \begin{subtable}{\textwidth}
+        \centering
+        \begin{tabular}{|r c l c|}
+            \hline
+            Effect          & Clinic    & Fleet         & Related       \\
+            \hline
+            Package         & Woman     & Habitat       & Endure        \\
+            Pilot           & Pot       & Contract      & Trainer       \\
+            Minimize        & Family    & Instrument    & Ban           \\
+            Mean            & Park      & Version       & Accountant    \\
+            Log             & Church    & Study         & Guitar        \\
+            Continuous      & Throne    & Pump          & Culture       \\
+            Discriminate    & Useful    & Agreement     & School        \\
+            \hline
+        \end{tabular}
+        \caption{Sum}
+        \label{table:museum}
+    \end{subtable}
+    \caption{Random words generated from https://randomwordgenerator.com/}
+    \label{table:layout}
+\end{table}
+
+\end{document}
