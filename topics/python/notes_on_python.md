@@ -11,6 +11,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [Useful links](#useful-links)
   - [Profiling Python code](#profiling-python-code)
   - [Useful Python snippets](#useful-python-snippets)
+    - [Make a list of prime numbers](#make-a-list-of-prime-numbers)
     - [Print the running time of a Python script](#print-the-running-time-of-a-python-script)
     - [Get a timestamped filename](#get-a-timestamped-filename)
     - [Get the directory name of the current source file](#get-the-directory-name-of-the-current-source-file)
@@ -204,6 +205,25 @@ python -c "import pstats; p = pstats.Stats('.profile_output.bin'); p.sort_stats(
 Note that errors can occur when trying to profile code which uses the `pickle` module. The explanation and a workaround are provided in [this StackOverflow answer](https://stackoverflow.com/a/53890887/8477566). A simple solution is the modify the code being profiled such that it has an option to run without using `pickle`.
 
 ## Useful Python snippets
+
+### Make a list of prime numbers
+
+```python
+import numpy as np
+
+def get_primes(p_max):
+    sieve = np.ones(p_max)
+    sieve[:2] = 0
+    for i in range(p_max):
+        if sieve[i] == 1:
+            sieve[2*i::i] = 0
+    prime_array = np.arange(p_max)[sieve == 1]
+    return prime_array
+
+p = get_primes(100)
+print(list(p))
+# >>> [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
+```
 
 ### Print the running time of a Python script
 
