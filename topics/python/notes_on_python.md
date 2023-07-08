@@ -12,7 +12,6 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [Profiling Python code](#profiling-python-code)
   - [Useful Python snippets](#useful-python-snippets)
     - [Make a list of prime numbers](#make-a-list-of-prime-numbers)
-    - [Print the running time of a Python script](#print-the-running-time-of-a-python-script)
     - [Get a timestamped filename](#get-a-timestamped-filename)
     - [Get the directory name of the current source file](#get-the-directory-name-of-the-current-source-file)
     - [Create a directory if it doesn't exist](#create-a-directory-if-it-doesnt-exist)
@@ -223,51 +222,6 @@ def get_primes(p_max):
 p = get_primes(100)
 print(list(p))
 # >>> [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
-```
-
-### Print the running time of a Python script
-
-The running time of a Python script can be printed using `time.perf_counter()`, as shown below:
-
-```python
-import time
-
-def main():
-    """ Main function for the script """
-    from time import sleep
-    sleep(3)
-
-if __name__ == "__main__":
-    t_start = time.perf_counter()
-
-    # Call main function
-    main()
-
-    # Print time taken
-    t_total = time.perf_counter() - t_start
-    mins, secs = divmod(t_total, 60)
-    print("\n\nScript ran in %i mins, %.1f secs" % (mins, secs))
-```
-
-This can be wrapped up in a reusable function as follows:
-
-```python
-import time
-
-def main(t_sleep):
-    """ Main function for the script """
-    from time import sleep
-    sleep(t_sleep)
-
-def time_func(func, *args, **kwargs):
-    t_start = time.perf_counter()
-    func(*args, **kwargs)
-    t_total = time.perf_counter() - t_start
-
-    print("\nFinished %r function in %.1fs" % (func.__name__, t_total))
-
-if __name__ == "__main__":
-    time_func(main, 3.0)
 ```
 
 ### Get a timestamped filename
