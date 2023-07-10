@@ -124,15 +124,21 @@ The following is a sensible, minimal example of a document template for a `tex` 
     Main document title \\
     \large Document subtitle
 }
-\author{Jake Levi \\ University of Oxford}
-\date{June 2023}
+\author{
+    Jake Levi \\
+    University of Oxford
+    \and
+    Author Two \\
+    Institute of Universities
+}
+\date{\today}
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-{Place holder for abstract, delete if necessary, otherwise summarise document here}
+Place holder for abstract, delete if necessary, otherwise summarise document here
 \end{abstract}
 
 \section{Introduction}
