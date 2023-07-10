@@ -1,0 +1,33 @@
+\documentclass{article}
+
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+
+\thispagestyle{empty}
+
+\begin{document}
+
+\begin{algorithm}
+\caption{Example algorithm}\label{alg:example}
+    \begin{algorithmic}[1]
+        \Require batch size $b$, number of episodes $e$, discount factor $\gamma$
+        \State $s_0, r_0 \sim p_0$
+        \State $r \gets r_0$
+        \State $g \gets 0$
+        \If{$b > 1$}
+            \For{$i \in (1, \dots, b)$} \Comment{This is a comment}
+                \State $a_i \sim \pi(s_i)$
+                \State $r_i \gets \texttt{env}(a_i)$
+            \EndFor
+        \ElsIf{$e > 1 $}
+            \While{$r \ge 0$}
+                \State $g_i \gets r + \gamma g_{i+1}$
+                \State $r \sim \mathcal{N}$
+            \EndWhile
+        \Else
+            \State $r \gets -\infty$
+        \EndIf
+    \end{algorithmic}
+\end{algorithm}
+
+\end{document}

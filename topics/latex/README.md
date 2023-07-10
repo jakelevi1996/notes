@@ -11,6 +11,7 @@
   - [Document template](#document-template)
   - [Figures and subfigures](#figures-and-subfigures)
   - [Tables and subtables](#tables-and-subtables)
+  - [Algorithms](#algorithms)
   - [Description of packages](#description-of-packages)
   - [`.gitignore`](#gitignore)
   - [Changing document style for a particular publication](#changing-document-style-for-a-particular-publication)
@@ -328,6 +329,55 @@ C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -dSAFER -dBATCH -dNOPAUSE -sDEVICE=p
 The resulting image is shown below:
 
 ![](Images/tables.png)
+
+## Algorithms
+
+To include algorithms in a Latex document, firstly include the following commands in the preamble:
+
+```tex
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+```
+
+Within a document, the following is a template for adding an algorithm:
+
+```tex
+\begin{algorithm}
+\caption{Example algorithm}\label{alg:example}
+    \begin{algorithmic}[1]
+        \Require batch size $b$, number of episodes $e$, discount factor $\gamma$
+        \State $s_0, r_0 \sim p_0$
+        \State $r \gets r_0$
+        \State $g \gets 0$
+        \If{$b > 1$}
+            \For{$i \in (1, \dots, b)$} \Comment{This is a comment}
+                \State $a_i \sim \pi(s_i)$
+                \State $r_i \gets \texttt{env}(a_i)$
+            \EndFor
+        \ElsIf{$e > 1 $}
+            \While{$r \ge 0$}
+                \State $g_i \gets r + \gamma g_{i+1}$
+                \State $r \sim \mathcal{N}$
+            \EndWhile
+        \Else
+            \State $r \gets -\infty$
+        \EndIf
+    \end{algorithmic}
+\end{algorithm}
+```
+
+These examples are included in the file [`algorithm.tex`](./Examples/algorithm.tex), which can be compiled into a PNG with the following commands (assuming a terminal is open in the directory containing [`algorithm.tex`](./Examples/figures.tex)):
+
+```
+pdflatex algorithm.tex
+pdfcrop --margins 10 algorithm.pdf algorithm_crop.pdf
+$env:GS_LIB="C:/texlive/2022/tlpkg/tlgs/Resource/Init;C:/texlive/2022/tlpkg/tlgs/lib;C:/texlive/2022/tlpkg/tlgs/kanji"
+C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r300 -sOutputFile="../Images/algorithm.png" algorithm_crop.pdf
+```
+
+The resulting image is shown below:
+
+![](Images/algorithm.png)
 
 ## Description of packages
 
