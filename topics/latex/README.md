@@ -339,7 +339,7 @@ To include algorithms in a Latex document, firstly include the following command
 \usepackage{algorithm}
 ```
 
-Within a document, the following is a template for adding an algorithm:
+Within a document, the following is a template for adding an algorithm ([source 1](https://www.overleaf.com/learn/latex/Algorithms) [source 2](https://tex.stackexchange.com/a/56877/266921)):
 
 ```tex
 \begin{algorithm}
