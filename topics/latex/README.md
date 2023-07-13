@@ -100,7 +100,7 @@ Below is a side-by-side comparison of the 2 images with different resolutions:
 
 ## Document template
 
-The following is a sensible, minimal example of a document template for a `tex` document. It assumes:
+The following is a sensible, minimal example of a document template for a `tex` document. It assumes the existence of certain files and directories (these can be created with the commands shown after the template):
 
 - Sections are contained in dedicated `tex` files in a subdirectory called `Sections`
 - Images are contained in a parallel directory called `Results`
@@ -143,7 +143,7 @@ Place holder for abstract, delete if necessary, otherwise summarise document her
 
 \section{Introduction}
 \label{section:intro}
-\input{Sections/Intro.tex}
+\input{Sections/intro.tex}
 
 \section{Related work}
 \label{section:related}
@@ -173,12 +173,13 @@ Place holder for abstract, delete if necessary, otherwise summarise document her
 \end{document}
 ```
 
-The `.tex` files included in the template can be created if they don't exist with the following commands (in `bash` or PowerShell), in a terminal window open in the same directory as the template `.tex` file:
+The `.tex` and `.bib` files included in the template can be created if they don't exist with the following commands (in `bash` or PowerShell), in a terminal window open in the same directory as the template `.tex` file:
 
 ```
+touch   references.bib
 mkdir   Sections
 cd      Sections
-touch   Intro.tex related_work.tex methods.tex results.tex discussion.tex additional_results.tex
+touch   intro.tex related_work.tex methods.tex results.tex discussion.tex additional_results.tex
 ```
 
 ## Figures and subfigures
