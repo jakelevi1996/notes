@@ -173,6 +173,14 @@ Place holder for abstract, delete if necessary, otherwise summarise document her
 \end{document}
 ```
 
+The `.tex` files included in the template can be created if they don't exist with the following commands (in `bash` or PowerShell), in a terminal window open in the same directory as the template `.tex` file:
+
+```
+mkdir   Sections
+cd      Sections
+touch   Intro.tex related_work.tex methods.tex results.tex discussion.tex additional_results.tex
+```
+
 ## Figures and subfigures
 
 To include figures and subfigures in a Latex document, firstly include the following lines in the preamble, replacing `path/to/image/folder` with the path of the directory containing the images which are to be included, relative to the path of the Latex document (note that the extra pair of curly braces inside `\graphicspath` is necessary for the document to compile, and is not a typographical error):
