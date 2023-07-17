@@ -471,3 +471,4 @@ Command | Meaning
 `\textbf{abc}` | Make text bold
 `\href{https://www.google.com/}{abc}` | Make text link to [google.com](https://www.google.com/) (requires `\usepackage{hyperref}` in preamble)
 `\texttt{abc}` | Put text in fixed width font (optionally include `\usepackage{courier}` in preamble to use Courier as fixed width font)
+`\centering` | Make the following paragraph centre-justified (instead of left-justified by default)
