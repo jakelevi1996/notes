@@ -1,0 +1,45 @@
+\documentclass{article}
+
+\usepackage{subcaption}
+\usepackage{graphicx}
+\graphicspath{{.}}
+
+\thispagestyle{empty}
+
+\begin{document}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{pgfplots_example.pdf}
+    \caption{Example figure}
+    \label{fig:example}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \captionsetup[subfigure]{justification=centering}
+    \begin{subfigure}[t]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{pgfplots_example.pdf}
+        \caption{Example image A \\ With a caption on multiple lines}
+        \label{fig:example A}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{pgfplots_example.pdf}
+        \caption{Example image B}
+        \label{fig:example B}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{pgfplots_example.pdf}
+        \caption{Example image C}
+        \label{fig:example C}
+    \end{subfigure}
+    \caption{Example figure with subfigures}
+    \label{fig:example with subfigures}
+\end{figure}
+
+\end{document}
