@@ -46,9 +46,9 @@ Blah blah blah
 \end{document}
 ```
 
-The above code is saved in the file [`latex_mre.tex`](topics/latex/Examples/latex_mre.tex). If this file is open in a VS Code window with the [Visual Studio Code LaTeX Workshop Extension](https://github.com/James-Yu/LaTeX-Workshop) installed, then simply either saving the file or pressing the build button (which looks like a hollow green play button, next to open tabs) will compile the document into a PDF document called `latex_mre.pdf`.
+The above code is saved in the file [`latex_mre.tex`](./Examples/latex_mre/latex_mre.tex). If this file is open in a VS Code window with the [Visual Studio Code LaTeX Workshop Extension](https://github.com/James-Yu/LaTeX-Workshop) installed, then simply either saving the file or pressing the build button (which looks like a hollow green play button, next to open tabs) will compile the document into a PDF document called `latex_mre.pdf`.
 
-Inspecting the `LaTeX Compiler` option of the VS Code `Output` pane reveals that the command performed when saving the document in VS Code is equivalent to performing the following command (in a terminal open in the directory containing [`latex_mre.tex`](topics/latex/Examples/latex_mre.tex)):
+Inspecting the `LaTeX Compiler` option of the VS Code `Output` pane reveals that the command performed when saving the document in VS Code is equivalent to performing the following command (in a terminal open in the directory containing [`latex_mre.tex`](./Examples/latex_mre/latex_mre.tex)):
 
 ```
 pdflatex -synctex=1 -interaction=nonstopmode -file-line-error -recorder latex_mre.tex
@@ -56,7 +56,7 @@ pdflatex -synctex=1 -interaction=nonstopmode -file-line-error -recorder latex_mr
 
 Descriptions can be found online for the meanings of [`-file-line-error` and `-recorder`](https://linux.die.net/man/1/pdflatex), [`-synctex=1`](https://tex.stackexchange.com/a/118491/266921) and [-interaction=nonstopmode](https://tex.stackexchange.com/a/258816/266921).
 
-Equivalently, this file can be compiled simply using the following command (again, in a terminal open in the directory containing [`latex_mre.tex`](topics/latex/Examples/latex_mre.tex)):
+Equivalently, this file can be compiled simply using the following command (again, in a terminal open in the directory containing [`latex_mre.tex`](./Examples/latex_mre/latex_mre.tex)):
 
 ```
 pdflatex latex_mre.tex
@@ -64,13 +64,13 @@ pdflatex latex_mre.tex
 
 ## Compiling to PNG
 
-The file [`latex_mre.tex`](topics/latex/Examples/latex_mre.tex) can be compiled into a PDF, cropped, and then converted into a PNG in Windows using the following Powershell commands (in a terminal open in the directory containing [`latex_mre.tex`](topics/latex/Examples/latex_mre.tex)):
+The file [`latex_mre.tex`](./Examples/latex_mre/latex_mre.tex) can be compiled into a PDF, cropped, and then converted into a PNG in Windows using the following Powershell commands (in a terminal open in the directory containing [`latex_mre.tex`](./Examples/latex_mre/latex_mre.tex)):
 
 ```
 pdflatex latex_mre.tex
 pdfcrop --margins 10 latex_mre.pdf latex_mre_crop.pdf
 $env:GS_LIB="C:/texlive/2022/tlpkg/tlgs/Resource/Init;C:/texlive/2022/tlpkg/tlgs/lib;C:/texlive/2022/tlpkg/tlgs/kanji"
-C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r300 -sOutputFile="../Images/latex_mre.png" latex_mre_crop.pdf
+C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r1000 -sOutputFile="../../Images/latex_mre.png" latex_mre_crop.pdf
 ```
 
 The resulting image is shown below:
@@ -84,12 +84,12 @@ Explanation:
 - The path names in this command as well as the full path of `gswin32c.exe` may need to modified depending on the location of these files in a given installation of Tex Live
 - Alternatively (IE instead of setting the `GS_LIB` environment variable) these paths can be included in the `gswin32c.exe` command (without needing to first set any environment variables) by specifying the `-I` flag individually before each path ([source](https://stackoverflow.com/a/12876349/8477566))
 - `gswin32c` is a wrapper for the [Ghostscript](https://www.ghostscript.com/index.html) program for converting a PDF to an image file, and appears to be installed as part of Tex Live by default, although its location does not appear on the system path by default (hence it is specified with its full path)
-- The double quotes around `../Images/latex_mre.png` appear to be necessary to prevent `gswin32c` returning an error
+- The double quotes around `../../Images/latex_mre.png` appear to be necessary to prevent `gswin32c` returning an error
 
-To change the resolution of the output image, change the value which is provided to the `gswin32c` `-r` flag (300 in the example above), which according to `C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -h` specifies "pixels/inch resolution" (DPI). The equivalent image with 3000 DPI can be produced as follows:
+To change the resolution of the output image, change the value which is provided to the `gswin32c` `-r` flag (1000 in the example above), which according to `C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -h` specifies "pixels/inch resolution" (DPI). The equivalent image with 3000 DPI can be produced as follows:
 
 ```
-C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r3000 -sOutputFile="../Images/latex_mre_3000.png" latex_mre_crop.pdf
+C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r3000 -sOutputFile="../../Images/latex_mre_3000.png" latex_mre_crop.pdf
 ```
 
 Below is a side-by-side comparison of the 2 images with different resolutions:
@@ -234,13 +234,13 @@ Shown below is a template for adding a figure with subfigures. Note that `[t]` a
 \end{figure}
 ```
 
-These examples are included in the file [`figures.tex`](./Examples/figures.tex), which can be compiled into a PNG with the following commands (assuming a terminal is open in the directory containing [`figures.tex`](./Examples/figures.tex)):
+These examples are included in the file [`figures.tex`](./Examples/figures/figures.tex), which can be compiled into a PNG with the following commands (assuming a terminal is open in the directory containing [`figures.tex`](./Examples/figures/figures.tex)):
 
 ```
 pdflatex figures.tex
 pdfcrop --margins 10 figures.pdf figures_crop.pdf
 $env:GS_LIB="C:/texlive/2022/tlpkg/tlgs/Resource/Init;C:/texlive/2022/tlpkg/tlgs/lib;C:/texlive/2022/tlpkg/tlgs/kanji"
-C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r300 -sOutputFile="../Images/figures.png" figures_crop.pdf
+C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r1000 -sOutputFile="../../Images/figures.png" figures_crop.pdf
 ```
 
 The resulting image is shown below:
@@ -332,13 +332,13 @@ The following is a template for adding multiple subtables:
 \end{table}
 ```
 
-These examples are included in the file [`tables.tex`](./Examples/tables.tex), which can be compiled into a PNG with the following commands (assuming a terminal is open in the directory containing [`tables.tex`](./Examples/figures.tex)):
+These examples are included in the file [`tables.tex`](./Examples/tables/tables.tex), which can be compiled into a PNG with the following commands (assuming a terminal is open in the directory containing [`tables.tex`](./Examples/tables/tables.tex)):
 
 ```
 pdflatex tables.tex
 pdfcrop --margins 10 tables.pdf tables_crop.pdf
 $env:GS_LIB="C:/texlive/2022/tlpkg/tlgs/Resource/Init;C:/texlive/2022/tlpkg/tlgs/lib;C:/texlive/2022/tlpkg/tlgs/kanji"
-C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r300 -sOutputFile="../Images/tables.png" tables_crop.pdf
+C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r1000 -sOutputFile="../../Images/tables.png" tables_crop.pdf
 ```
 
 The resulting image is shown below:
@@ -381,13 +381,13 @@ Within a document, the following is a template for adding an algorithm ([source 
 \end{algorithm}
 ```
 
-These examples are included in the file [`algorithm.tex`](./Examples/algorithm.tex), which can be compiled into a PNG with the following commands (assuming a terminal is open in the directory containing [`algorithm.tex`](./Examples/figures.tex)):
+These examples are included in the file [`algorithm.tex`](./Examples/algorithm/algorithm.tex), which can be compiled into a PNG with the following commands (assuming a terminal is open in the directory containing [`algorithm.tex`](./Examples/algorithm/algorithm.tex)):
 
 ```
 pdflatex algorithm.tex
 pdfcrop --margins 10 algorithm.pdf algorithm_crop.pdf
 $env:GS_LIB="C:/texlive/2022/tlpkg/tlgs/Resource/Init;C:/texlive/2022/tlpkg/tlgs/lib;C:/texlive/2022/tlpkg/tlgs/kanji"
-C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r300 -sOutputFile="../Images/algorithm.png" algorithm_crop.pdf
+C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r1000 -sOutputFile="../../Images/algorithm.png" algorithm_crop.pdf
 ```
 
 The resulting image is shown below:
