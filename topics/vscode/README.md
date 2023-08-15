@@ -168,6 +168,7 @@ For more information about C/C++ default include-paths in VSCode, and how to com
             ["(", ")"]
         ],
     },
+    "files.autoSave": "off",
 }
 ```
 
@@ -286,6 +287,12 @@ For more information about C/C++ default include-paths in VSCode, and how to com
     {
         "key": "ctrl+b",
         "command": "editor.action.selectToBracket",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+alt+v",
+        "command": "markdown.showPreviewToSide",
+        "when": "!notebookEditorFocused && editorLangId == 'markdown'"
     },
     {
         "key": "ctrl+f5",
