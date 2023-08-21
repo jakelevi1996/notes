@@ -74,6 +74,14 @@
         };
         \addlegendentry{Arrow}
 
+    \draw[color=red] (1.2,0 |- current axis.south) -- (1.2,0 |- current axis.north);
+        \addlegendimage{color=red}
+        \addlegendentry{Vertical line}
+
+    \draw[color=blue] (current axis.east |- 0,5.5) -- (current axis.west |- 0,5.5);
+        \addlegendimage{color=blue}
+        \addlegendentry{Horizontal line}
+
 \end{axis}
 \end{tikzpicture}
 
