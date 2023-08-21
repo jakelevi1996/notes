@@ -6,13 +6,12 @@
 \usepgfplotslibrary{fillbetween}
 % \usepgfplotslibrary{patchplots}
 
-\begin{document}
-
 \definecolor{c0}{rgb}{1.000000,0.000000,0.000000}
 \definecolor{c1}{rgb}{0.517646,1.000000,0.000000}
 \definecolor{c2}{rgb}{0.000000,1.000000,0.964703}
 \definecolor{c3}{rgb}{0.447057,0.000000,1.000000}
 
+\begin{document}
 \begin{tikzpicture}
 \begin{axis}[
     title={Title of plot},
@@ -41,22 +40,22 @@
 ]
 
     \addplot[color=c0, mark=*, opacity=0.5]
-        coordinates {(0.083,0.263)(0.205,0.857)(1.349,1.822)(3.185,2.833)(4.066,3.434)};
-        \addlegendentry{Legend entry 1}
+    coordinates {(0.083,0.263)(0.205,0.857)(1.349,1.822)(3.185,2.833)(4.066,3.434)};
+    \addlegendentry{Legend entry 1}
 
     \addplot[color=c1, mark=*, opacity=1]
-        coordinates {(0.721,0.944)(1.559,1.291)(2.559,2.850)(4.743,4.926)(4.752,4.899)};
-        \addlegendentry{Legend entry 2}
+    coordinates {(0.721,0.944)(1.559,1.291)(2.559,2.850)(4.743,4.926)(4.752,4.899)};
+    \addlegendentry{Legend entry 2}
 
     \addplot[name path=y1, opacity=0, forget plot]
-        coordinates{(0,-1)(2,0)(5,4)};
+    coordinates{(0,-1)(2,0)(5,4)};
 
     \addplot[name path=y2, opacity=0, forget plot]
-        coordinates{(0,1)(2,4)(5,6)};
+    coordinates{(0,1)(2,4)(5,6)};
 
     \addplot[color=c2, opacity=0.2]
-        fill between[of=y1 and y2];
-        \addlegendentry{Patch}
+    fill between[of=y1 and y2];
+    \addlegendentry{Patch}
 
     \addplot[
         color=c3,
@@ -66,23 +65,24 @@
         },
         -stealth,
     ]
-        table {
-            x  y  u  v
-            1 -1  2  1
-            4  0  1  2
-            0  3  2  2
-        };
-        \addlegendentry{Arrow}
+    table {
+        x  y  u  v
+        1 -1  2  1
+        4  0  1  2
+        0  3  2  2
+    };
+    \addlegendentry{Arrow}
 
-    \draw[color=red] (1.2,0 |- current axis.south) -- (1.2,0 |- current axis.north);
-        \addlegendimage{color=red}
-        \addlegendentry{Vertical line}
+    \draw[color=red]
+    (1.2,0 |- current axis.south) -- (1.2,0 |- current axis.north);
+    \addlegendimage{color=red}
+    \addlegendentry{Vertical line}
 
-    \draw[color=blue] (current axis.east |- 0,5.5) -- (current axis.west |- 0,5.5);
-        \addlegendimage{color=blue}
-        \addlegendentry{Horizontal line}
+    \draw[color=blue]
+    (current axis.east |- 0,5.5) -- (current axis.west |- 0,5.5);
+    \addlegendimage{color=blue}
+    \addlegendentry{Horizontal line}
 
 \end{axis}
 \end{tikzpicture}
-
 \end{document}
