@@ -451,16 +451,31 @@ Command | Meaning
 
 ## Formatting equations
 
+Below are some examples of formatting equations in Latex:
+
 Command | Meaning
 --- | ---
 `\usepackage{amsmath}` | Use this command in the preamble to gain access to common equation commands (AMS stands for "American Mathematical Society"), **required for many of the commands below**
 `\begin{align} x &= 1 \\ y &= 2 \end{align}` | Place equations into an `align` environment, supporting multiple equations on different lines (separated by `\\`), each of which is aligned at the `&` character (optional), receives a unique equation number, and can be labelled
-`x = 3 \nonumber \\ ` | Don't assign an equation number to a line which has `\nonumber` before the end of the line
+`z = 3 \nonumber \\` | Don't assign an equation number to a line which has `\nonumber` before the end of the line
 `f \left( \frac 2 3 \right)` | Use `\left` and `\right` to make brackets adapt to height of equation (supports different types of brackets, EG square and curly brackets, and also `\left.` or `\right.` to make one of the brackets invisible)
 `p \left( x \;\middle\vert\; y = \frac 2 3 \right)` | Use `\middle\vert` to insert a vertical bar inside a `\left` and `\right` block which adapts to the height of the equation, and use `\;` to add space on either side of the vertical bar
 `f \Bigl( g(x) \Bigr)` | Use `\Bigl` and `\Bigr` to make large brackets which don't adapt to the height of the equation (supports different types of brackets, EG square and curly brackets)
 `\begin{cases} 10 & x > 0 \\ 20 & x < 0 \end{cases}` | Format equation elements into an array with a large curly brace on the left hand side
 `\underset{x}{abcd}` | Place `x` underneath `abcd`
+
+These examples and more are included in the file [`equations.tex`](./Examples/equations/equations.tex), which can be compiled into an image with the following commands (in a terminal open in the same directory as the `tex` file):
+
+```
+pdflatex equations.tex
+pdfcrop --margins 10 equations.pdf equations_crop.pdf
+$env:GS_LIB="C:/texlive/2022/tlpkg/tlgs/Resource/Init;C:/texlive/2022/tlpkg/tlgs/lib;C:/texlive/2022/tlpkg/tlgs/kanji"
+C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r1000 -sOutputFile="../../Images/equations.png" equations_crop.pdf
+```
+
+The resulting image is shown below:
+
+![](Images/equations.png)
 
 ## Formatting text
 
