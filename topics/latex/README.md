@@ -46,9 +46,9 @@ Blah blah blah
 \end{document}
 ```
 
-The above code is saved in the file [`latex_mre.tex`](./Examples/latex_mre/latex_mre.tex). If this file is open in a VS Code window with the [Visual Studio Code LaTeX Workshop Extension](https://github.com/James-Yu/LaTeX-Workshop) installed, then simply either saving the file or pressing the build button (which looks like a hollow green play button, next to open tabs) will compile the document into a PDF document called `latex_mre.pdf`.
+The above code is saved in the file [`latex_mre.tex`](./Examples/latex_mre/latex_mre.tex). If this file is open in a VS Code window with the [Visual Studio Code LaTeX Workshop Extension](https://github.com/James-Yu/LaTeX-Workshop) installed, then simply either saving the file or pressing the build button (which looks like a hollow green play button, next to open tabs) or its shortcut (by default `ctrl+alt+b`) will compile the document into a PDF document called `latex_mre.pdf`.
 
-Inspecting the `LaTeX Compiler` option of the VS Code `Output` pane reveals that the command performed when saving the document in VS Code is equivalent to performing the following command (in a terminal open in the directory containing [`latex_mre.tex`](./Examples/latex_mre/latex_mre.tex)):
+Inspecting the `LaTeX Compiler` option of the VS Code `Output` pane reveals that the command performed when saving the document in VS Code is equivalent to performing the following command (in a terminal open in the same directory as the `tex` file):
 
 ```
 pdflatex -synctex=1 -interaction=nonstopmode -file-line-error -recorder latex_mre.tex
@@ -56,7 +56,7 @@ pdflatex -synctex=1 -interaction=nonstopmode -file-line-error -recorder latex_mr
 
 Descriptions can be found online for the meanings of [`-file-line-error` and `-recorder`](https://linux.die.net/man/1/pdflatex), [`-synctex=1`](https://tex.stackexchange.com/a/118491/266921) and [-interaction=nonstopmode](https://tex.stackexchange.com/a/258816/266921).
 
-Equivalently, this file can be compiled simply using the following command (again, in a terminal open in the directory containing [`latex_mre.tex`](./Examples/latex_mre/latex_mre.tex)):
+Equivalently, this file can be compiled simply using the following command (again, in a terminal open in the same directory as the `tex` file):
 
 ```
 pdflatex latex_mre.tex
@@ -64,7 +64,7 @@ pdflatex latex_mre.tex
 
 ## Compiling to PNG
 
-The file [`latex_mre.tex`](./Examples/latex_mre/latex_mre.tex) can be compiled into a PDF, cropped, and then converted into a PNG in Windows using the following Powershell commands (in a terminal open in the directory containing [`latex_mre.tex`](./Examples/latex_mre/latex_mre.tex)):
+The file [`latex_mre.tex`](./Examples/latex_mre/latex_mre.tex) can be compiled into a PDF, cropped, and then converted into a PNG in Windows using the following Powershell commands (in a terminal open in the same directory as the `tex` file):
 
 ```
 pdflatex latex_mre.tex
@@ -234,7 +234,7 @@ Shown below is a template for adding a figure with subfigures. Note that `[t]` a
 \end{figure}
 ```
 
-These examples are included in the file [`figures.tex`](./Examples/figures/figures.tex), which can be compiled into a PNG with the following commands (assuming a terminal is open in the directory containing [`figures.tex`](./Examples/figures/figures.tex)):
+These examples are included in the file [`figures.tex`](./Examples/figures/figures.tex), which can be compiled into an image with the following commands (in a terminal open in the same directory as the `tex` file):
 
 ```
 pdflatex figures.tex
@@ -332,7 +332,7 @@ The following is a template for adding multiple subtables:
 \end{table}
 ```
 
-These examples are included in the file [`tables.tex`](./Examples/tables/tables.tex), which can be compiled into a PNG with the following commands (assuming a terminal is open in the directory containing [`tables.tex`](./Examples/tables/tables.tex)):
+These examples are included in the file [`tables.tex`](./Examples/tables/tables.tex), which can be compiled into an image with the following commands (in a terminal open in the same directory as the `tex` file):
 
 ```
 pdflatex tables.tex
@@ -381,7 +381,7 @@ Within a document, the following is a template for adding an algorithm ([source 
 \end{algorithm}
 ```
 
-These examples are included in the file [`algorithm.tex`](./Examples/algorithm/algorithm.tex), which can be compiled into a PNG with the following commands (assuming a terminal is open in the directory containing [`algorithm.tex`](./Examples/algorithm/algorithm.tex)):
+These examples are included in the file [`algorithm.tex`](./Examples/algorithm/algorithm.tex), which can be compiled into an image with the following commands (in a terminal open in the same directory as the `tex` file):
 
 ```
 pdflatex algorithm.tex
