@@ -35,11 +35,11 @@
 
 ## Compiling a PDF
 
-The following code represents an almost-[minimal reproducable example](https://en.wikipedia.org/wiki/Minimal_reproducible_example) of a Latex document (almost in the sense that the `\thispagestyle{empty}` command which removes page numbers is not strictly necessary, although it will produce a nicer looking output when cropped and converted into an image in the next section):
+The following code represents an almost-[minimal reproducable example](https://en.wikipedia.org/wiki/Minimal_reproducible_example) of a Latex document (almost in the sense that the `\pagestyle{empty}` command which removes page numbers is not strictly necessary, although it will produce a nicer looking output when cropped and converted into an image in the next section):
 
 ```tex
 \documentclass{article}
-\thispagestyle{empty}
+\pagestyle{empty}
 
 \begin{document}
 Blah blah blah
