@@ -265,6 +265,10 @@ For more information about C/C++ default include-paths in VSCode, and how to com
         "command": "git.revertSelectedRanges",
     },
     {
+        "key": "alt+g",
+        "command": "git.openChange"
+    },
+    {
         "key": "alt+n",
         "command": "workbench.action.editor.nextChange",
         "when": "editorTextFocus"
