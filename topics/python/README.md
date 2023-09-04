@@ -24,7 +24,8 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
     - [Run a command using `subprocess` and parse its output to STDOUT](#run-a-command-using-subprocess-and-parse-its-output-to-stdout)
     - [Call a function with a timeout using `multiprocessing`](#call-a-function-with-a-timeout-using-multiprocessing)
     - [Set `numpy` print options (including preventing `numpy` from wrapping lines)](#set-numpy-print-options-including-preventing-numpy-from-wrapping-lines)
-    - [Rename files programmatically using `os.path.walk` and `os.rename`](#rename-files-programmatically-using-ospathwalk-and-osrename)
+    - [Recursively rename files using `os.path.walk` and `os.rename`](#recursively-rename-files-using-ospathwalk-and-osrename)
+    - [Recursively delete files using `os.path.walk` and `os.remove`](#recursively-delete-files-using-ospathwalk-and-osremove)
     - [Recursively flatten a list of irregularly nested lists](#recursively-flatten-a-list-of-irregularly-nested-lists)
   - [Python implementations of algorithms](#python-implementations-of-algorithms)
     - [Find all permutations of a string](#find-all-permutations-of-a-string)
@@ -570,7 +571,7 @@ print(np.random.normal(size=[3, 15]))
 #      [-0.105 -0.082  0.305 -0.207  0.369  0.655 -1.292 -0.629 -0.275 -0.492 -1.085  0.064  0.037  0.428  0.126]]
 ```
 
-### Rename files programmatically using `os.path.walk` and `os.rename`
+### Recursively rename files using `os.path.walk` and `os.rename`
 
 Below is an example of renaming all files in the current directory (including all subdirectories) not in `.git/` which contain a space, replacing spaces with underscores and converting to lowercase. To simply see what would happen without actually renaming any files (IE perform a dry run), simply comment out the line `os.rename(old_name, new_name)`.
 
@@ -590,6 +591,24 @@ for root, dirs, files in os.walk(CURRENT_DIR):
                 )
                 print("Renaming %120s to %s" % (old_name, new_name))
                 os.rename(old_name, new_name)
+```
+
+### Recursively delete files using `os.path.walk` and `os.remove`
+
+Below is an example of delete all files in the current directory (including all subdirectories) not in `.git/` which do not have the `.pdf` file extension. To simply see what would happen without actually renaming any files (IE perform a dry run), simply comment out the line `os.remove(full_path)`.
+
+```python
+import os
+
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+for root, dirs, files in os.walk(CURRENT_DIR):
+    if ".git" not in root:
+        for filename in files:
+            if ".pdf" not in filename:
+                full_path = os.path.join(root, filename)
+                print("Removing %s" % full_path)
+                os.remove(full_path)
 ```
 
 ### Recursively flatten a list of irregularly nested lists
