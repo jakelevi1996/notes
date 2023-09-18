@@ -102,13 +102,12 @@ For more information about C/C++ default include-paths in VSCode, and how to com
     "search.useIgnoreFiles": false,
     // "editor.multiCursorModifier": "ctrlCmd", // <- this can be useful on Linux
     "files.trimTrailingWhitespace": true,
-    "diffEditor.ignoreTrimWhitespace": false,
     "debug.onTaskErrors": "abort",
     "explorer.copyRelativePathSeparator": "/",
     "files.associations": {
         "*.vhd": "sql"
     },
-    "workbench.colorTheme": "Visual Studio Dark",
+    "workbench.colorTheme": "Default Dark+",
     "workbench.editor.wrapTabs": true,
     "workbench.editorAssociations": {
         "*.ipynb": "jupyter-notebook",
@@ -158,7 +157,7 @@ For more information about C/C++ default include-paths in VSCode, and how to com
         }
     },
     // "terminal.integrated.defaultProfile.windows": "Ubuntu (WSL)",
-    "terminal.integrated.defaultProfile.windows": "Ubuntu-18.04 (WSL)",
+    // "terminal.integrated.defaultProfile.windows": "Ubuntu-18.04 (WSL)",
     "terminal.integrated.scrollback": 1200,
 	"terminal.integrated.wordSeparators": " []{}',\"`─",
     "[plaintext]": {
