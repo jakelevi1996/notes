@@ -268,6 +268,11 @@ For more information about C/C++ default include-paths in VSCode, and how to com
         "command": "git.openChange"
     },
     {
+        "key": "shift+alt+g",
+        "command": "workbench.view.scm",
+        "when": "workbench.scm.active"
+    },
+    {
         "key": "alt+n",
         "command": "workbench.action.editor.nextChange",
         "when": "editorTextFocus"
