@@ -269,7 +269,14 @@ For more information about C/C++ default include-paths in VSCode, and how to com
     },
     {
         "key": "ctrl+g",
-        "command": "workbench.view.scm",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "workbench.scm.focus",
+                "list.focusFirst",
+                "list.select",
+            ],
+        },
         "when": "workbench.scm.active"
     },
     {
