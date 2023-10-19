@@ -277,7 +277,10 @@ For more information about C/C++ default include-paths in VSCode, and how to com
                 "list.select",
             ],
         },
-        "when": "workbench.scm.active"
+    },
+    {
+        "key": "ctrl+alt+g",
+        "command": "git-graph.view"
     },
     {
         "key": "alt+n",
