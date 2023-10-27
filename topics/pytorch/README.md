@@ -143,7 +143,7 @@ def main():
 
     batch_loss = table.get_data("batch_loss")
     downsample_ratio = 20
-    mean, ucb, lcb = plotting.confidence_bounds(
+    mean, ucb, lcb = util.confidence_bounds(
         np.array(batch_loss),
         split_dim=0,
         downsample_ratio=downsample_ratio,
@@ -169,6 +169,15 @@ if __name__ == "__main__":
     with util.Timer("main function"):
         main()
 ```
+
+Accuracies after each epoch are as follows:
+
+Time        | Epoch | Train acc  | Test acc
+----------- | ----- | ---------- | ----------
+0.0005s     |     0 |    0.09868 |    0.09790
+15.6165s    |     1 |    0.94610 |    0.94330
+33.2215s    |     2 |    0.96455 |    0.96030
+49.3625s    |     3 |    0.97120 |    0.96430
 
 ![](img/Loss_curve.png)
 
