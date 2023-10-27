@@ -11,3 +11,6 @@
 *.blg
 *.out
 *.synctex(busy)
+
+*-ubyte
+*.gz
