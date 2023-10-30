@@ -232,11 +232,11 @@ For more information about C/C++ default include-paths in VSCode, and how to com
         "when": "textInputFocus && !editorReadonly"
     },
     {
-        "key": "ctrl+alt+d",
+        "key": "shift+alt+d",
         "command": "workbench.action.duplicateWorkspaceInNewWindow",
     },
     {
-        "key": "shift+alt+d",
+        "key": "ctrl+alt+d",
         "command": "workbench.debug.action.toggleRepl",
     },
     {
