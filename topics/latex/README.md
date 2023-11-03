@@ -437,6 +437,7 @@ The following entries can be added to `.gitignore` to ignore the various outputs
   - Optionally include `\subsubsection*{Author Contributions}` and `\subsubsection*{Acknowledgments}` (followed by relevant content) immediately before the bibliography
 - The style files will automatically hide author names and specify "Under review" in the document header
 - To reveal author names and change "Under review" to "Published", simply include the command `\iclrfinalcopy` immediately before `\begin{document}`
+- Many publications require that any appendix must be separate from the main paper during submission, in which case the `pagesel` package can be useful to produce a PDF including only a specified set of pages, EG pages 26-30 using the command `\usepackage[26-30]{pagesel}` in the preamble ([source 1](https://tex.stackexchange.com/questions/96256/compiling-only-a-page-range-or-page-selection/698094#comment219123_100475) [source 2](https://tex.stackexchange.com/a/698094/266921))
 
 ## Formatting colours
 
