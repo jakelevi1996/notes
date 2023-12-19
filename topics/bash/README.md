@@ -73,6 +73,7 @@ This is just a random collection of commands which I have found useful in Bash. 
   - [Create a symbolic link using `ln -s`](#create-a-symbolic-link-using-ln--s)
   - [Find CPU details (including model name) using `lscpu`](#find-cpu-details-including-model-name-using-lscpu)
   - [Change default shell](#change-default-shell)
+  - [Add directory to the `$PATH` environment variable](#add-directory-to-the-path-environment-variable)
 
 ## Run, control and view detached processes using `screen`
 
@@ -1256,3 +1257,15 @@ Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cm
 ## Change default shell
 
 Use `chsh` to change default shell, EG from `sh` to `bash`. `chsh` asks for a password, and then the path to the new shell, EG `\bin\bash`. Changes take effect across the system after logging out and logging in again.
+
+## Add directory to the `$PATH` environment variable
+
+To add a directory to the `$PATH` environment variable, EG `~/.local/bin`, append the following line to the end of `~/.bashrc`:
+
+```
+export PATH="$PATH:~/.local/bin"
+```
+
+Then run the command `source ~/.bashrc` to reload the `~/.bashrc` profile in the current `bash` terminal.
+
+[As explained here](https://superuser.com/a/18990/1098000), the reason for using the `export` command rather than just `PATH=...` is that `export` sets an environment variable, which will be available in subprocesses of the current shell process, whereas just setting `PATH=...` in general creates a shell variable, which is not necessarily available to subprocesses of the current shell process.
