@@ -1260,10 +1260,10 @@ Use `chsh` to change default shell, EG from `sh` to `bash`. `chsh` asks for a pa
 
 ## Add directory to the `$PATH` environment variable
 
-To add a directory to the `$PATH` environment variable, EG `~/.local/bin`, append the following line to the end of `~/.bashrc`:
+To add a directory to the `$PATH` environment variable, EG `/home/jakevi/.local/bin`, append the following line to the end of `~/.bashrc`:
 
 ```
-export PATH="$PATH:~/.local/bin"
+export PATH="$PATH:/home/jakevi/.local/bin"
 ```
 
 Then run the command `source ~/.bashrc` to reload the `~/.bashrc` profile in the current `bash` terminal.
