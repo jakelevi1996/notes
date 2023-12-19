@@ -72,6 +72,7 @@ This is just a random collection of commands which I have found useful in Bash. 
   - [Create an `alias`](#create-an-alias)
   - [Create a symbolic link using `ln -s`](#create-a-symbolic-link-using-ln--s)
   - [Find CPU details (including model name) using `lscpu`](#find-cpu-details-including-model-name-using-lscpu)
+  - [Change default shell](#change-default-shell)
 
 ## Run, control and view detached processes using `screen`
 
@@ -1251,3 +1252,7 @@ Hypervisor vendor:   Windows Subsystem for Linux
 Virtualization type: container
 Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave osxsave avx f16c rdrand lahf_lm abm 3dnowprefetch fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid avx512f avx512dq rdseed adx smap avx512ifma clflushopt intel_pt avx512cd sha_ni avx512bw avx512vl avx512vbmi umip pku avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg avx512_vpopcntdq rdpid ibrs ibpb stibp ssbd
 ```
+
+## Change default shell
+
+Use `chsh` to change default shell, EG from `sh` to `bash`. `chsh` asks for a password, and then the path to the new shell, EG `\bin\bash`. Changes take effect across the system after logging out and logging in again.
