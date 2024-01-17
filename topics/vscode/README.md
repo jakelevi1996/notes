@@ -317,6 +317,10 @@ For more information about C/C++ default include-paths in VSCode, and how to com
         "when": "!notebookEditorFocused && editorLangId == 'markdown'"
     },
     {
+        "key": "alt+f",
+        "command": "workbench.action.openRecent"
+    },
+    {
         "key": "ctrl+f5",
         "command": "workbench.action.reloadWindow",
         "when": "editorTextFocus"
