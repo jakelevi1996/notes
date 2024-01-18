@@ -56,7 +56,6 @@ For more information about C/C++ default include-paths in VSCode, and how to com
 
 ```jsonc
 {
-    "window.zoomLevel": 0,
     "explorer.confirmDelete": false,
     "git.enableSmartCommit": true,
     "debug.console.historySuggestions": false,
@@ -73,7 +72,6 @@ For more information about C/C++ default include-paths in VSCode, and how to com
         "--disable", "W", // ignore warnings
         "--disable", "R" // ignore refactor suggestions
     ],
-    "python.defaultInterpreterPath": "C://Python37//python.exe",
     "material-icon-theme.files.associations": {
         "*.m": "Matlab",
         "*.mexw64": "Matlab",
@@ -161,6 +159,13 @@ For more information about C/C++ default include-paths in VSCode, and how to com
     "terminal.integrated.scrollback": 1200,
 	"terminal.integrated.wordSeparators": " []{}',\"`─",
     "[plaintext]": {
+        "editor.language.colorizedBracketPairs": [
+            ["{", "}"],
+            ["[", "]"],
+            ["(", ")"]
+        ],
+    },
+    "[markdown]": {
         "editor.language.colorizedBracketPairs": [
             ["{", "}"],
             ["[", "]"],
