@@ -233,11 +233,11 @@ For more information about C/C++ default include-paths in VSCode, and how to com
     },
     {
         "key": "shift+alt+d",
-        "command": "workbench.action.duplicateWorkspaceInNewWindow",
+        "command": "workbench.debug.action.toggleRepl",
     },
     {
         "key": "ctrl+alt+d",
-        "command": "workbench.debug.action.toggleRepl",
+        "command": "workbench.action.duplicateWorkspaceInNewWindow",
     },
     {
         "key": "alt+t",
