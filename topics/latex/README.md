@@ -111,7 +111,7 @@ The following is a sensible, minimal example of a document template for a `tex` 
 
 \usepackage[a4paper, total={7in, 10in}]{geometry}
 
-\usepackage{hyperref}
+\usepackage[backref=page]{hyperref}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{subcaption}
@@ -422,6 +422,8 @@ The following entries can be added to `.gitignore` to ignore the various outputs
 *.blg
 *.out
 *.synctex(busy)
+*.cut
+*.brf
 ```
 
 ## Changing document style for a particular publication
@@ -438,6 +440,7 @@ The following entries can be added to `.gitignore` to ignore the various outputs
 - The style files will automatically hide author names and specify "Under review" in the document header
 - To reveal author names and change "Under review" to "Published", simply include the command `\iclrfinalcopy` immediately before `\begin{document}`
 - Many publications require that any appendix must be separate from the main paper during submission, in which case the `pagesel` package can be useful to produce a PDF including only a specified set of pages, EG pages 26-30 using the command `\usepackage[26-30]{pagesel}` in the preamble ([source 1](https://tex.stackexchange.com/questions/96256/compiling-only-a-page-range-or-page-selection/698094#comment219123_100475) [source 2](https://tex.stackexchange.com/a/698094/266921))
+  - Make sure that the paper has first been compiled without `pagesel` before compiling with `pagesel`, otherwise references might not compile properly
 
 ## Formatting colours
 
