@@ -20,6 +20,7 @@ This is just a random collection of commands which I have found useful in Bash. 
     - [What's the difference between `apt update`, `apt upgrade`, `apt full-upgrade`, and `apt-get dist-upgrade`?](#whats-the-difference-between-apt-update-apt-upgrade-apt-full-upgrade-and-apt-get-dist-upgrade)
     - [Checking the version of an installed `apt` package using `apt list`](#checking-the-version-of-an-installed-apt-package-using-apt-list)
     - [Uninstalling packages and their dependencies](#uninstalling-packages-and-their-dependencies)
+  - [Use `git push` with an authentication token](#use-git-push-with-an-authentication-token)
   - [View the Linux distribution name and version number using `lsb_release`](#view-the-linux-distribution-name-and-version-number-using-lsb_release)
   - [Download VSCode](#download-vscode)
   - [Get the current date and time and generate timestamped filenames with `date`](#get-the-current-date-and-time-and-generate-timestamped-filenames-with-date)
@@ -430,6 +431,22 @@ Note that some packages are dummy packages, meaning they require very little ins
 - Parse `/var/log/apt/term.log` to extract all dependencies that were installed when `packagename` was installed and remove them manually
 - Run the command `apt show packagename`, and manually remove any packages listed as dependencies in the output from `apt show packagename` (and any dependencies of those dependencies, etc)
 - Run the command `apt list --installed | grep packagename` to view any installed packages which contain `packagename` in their name, which are likely to be dependencies of `packagename`, and remove all such packages (and any dependencies of those packages, etc)
+
+## Use `git push` with an authentication token
+
+- Use the command `git remote get-url origin` to view the remote URL, which should be in the form `https://github.com/${USERNAME}/${REPO_NAME}.git`
+- Use the command `git remote set-url origin https://git:${TOKEN_STR}@github.com/${USERNAME}/${REPO_NAME}.git`, replacing `${TOKEN_STR}` with the authentication token, and `${USERNAME}` and `${REPO_NAME}` with the appropriate values from the output of `git remote get-url origin`
+- `git push` and other `git` commands requiring authentication should now work without requiring authentication
+- For setting authentication tokens to use with GitHub, `git:${TOKEN_STR}` can be replaced with `${USERNAME}:${TOKEN_STR}`, where `${USERNAME}` is the GitHub username, however using `git` instead of `${USERNAME}` works for GitHub, and also generalises to other remote repositories, EG those hosted on Overleaf, for which the username is an email address, which is not a valid URL component
+
+Summary:
+
+```
+$ git remote get-url origin
+https://github.com/${USERNAME}/${REPO_NAME}.git
+$ git remote set-url origin https://git:${TOKEN_STR}@github.com/${USERNAME}/${REPO_NAME}.git
+$ git push
+```
 
 ## View the Linux distribution name and version number using `lsb_release`
 
