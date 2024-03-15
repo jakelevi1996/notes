@@ -317,6 +317,10 @@ For more information about C/C++ default include-paths in VSCode, and how to com
         "when": "editorTextFocus"
     },
     {
+        "key": "ctrl+n",
+        "command": "explorer.newFile"
+    },
+    {
         "key": "ctrl+alt+v",
         "command": "markdown.showPreviewToSide",
         "when": "!notebookEditorFocused && editorLangId == 'markdown'"
