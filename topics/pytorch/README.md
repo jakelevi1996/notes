@@ -6,6 +6,7 @@
   - [Contents](#contents)
   - [Installing PyTorch](#installing-pytorch)
   - [Single script example of training a MLP on MNIST](#single-script-example-of-training-a-mlp-on-mnist)
+  - [Pattern for saving results in automatically named directory from CLI arguments](#pattern-for-saving-results-in-automatically-named-directory-from-cli-arguments)
   - [Simple automatic differentiation](#simple-automatic-differentiation)
   - [Simple gradient descent](#simple-gradient-descent)
   - [Moving a tensor that requires gradients to a different device](#moving-a-tensor-that-requires-gradients-to-a-different-device)
@@ -182,6 +183,178 @@ Time        | Epoch | Train acc  | Test acc
 ![](img/Loss_curve.png)
 
 ![](img/Accuracy_curve.png)
+
+## Pattern for saving results in automatically named directory from CLI arguments
+
+```python
+import os
+import sys
+import argparse
+import numpy as np
+import torch
+import torchvision
+from jutility import util, plotting
+
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+def get_data_loaders(batch_size=100):
+    transforms = [torchvision.transforms.ToTensor(), torch.flatten]
+    data_kwargs = {
+        "root":         CURRENT_DIR,
+        "download":     True,
+        "transform":    torchvision.transforms.Compose(transforms),
+    }
+    train_dataset = torchvision.datasets.MNIST(train=True , **data_kwargs)
+    test_dataset  = torchvision.datasets.MNIST(train=False, **data_kwargs)
+
+    load_kwargs = {
+        "batch_size":   batch_size,
+        "shuffle":      True,
+    }
+    train_loader = torch.utils.data.DataLoader(train_dataset, **load_kwargs)
+    test_loader  = torch.utils.data.DataLoader(test_dataset,  **load_kwargs)
+
+    return train_loader, test_loader
+
+def get_model(args, input_dim, output_dim):
+    layers = []
+    layer_input_dim = input_dim
+    for _ in range(args.num_hidden_layers):
+        layers.append(torch.nn.Linear(layer_input_dim, args.hidden_dim))
+        layers.append(torch.nn.ReLU())
+        layer_input_dim = args.hidden_dim
+
+    layers.append(torch.nn.Linear(layer_input_dim, output_dim))
+    model = torch.nn.Sequential(*layers)
+    return model
+
+def get_accuracy(model, data_loader):
+    num_samples = 0
+    num_correct = 0
+    for x, t in data_loader:
+        y = model.forward(x)
+        accuracy_tensor = (y.argmax(dim=1) == t)
+        num_samples += accuracy_tensor.numel()
+        num_correct += accuracy_tensor.sum().item()
+
+    return num_correct / num_samples
+
+def main(args):
+    torch.manual_seed(args.seed)
+    train_loader, test_loader = get_data_loaders()
+    model = get_model(args, 784, 10)
+    optimiser = torch.optim.Adam(model.parameters(), lr=args.lr)
+    table = util.Table(
+        util.TimeColumn("t"),
+        util.Column("epoch"),
+        util.Column("batch"),
+        util.Column("batch_loss", ".5f", width=10),
+        util.Column("train_acc", ".5f", width=10).set_callback(
+            lambda: get_accuracy(model, train_loader),
+            level=1,
+        ),
+        util.Column("test_acc", ".5f", width=10).set_callback(
+            lambda: get_accuracy(model, test_loader),
+            level=1,
+        ),
+        print_interval=util.TimeInterval(1),
+    )
+
+    table.update(level=1)
+    for epoch in range(args.num_epochs):
+        for i, (x, t) in enumerate(train_loader):
+            y = model.forward(x)
+            loss = torch.nn.functional.cross_entropy(y, t)
+            optimiser.zero_grad()
+            loss.backward()
+            optimiser.step()
+            table.update(epoch=epoch, batch=i, batch_loss=loss.item())
+
+        table.print_last()
+        table.update(level=1)
+
+    batch_loss = table.get_data("batch_loss")
+    x = np.linspace(0, args.num_epochs, len(batch_loss))
+    mp = plotting.MultiPlot(
+        plotting.Subplot(
+            plotting.Line(x, batch_loss, c="b", alpha=0.8),
+            xlabel="Epoch",
+            ylabel="Loss",
+            title="Loss curve",
+        ),
+        plotting.Subplot(
+            plotting.Line(table.get_data("train_acc"), c="b", label="Train"),
+            plotting.Line(table.get_data("test_acc"),  c="r", label="Test"),
+            xlabel="Epoch",
+            ylabel="Accuracy",
+            legend=True,
+            title="Accuracy curve",
+        ),
+        figsize=[8, 4],
+    )
+    mp.save("metrics", get_output_dir(args))
+    save_results(args, model, table)
+
+def save_results(args, model, table):
+    output_dir = get_output_dir(args)
+    cmd = "%s %s" % (sys.executable, " ".join(sys.argv))
+
+    util.save_pickle(model,                     "model",    output_dir)
+    util.save_text(table,                       "table",    output_dir)
+    util.save_text(cmd,                         "cmd",      output_dir)
+    util.save_json(vars(args),                  "args",     output_dir)
+    util.save_json(table.get_data("test_acc"),  "test_acc", output_dir)
+    table.save_json("table", output_dir)
+
+def get_output_dir(args, experiment_name="mnist"):
+    if args.model_name is not None:
+        model_name = args.model_name
+    else:
+        key_dict = {
+            "seed":              "s",
+            "num_hidden_layers": "nl",
+            "hidden_dim":        "nh",
+            "num_epochs":        "ne",
+            "lr":                "lr",
+        }
+        model_name = util.abbreviate_dictionary(vars(args), key_dict)
+
+    output_dir = os.path.join(util.RESULTS_DIR, experiment_name, model_name)
+    return output_dir
+
+def get_parser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--seed",               type=int,   default=0)
+    parser.add_argument("--num_hidden_layers",  type=int,   default=2)
+    parser.add_argument("--hidden_dim",         type=int,   default=100)
+    parser.add_argument("--num_epochs",         type=int,   default=3)
+    parser.add_argument("--lr",                 type=float, default=1e-3)
+    parser.add_argument("--model_name",         type=str,   default=None)
+    return parser
+
+if __name__ == "__main__":
+    parser = get_parser()
+    args = parser.parse_args()
+
+    with util.Timer("main function"):
+        main(args)
+
+```
+
+Output (after table, with current directory renamed to `.`):
+
+```
+Saving in "./Results/mnist/lr0.001ne3nh100nl2s0/metrics.png"
+Saving in "./Results/mnist/lr0.001ne3nh100nl2s0/model.pkl"
+Saving in "./Results/mnist/lr0.001ne3nh100nl2s0/table.txt"
+Saving in "./Results/mnist/lr0.001ne3nh100nl2s0/cmd.txt"
+Saving in "./Results/mnist/lr0.001ne3nh100nl2s0/args.json"
+Saving in "./Results/mnist/lr0.001ne3nh100nl2s0/test_acc.json"
+Saving in "./Results/mnist/lr0.001ne3nh100nl2s0/table.json"
+Time taken for `main function` = 41.2677 seconds
+```
+
+![](./img/metrics.png)
 
 ## Simple automatic differentiation
 
