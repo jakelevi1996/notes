@@ -347,10 +347,17 @@ Flag | Meaning
 
 - To configure `rsync` to not request a password when synchronising directories, follow the instructions in the previous section "[Passwordless `ssh` terminals and commands](#passwordless-ssh-terminals)".
 - `rsync` can be used with the `--delete` option to delete extra files in the remote directory that are not present in the local directory ([source](https://askubuntu.com/a/665918/1078405)).
-- To ignore certain files (EG hidden files, `.pyc` files), use the `--exclude=$PATTERN` flag
-  - Multiple `--exclude` flags can be included in the same command, EG `rsync -Chavz . hostname:~/target_dir --exclude=".*" --exclude="*.pyc"`
+- To ignore certain files (EG hidden files, `.pyc` files), use the `--exclude $PATTERN` flag
+  - Multiple `--exclude` flags can be included in the same command, EG `rsync -Chavz . hostname:~/target_dir --exclude ".*" --exclude "*.pyc"`
 - To copy the contents of the *current directory on the local machine to* a subdirectory of the home directory called `target_dir` on the remote machine, use the command `rsync -Chavz . hostname:~/target_dir` (note *no* `/` character after `target_dir`)
 - To copy the contents of a subdirectory of the home directory on the remote machine called `target_dir` *to the current directory on the local machine*, use the command `rsync -Chavz hostname:~/target_dir/ .` (note that there *is* a `/` character after `target_dir`)
+- To ignore existing files (useful when synchronising from a server to the local machine after running an experiment remotely, without overwriting recent changes on the local machine), use the flag `--ignore-existing` ([source 1](https://unix.stackexchange.com/questions/67539/how-to-rsync-only-new-files), [source 2](https://linux.die.net/man/1/rsync))
+- Summary of commands to synchronise files between the current directory and `~/dir/to/sync` on the remote machine, with all flags described above, ignoring hidden and `.pyc` files and not overwriting recent changes on the local machine:
+
+```
+rsync -Chavz . hostname:~/dir/to/sync  --exclude ".*" --exclude "*.pyc"
+rsync -Chavz hostname:~/dir/to/sync/ . --exclude ".*" --exclude "*.pyc" --ignore-existing
+```
 
 ## Package management with `apt`
 
