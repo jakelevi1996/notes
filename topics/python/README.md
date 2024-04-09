@@ -10,6 +10,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [Contents](#contents)
   - [Useful links](#useful-links)
   - [Profiling Python code](#profiling-python-code)
+  - [`.temp.py`](#temppy)
   - [Useful Python snippets](#useful-python-snippets)
     - [Make a list of prime numbers](#make-a-list-of-prime-numbers)
     - [Get a timestamped filename](#get-a-timestamped-filename)
@@ -203,6 +204,46 @@ python -c "import pstats; p = pstats.Stats('.profile_output.bin'); p.sort_stats(
 ```
 
 Note that errors can occur when trying to profile code which uses the `pickle` module. The explanation and a workaround are provided in [this StackOverflow answer](https://stackoverflow.com/a/53890887/8477566). A simple solution is the modify the code being profiled such that it has an option to run without using `pickle`.
+
+## `.temp.py`
+
+A useful trick I have found is to keep a Python file called `.temp.py` in the top level directory of any repository (ignored by the pattern `.*` in `.gitignore`), which I use as a temporary scratchpad for quickly writing and running short snippets of code, often as a "first draft" before moving that code into a permanent module or script (I also use it for storing some common commands I may want to paste into a debug terminal, EG setting different print options for PyTorch). Below is a template I use for `.temp.py`:
+
+```python
+import os
+import sys
+import numpy as np
+from jutility import plotting, util
+
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+SRC_DIR = os.path.join(CURRENT_DIR, "src")
+sys.path.append(SRC_DIR)
+
+# rng = np.random.default_rng()
+rng = np.random.default_rng(0)
+util.numpy_set_print_options()
+
+# TEMPORARY CODE GOES HERE
+
+###############################################################################
+
+# import torch
+# import torchvision
+
+# torch.set_printoptions(
+#     precision=3,
+#     linewidth=10000,
+#     sci_mode=False,
+#     threshold=int(1e9),
+# )
+# torch.set_printoptions(
+#     precision=3,
+#     linewidth=10000,
+#     sci_mode=False,
+#     threshold=1000,
+# )
+# torch.manual_seed(0)
+```
 
 ## Useful Python snippets
 
