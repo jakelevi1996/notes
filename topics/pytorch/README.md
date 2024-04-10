@@ -11,6 +11,7 @@
   - [Simple gradient descent](#simple-gradient-descent)
   - [Moving a tensor that requires gradients to a different device](#moving-a-tensor-that-requires-gradients-to-a-different-device)
   - [Using a DataLoader with a custom dataset](#using-a-dataloader-with-a-custom-dataset)
+  - [`map` module for automatically transforming `DataLoader` instances](#map-module-for-automatically-transforming-dataloader-instances)
   - [Simple example of training an LSTM](#simple-example-of-training-an-lstm)
   - [Demonstrating periodic naive learning in a 2-player general sum matrix game](#demonstrating-periodic-naive-learning-in-a-2-player-general-sum-matrix-game)
 
@@ -585,6 +586,64 @@ Called len(MockData)
 Called MockData[6]
 Called MockData[4]
 Received batch x = tensor([6, 4], dtype=torch.int32), y = tensor([106, 104], dtype=torch.int32)
+```
+
+## `map` module for automatically transforming `DataLoader` instances
+
+```python
+import torch
+
+class _DataLoaderMap(torch.utils.data.DataLoader):
+    def __init__(self, dataloader):
+        self._set_dataloader(dataloader)
+
+    def _set_dataloader(self, dataloader):
+        self.dataloader = dataloader
+        self.dataset    = dataloader.dataset
+
+    def _map(self, batch):
+        raise NotImplementedError()
+
+    def __iter__(self):
+        return map(self._map, self.dataloader)
+
+class Device(_DataLoaderMap):
+    def __init__(self, dataloader, device=0):
+        self._set_dataloader(dataloader)
+        self._device = device
+
+    def _map(self, batch):
+        x, t = batch
+        return x.to(device=self._device), t.to(device=self._device)
+
+class OneHotTargets(_DataLoaderMap):
+    def __init__(self, dataloader, num_classes):
+        self._set_dataloader(dataloader)
+        self._num_classes = num_classes
+
+    def _map(self, batch):
+        x, t = batch
+        t_one_hot = torch.nn.functional.one_hot(t, self._num_classes)
+        t_one_hot = t_one_hot.to(dtype=torch.float32)
+        return x, t_one_hot
+
+class SelectTargetDims(_DataLoaderMap):
+    def __init__(self, dataloader, target_dims):
+        self._set_dataloader(dataloader)
+        self._target_dims = target_dims
+
+    def _map(self, batch):
+        x, t = batch
+        return x, t[:, self._target_dims]
+
+class SelectInputDims(_DataLoaderMap):
+    def __init__(self, dataloader, input_dims):
+        self._set_dataloader(dataloader)
+        self._input_dims = input_dims
+
+    def _map(self, batch):
+        x, t = batch
+        return x[:, self._input_dims], t
 ```
 
 ## Simple example of training an LSTM
