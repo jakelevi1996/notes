@@ -64,6 +64,7 @@ For more information about C/C++ default include-paths in VSCode, and how to com
 
 ```jsonc
 {
+    "python.defaultInterpreterPath": "python",
     "explorer.confirmDelete": false,
     "git.enableSmartCommit": true,
     "debug.console.historySuggestions": false,
