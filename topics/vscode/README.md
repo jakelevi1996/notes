@@ -18,11 +18,20 @@ Installed extensions can be listed on the command line using the command `code -
 
 ```
 eamodio.gitlens
+james-yu.latex-workshop
+mechatroner.rainbow-csv
 mhutchie.git-graph
+ms-python.debugpy
 ms-python.python
+ms-python.vscode-pylance
+ms-toolsai.jupyter-keymap
+ms-vscode-remote.remote-ssh
+ms-vscode-remote.remote-ssh-edit
 ms-vscode.cpptools
 ms-vscode.hexeditor
-PKief.material-icon-theme
+ms-vscode.remote-explorer
+oliversturm.fix-json
+pkief.material-icon-theme
 stkb.rewrap
 v4run.transpose
 yzhang.markdown-all-in-one
@@ -41,7 +50,6 @@ fabiospampinato.vscode-diff
 Gimly81.matlab
 jack89ita.open-file-from-path
 johnstoncode.svn-scm
-oliversturm.fix-json
 ```
 
 Useful commands using the "Markdown All in One" extension:
