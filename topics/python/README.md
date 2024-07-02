@@ -9,6 +9,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
 - [Notes on Python](#notes-on-python)
   - [Contents](#contents)
   - [Useful links](#useful-links)
+  - [Packaging](#packaging)
   - [Profiling Python code](#profiling-python-code)
   - [`.temp.py`](#temppy)
   - [Useful Python snippets](#useful-python-snippets)
@@ -49,6 +50,41 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [The Python Language Reference](https://docs.python.org/3/reference/index.html)
     - [Data model](https://docs.python.org/3/reference/datamodel.html)
 - [Project Euler](https://projecteuler.net/archives) (useful and interesting problems for practising numerical programming, and well-suited to Python)
+
+## Packaging
+
+To make Python code installable as a package called `mypackage`, place all source code in a directory called `src/mypackage`, and create a `pyproject.toml` file. The following code creates a minimal `pyproject.toml` file (replace `mypackage` with the name of the package):
+
+```bash
+rm "pyproject.toml"
+echo [build-system]                             >> "pyproject.toml"
+echo requires = [\""setuptools>=61.0"\"]        >> "pyproject.toml"
+echo build-backend = \"setuptools.build_meta\"  >> "pyproject.toml"
+echo                                            >> "pyproject.toml"
+echo [project]                                  >> "pyproject.toml"
+echo name = \"mypackage\"                       >> "pyproject.toml"
+echo version = \"0.0.1\"                        >> "pyproject.toml"
+```
+
+The package can then be installed with the command `python -m pip install -e .`. The following installation instructions can be added to a `README.md` file:
+
+````
+This package can be installed locally in "editable mode" with the following commands:
+
+```
+python -m pip install -U pip
+python -m pip install -e .
+```
+````
+
+Below are some useful links for writing `pyproject.toml` files and packaging in general (from [`setuptools.pypa.io`](https://setuptools.pypa.io) unless otherwise specified):
+
+- [Configuring `setuptools` using `pyproject.toml` files](https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html)
+- [Configuring `setuptools` using `setup.cfg` files](https://setuptools.pypa.io/en/latest/userguide/declarative_config.html)
+- [Package Discovery and Namespace Packages](https://setuptools.pypa.io/en/latest/userguide/package_discovery.html)
+- [Development Mode (AKA “Editable Installs”)](https://setuptools.pypa.io/en/latest/userguide/development_mode.html)
+- [Writing your `pyproject.toml`](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/)  (from [`packaging.python.org`](https://packaging.python.org/))
+- [`pip install`](https://pip.pypa.io/en/stable/cli/pip_install/) (from [`pip.pypa.io`](https://pip.pypa.io/))
 
 ## Profiling Python code
 
