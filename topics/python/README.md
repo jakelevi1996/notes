@@ -66,7 +66,7 @@ echo name = \"mypackage\"                       >> "pyproject.toml"
 echo version = \"0.0.1\"                        >> "pyproject.toml"
 ```
 
-The package can then be installed with the command `python -m pip install -e .`. The following installation instructions can be added to a `README.md` file:
+The package can be installed locally in "editable mode" with the command `python -m pip install -e .`. The following installation instructions can be added to a `README.md` file:
 
 ````
 This package can be installed locally in "editable mode" with the following commands:
@@ -76,6 +76,25 @@ python -m pip install -U pip
 python -m pip install -e .
 ```
 ````
+
+The following lines should also be added to `.gitignore`:
+
+```
+__pycache__
+*.egg-info
+```
+
+Suppose the `src/mypackage` directory contains Python modules in files called `mymodule1.py`, `mymodule2.py`, `mymodule3.py`, and that `mymodule3` wants to import `mymodule1` and `mymodule2`. This can be achieved with the following command in `src/mypackage/mymodule3.py`:
+
+```python
+from mypackage import mymodule1, mymodule2
+```
+
+To make the modules `mymodule1`, `mymodule2`, `mymodule3` accessible within the `mypackage` namespace from external code, for example with the commands `import mypackage; mypackage.mymodule1.myfunction()`, add a file `src/mypackage/__init__.py` with the following code:
+
+```python
+from mypackage import mymodule1, mymodule2, mymodule3
+```
 
 Below are some useful links for writing `pyproject.toml` files and packaging in general (from [`setuptools.pypa.io`](https://setuptools.pypa.io) unless otherwise specified):
 
