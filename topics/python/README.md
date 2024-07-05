@@ -54,7 +54,25 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
 
 ## Packaging
 
-To make Python code installable as a package called `mypackage`, place all source code in a directory called `src/mypackage`, and create a `pyproject.toml` file. The following code creates a minimal `pyproject.toml` file (replace `mypackage` with the name of the package):
+To make Python code installable as a package called `mypackage`, place all source code in a directory called `src/mypackage`, and create a `pyproject.toml` file (in the top level of the repository). The following command creates a file called `pyproject.toml` if it doesn't already exist:
+
+```bash
+touch pyproject.toml
+```
+
+The following is an example of a minimal `pyproject.toml` file (replace `mypackage` with the name of the package):
+
+```toml
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mypackage"
+version = "0.0.1"
+```
+
+The following commands create minimal a `pyproject.toml` file automatically (replace `mypackage` with the name of the package):
 
 ```bash
 rm "pyproject.toml"
