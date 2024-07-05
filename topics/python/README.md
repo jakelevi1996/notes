@@ -13,6 +13,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [Profiling Python code](#profiling-python-code)
   - [`.temp.py`](#temppy)
   - [Useful Python snippets](#useful-python-snippets)
+    - [Multi-headed matrix multiplication](#multi-headed-matrix-multiplication)
     - [Make a list of prime numbers](#make-a-list-of-prime-numbers)
     - [Get a timestamped filename](#get-a-timestamped-filename)
     - [Get the directory name of the current source file](#get-the-directory-name-of-the-current-source-file)
@@ -301,6 +302,60 @@ util.numpy_set_print_options()
 ```
 
 ## Useful Python snippets
+
+### Multi-headed matrix multiplication
+
+- A `d`-dimensional vector `x` can be linearly transformed into a `m*n`-dimensional matrix `y` using a `m*n*d`-dimensional tensor `w`, as shown in the example below
+- The `(i, j)`th element of `y` is equal to the inner product between `w[i, j, :]` and `x[:]`
+
+```python
+import numpy as np
+
+m = 3
+n = 4
+d = 5
+
+x = 100 ** np.flip(np.arange(d)).reshape(1, d, 1)
+w = np.arange(m*n*d).reshape(m, n, d)
+y = (w @ x).squeeze(-1)
+
+print(x)
+print(x.shape)
+print(w)
+print(w.shape)
+print(y)
+print(y.shape)
+```
+
+Output:
+
+```
+[[[100000000]
+  [  1000000]
+  [    10000]
+  [      100]
+  [        1]]]
+(1, 5, 1)
+[[[ 0  1  2  3  4]
+  [ 5  6  7  8  9]
+  [10 11 12 13 14]
+  [15 16 17 18 19]]
+
+ [[20 21 22 23 24]
+  [25 26 27 28 29]
+  [30 31 32 33 34]
+  [35 36 37 38 39]]
+
+ [[40 41 42 43 44]
+  [45 46 47 48 49]
+  [50 51 52 53 54]
+  [55 56 57 58 59]]]
+(3, 4, 5)
+[[   1020304  506070809 1011121314 1516171819]
+ [2021222324 2526272829 3031323334 3536373839]
+ [4041424344 4546474849 5051525354 5556575859]]
+(3, 4)
+```
 
 ### Make a list of prime numbers
 
