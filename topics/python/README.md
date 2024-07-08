@@ -375,6 +375,74 @@ Output:
 (3, 4)
 ```
 
+- A transposed version with outer batch dimensions is shown below
+- In this case, the input `x` has shape `b*d` (expanded to `b*1*1*d`), the parameter `W` has shape `m*d*n`, and the output `y` has shape `b*m*n`
+- Each outer dimension in the output `y` corresponds to a different element in the batch, and the inner 2 dimensions correspond to elements in a matrix (one `m*n` matrix for each batch element)
+- The element `y[b, i, j]` corresponds to the dot product between `x[b, :]` (assuming squeezed dimensions) and `W[i, :, j]` (`j`th column in the `i`th matrix in `W`), IE each column of the `i`th parameter matrix `W[i, :, :]` is used in the dot product with `x[b, :]` to compute an element in the `i`th row of `y[b, :, :]`
+- With the layout shown below (with each index in the outer dimension of `W` shown as a separate matrix), given a batch element, moving across the rows of `y` (horizontally) corresponds to moving across the rows (horizontally) of `W`, and moving down the columns of `y` (vertically) corresponds to moving down the different matrices in `W`
+
+```python
+import numpy as np
+
+m = 5
+n = 4
+d = 3
+b = 2
+
+x = 100 ** np.flip(np.arange(b*d)).reshape(b, 1, 1, d)
+w = np.arange(m*n*d).reshape(m, d, n)
+y = (x @ w).squeeze(-2)
+
+print(x)
+print(x.shape)
+print(w)
+print(w.shape)
+print(y)
+print(y.shape)
+```
+
+Output:
+
+```
+[[[[10000000000   100000000     1000000]]]
+
+
+ [[[      10000         100           1]]]]
+(2, 1, 1, 3)
+[[[ 0  1  2  3]
+  [ 4  5  6  7]
+  [ 8  9 10 11]]
+
+ [[12 13 14 15]
+  [16 17 18 19]
+  [20 21 22 23]]
+
+ [[24 25 26 27]
+  [28 29 30 31]
+  [32 33 34 35]]
+
+ [[36 37 38 39]
+  [40 41 42 43]
+  [44 45 46 47]]
+
+ [[48 49 50 51]
+  [52 53 54 55]
+  [56 57 58 59]]]
+(5, 3, 4)
+[[[   408000000  10509000000  20610000000  30711000000]
+  [121620000000 131721000000 141822000000 151923000000]
+  [242832000000 252933000000 263034000000 273135000000]
+  [364044000000 374145000000 384246000000 394347000000]
+  [485256000000 495357000000 505458000000 515559000000]]
+
+ [[         408        10509        20610        30711]
+  [      121620       131721       141822       151923]
+  [      242832       252933       263034       273135]
+  [      364044       374145       384246       394347]
+  [      485256       495357       505458       515559]]]
+(2, 5, 4)
+```
+
 ### Make a list of prime numbers
 
 ```python
