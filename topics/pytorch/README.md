@@ -83,6 +83,11 @@ def save_results(args, model, table):
     util.save_json(test_acc,    "test_acc", output_dir)
     torch.save(model.state_dict(), model_path)
     table.save_json("table", output_dir)
+    plotting.plot(
+        plotting.Line(test_acc),
+        plot_name="Test accuracy",
+        dir_name=output_dir,
+    )
 
 def get_output_dir(args, experiment_name="mnist"):
     if args.model_name is not None:
