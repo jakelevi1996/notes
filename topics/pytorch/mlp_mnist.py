@@ -25,26 +25,32 @@ def get_data_loaders(batch_size=100):
 
     return train_loader, test_loader
 
-def get_model(
-    input_dim,
-    output_dim,
-    num_hidden_layers,
-    hidden_dim,
-    act_func=None,
-):
-    if act_func is None:
-        act_func = torch.nn.ReLU
+class Mlp(torch.nn.Module):
+    def __init__(
+        self,
+        input_dim,
+        output_dim,
+        num_hidden_layers,
+        hidden_dim,
+        act_func=None,
+    ):
+        super().__init__()
 
-    layers = []
-    layer_input_dim = input_dim
-    for _ in range(num_hidden_layers):
-        layers.append(torch.nn.Linear(layer_input_dim, hidden_dim))
-        layers.append(act_func())
-        layer_input_dim = hidden_dim
+        if act_func is None:
+            act_func = torch.nn.ReLU
 
-    layers.append(torch.nn.Linear(layer_input_dim, output_dim))
-    model = torch.nn.Sequential(*layers)
-    return model
+        layers = []
+        layer_input_dim = input_dim
+        for _ in range(num_hidden_layers):
+            layers.append(torch.nn.Linear(layer_input_dim, hidden_dim))
+            layers.append(act_func())
+            layer_input_dim = hidden_dim
+
+        layers.append(torch.nn.Linear(layer_input_dim, output_dim))
+        self.model = torch.nn.Sequential(*layers)
+
+    def forward(self, x):
+        return self.model.forward(x)
 
 def get_accuracy(model, data_loader):
     num_samples = 0
@@ -62,7 +68,7 @@ def main():
 
     train_loader, test_loader = get_data_loaders()
 
-    model = get_model(
+    model = Mlp(
         input_dim=784,
         output_dim=10,
         # num_hidden_layers=3,
