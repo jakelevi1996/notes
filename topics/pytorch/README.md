@@ -75,12 +75,13 @@ def save_results(args, model, table):
     output_dir = get_output_dir(args)
     cmd = "%s %s" % (sys.executable, " ".join(sys.argv))
     test_acc = table.get_data("test_acc")
+    model_path = util.get_full_path("model", output_dir, "pth")
 
-    util.save_pickle(model,     "model",    output_dir)
     util.save_text(table,       "table",    output_dir)
     util.save_text(cmd,         "cmd",      output_dir)
     util.save_json(vars(args),  "args",     output_dir)
     util.save_json(test_acc,    "test_acc", output_dir)
+    torch.save(model.state_dict(), model_path)
     table.save_json("table", output_dir)
 
 def get_output_dir(args, experiment_name="mnist"):
