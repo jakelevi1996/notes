@@ -43,14 +43,12 @@ Accuracies after each epoch are as follows:
 
 Time        | Epoch | Train acc  | Test acc
 ----------- | ----- | ---------- | ----------
-0.0005s     |     0 |    0.09868 |    0.09790
-15.6165s    |     1 |    0.94610 |    0.94330
-33.2215s    |     2 |    0.96455 |    0.96030
-49.3625s    |     3 |    0.97120 |    0.96430
+0.0001s     |     0 |    0.09868 |    0.09790
+11.6639s    |     1 |    0.94610 |    0.94330
+23.3747s    |     2 |    0.96462 |    0.96050
+32.4061s    |     3 |    0.97117 |    0.96400
 
-![](img/Loss_curve.png)
-
-![](img/Accuracy_curve.png)
+![](img/mlp_mnist.png)
 
 ## Pattern for saving results in automatically named directory from CLI arguments
 

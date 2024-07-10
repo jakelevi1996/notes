@@ -74,15 +74,15 @@ def main():
     optimiser = torch.optim.Adam(model.parameters(), lr=1e-3)
 
     table = util.Table(
-        util.TimeColumn("t"),
+        util.TimeColumn("t", width=-11),
         util.Column("epoch"),
         util.Column("batch"),
         util.Column("batch_loss", ".5f", width=10),
-        util.Column("train_acc", ".5f", width=10).set_callback(
+        util.CallbackColumn("train_acc", ".5f", width=10).set_callback(
             lambda: get_accuracy(model, train_loader),
             level=1,
         ),
-        util.Column("test_acc", ".5f", width=10).set_callback(
+        util.CallbackColumn("test_acc", ".5f", width=10).set_callback(
             lambda: get_accuracy(model, test_loader),
             level=1,
         ),
@@ -90,7 +90,7 @@ def main():
     )
 
     num_epochs = 3
-    table.update(level=1)
+    table.update(level=1, epoch=0)
     for epoch in range(num_epochs):
         for i, (x, t) in enumerate(train_loader):
             y = model.forward(x)
@@ -101,7 +101,7 @@ def main():
             table.update(epoch=epoch, batch=i, batch_loss=loss.item())
 
         table.print_last()
-        table.update(level=1)
+        table.update(level=1, epoch=epoch+1)
 
     batch_loss = table.get_data("batch_loss")
     downsample_ratio = 20
@@ -112,21 +112,27 @@ def main():
     )
     x = np.linspace(0, num_epochs, len(batch_loss))
     x_ds = x[::downsample_ratio]
-    plotting.plot(
-        plotting.Line(x, batch_loss, c="b", alpha=0.3, zorder=20),
-        plotting.Line(x_ds, mean, c="b", zorder=30),
-        plotting.FillBetween(x_ds, ucb, lcb, c="b", alpha=0.3, zorder=10),
-        axis_properties=plotting.AxisProperties("Epoch", "Loss"),
-        plot_name="Loss curve",
+    mp = plotting.MultiPlot(
+        plotting.Subplot(
+            plotting.Line(x, batch_loss, c="b", a=0.3, z=20),
+            plotting.Line(x_ds, mean, c="b", z=30),
+            plotting.FillBetween(x_ds, ucb, lcb, c="b", a=0.3, z=10),
+            xlabel="Epoch",
+            ylabel="Loss",
+            title="Loss curve",
+        ),
+        plotting.Subplot(
+            plotting.Line(table.get_data("train_acc"), c="b", label="Train"),
+            plotting.Line(table.get_data("test_acc"),  c="r", label="Test"),
+            plotting.Legend(),
+            xlabel="Epoch",
+            ylabel="Accuracy",
+            title="Accuracy curve",
+        ),
+        figsize=[10, 4],
     )
-    plotting.plot(
-        plotting.Line(table.get_data("train_acc"), c="b", label="Train"),
-        plotting.Line(table.get_data("test_acc"),  c="r", label="Test"),
-        axis_properties=plotting.AxisProperties("Epoch", "Accuracy"),
-        legend=True,
-        plot_name="Accuracy curve",
-    )
+    mp.save("mlp_mnist", os.path.join(CURRENT_DIR, "img"))
 
 if __name__ == "__main__":
-    with util.Timer("main function"):
+    with util.Timer("main"):
         main()
