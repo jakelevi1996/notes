@@ -6,25 +6,6 @@ from jutility import util, plotting
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-def get_data_loaders(batch_size=100):
-    transforms = [torchvision.transforms.ToTensor(), torch.flatten]
-    data_kwargs = {
-        "root":         CURRENT_DIR,
-        "download":     True,
-        "transform":    torchvision.transforms.Compose(transforms),
-    }
-    train_dataset = torchvision.datasets.MNIST(train=True , **data_kwargs)
-    test_dataset  = torchvision.datasets.MNIST(train=False, **data_kwargs)
-
-    load_kwargs = {
-        "batch_size":   batch_size,
-        "shuffle":      True,
-    }
-    train_loader = torch.utils.data.DataLoader(train_dataset, **load_kwargs)
-    test_loader  = torch.utils.data.DataLoader(test_dataset,  **load_kwargs)
-
-    return train_loader, test_loader
-
 class Mlp(torch.nn.Module):
     def __init__(
         self,
@@ -51,6 +32,25 @@ class Mlp(torch.nn.Module):
 
     def forward(self, x):
         return self.model.forward(x)
+
+def get_data_loaders(batch_size=100):
+    transforms = [torchvision.transforms.ToTensor(), torch.flatten]
+    data_kwargs = {
+        "root":         CURRENT_DIR,
+        "download":     True,
+        "transform":    torchvision.transforms.Compose(transforms),
+    }
+    train_dataset = torchvision.datasets.MNIST(train=True , **data_kwargs)
+    test_dataset  = torchvision.datasets.MNIST(train=False, **data_kwargs)
+
+    load_kwargs = {
+        "batch_size":   batch_size,
+        "shuffle":      True,
+    }
+    train_loader = torch.utils.data.DataLoader(train_dataset, **load_kwargs)
+    test_loader  = torch.utils.data.DataLoader(test_dataset,  **load_kwargs)
+
+    return train_loader, test_loader
 
 def get_accuracy(model, data_loader):
     num_samples = 0
