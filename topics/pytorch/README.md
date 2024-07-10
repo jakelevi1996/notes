@@ -93,14 +93,16 @@ def get_output_dir(args, experiment_name="mnist"):
     if args.model_name is not None:
         model_name = args.model_name
     else:
-        key_dict = {
-            "seed":              "s",
-            "num_hidden_layers": "nl",
-            "hidden_dim":        "nh",
-            "num_epochs":        "ne",
-            "lr":                "lr",
-        }
-        model_name = util.abbreviate_dictionary(vars(args), key_dict)
+        model_name = util.abbreviate_dictionary(
+            input_dict=vars(args),
+            key_abbreviations={
+                "seed":              "s",
+                "num_hidden_layers": "nl",
+                "hidden_dim":        "nh",
+                "num_epochs":        "ne",
+                "lr":                "lr",
+            },
+        )
 
     return os.path.join(CURRENT_DIR, "results", experiment_name, model_name)
 
