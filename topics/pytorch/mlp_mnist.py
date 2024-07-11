@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import torch
+import torch.utils.data
 import torchvision
 from jutility import util, plotting
 
@@ -33,24 +34,20 @@ class Mlp(torch.nn.Module):
     def forward(self, x):
         return self.model.forward(x)
 
-def get_data_loaders(batch_size=100):
+def get_data_loader(train=True, batch_size=100):
     transforms = [torchvision.transforms.ToTensor(), torch.flatten]
-    data_kwargs = {
-        "root":         CURRENT_DIR,
-        "download":     True,
-        "transform":    torchvision.transforms.Compose(transforms),
-    }
-    train_dataset = torchvision.datasets.MNIST(train=True , **data_kwargs)
-    test_dataset  = torchvision.datasets.MNIST(train=False, **data_kwargs)
-
-    load_kwargs = {
-        "batch_size":   batch_size,
-        "shuffle":      True,
-    }
-    train_loader = torch.utils.data.DataLoader(train_dataset, **load_kwargs)
-    test_loader  = torch.utils.data.DataLoader(test_dataset,  **load_kwargs)
-
-    return train_loader, test_loader
+    dataset = torchvision.datasets.MNIST(
+        root=CURRENT_DIR,
+        train=train,
+        transform=torchvision.transforms.Compose(transforms),
+        download=True,
+    )
+    data_loader = torch.utils.data.DataLoader(
+        dataset,
+        batch_size=batch_size,
+        shuffle=True,
+    )
+    return data_loader
 
 def get_accuracy(model, data_loader):
     num_samples = 0
@@ -66,7 +63,8 @@ def get_accuracy(model, data_loader):
 def main():
     torch.manual_seed(0)
 
-    train_loader, test_loader = get_data_loaders()
+    train_loader = get_data_loader(train=True)
+    test_loader  = get_data_loader(train=False)
 
     model = Mlp(
         input_dim=784,
