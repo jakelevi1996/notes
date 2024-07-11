@@ -94,8 +94,8 @@ def main():
     )
 
     num_epochs = 3
-    table.update(level=1, epoch=0)
     for epoch in range(num_epochs):
+        table.update(level=1, epoch=epoch)
         for i, (x, t) in enumerate(train_loader):
             y = model.forward(x)
             loss = torch.nn.functional.cross_entropy(y, t)
@@ -105,7 +105,8 @@ def main():
             table.update(epoch=epoch, batch=i, batch_loss=loss.item())
 
         table.print_last()
-        table.update(level=1, epoch=epoch+1)
+
+    table.update(level=1, epoch=num_epochs)
 
     mp = plotting.MultiPlot(
         plotting.Subplot(
