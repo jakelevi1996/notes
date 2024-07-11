@@ -54,7 +54,7 @@ def get_accuracy(model, data_loader):
     num_correct = 0
     for x, t in data_loader:
         y = model.forward(x)
-        accuracy_tensor = (y.argmax(dim=1) == t)
+        accuracy_tensor = (y.argmax(dim=-1) == t)
         num_samples += accuracy_tensor.numel()
         num_correct += accuracy_tensor.sum().item()
 
