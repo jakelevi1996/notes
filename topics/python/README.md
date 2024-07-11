@@ -287,7 +287,6 @@ A useful trick I have found is to keep a Python file called `.temp.py` in the to
 import numpy as np
 from jutility import plotting, util
 
-# rng = np.random.default_rng()
 rng = np.random.default_rng(0)
 util.numpy_set_print_options()
 
