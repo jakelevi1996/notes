@@ -107,20 +107,9 @@ def main():
         table.print_last()
         table.update(level=1, epoch=epoch+1)
 
-    batch_loss = table.get_data("batch_loss")
-    downsample_ratio = 20
-    mean, ucb, lcb = util.confidence_bounds(
-        np.array(batch_loss),
-        split_dim=0,
-        downsample_ratio=downsample_ratio,
-    )
-    x = np.linspace(0, num_epochs, len(batch_loss))
-    x_ds = x[::downsample_ratio]
     mp = plotting.MultiPlot(
         plotting.Subplot(
-            plotting.Line(x, batch_loss, c="b", a=0.3, z=20),
-            plotting.Line(x_ds, mean, c="b", z=30),
-            plotting.FillBetween(x_ds, ucb, lcb, c="b", a=0.3, z=10),
+            plotting.Line(table.get_data("batch_loss")),
             xlabel="Epoch",
             ylabel="Loss",
             title="Loss curve",
