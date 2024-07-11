@@ -11,8 +11,8 @@ class Mlp(torch.nn.Module):
         self,
         input_dim,
         output_dim,
-        num_hidden_layers,
         hidden_dim,
+        num_hidden_layers,
         act_func=None,
     ):
         super().__init__()
