@@ -96,9 +96,10 @@ def get_output_dir(args, experiment_name="mnist"):
             input_dict=vars(args),
             key_abbreviations={
                 "seed":              "s",
+                "batch_size":        "b",
+                "hidden_dim":        "h",
                 "num_hidden_layers": "nl",
-                "hidden_dim":        "nh",
-                "num_epochs":        "ne",
+                "num_epochs":        "e",
                 "lr":                "lr",
             },
         )
@@ -107,8 +108,9 @@ def get_output_dir(args, experiment_name="mnist"):
 
 def add_parser_arguments(parser: argparse.ArgumentParser):
     parser.add_argument("--seed",               type=int,   default=0)
-    parser.add_argument("--num_hidden_layers",  type=int,   default=2)
+    parser.add_argument("--batch_size",         type=int,   default=100)
     parser.add_argument("--hidden_dim",         type=int,   default=100)
+    parser.add_argument("--num_hidden_layers",  type=int,   default=2)
     parser.add_argument("--num_epochs",         type=int,   default=3)
     parser.add_argument("--lr",                 type=float, default=1e-3)
     parser.add_argument("--model_name",         type=str,   default=None)
