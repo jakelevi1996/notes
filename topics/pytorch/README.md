@@ -54,7 +54,6 @@ Time        | Epoch | Train acc  | Test acc
 
 ```python
 import os
-import sys
 import argparse
 import numpy as np
 import torch
@@ -71,13 +70,13 @@ def main(args):
     ...
     save_results(args, model, table)
 
-def save_results(args, model, table):
-    output_dir = get_output_dir(args)
-    cmd = "%s %s" % (sys.executable, " ".join(sys.argv))
-    test_acc = table.get_data("test_acc")
-    model_path = util.get_full_path("model", output_dir, "pth")
+def save_results(args, model: torch.nn.Module, table: util.Table):
+    output_dir  = get_output_dir(args)
+    model_path  = util.get_full_path("model", output_dir, "pth")
+    cmd         = util.get_program_command()
+    test_acc    = table.get_data("test_acc")
 
-    util.save_text(table,       "table",    output_dir)
+    util.save_text(str(table),  "table",    output_dir)
     util.save_text(cmd,         "cmd",      output_dir)
     util.save_json(vars(args),  "args",     output_dir)
     util.save_json(test_acc,    "test_acc", output_dir)
@@ -106,7 +105,7 @@ def get_output_dir(args, experiment_name="mnist"):
 
     return os.path.join(CURRENT_DIR, "results", experiment_name, model_name)
 
-def add_parser_arguments(parser):
+def add_parser_arguments(parser: argparse.ArgumentParser):
     parser.add_argument("--seed",               type=int,   default=0)
     parser.add_argument("--num_hidden_layers",  type=int,   default=2)
     parser.add_argument("--hidden_dim",         type=int,   default=100)
