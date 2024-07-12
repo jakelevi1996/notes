@@ -7,6 +7,7 @@
   - [Installing PyTorch](#installing-pytorch)
   - [Single script example of training a MLP on MNIST](#single-script-example-of-training-a-mlp-on-mnist)
   - [Pattern for saving results in automatically named directory from CLI arguments](#pattern-for-saving-results-in-automatically-named-directory-from-cli-arguments)
+  - [Pattern for saving and loading models](#pattern-for-saving-and-loading-models)
   - [Simple automatic differentiation](#simple-automatic-differentiation)
   - [Simple gradient descent](#simple-gradient-descent)
   - [Moving a tensor that requires gradients to a different device](#moving-a-tensor-that-requires-gradients-to-a-different-device)
@@ -135,6 +136,29 @@ Saving in "./Results/mnist/lr0.001ne3nh100nl2s0/args.json"
 Saving in "./Results/mnist/lr0.001ne3nh100nl2s0/test_acc.json"
 Saving in "./Results/mnist/lr0.001ne3nh100nl2s0/table.json"
 Time taken for `main function` = 41.2677 seconds
+```
+
+## Pattern for saving and loading models
+
+Saving and loading models in PyTorch is described in [the PyTorch documentation "Saving and Loading Models"](https://pytorch.org/tutorials/beginner/saving_loading_models.html), which also describes saving models for resuming training (which involves also saving the optimiser's state-dictionary), and saving multiple models in a single file.
+
+```python
+output_dir = "path/to/model/dir"
+model_path  = util.get_full_path("model", output_dir, "pth")
+util.save_json(vars(args), "args", output_dir)
+torch.save(model.state_dict(), model_path)
+
+...
+
+model_dir = "path/to/model/dir"
+model_args = util.load_json(os.path.join(model_dir, "args.json"))
+model = ModelClass(
+    output_dim=10,
+    hidden_dim=model_args["hidden_dim"],
+    num_hidden_layers=model_args["num_hidden_layers"],
+)
+model_path = os.path.join(model_dir, "model.pth")
+model.load_state_dict(torch.load(model_path))
 ```
 
 ## Simple automatic differentiation
