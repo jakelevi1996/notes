@@ -144,7 +144,7 @@ Saving and loading models in PyTorch is described in [the PyTorch documentation 
 
 ```python
 output_dir = "path/to/model/dir"
-model_path  = util.get_full_path("model", output_dir, "pth")
+model_path = util.get_full_path("model", output_dir, "pth")
 util.save_json(vars(args), "args", output_dir)
 torch.save(model.state_dict(), model_path)
 

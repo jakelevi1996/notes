@@ -111,7 +111,7 @@ def main():
     mp = plotting.MultiPlot(
         plotting.Subplot(
             plotting.Line(table.get_data("batch_loss")),
-            xlabel="Epoch",
+            xlabel="Batch",
             ylabel="Loss",
             title="Loss curve",
         ),
