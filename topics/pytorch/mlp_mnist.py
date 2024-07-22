@@ -7,7 +7,17 @@ from jutility import util, plotting
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-class Mlp(torch.nn.Module):
+class Model(torch.nn.Module):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        raise NotImplementedError()
+
+    def num_params(self):
+        return sum(p.numel() for p in self.parameters())
+
+    def __repr__(self):
+        return "%s(num_params=%s)" % (type(self).__name__, self.num_params())
+
+class Mlp(Model):
     def __init__(
         self,
         input_dim,
