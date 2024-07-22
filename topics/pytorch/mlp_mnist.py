@@ -70,6 +70,28 @@ def get_accuracy(model, data_loader):
 
     return num_correct / num_samples
 
+def plot_metrics(table: util.Table, plot_name, output_dir):
+    mp = plotting.MultiPlot(
+        plotting.Subplot(
+            plotting.Line(table.get_data("batch_loss")),
+            xlabel="Batch",
+            ylabel="Loss",
+            title="Loss curve",
+        ),
+        plotting.Subplot(
+            plotting.Line(table.get_data("train_acc"), c="b", label="Train"),
+            plotting.Line(table.get_data("test_acc"),  c="r", label="Test"),
+            plotting.Legend(),
+            xlabel="Epoch",
+            ylabel="Accuracy",
+            title="Accuracy curve",
+        ),
+        figsize=[10, 4],
+        title=plot_name,
+        top_space=0.2,
+    )
+    mp.save(plot_name, output_dir)
+
 def main():
     torch.manual_seed(0)
 
@@ -117,25 +139,8 @@ def main():
         table.print_last()
 
     table.update(level=1, epoch=num_epochs)
-
-    mp = plotting.MultiPlot(
-        plotting.Subplot(
-            plotting.Line(table.get_data("batch_loss")),
-            xlabel="Batch",
-            ylabel="Loss",
-            title="Loss curve",
-        ),
-        plotting.Subplot(
-            plotting.Line(table.get_data("train_acc"), c="b", label="Train"),
-            plotting.Line(table.get_data("test_acc"),  c="r", label="Test"),
-            plotting.Legend(),
-            xlabel="Epoch",
-            ylabel="Accuracy",
-            title="Accuracy curve",
-        ),
-        figsize=[10, 4],
-    )
-    mp.save("mlp_mnist", os.path.join(CURRENT_DIR, "img"))
+    plot_name = "Metrics for %s" % model
+    plot_metrics(table, plot_name, os.path.join(CURRENT_DIR, "img"))
 
 if __name__ == "__main__":
     with util.Timer("main"):

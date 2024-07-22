@@ -49,7 +49,7 @@ Time        | Epoch | Train acc  | Test acc
 23.3747s    |     2 |    0.96462 |    0.96050
 32.4061s    |     3 |    0.97117 |    0.96400
 
-![](img/mlp_mnist.png)
+![](img/Metrics_for_Mlp_num_params_89610_.png)
 
 ## Pattern for saving results in automatically named directory from CLI arguments
 
