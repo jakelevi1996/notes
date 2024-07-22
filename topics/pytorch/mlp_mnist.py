@@ -139,6 +139,7 @@ def main():
         table.print_last()
 
     table.update(level=1, epoch=num_epochs)
+
     plot_name = "Metrics for %s" % model
     plot_metrics(table, plot_name, os.path.join(CURRENT_DIR, "img"))
 
