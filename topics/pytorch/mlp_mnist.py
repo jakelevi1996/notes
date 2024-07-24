@@ -87,6 +87,7 @@ def plot_metrics(table: util.Table, plot_name, output_dir, **kwargs):
             plotting.Legend(),
             xlabel="Epoch",
             ylabel="Accuracy",
+            ylim=[0, 1],
             title="Accuracy curve",
         ),
         **kwargs,
