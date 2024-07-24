@@ -70,7 +70,10 @@ def get_accuracy(model, data_loader):
 
     return num_correct / num_samples
 
-def plot_metrics(table: util.Table, plot_name, output_dir):
+def plot_metrics(table: util.Table, plot_name, output_dir, **kwargs):
+    kwargs.setdefault("title", plot_name)
+    kwargs.setdefault("figsize", [10, 4])
+    kwargs.setdefault("top_space", 0.2)
     mp = plotting.MultiPlot(
         plotting.Subplot(
             plotting.Line(table.get_data("batch_loss")),
@@ -86,9 +89,7 @@ def plot_metrics(table: util.Table, plot_name, output_dir):
             ylabel="Accuracy",
             title="Accuracy curve",
         ),
-        figsize=[10, 4],
-        title=plot_name,
-        top_space=0.2,
+        **kwargs,
     )
     mp.save(plot_name, output_dir)
 
