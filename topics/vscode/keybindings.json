@@ -84,6 +84,13 @@
         "command": "git.stageSelectedRanges",
     },
     {
+        "key": "shift+alt+a",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "git add -f ${relativeFile}\u000D"
+        }
+    },
+    {
         "key": "alt+u",
         "command": "git.unstageSelectedRanges",
     },
@@ -129,6 +136,13 @@
         "key": "alt+b",
         "command": "workbench.action.compareEditor.previousChange",
         "when": "textCompareEditorVisible"
+    },
+    {
+        "key": "alt+p",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "git push\u000D"
+        }
     },
     {
         "key": "ctrl+b",
