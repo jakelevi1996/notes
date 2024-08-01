@@ -1,0 +1,174 @@
+// Place your key bindings in this file to overwrite the defaults
+[
+    {
+        "key": "alt+c",
+        "command": "editor.action.commentLine",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "shift+alt+c",
+        "command": "editor.action.blockComment",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+alt+c",
+        "command": "copyRelativeFilePath",
+    },
+    {
+        "key": "ctrl+shift+alt+c",
+        "command": "copyFilePath",
+    },
+    {
+        "key": "alt+r",
+        "command": "python.execInTerminal",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+r",
+        "command": "workbench.action.terminal.runSelectedText",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "shift+alt+r",
+        "command": "revealFileInOS",
+    },
+    {
+        "key": "ctrl+alt+r",
+        "command": "workbench.files.action.showActiveFileInExplorer",
+    },
+    {
+        "key": "alt+s",
+        "command": "extension.transpose",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "shift+alt+s",
+        "command": "editor.action.insertCursorAtEndOfEachLineSelected",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+d",
+        "command": "compareSelected"
+    },
+    {
+        "key": "alt+d",
+        "command": "editor.action.deleteLines",
+        "when": "textInputFocus && !editorReadonly"
+    },
+    {
+        "key": "shift+alt+d",
+        "command": "workbench.debug.action.toggleRepl",
+    },
+    {
+        "key": "ctrl+alt+d",
+        "command": "workbench.action.duplicateWorkspaceInNewWindow",
+    },
+    {
+        "key": "alt+t",
+        "command": "workbench.action.terminal.toggleTerminal",
+    },
+    {
+        "key": "shift+alt+t",
+        "command": "openInTerminal",
+    },
+    {
+        "key": "alt+m",
+        "command": "workbench.action.toggleMaximizedPanel",
+    },
+    {
+        "key": "alt+k",
+        "command": "workbench.action.terminal.kill"
+    },
+    {
+        "key": "alt+a",
+        "command": "git.stageSelectedRanges",
+    },
+    {
+        "key": "alt+u",
+        "command": "git.unstageSelectedRanges",
+    },
+    {
+        "key": "alt+v",
+        "command": "git.revertSelectedRanges",
+    },
+    {
+        "key": "alt+g",
+        "command": "git.openChange"
+    },
+    {
+        "key": "ctrl+g",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "workbench.scm.focus",
+                "list.focusFirst",
+                "list.select",
+            ],
+        },
+    },
+    {
+        "key": "ctrl+alt+g",
+        "command": "git-graph.view"
+    },
+    {
+        "key": "alt+n",
+        "command": "workbench.action.editor.nextChange",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "alt+n",
+        "command": "workbench.action.compareEditor.nextChange",
+        "when": "textCompareEditorVisible"
+    },
+    {
+        "key": "alt+b",
+        "command": "workbench.action.editor.previousChange",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "alt+b",
+        "command": "workbench.action.compareEditor.previousChange",
+        "when": "textCompareEditorVisible"
+    },
+    {
+        "key": "ctrl+b",
+        "command": "editor.action.selectToBracket",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+n",
+        "command": "explorer.newFile"
+    },
+    {
+        "key": "ctrl+alt+v",
+        "command": "markdown.showPreviewToSide",
+        "when": "!notebookEditorFocused && editorLangId == 'markdown'"
+    },
+    {
+        "key": "alt+f",
+        "command": "workbench.action.openRecent"
+    },
+    {
+        "key": "ctrl+f5",
+        "command": "workbench.action.reloadWindow",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "shift+alt+down",
+        "command": "editor.action.copyLinesDownAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "shift+alt+up",
+        "command": "editor.action.copyLinesUpAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "alt+left",
+        "command": "workbench.action.navigateBack"
+    },
+    {
+        "key": "alt+right",
+        "command": "workbench.action.navigateForward"
+    },
+]

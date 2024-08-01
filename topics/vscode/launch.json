@@ -1,0 +1,41 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+        },
+        {
+            "name": "Python, including stepping into external libraries",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+        },
+        {
+            "name": "Specific Python script with args",
+            "type": "python",
+            "request": "launch",
+            "program": "path/to/Python/script.py",
+            "console": "integratedTerminal",
+            "args": ["--arg_1_name", "arg_2_name", "-etc"]
+        },
+        {
+            // Remember to pass the -g flag to gcc when compiling
+            "name": "Debug C executable",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/path/to/executable",
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "custom_build_task"
+        }
+    ]
+}
