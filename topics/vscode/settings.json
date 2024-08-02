@@ -117,4 +117,5 @@
         ],
     },
     "files.autoSave": "off",
+    "editor.stickyScroll.enabled": true,
 }
