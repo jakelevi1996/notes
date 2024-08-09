@@ -15,6 +15,7 @@ This is just a random collection of commands which I have found useful in Bash. 
     - [Enable `ssh` server on remote machine](#enable-ssh-server-on-remote-machine)
     - [Automatically run commands after connection over SSH](#automatically-run-commands-after-connection-over-ssh)
   - [Synchronise remote files and directories with `rsync`](#synchronise-remote-files-and-directories-with-rsync)
+  - [Useful commands for running experiments on a server](#useful-commands-for-running-experiments-on-a-server)
   - [Package management with `apt`](#package-management-with-apt)
     - [What's the difference between `apt` and `apt-get`?](#whats-the-difference-between-apt-and-apt-get)
     - [What's the difference between `apt update`, `apt upgrade`, `apt full-upgrade`, and `apt-get dist-upgrade`?](#whats-the-difference-between-apt-update-apt-upgrade-apt-full-upgrade-and-apt-get-dist-upgrade)
@@ -357,6 +358,39 @@ Flag | Meaning
 ```
 rsync -Chavz . hostname:~/dir/to/sync  --exclude ".*" --exclude "*.pyc"
 rsync -Chavz hostname:~/dir/to/sync/ . --exclude ".*" --exclude "*.pyc" --ignore-existing
+```
+
+## Useful commands for running experiments on a server
+
+```bash
+wc      -l      ~/.ssh/config
+head    -n50    ~/.ssh/config
+
+ssh HOSTNAME
+exit
+
+ssh HOSTNAME screen -ls
+
+ssh HOSTNAME nvidia-smi
+
+ssh HOSTNAME ls             screen_output
+ssh HOSTNAME wc     -l      screen_output/TEST_NAME.txt
+ssh HOSTNAME tail   -n100   screen_output/TEST_NAME.txt
+
+rsync -Chavz . HOSTNAME:~/PROJECT_DIR       --exclude ".*" --exclude "*.pyc"
+rsync -Chavz ../OTHER_PROJECT HOSTNAME:~    --exclude ".*" --exclude "*.pyc"
+rsync -Chavz HOSTNAME:~/PROJECT_DIR/ .      --exclude ".*" --exclude "*.pyc" --ignore-existing
+
+scp HOSTNAME:~/screen_output/TEST_NAME.txt ./results
+
+rm -rf  ~/screen_output
+mkdir   ~/screen_output
+ls      ~/screen_output
+
+cd ~/PROJECT_DIR/
+TEST_NAME="TEST_NAME"
+echo ${TEST_NAME}
+screen -S ${TEST_NAME} -L -Logfile ~/screen_output/${TEST_NAME}.txt python3 scripts/SCRIPT_NAME.py --ARG_1 VAL_1 --ARG_2
 ```
 
 ## Package management with `apt`
