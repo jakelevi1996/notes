@@ -29,6 +29,16 @@
         "when": "editorTextFocus"
     },
     {
+        "key": "ctrl+t",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "workbench.action.terminal.new",
+                "workbench.action.terminal.runSelectedText",
+            ],
+        },
+    },
+    {
         "key": "shift+alt+r",
         "command": "revealFileInOS",
     },
