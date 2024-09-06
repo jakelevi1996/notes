@@ -85,6 +85,10 @@
         }
     },
     {
+        "key": "shift+alt+2",
+        "command": "testing.reRunLastRun",
+    },
+    {
         "key": "shift+alt+t",
         "command": "workbench.action.terminal.new",
     },
