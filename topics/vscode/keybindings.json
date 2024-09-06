@@ -86,7 +86,13 @@
     },
     {
         "key": "shift+alt+2",
-        "command": "testing.reRunLastRun",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "workbench.view.testing.focus",
+                "testing.reRunLastRun",
+            ]
+        }
     },
     {
         "key": "shift+alt+t",
