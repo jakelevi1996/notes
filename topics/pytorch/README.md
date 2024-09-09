@@ -5,6 +5,7 @@
 - [Notes on PyTorch](#notes-on-pytorch)
   - [Contents](#contents)
   - [Installing PyTorch](#installing-pytorch)
+  - [Set `CUDA_VISIBLE_DEVICES` from CLI arguments](#set-cuda_visible_devices-from-cli-arguments)
   - [Single script example of training a MLP on MNIST](#single-script-example-of-training-a-mlp-on-mnist)
   - [Pattern for saving results in automatically named directory from CLI arguments](#pattern-for-saving-results-in-automatically-named-directory-from-cli-arguments)
   - [Pattern for saving and loading models](#pattern-for-saving-and-loading-models)
@@ -35,6 +36,61 @@ python -m pip install torch torchvision torchaudio --extra-index-url https://dow
 ```
 
 This installation appears to work fine, and commands such as `torch.cuda.is_available()` and `torch.tensor([2.,3,4], requires_grad=True).cuda()` return results suggesting that GPU support is working successfully.
+
+## Set `CUDA_VISIBLE_DEVICES` from CLI arguments
+
+`test_devices.py`:
+
+```python
+import os
+import torch
+from jutility import util, cli
+
+def main(args: cli.Namespace):
+    if args.devices is not None:
+        os.environ["CUDA_VISIBLE_DEVICES"] = ",".join(args.devices)
+
+    print("torch.cuda.device_count() = %i" % torch.cuda.device_count())
+
+    # ...
+
+if __name__ == "__main__":
+    parser = cli.ObjectParser(
+        # ...
+        cli.Arg("devices", nargs="*"),
+        # ...
+    )
+    args = parser.parse_args()
+
+    with util.Timer("main"):
+        main(args)
+```
+
+Examples:
+
+```
+>>> python test_devices.py
+torch.cuda.device_count() = 1
+Time taken for `main` = 0.1544 seconds
+>>> python test_devices.py --devices 0
+torch.cuda.device_count() = 1
+Time taken for `main` = 0.0996 seconds
+>>> python test_devices.py --devices
+torch.cuda.device_count() = 0
+Time taken for `main` = 0.0568 seconds
+>>> python test_devices.py --devices 1 2 3
+torch.cuda.device_count() = 3
+Time taken for `main` = 0.3359 seconds
+>>> python test_devices.py --devices 0 3 2
+torch.cuda.device_count() = 3
+Time taken for `main` = 0.2664 seconds
+>>> python test_devices.py --devices 0 3 2 6 9 189
+torch.cuda.device_count() = 3
+Time taken for `main` = 0.4095 seconds
+>>> python test_devices.py --devices 123 456 789
+torch.cuda.device_count() = 0
+Time taken for `main` = 0.0355 seconds
+```
 
 ## Single script example of training a MLP on MNIST
 
