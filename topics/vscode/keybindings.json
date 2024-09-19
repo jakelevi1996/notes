@@ -78,6 +78,21 @@
         },
     },
     {
+        "key": "shift+alt+v",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "workbench.action.terminal.focus",
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "cp ${relativeFile} ${relativeFileDirname}${pathSeparator}${fileBasenameNoExtension}_copy${fileExtname}\u000dgit checkout -- ${relativeFile}\u000d",
+                    },
+                },
+            ],
+        },
+    },
+    {
         "key": "shift+alt+1",
         "command": "workbench.action.terminal.sendSequence",
         "args": {
