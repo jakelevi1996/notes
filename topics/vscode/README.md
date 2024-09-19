@@ -11,8 +11,8 @@
 ## Useful links
 
 - [VS Code docs - Terminal Basics](https://code.visualstudio.com/docs/terminal/basics)
-- [VS Code docs - Terminal Advanced](https://code.visualstudio.com/docs/terminal/advanced)
-- [VS Code docs - Key Bindings for Visual Studio Code](https://code.visualstudio.com/docs/getstarted/keybindings)
+- [VS Code docs - Terminal Advanced (including `workbench.action.terminal.sendSequence`)](https://code.visualstudio.com/docs/terminal/advanced)
+- [VS Code docs - Key Bindings for Visual Studio Code (including `runCommands`)](https://code.visualstudio.com/docs/getstarted/keybindings)
 - [VS Code docs - Variables Reference (including `${relativeFile}`)](https://code.visualstudio.com/docs/editor/variables-reference)
 - [Virtual-Key Codes (including `0x0D`)](https://learn.microsoft.com/en-gb/windows/win32/inputdev/virtual-key-codes)
 
