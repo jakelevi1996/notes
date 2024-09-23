@@ -11,6 +11,7 @@
   - [Pattern for saving and loading models](#pattern-for-saving-and-loading-models)
   - [Simple automatic differentiation](#simple-automatic-differentiation)
   - [Simple gradient descent](#simple-gradient-descent)
+  - [Comparing learning rates for Adam optimiser](#comparing-learning-rates-for-adam-optimiser)
   - [Moving a tensor that requires gradients to a different device](#moving-a-tensor-that-requires-gradients-to-a-different-device)
   - [Using a DataLoader with a custom dataset](#using-a-dataloader-with-a-custom-dataset)
   - [`map` module for automatically transforming `DataLoader` instances](#map-module-for-automatically-transforming-dataloader-instances)
@@ -334,6 +335,46 @@ plotting.plot(*line_list, plot_name="Weights vs iteration")
 ![](img/Error_vs_iteration.png)
 
 ![](img/Weights_vs_iteration.png)
+
+## Comparing learning rates for Adam optimiser
+
+```python
+import torch
+from jutility import plotting, util
+
+lr_list = [1e-4, 1e-3, 1e-2, 1e-1, 1e0]
+cp = plotting.ColourPicker(len(lr_list), cyclic=False)
+lines = []
+
+for lr in lr_list:
+
+    x = torch.tensor([1], dtype=torch.float32, requires_grad=True)
+
+    optimiser = torch.optim.Adam([x], lr=lr)
+
+    def loss_func(x: torch.Tensor):
+        return x.square()
+
+    x_list = [loss_func(x).item()]
+
+    for _ in util.progress(range(10000)):
+        optimiser.zero_grad()
+        loss = loss_func(x)
+        loss.backward()
+        optimiser.step()
+        x_list.append(loss.item())
+
+    lines.append(plotting.Line(x_list, c=cp.next(), label="lr = %.4f" % lr))
+
+plotting.plot(
+    *lines,
+    plotting.Legend(),
+    log_y=True,
+    plot_name="Comparing learning rates for minimising quadratic with Adam",
+)
+```
+
+![](img/Comparing_learning_rates_for_minimising_quadratic_with_Adam.png)
 
 ## Moving a tensor that requires gradients to a different device
 
