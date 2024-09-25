@@ -11,7 +11,8 @@
   - [Pattern for saving and loading models](#pattern-for-saving-and-loading-models)
   - [Simple automatic differentiation](#simple-automatic-differentiation)
   - [Simple gradient descent](#simple-gradient-descent)
-  - [Comparing learning rates for Adam optimiser](#comparing-learning-rates-for-adam-optimiser)
+  - [Comparing learning rates for Adam optimiser (univariate quadratic)](#comparing-learning-rates-for-adam-optimiser-univariate-quadratic)
+  - [Comparing learning rates and optimisers (multivariate quadratic)](#comparing-learning-rates-and-optimisers-multivariate-quadratic)
   - [Moving a tensor that requires gradients to a different device](#moving-a-tensor-that-requires-gradients-to-a-different-device)
   - [Using a DataLoader with a custom dataset](#using-a-dataloader-with-a-custom-dataset)
   - [`map` module for automatically transforming `DataLoader` instances](#map-module-for-automatically-transforming-dataloader-instances)
@@ -336,7 +337,7 @@ plotting.plot(*line_list, plot_name="Weights vs iteration")
 
 ![](img/Weights_vs_iteration.png)
 
-## Comparing learning rates for Adam optimiser
+## Comparing learning rates for Adam optimiser (univariate quadratic)
 
 ```python
 import torch
@@ -375,6 +376,73 @@ plotting.plot(
 ```
 
 ![](img/Comparing_learning_rates_for_minimising_quadratic_with_Adam.png)
+
+## Comparing learning rates and optimisers (multivariate quadratic)
+
+```python
+import torch
+from jutility import plotting, util
+
+torch.manual_seed(0)
+
+n = 10
+
+t = torch.normal(0, 1, [n])
+w = torch.normal(0, 1, [n, n])
+
+lr_list = [1e-4, 1e-3, 1e-2, 1e-1, 1e0]
+optimiser_list: list[type[torch.optim.Optimizer]] = [
+    torch.optim.Adam,
+    torch.optim.AdamW,
+    torch.optim.SGD,
+    torch.optim.RMSprop,
+]
+cp = plotting.ColourPicker(len(lr_list), cyclic=False)
+sp_list = []
+
+def loss_func(x: torch.Tensor):
+    return ((w @ x) - t).square().sum()
+
+for optimiser_type in optimiser_list:
+    lines = []
+
+    for lr in lr_list:
+        x = torch.zeros([n], dtype=torch.float32, requires_grad=True)
+        optimiser = optimiser_type([x], lr=lr)
+        loss_list = [loss_func(x).item()]
+
+        for _ in util.progress(range(20000)):
+            optimiser.zero_grad()
+            loss = loss_func(x)
+            loss.backward()
+            optimiser.step()
+            loss_list.append(loss.item())
+
+        lines.append(plotting.Line(loss_list, c=cp.next(), a=0.8))
+
+    sp = plotting.Subplot(
+        *reversed(lines),
+        log_y=True,
+        ylim=[1e-13, 1e3],
+        title=optimiser_type.__name__,
+    )
+    sp_list.append(sp)
+
+mp = plotting.MultiPlot(
+    *sp_list,
+    legend=plotting.FigureLegend(
+        *[
+            plotting.Line(c=cp.next(), label="lr = %.4f" % lr)
+            for lr in lr_list
+        ],
+        ncols=len(lr_list),
+    ),
+    title="Comparing optimisers and learning rates for minimising quadratic",
+)
+mp.save("compare_optimisers_learning_rates")
+```
+
+![](img/compare_optimisers_learning_rates.png)
 
 ## Moving a tensor that requires gradients to a different device
 
