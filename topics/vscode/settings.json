@@ -20,17 +20,17 @@
         "*.m": "Matlab",
         "*.mexw64": "Matlab",
         "*.lnk": "Url",
-        "*.readme": "Readme"
+        "*.readme": "Readme",
     },
     "C_Cpp.default.includePath": [
         "${workspaceFolder}",
         "C:/Python37/include",
         "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.0/include/",
-        "C:/Program Files/MATLAB/R2020a/extern/include"
+        "C:/Program Files/MATLAB/R2020a/extern/include",
     ],
     "matlab.mlintpath": "C:/Program Files/MATLAB/R2020a/bin/win64/mlint.exe",
     "[matlab]": {
-        "editor.rulers": [75]
+        "editor.rulers": [75],
     },
     "diffEditor.ignoreTrimWhitespace": false,
     // "diffEditor.ignoreTrimWhitespace": true,
@@ -47,13 +47,13 @@
     "debug.onTaskErrors": "abort",
     "explorer.copyRelativePathSeparator": "/",
     "files.associations": {
-        "*.vhd": "sql"
+        "*.vhd": "sql",
     },
     "workbench.colorTheme": "Default Dark+",
     "workbench.editor.wrapTabs": true,
     "workbench.editorAssociations": {
         "*.ipynb": "jupyter-notebook",
-        "*.bin": "hexEditor.hexedit"
+        "*.bin": "hexEditor.hexedit",
     },
     "workbench.iconTheme": "material-icon-theme",
     "workbench.list.horizontalScrolling": true,
@@ -65,38 +65,38 @@
     // "workbench.colorCustomizations": {
     //     "editorError.foreground":   "#00000000",
     //     "editorWarning.foreground": "#00000000",
-    //     "editorInfo.foreground":    "#00000000"
-    // }
+    //     "editorInfo.foreground":    "#00000000",
+    // },
     "terminal.integrated.profiles.windows": {
         "PowerShell": {
             "source": "PowerShell",
-            "icon": "terminal-powershell"
+            "icon": "terminal-powershell",
         },
         "Command Prompt": {
             "path": [
                 "${env:windir}\\Sysnative\\cmd.exe",
-                "${env:windir}\\System32\\cmd.exe"
+                "${env:windir}\\System32\\cmd.exe",
             ],
             "args": [],
-            "icon": "terminal-cmd"
+            "icon": "terminal-cmd",
         },
         "Git Bash": {
-            "source": "Git Bash"
+            "source": "Git Bash",
         },
         "Ubuntu-18.04 (WSL)": {
             "path": "C:\\WINDOWS\\System32\\wsl.exe",
             "args": [
                 "-d",
-                "Ubuntu-18.04"
-            ]
+                "Ubuntu-18.04",
+            ],
         },
         "Ubuntu (WSL)": {
             "path": "C:\\WINDOWS\\System32\\wsl.exe",
             "args": [
                 "-d",
-                "Ubuntu"
-            ]
-        }
+                "Ubuntu",
+            ],
+        },
     },
     // "terminal.integrated.defaultProfile.windows": "Ubuntu (WSL)",
     // "terminal.integrated.defaultProfile.windows": "Ubuntu-18.04 (WSL)",
@@ -106,14 +106,14 @@
         "editor.language.colorizedBracketPairs": [
             ["{", "}"],
             ["[", "]"],
-            ["(", ")"]
+            ["(", ")"],
         ],
     },
     "[markdown]": {
         "editor.language.colorizedBracketPairs": [
             ["{", "}"],
             ["[", "]"],
-            ["(", ")"]
+            ["(", ")"],
         ],
     },
     "files.autoSave": "off",
