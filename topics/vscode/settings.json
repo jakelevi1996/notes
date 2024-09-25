@@ -118,4 +118,14 @@
     },
     "files.autoSave": "off",
     "editor.stickyScroll.enabled": true,
+    "json.schemas": [
+        {
+            "fileMatch": [
+                "topics/vscode/*.json",
+            ],
+            "schema": {
+                "allowTrailingCommas": true,
+            },
+        },
+    ],
 }
