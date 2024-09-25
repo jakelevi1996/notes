@@ -32,8 +32,8 @@
     "[matlab]": {
         "editor.rulers": [75]
     },
-    // "diffEditor.ignoreTrimWhitespace": false,
-    "diffEditor.ignoreTrimWhitespace": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+    // "diffEditor.ignoreTrimWhitespace": true,
     "gitlens.hovers.currentLine.over": "line",
     "gitlens.currentLine.enabled": false,
     "gitlens.codeLens.enabled": false,
