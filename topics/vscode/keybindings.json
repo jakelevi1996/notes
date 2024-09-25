@@ -94,9 +94,17 @@
     },
     {
         "key": "shift+alt+1",
-        "command": "workbench.action.terminal.sendSequence",
+        "command": "runCommands",
         "args": {
-            "text": "\u001b[A\u000d"
+            "commands": [
+                "workbench.action.files.saveAll",
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "\u001b[A\u000d"
+                    }
+                }
+            ]
         }
     },
     {
