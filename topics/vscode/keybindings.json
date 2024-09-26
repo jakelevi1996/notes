@@ -159,9 +159,17 @@
     },
     {
         "key": "shift+alt+a",
-        "command": "workbench.action.terminal.sendSequence",
+        "command": "runCommands",
         "args": {
-            "text": "git add -f ${relativeFile}\u000D",
+            "commands": [
+                "terminal.focus",
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "git add -f ${relativeFile}\u000D",
+                    },
+                },
+            ],
         },
     },
     {
@@ -213,9 +221,17 @@
     },
     {
         "key": "alt+p",
-        "command": "workbench.action.terminal.sendSequence",
+        "command": "runCommands",
         "args": {
-            "text": "git push\u000D",
+            "commands": [
+                "terminal.focus",
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "git push\u000D",
+                    },
+                },
+            ],
         },
     },
     {
