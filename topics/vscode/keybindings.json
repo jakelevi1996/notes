@@ -49,7 +49,7 @@
     {
         "key": "ctrl+d",
         "command": "compareSelected",
-        "when": "${fileExtname} != png",
+        "when": "resourceExtname != .png",
     },
     {
         "key": "ctrl+d",
@@ -72,7 +72,7 @@
                 },
             ],
         },
-        "when": "${fileExtname} == png",
+        "when": "resourceExtname == .png",
     },
     {
         "key": "alt+d",
