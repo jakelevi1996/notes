@@ -49,6 +49,30 @@
     {
         "key": "ctrl+d",
         "command": "compareSelected",
+        "when": "${fileExtname} != png",
+    },
+    {
+        "key": "ctrl+d",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "terminal.focus",
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "python -c \"from jutility import util; util.save_image_diff(\\\"${relativeFile}\\\", ",
+                    },
+                },
+                "workbench.action.openPreviousRecentlyUsedEditor",
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "\\\"${relativeFile}\\\", \\\"vscode_diff\\\", rgba=True)\" && code results/vscode_diff.png\u000d",
+                    },
+                },
+            ],
+        },
+        "when": "${fileExtname} == png",
     },
     {
         "key": "alt+d",
