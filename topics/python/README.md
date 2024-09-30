@@ -122,6 +122,7 @@ Below are some useful links for writing `pyproject.toml` files and packaging in 
 - [Package Discovery and Namespace Packages](https://setuptools.pypa.io/en/latest/userguide/package_discovery.html)
 - [Development Mode (AKA “Editable Installs”)](https://setuptools.pypa.io/en/latest/userguide/development_mode.html)
 - [Writing your `pyproject.toml`](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/)  (from [`packaging.python.org`](https://packaging.python.org/))
+- [Packaging Python Projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/) (from [`packaging.python.org`](https://packaging.python.org/en/latest/), including uploading to PyPI/`pip`)
 - [`pip install`](https://pip.pypa.io/en/stable/cli/pip_install/) (from [`pip.pypa.io`](https://pip.pypa.io/))
 
 ## Profiling Python code
