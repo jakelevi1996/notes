@@ -396,7 +396,7 @@ rm -rf  ~/screen_output
 mkdir   ~/screen_output
 ls      ~/screen_output
 
-TEST_NAME="insert_test_name_here"; screen -S ${TEST_NAME} -L -Logfile ~/screen_output/${TEST_NAME}.txt python scripts/SCRIPT_NAME.py --ARG_1 VAL_1 --ARG_2
+TEST_NAME="insert_test_name_here"; screen -S ${TEST_NAME} -L -Logfile ~/screen_output/${TEST_NAME}.txt python3 scripts/SCRIPT_NAME.py --ARG_1 VAL_1 --ARG_2
 ```
 
 ## Package management with `apt`
