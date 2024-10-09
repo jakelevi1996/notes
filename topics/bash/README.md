@@ -80,6 +80,25 @@ This is just a random collection of commands which I have found useful in Bash. 
 
 ## Run, control and view detached processes using `screen`
 
+TLDR:
+
+```bash
+# Reset logging output directory
+rm -rf  ~/screen_output
+mkdir   ~/screen_output
+ls      ~/screen_output
+# Run command (detach by pressing `ctrl+a` and then `d`)
+TEST_NAME="insert_test_name_here"; screen -S ${TEST_NAME} -L -Logfile ~/screen_output/${TEST_NAME}.txt python3 scripts/SCRIPT_NAME.py --ARG_1 VAL_1 --ARG_2
+# Run command in detached mode
+TEST_NAME="insert_test_name_here"; screen -dmS ${TEST_NAME} -L -Logfile ~/screen_output/${TEST_NAME}.txt python3 scripts/SCRIPT_NAME.py --ARG_1 VAL_1 --ARG_2
+# List running screen processes
+screen -ls
+# Attach to process (can use `pid.test_name` copied from `screen -ls`, or just `pid` or just `test_name`)
+screen -r pid.test_name
+# Kill detached process (can use `pid.test_name` copied from `screen -ls`, or just `pid` or just `test_name`)
+screen -XS pid.test_name quit
+```
+
 - Say you have a long-running script, and you want to start the script running on the server, disconnect from the server without stopping the script, and later reconnect to the server and view the output from the script in real time
 - As an example, consider a script that prints the current date and time once per second, which can be created as follows:
 
