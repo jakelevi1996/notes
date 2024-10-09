@@ -373,6 +373,11 @@ ssh HOSTNAME screen -ls
 
 ssh HOSTNAME nvidia-smi
 
+ssh HOSTNAME_1 nvidia-smi; ssh HOSTNAME_2 nvidia-smi
+
+ssh HOSTNAME_1 nvidia-smi --loop=1 > .temp.txt
+ssh HOSTNAME_1 ps -o user= -p 9318
+
 ssh HOSTNAME ls             screen_output
 ssh HOSTNAME wc     -l      screen_output/TEST_NAME.txt
 ssh HOSTNAME tail   -n100   screen_output/TEST_NAME.txt
@@ -381,16 +386,17 @@ rsync -Chavz . HOSTNAME:~/PROJECT_DIR       --exclude ".*" --exclude "*.pyc"
 rsync -Chavz ../OTHER_PROJECT HOSTNAME:~    --exclude ".*" --exclude "*.pyc"
 rsync -Chavz HOSTNAME:~/PROJECT_DIR/ .      --exclude ".*" --exclude "*.pyc" --ignore-existing
 
+cd ~/jutility
+git pull
+cd ~/PROJECT_DIR
+
 scp HOSTNAME:~/screen_output/TEST_NAME.txt ./results
 
 rm -rf  ~/screen_output
 mkdir   ~/screen_output
 ls      ~/screen_output
 
-cd ~/PROJECT_DIR/
-TEST_NAME="TEST_NAME"
-echo ${TEST_NAME}
-screen -S ${TEST_NAME} -L -Logfile ~/screen_output/${TEST_NAME}.txt python3 scripts/SCRIPT_NAME.py --ARG_1 VAL_1 --ARG_2
+TEST_NAME="insert_test_name_here"; screen -S ${TEST_NAME} -L -Logfile ~/screen_output/${TEST_NAME}.txt python scripts/SCRIPT_NAME.py --ARG_1 VAL_1 --ARG_2
 ```
 
 ## Package management with `apt`
