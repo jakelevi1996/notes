@@ -407,8 +407,8 @@ ssh HOSTNAME ls             screen_output
 ssh HOSTNAME wc     -l      screen_output/TEST_NAME.txt
 ssh HOSTNAME tail   -n100   screen_output/TEST_NAME.txt
 
-rsync -Chavz . HOSTNAME:~/PROJECT_DIR       --exclude ".*" --exclude "*.pyc"
-rsync -Chavz ../OTHER_PROJECT HOSTNAME:~    --exclude ".*" --exclude "*.pyc"
+rsync -Chavz . HOSTNAME:~/PROJECT_DIR       --exclude ".*" --exclude "*.pyc" --exclude "*.egg-info"
+rsync -Chavz ../OTHER_PROJECT HOSTNAME:~    --exclude ".*" --exclude "*.pyc" --exclude "*.egg-info"
 rsync -Chavz HOSTNAME:~/PROJECT_DIR/ .      --exclude ".*" --exclude "*.pyc" --ignore-existing
 
 cd ~/jutility
