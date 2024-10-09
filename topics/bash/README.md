@@ -188,11 +188,17 @@ screen -S temp_session_${VAR_1}_${VAR_2} -L -Logfile screen_output_${VAR_2}_${VA
 
 A good approach for organising commands, session names and log files is to set a `$TEST_NAME` environment variable based on the arguments that will be passed to the command, and then using `$TEST_NAME` to set the `screen` session name, log file (in a dedicated subdirectory to avoid clogging up the home directory), and potentially to pass as an argument to the command itself, for example:
 
-```
+```bash
 mkdir ~/screen_output
 DEVICE=2 SEED=3 GAME="IPD" TEST_NAME="unique_test_name_for_game_${GAME}_seed_${SEED}"
 echo ${TEST_NAME}
 CUDA_VISIBLE_DEVICES=${DEVICE} screen -S ${TEST_NAME} -L -Logfile ~/screen_output/${TEST_NAME}.txt python3 ~/dir_name/src/python_script.py --game ${GAME} --seed ${SEED} --output_dir output_dir_name/${TEST_NAME}
+```
+
+To set an environment variable *and use it* in a single line, separate setting the environment variable from the rest of the command using a semicolon:
+
+```bash
+TEST_NAME="insert_test_name_here"; screen -S ${TEST_NAME} -L -Logfile ~/screen_output/${TEST_NAME}.txt python3 scripts/SCRIPT_NAME.py --ARG_1 VAL_1 --ARG_2
 ```
 
 - If running `screen` returns the error `mkdir: cannot create directory ‘/run/screen’: Permission denied`, use the following commands (with `sudo` privelages), which should fix the problem:
