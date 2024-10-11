@@ -50,15 +50,21 @@ def main(
     printer.hline()
 
     mp = plotting.MultiPlot(
-        plotting.Subplot(plotting.ImShow(x[0]),             title="x"),
-        plotting.Subplot(plotting.ImShow(x_up[0]),          title="x_up"),
-        plotting.Subplot(plotting.ImShow(w.weight[0, 0]),   title="w"),
-        plotting.Subplot(plotting.ImShow(y[0]),             title="y"),
-        plotting.Subplot(plotting.ImShow(y_up[0]),          title="y_up"),
+        subplot(x,          name="x"),
+        subplot(x_up,       name="x_up"),
+        subplot(w.weight,   name="w"),
+        subplot(y,          name="y"),
+        subplot(y_up,       name="y_up"),
         title="ConvTranspose2d demo",
         figsize=[8, 6],
     )
     mp.save("ConvTranspose2d demo", OUTPUT_DIR)
+
+def subplot(t: torch.Tensor, name: str):
+    return plotting.Subplot(
+        plotting.ImShow(t.squeeze()),
+        title="%s %s" % (name, list(t.shape)),
+    )
 
 if __name__ == "__main__":
     torch.set_printoptions(
