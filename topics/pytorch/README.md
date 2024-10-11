@@ -795,3 +795,9 @@ python topics/pytorch/scripts/convtranspose2d_demo.py --x_uniform  --kernel_size
 ```
 
 ![](img/k5s2waFwuFx5xaFxuT.png)
+
+```
+python topics/pytorch/scripts/convtranspose2d_demo.py --x_uniform --w_arange  --kernel_size 3 --stride 5
+```
+
+![](img/k3s5waTwuFx5xaFxuT.png)
