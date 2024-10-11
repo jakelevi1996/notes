@@ -776,4 +776,22 @@ python topics/pytorch/scripts/convtranspose2d_demo.py -h
 python topics/pytorch/scripts/convtranspose2d_demo.py --x_arange
 ```
 
-![](img/k3s2waFx5xaT.png)
+![](img/k3s2waFwuFx5xaTxuF.png)
+
+```
+python topics/pytorch/scripts/convtranspose2d_demo.py --x_uniform --w_uniform --kernel_size 2
+```
+
+![](img/k2s2waFwuTx5xaFxuT.png)
+
+```
+python topics/pytorch/scripts/convtranspose2d_demo.py --x_uniform  --kernel_size 4
+```
+
+![](img/k4s2waFwuFx5xaFxuT.png)
+
+```
+python topics/pytorch/scripts/convtranspose2d_demo.py --x_uniform  --kernel_size 5
+```
+
+![](img/k5s2waFwuFx5xaFxuT.png)

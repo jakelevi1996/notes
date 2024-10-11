@@ -12,6 +12,8 @@ def main(
     x_size=5,
     w_arange=True,
     x_arange=True,
+    w_uniform=False,
+    x_uniform=False,
 ):
     w = torch.nn.ConvTranspose2d(1, 1, kernel_size, stride)
     w.requires_grad_(False)
@@ -21,10 +23,14 @@ def main(
     if w_arange:
         w.weight += torch.arange(w.weight.numel()).reshape(w.weight.shape)
         # w.weight.copy_(100 ** w.weight)
+    if w_uniform:
+        w.weight.uniform_()
 
     x = torch.ones([1, x_size, x_size])
     if x_arange:
         x += torch.arange(x.numel()).reshape(x.shape)
+    if x_uniform:
+        x.uniform_()
 
     y = w.forward(x)
 
@@ -80,8 +86,10 @@ if __name__ == "__main__":
         cli.Arg("kernel_size",  "k", type=int, default=3),
         cli.Arg("stride",       "s", type=int, default=2),
         cli.Arg("x_size",       "x", type=int, default=5),
-        cli.Arg("w_arange", "wa", action="store_true"),
-        cli.Arg("x_arange", "xa", action="store_true"),
+        cli.Arg("w_arange",     "wa", action="store_true"),
+        cli.Arg("x_arange",     "xa", action="store_true"),
+        cli.Arg("w_uniform",    "wu", action="store_true"),
+        cli.Arg("x_uniform",    "xu", action="store_true"),
     )
     args = parser.parse_args()
 
