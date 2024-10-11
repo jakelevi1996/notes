@@ -1,11 +1,12 @@
 import os
 import torch
-from jutility import plotting, util
+from jutility import plotting, util, cli
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR  = os.path.abspath(os.path.join(CURRENT_DIR, "..", "img"))
 
 def main(
+    name,
     kernel_size=2,
     stride=2,
     x_size=5,
@@ -58,7 +59,7 @@ def main(
         title="ConvTranspose2d demo",
         figsize=[8, 6],
     )
-    mp.save("ConvTranspose2d demo", OUTPUT_DIR)
+    mp.save(name, OUTPUT_DIR)
 
 def subplot(t: torch.Tensor, name: str):
     return plotting.Subplot(
@@ -75,24 +76,14 @@ if __name__ == "__main__":
     )
     torch.manual_seed(0)
 
-    main(
-        # kernel_size=2,
-        kernel_size=3,
-        # kernel_size=4,
-        # kernel_size=5,
-        # kernel_size=6,
-        # kernel_size=7,
-        stride=2,
-        # stride=3,
-        # stride=4,
-        # stride=5,
-        # stride=6,
-        # stride=7,
-        x_size=5,
-        # x_size=10,
-        # x_size=100,
-        # w_arange=True,
-        w_arange=False,
-        x_arange=True,
-        # x_arange=False,
+    parser = cli.ObjectParser(
+        cli.Arg("kernel_size",  "k", type=int, default=3),
+        cli.Arg("stride",       "s", type=int, default=2),
+        cli.Arg("x_size",       "x", type=int, default=5),
+        cli.Arg("w_arange", "wa", action="store_true"),
+        cli.Arg("x_arange", "xa", action="store_true"),
     )
+    args = parser.parse_args()
+
+    name = cli.get_args_summary(args)
+    main(name, **cli.get_arg_dict(args))

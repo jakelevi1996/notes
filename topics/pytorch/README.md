@@ -768,6 +768,12 @@ plotting.plot(
 
 ## Up-convolution (AKA transposed convolution AKA deconvolution) demo
 
-See [`topics/pytorch/scripts/convtranspose2d_demo.py`](scripts/convtranspose2d_demo.py), which uses [`torch.nn.ConvTranspose2d`](https://pytorch.org/docs/stable/generated/torch.nn.ConvTranspose2d.html), and produces, for example, the following output:
+See [`topics/pytorch/scripts/convtranspose2d_demo.py`](scripts/convtranspose2d_demo.py), which uses [`torch.nn.ConvTranspose2d`](https://pytorch.org/docs/stable/generated/torch.nn.ConvTranspose2d.html), and produces the following outputs:
 
-![](img/ConvTranspose2d_demo.png)
+```
+python topics/pytorch/scripts/convtranspose2d_demo.py -h
+
+python topics/pytorch/scripts/convtranspose2d_demo.py --x_arange
+```
+
+![](img/k3s2waFx5xaT.png)
