@@ -18,6 +18,7 @@
   - [`map` module for automatically transforming `DataLoader` instances](#map-module-for-automatically-transforming-dataloader-instances)
   - [Simple example of training an LSTM](#simple-example-of-training-an-lstm)
   - [Demonstrating periodic naive learning in a 2-player general sum matrix game](#demonstrating-periodic-naive-learning-in-a-2-player-general-sum-matrix-game)
+  - [Up-convolution (AKA transposed convolution AKA deconvolution) demo](#up-convolution-aka-transposed-convolution-aka-deconvolution-demo)
 
 ## Installing PyTorch
 
@@ -764,3 +765,9 @@ plotting.plot(
 ![](img/Action_probabilities.png)
 
 ![](img/Expected_payoffs.png)
+
+## Up-convolution (AKA transposed convolution AKA deconvolution) demo
+
+See [`topics/pytorch/scripts/convtranspose2d_demo.py`](scripts/convtranspose2d_demo.py), which uses [`torch.nn.ConvTranspose2d`](https://pytorch.org/docs/stable/generated/torch.nn.ConvTranspose2d.html), and produces, for example, the following output:
+
+![](img/ConvTranspose2d_demo.png)
