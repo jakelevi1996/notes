@@ -99,6 +99,8 @@ screen -r pid.test_name
 screen -XS pid.test_name quit
 ```
 
+Full tutorial:
+
 - Say you have a long-running script, and you want to start the script running on the server, disconnect from the server without stopping the script, and later reconnect to the server and view the output from the script in real time
 - As an example, consider a script that prints the current date and time once per second, which can be created as follows:
 
