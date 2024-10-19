@@ -13,6 +13,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [Profiling Python code](#profiling-python-code)
   - [`.temp.py`](#temppy)
   - [Useful Python snippets](#useful-python-snippets)
+    - [Print estimated finish time of experiments](#print-estimated-finish-time-of-experiments)
     - [Multi-headed matrix multiplication](#multi-headed-matrix-multiplication)
     - [Make a list of prime numbers](#make-a-list-of-prime-numbers)
     - [Get a timestamped filename](#get-a-timestamped-filename)
@@ -315,6 +316,29 @@ util.numpy_set_print_options()
 ```
 
 ## Useful Python snippets
+
+### Print estimated finish time of experiments
+
+```python
+t_complete  = "6h  1m 10s"
+t_current   = "4h 51m 24s"
+n_complete  = 3
+n_total     = 5
+
+n = n_total - (n_complete + 1)
+current_remaining = units.time_concise.diff(t_complete, t_current)
+total_remaining = units.time_concise.sum(current_remaining, t_complete, n)
+finish_time = units.time_concise.future_time(total_remaining)
+
+cf = util.ColumnFormatter("%-19s", sep=" = ", printer=printer)
+cf.print("Time left (current)", current_remaining)
+cf.print("Time left (total)",   total_remaining)
+cf.print("Estimated finish",    finish_time)
+
+# Time left (current) =  1h  9m 46s
+# Time left (total)   =  7h 10m 56s
+# Estimated finish    = 2024-10-19 08:35:12
+```
 
 ### Multi-headed matrix multiplication
 
