@@ -292,6 +292,7 @@ from jutility import plotting, util
 
 rng = np.random.default_rng(0)
 util.numpy_set_print_options()
+printer = util.Printer()
 
 # TEMPORARY CODE GOES HERE
 
