@@ -21,6 +21,7 @@ This is just a random collection of commands which I have found useful in Bash. 
     - [What's the difference between `apt update`, `apt upgrade`, `apt full-upgrade`, and `apt-get dist-upgrade`?](#whats-the-difference-between-apt-update-apt-upgrade-apt-full-upgrade-and-apt-get-dist-upgrade)
     - [Checking the version of an installed `apt` package using `apt list`](#checking-the-version-of-an-installed-apt-package-using-apt-list)
     - [Uninstalling packages and their dependencies](#uninstalling-packages-and-their-dependencies)
+  - [List files in a directory ordered by date with `ls -halt`](#list-files-in-a-directory-ordered-by-date-with-ls--halt)
   - [Use `git push` with an authentication token](#use-git-push-with-an-authentication-token)
   - [View the Linux distribution name and version number using `lsb_release`](#view-the-linux-distribution-name-and-version-number-using-lsb_release)
   - [Download VSCode](#download-vscode)
@@ -87,6 +88,7 @@ TLDR:
 rm -rf  ~/screen_output
 mkdir   ~/screen_output
 ls      ~/screen_output
+ls      ~/screen_output -halt
 # Run command (detach by pressing `ctrl+a` and then `d`)
 TEST_NAME="insert_test_name_here"; screen -S ${TEST_NAME} -L -Logfile ~/screen_output/${TEST_NAME}.txt python3 scripts/SCRIPT_NAME.py --ARG_1 VAL_1 --ARG_2
 # Run command in detached mode
@@ -422,6 +424,7 @@ scp HOSTNAME:~/screen_output/TEST_NAME.txt ./results
 rm -rf  ~/screen_output
 mkdir   ~/screen_output
 ls      ~/screen_output
+ls      ~/screen_output -halt
 
 TEST_NAME="insert_test_name_here"; screen -S ${TEST_NAME} -L -Logfile ~/screen_output/${TEST_NAME}.txt python3 scripts/SCRIPT_NAME.py --ARG_1 VAL_1 --ARG_2
 ```
@@ -505,6 +508,14 @@ Note that some packages are dummy packages, meaning they require very little ins
 - Parse `/var/log/apt/term.log` to extract all dependencies that were installed when `packagename` was installed and remove them manually
 - Run the command `apt show packagename`, and manually remove any packages listed as dependencies in the output from `apt show packagename` (and any dependencies of those dependencies, etc)
 - Run the command `apt list --installed | grep packagename` to view any installed packages which contain `packagename` in their name, which are likely to be dependencies of `packagename`, and remove all such packages (and any dependencies of those packages, etc)
+
+## List files in a directory ordered by date with `ls -halt`
+
+Use the flags `-halt` with the `ls` command to list files, dates, and human readable file sizes in a directory ordered by date. "`ls -halt` is for `human readable`, `show hidden`, `print details`, `sort by date`" ([source](https://superuser.com/questions/147027/how-can-i-sort-the-output-of-ls-by-last-modified-date#comment821579_147030)). For example:
+
+```
+ls ~/screen_output -halt
+```
 
 ## Use `git push` with an authentication token
 
