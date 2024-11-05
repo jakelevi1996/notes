@@ -406,6 +406,7 @@ ssh HOSTNAME_1 nvidia-smi; ssh HOSTNAME_2 nvidia-smi
 
 ssh HOSTNAME_1 nvidia-smi --loop=1 > .temp.txt
 ssh HOSTNAME_1 ps -o user= -p 9318
+ssh HOSTNAME_1 grep USERNAME /etc/passwd
 
 ssh HOSTNAME ls             screen_output
 ssh HOSTNAME wc     -l      screen_output/TEST_NAME.txt
