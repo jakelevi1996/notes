@@ -14,6 +14,7 @@ In particular:
 - [MATLAB](./topics/matlab/README.md)
 - [Python](./topics/python/README.md)
 - [PyTorch](./topics/pytorch/README.md)
+- [Quotes](topics/quotes/README.md)
 - [VS Code](./topics/vscode/README.md)
 - ...
 
