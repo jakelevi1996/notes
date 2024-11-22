@@ -19,6 +19,7 @@
   - [Simple example of training an LSTM](#simple-example-of-training-an-lstm)
   - [Demonstrating periodic naive learning in a 2-player general sum matrix game](#demonstrating-periodic-naive-learning-in-a-2-player-general-sum-matrix-game)
   - [Up-convolution (AKA transposed convolution AKA deconvolution) demo](#up-convolution-aka-transposed-convolution-aka-deconvolution-demo)
+  - [Learning rate scheduling](#learning-rate-scheduling)
 
 ## Installing PyTorch
 
@@ -801,3 +802,32 @@ python topics/pytorch/scripts/convtranspose2d_demo.py --x_uniform --w_arange  --
 ```
 
 ![](img/k3s5waTwuFx5xaFxuT.png)
+
+## Learning rate scheduling
+
+```python
+import torch
+from jutility import plotting
+
+x = torch.zeros(3)
+op = torch.optim.Adam([x])
+lrs = torch.optim.lr_scheduler.CosineAnnealingLR(op, 500, 1e-5, verbose=True)
+lr_list = []
+for _ in range(500):
+    lr_list.append(lrs.get_last_lr())
+    op.step()
+    lrs.step()
+
+print(lrs.get_last_lr())
+print(type(lrs.get_last_lr()))
+
+plotting.MultiPlot(
+    plotting.Subplot(
+        plotting.Line(lr_list),
+    ),
+    plotting.Subplot(
+        plotting.Line(lr_list),
+        log_y=True,
+    ),
+).save()
+```
