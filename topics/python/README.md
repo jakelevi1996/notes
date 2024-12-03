@@ -89,6 +89,8 @@ echo version = \"0.0.1\"                        >> "pyproject.toml"
 The package can be installed locally in "editable mode" with the command `python -m pip install -e .`. The following installation instructions can be added to a `README.md` file:
 
 ````
+## Installation
+
 This package can be installed locally in "editable mode" with the following commands:
 
 ```
