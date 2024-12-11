@@ -173,6 +173,10 @@
         },
     },
     {
+        "key": "ctrl+u",
+        "command": "workbench.files.action.compareNewUntitledTextFiles",
+    },
+    {
         "key": "alt+u",
         "command": "git.unstageSelectedRanges",
     },
