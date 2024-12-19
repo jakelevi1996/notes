@@ -130,7 +130,7 @@
                 {
                     "command": "workbench.action.terminal.sendSequence",
                     "args": {
-                        "text": "cp \"${relativeFile}\" \"${relativeFileDirname}${pathSeparator}${fileBasenameNoExtension}_copy${fileExtname}\"\u000dcode \"${relativeFileDirname}${pathSeparator}${fileBasenameNoExtension}_copy${fileExtname}\"\u000d",
+                        "text": "cp \"${relativeFile}\" \"${relativeFileDirname}${pathSeparator}${fileBasenameNoExtension}_copy${fileExtname}\" && code \"${relativeFileDirname}${pathSeparator}${fileBasenameNoExtension}_copy${fileExtname}\"\u000d",
                     },
                 },
             ],
