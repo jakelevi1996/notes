@@ -115,7 +115,22 @@
                 {
                     "command": "workbench.action.terminal.sendSequence",
                     "args": {
-                        "text": "cp ${relativeFile} ${relativeFileDirname}${pathSeparator}${fileBasenameNoExtension}_copy${fileExtname}\u000dgit checkout -- ${relativeFile}\u000dcode ${relativeFileDirname}${pathSeparator}${fileBasenameNoExtension}_copy${fileExtname}\u000d",
+                        "text": "git checkout -- ${relativeFile}\u000d",
+                    },
+                },
+            ],
+        },
+    },
+    {
+        "key": "ctrl+shift+-",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "workbench.action.terminal.focus",
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "cp ${relativeFile} ${relativeFileDirname}${pathSeparator}${fileBasenameNoExtension}_copy${fileExtname}\u000dcode ${relativeFileDirname}${pathSeparator}${fileBasenameNoExtension}_copy${fileExtname}\u000d",
                     },
                 },
             ],
