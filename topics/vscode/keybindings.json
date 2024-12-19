@@ -162,6 +162,16 @@
         },
     },
     {
+        "key": "shift+alt+3",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "workbench.view.testing.focus",
+                "testing.runAll",
+            ],
+        },
+    },
+    {
         "key": "shift+alt+t",
         "command": "workbench.action.terminal.new",
     },
