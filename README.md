@@ -10,6 +10,7 @@ In particular:
 - [Cuda](topics/cuda/README.md)
 - [`gdb` (GNU debugger)](topics/gdb/README.md)
 - [GitLab CI](topics/gitlab_ci/README.md)
+- [GNU Image Manipulation System](topics/gnu_gimp/README.md)
 - [LaTeX](topics/latex/README.md)
 - [MATLAB](topics/matlab/README.md)
 - [Python](topics/python/README.md)
