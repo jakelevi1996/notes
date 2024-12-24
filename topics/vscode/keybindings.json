@@ -167,6 +167,16 @@
         "args": {
             "commands": [
                 "workbench.view.testing.focus",
+                "testing.reRunFailTests",
+            ],
+        },
+    },
+    {
+        "key": "shift+alt+4",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "workbench.view.testing.focus",
                 "testing.runAll",
             ],
         },
