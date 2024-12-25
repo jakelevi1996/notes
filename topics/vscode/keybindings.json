@@ -48,7 +48,32 @@
     },
     {
         "key": "ctrl+d",
-        "command": "compareSelected",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "terminal.focus",
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "code --diff ${file} ",
+                    },
+                },
+                "workbench.action.openPreviousRecentlyUsedEditor",
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "${file}",
+                    },
+                },
+                "workbench.action.openNextRecentlyUsedEditor",
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "\u000d",
+                    },
+                },
+            ],
+        },
     },
     {
         "key": "ctrl+shift+d",
