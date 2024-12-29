@@ -71,6 +71,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "mypackage"
 version = "0.0.1"
+
 ```
 
 The following commands create minimal a `pyproject.toml` file automatically (replace `mypackage` with the name of the package):
