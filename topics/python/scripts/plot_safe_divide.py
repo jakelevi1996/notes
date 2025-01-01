@@ -8,7 +8,7 @@ x = np.linspace(-2, 2, 500)
 r_true = 1 / x
 r_safe = safe_divide(1, x, eps=1e-1)
 plotting.plot(
-    plotting.Line(x, r_true,  c="b", label="True", lw=10, a=0.5),
+    plotting.Line(x, r_true, c="b", label="True", lw=10, a=0.5),
     plotting.Line(x, r_safe, c="r", label="Safe"),
     plotting.Legend(),
     ylim=[-15, 15],
