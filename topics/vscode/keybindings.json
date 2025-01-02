@@ -105,6 +105,10 @@
         },
     },
     {
+        "key": "ctrl+alt+d",
+        "command": "workbench.files.action.compareNewUntitledTextFiles",
+    },
+    {
         "key": "alt+d",
         "command": "editor.action.deleteLines",
         "when": "textInputFocus && !editorReadonly",
@@ -112,10 +116,6 @@
     {
         "key": "shift+alt+d",
         "command": "workbench.debug.action.toggleRepl",
-    },
-    {
-        "key": "ctrl+alt+d",
-        "command": "workbench.action.duplicateWorkspaceInNewWindow",
     },
     {
         "key": "alt+t",
@@ -236,10 +236,6 @@
                 },
             ],
         },
-    },
-    {
-        "key": "ctrl+u",
-        "command": "workbench.files.action.compareNewUntitledTextFiles",
     },
     {
         "key": "alt+u",
