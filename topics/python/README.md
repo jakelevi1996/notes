@@ -119,6 +119,13 @@ To make the modules `mymodule1`, `mymodule2`, `mymodule3` accessible within the 
 from mypackage import mymodule1, mymodule2, mymodule3
 ```
 
+To make the function `mypackage.mymodule1.myfunction()` available from the command line with the name `my-command`, add the following lines to `pyproject.toml`:
+
+```toml
+[project.scripts]
+my-command = "mypackage.mymodule1:myfunction"
+```
+
 Below are some useful links for writing `pyproject.toml` files and packaging in general (from [`setuptools.pypa.io`](https://setuptools.pypa.io) unless otherwise specified):
 
 - [Configuring `setuptools` using `pyproject.toml` files](https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html)
