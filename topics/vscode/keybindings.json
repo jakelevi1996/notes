@@ -215,6 +215,10 @@
         "command": "workbench.action.toggleMaximizedPanel",
     },
     {
+        "key": "ctrl+alt+m",
+        "command": "workbench.action.toggleEditorWidths",
+    },
+    {
         "key": "alt+k",
         "command": "workbench.action.terminal.kill",
     },
@@ -298,6 +302,10 @@
                 },
             ],
         },
+    },
+    {
+        "key": "ctrl+alt+s",
+        "command": "diffEditor.switchSide",
     },
     {
         "key": "ctrl+b",
