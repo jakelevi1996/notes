@@ -121,6 +121,7 @@ The following is a sensible, minimal example of a document template for a `tex` 
 \graphicspath{{../Results/}}
 
 \title{
+    \rule{\linewidth}{1pt}
     Main document title \\
     \large Document subtitle
 }
@@ -131,7 +132,10 @@ The following is a sensible, minimal example of a document template for a `tex` 
     Author Two \\
     Institute of Universities
 }
-\date{\today}
+\date{
+    \today \\
+    \rule{\linewidth}{1pt}
+}
 
 \begin{document}
 
