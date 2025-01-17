@@ -52,20 +52,20 @@
         "args": {
             "commands": [
                 "terminal.focus",
+                "workbench.action.openPreviousRecentlyUsedEditor",
                 {
                     "command": "workbench.action.terminal.sendSequence",
                     "args": {
                         "text": "code --diff ${file} ",
                     },
                 },
-                "workbench.action.openPreviousRecentlyUsedEditor",
+                "workbench.action.openNextRecentlyUsedEditor",
                 {
                     "command": "workbench.action.terminal.sendSequence",
                     "args": {
                         "text": "${file}",
                     },
                 },
-                "workbench.action.openNextRecentlyUsedEditor",
                 {
                     "command": "workbench.action.terminal.sendSequence",
                     "args": {
