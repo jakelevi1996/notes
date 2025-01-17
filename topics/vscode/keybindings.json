@@ -348,4 +348,9 @@
         "key": "alt+right",
         "command": "workbench.action.navigateForward",
     },
+    {
+        "key": "ctrl+shift+o",
+        "command": "editor.action.revealDefinition",
+        "when": "editorHasDefinitionProvider && editorTextFocus",
+    },
 ]
