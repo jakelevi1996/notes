@@ -25,5 +25,6 @@
   - Press `shift+b` to select "Bucket Fill Tool"
   - Set "Bucket Fill" to "Darken only" (light background) or "Lighten only" (dark background)
   - Click inside the selected area (click multiple times to effictively increase opacity)
+  - After selecting the first area, hold `shift` to select multiple areas simultaneously, which can all be filled simultaneously using a single "Bucket Fill"
 - Copy edited image:
-  - Press `ctrl+a`, `ctrl+c`
+  - Press `ctrl+a`, `ctrl+c` (do not close GIMP until the image has been pasted, otherwise the image will be lost from the clipboard)
