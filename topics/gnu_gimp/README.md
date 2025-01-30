@@ -28,7 +28,7 @@
   - Set "Fill Type" to "FG colour fill"
   - Set "Affected Area" to "Fill whole selection"
   - Set "Bucket Fill" to "Darken only" (light background) or "Lighten only" (dark background)
-- Set shortcut for "Stroke":
+- Set shortcut for "Stroke Selection":
   - Click "Edit", "Keyboard Shortcuts"
   - Search for "Stroke Selection"
   - Click the "Shortcut" field next to "Stroke Selection"
@@ -37,7 +37,7 @@
   - Click "Save", "Close"
   - To reset all keyboard shortcuts to default:
     - Click "Edit", "Preferences", "Interface", "Reset Keyboard Shortcuts to Default Values", "OK", "OK"
-    - Restart GIMP"Stroke Selection"
+    - Restart GIMP
 - Highlight an area:
   - Change foreground colour to yellow (HTML `ffff00`)
   - Press `r` to select "Rectangle Select Tool"
