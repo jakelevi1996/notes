@@ -9,9 +9,19 @@
     - Drag right mouse button to select new area starting inside current selection
   - Press `enter` or `ctrl+c`
 - Open in GNU Image Manipulation System:
-  - Click the screenshot notification to open the image in "Image Viewer"
-  - Click the "hamburger" (menu button with 3 horizontal lines)
-  - Select "Open With...", "GNU Image Manipulation System"
+  - Option 1:
+    - Click the screenshot notification to open the image in "Image Viewer"
+    - Click the "hamburger" (menu button with 3 horizontal lines)
+    - Select "Open With...", "GNU Image Manipulation System"
+  - Option 2:
+    - Open GIMP
+    - Press `ctrl+v`
+  - Option 3:
+    - Open GIMP
+    - Press `ctrl+o`
+    - Select "Screenshots" folder
+    - Sort by "Modified" (click "Modified")
+    - Select most recent screenshot
 - Set options for highlighting:
   - Press `shift+b` to select "Bucket Fill Tool"
   - Set "Opacity" to 50.0 (25.0 might look better on dark backgrounds)
