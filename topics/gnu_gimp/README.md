@@ -13,18 +13,33 @@
   - Click the "hamburger" (menu button with 3 horizontal lines)
   - Select "Open With...", "GNU Image Manipulation System"
 - Set options for highlighting:
-  - Change foreground colour to yellow (HTML `ffff00`)
   - Press `shift+b` to select "Bucket Fill Tool"
   - Set "Opacity" to 50.0 (25.0 might look better on dark backgrounds)
   - Set "Fill Type" to "FG colour fill"
   - Set "Affected Area" to "Fill whole selection"
   - Set "Bucket Fill" to "Darken only" (light background) or "Lighten only" (dark background)
+- Set shortcut for "Stroke":
+  - Click "Edit", "Keyboard Shortcuts"
+  - Search for "Stroke Selection"
+  - Click the "Shortcut" field next to "Stroke Selection"
+  - Press `shift+s`
+  - If a "Conflicting Shortcuts" box appears, click "Reassign Shotcut"
+  - Click "Save", "Close"
+  - To reset all keyboard shortcuts to default:
+    - Click "Edit", "Preferences", "Interface", "Reset Keyboard Shortcuts to Default Values", "OK", "OK"
+    - Restart GIMP"Stroke Selection"
 - Highlight an area:
+  - Change foreground colour to yellow (HTML `ffff00`)
   - Press `r` to select "Rectangle Select Tool"
   - Select an area (drag left mouse button)
   - Press `shift+b` to select "Bucket Fill Tool"
   - Set "Bucket Fill" to "Darken only" (light background) or "Lighten only" (dark background)
   - Click inside the selected area (click multiple times to effictively increase opacity)
   - After selecting the first area, hold `shift` to select multiple areas simultaneously, which can all be filled simultaneously using a single "Bucket Fill"
+- Outline an area:
+  - Change foreground colour to red (HTML `ff0000`)
+  - Press `r` to select "Rectangle Select Tool"
+  - Select an area (drag left mouse button)
+  - Press `shift+s` to apply "Stroke Selection" (assuming custom shortcut has been set, see above)
 - Copy edited image:
   - Press `ctrl+a`, `ctrl+c` (do not close GIMP until the image has been pasted, otherwise the image will be lost from the clipboard)
