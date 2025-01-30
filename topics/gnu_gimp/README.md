@@ -35,11 +35,17 @@
   - Press `shift+b` to select "Bucket Fill Tool"
   - Set "Bucket Fill" to "Darken only" (light background) or "Lighten only" (dark background)
   - Click inside the selected area (click multiple times to effictively increase opacity)
-  - After selecting the first area, hold `shift` to select multiple areas simultaneously, which can all be filled simultaneously using a single "Bucket Fill"
 - Outline an area:
   - Change foreground colour to red (HTML `ff0000`)
   - Press `r` to select "Rectangle Select Tool"
   - Select an area (drag left mouse button)
   - Press `shift+s` to apply "Stroke Selection" (assuming custom shortcut has been set, see above)
+- Highlight/outline multiple areas simultaneously:
+  - Select an area (drag left mouse button)
+  - Hold `shift` and select multiple additional areas
+  - To highlight:
+    - Press `shift+b` and click inside one of the selected areas
+  - To outline:
+    - Press `shift+s`
 - Copy edited image:
   - Press `ctrl+a`, `ctrl+c` (do not close GIMP until the image has been pasted, otherwise the image will be lost from the clipboard)
