@@ -13,6 +13,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
     - [Local installation](#local-installation)
     - [Uploading a new package to PyPI](#uploading-a-new-package-to-pypi)
     - [Updating an existing package on PyPI](#updating-an-existing-package-on-pypi)
+    - [Package naming (`pip install` vs `import` names)](#package-naming-pip-install-vs-import-names)
   - [Profiling Python code](#profiling-python-code)
   - [`.temp.py`](#temppy)
   - [Useful Python snippets](#useful-python-snippets)
@@ -192,6 +193,11 @@ python -m twine upload dist/*
 ```
 
 If `twine` asks for a username, use `__token__` as the username, and use the PyPI API token as the password (including the `pypi-` prefix).
+
+### Package naming (`pip install` vs `import` names)
+
+- The name of the package on PyPI used for `pip install` commands is the name specified next to `name` under `[project]` in `pyproject.toml`
+- The name of the package used to import the package in `import` statements in Python code is the name of the directory inside `src`, which contains source code for the module
 
 ## Profiling Python code
 
