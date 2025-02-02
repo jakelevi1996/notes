@@ -61,10 +61,10 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
 
 ### Local installation
 
-To make Python code installable as a package called `mypackage`, place all source code in a directory called `src/mypackage`, and create a `pyproject.toml` file (in the top level of the repository). The following command creates a file called `pyproject.toml` if it doesn't already exist:
+To make Python code installable as a package called `mypackage`, place all source code in a directory called `src/mypackage`, and create a file with the following name in the top level of the repository:
 
-```bash
-touch pyproject.toml
+```
+pyproject.toml
 ```
 
 The following is an example of a minimal `pyproject.toml` file (replace `mypackage` with the name of the package):
@@ -78,19 +78,6 @@ build-backend = "setuptools.build_meta"
 name = "mypackage"
 version = "0.0.1"
 
-```
-
-The following commands create minimal a `pyproject.toml` file automatically (replace `mypackage` with the name of the package):
-
-```bash
-rm "pyproject.toml"
-echo [build-system]                             >> "pyproject.toml"
-echo requires = [\""setuptools>=61.0"\"]        >> "pyproject.toml"
-echo build-backend = \"setuptools.build_meta\"  >> "pyproject.toml"
-echo                                            >> "pyproject.toml"
-echo [project]                                  >> "pyproject.toml"
-echo name = \"mypackage\"                       >> "pyproject.toml"
-echo version = \"0.0.1\"                        >> "pyproject.toml"
 ```
 
 The package can be installed locally in "editable mode" with the command `python -m pip install -e .`. The following installation instructions can be added to a `README.md` file:
