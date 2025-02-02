@@ -11,8 +11,8 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [Useful links](#useful-links)
   - [Packaging](#packaging)
     - [Local installation](#local-installation)
-    - [Uploading a new package to PyPI](#uploading-a-new-package-to-pypi)
-    - [Updating an existing package on PyPI](#updating-an-existing-package-on-pypi)
+    - [Upload a new package to PyPI](#upload-a-new-package-to-pypi)
+    - [Update an existing package on PyPI](#update-an-existing-package-on-pypi)
     - [Package naming (`pip install` vs `import` names)](#package-naming-pip-install-vs-import-names)
   - [Profiling Python code](#profiling-python-code)
   - [`.temp.py`](#temppy)
@@ -129,7 +129,7 @@ Below are some useful links for writing `pyproject.toml` files and packaging in 
 - [Packaging Python Projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/) (from [`packaging.python.org`](https://packaging.python.org/en/latest/), including uploading to PyPI/`pip`)
 - [`pip install`](https://pip.pypa.io/en/stable/cli/pip_install/) (from [`pip.pypa.io`](https://pip.pypa.io/))
 
-### Uploading a new package to PyPI
+### Upload a new package to PyPI
 
 To upload to [PyPI](https://pypi.org/), install and update appropriate packages with the following commands:
 
@@ -189,9 +189,9 @@ Useful links:
 
 - [Packaging Python Projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/) (from [packaging.python.org](https://packaging.python.org/en/latest/))
 
-### Updating an existing package on PyPI
+### Update an existing package on PyPI
 
-After following the instructions for ["Uploading a new package to PyPI"](#uploading-a-new-package-to-pypi) above, to update PyPI with a newer version, update the `version` tag in `pyproject.toml`, and then use the following commands:
+After following the instructions to ["Upload a new package to PyPI"](#upload-a-new-package-to-pypi) above, to update the version of the package on PyPI, update the `version` tag in `pyproject.toml`, and then use the following commands:
 
 ```
 rm -rf dist/*
