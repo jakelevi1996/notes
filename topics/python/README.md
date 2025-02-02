@@ -12,6 +12,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [Packaging](#packaging)
     - [Local installation](#local-installation)
     - [Uploading a new package to PyPI](#uploading-a-new-package-to-pypi)
+    - [Updating an existing package on PyPI](#updating-an-existing-package-on-pypi)
   - [Profiling Python code](#profiling-python-code)
   - [`.temp.py`](#temppy)
   - [Useful Python snippets](#useful-python-snippets)
@@ -179,6 +180,18 @@ If `twine` asks for a username, use `__token__` as the username, and use the PyP
 Useful links:
 
 - [Packaging Python Projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/) (from [packaging.python.org](https://packaging.python.org/en/latest/))
+
+### Updating an existing package on PyPI
+
+After following the instructions for ["Uploading a new package to PyPI"](#uploading-a-new-package-to-pypi) above, to update PyPI with a newer version, update the `version` tag in `pyproject.toml`, and then use the following commands:
+
+```
+rm -rf dist/*
+python -m build
+python -m twine upload dist/*
+```
+
+If `twine` asks for a username, use `__token__` as the username, and use the PyPI API token as the password (including the `pypi-` prefix).
 
 ## Profiling Python code
 
