@@ -165,6 +165,14 @@ python -m twine upload dist/*
 
 If `twine` asks for a username, use `__token__` as the username, and use the PyPI API token as the password (including the `pypi-` prefix).
 
+Add the following lines to `.gitignore`:
+
+```
+__pycache__
+*.egg-info
+dist
+```
+
 Useful links:
 
 - [Packaging Python Projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/) (from [packaging.python.org](https://packaging.python.org/en/latest/))
