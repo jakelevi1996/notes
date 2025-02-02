@@ -10,6 +10,8 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [Contents](#contents)
   - [Useful links](#useful-links)
   - [Packaging](#packaging)
+    - [Local installation](#local-installation)
+    - [Uploading a new package to PyPI](#uploading-a-new-package-to-pypi)
   - [Profiling Python code](#profiling-python-code)
   - [`.temp.py`](#temppy)
   - [Useful Python snippets](#useful-python-snippets)
@@ -54,6 +56,8 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
 - [Project Euler](https://projecteuler.net/archives) (useful and interesting problems for practising numerical programming, and well-suited to Python)
 
 ## Packaging
+
+### Local installation
 
 To make Python code installable as a package called `mypackage`, place all source code in a directory called `src/mypackage`, and create a `pyproject.toml` file (in the top level of the repository). The following command creates a file called `pyproject.toml` if it doesn't already exist:
 
@@ -135,6 +139,46 @@ Below are some useful links for writing `pyproject.toml` files and packaging in 
 - [Writing your `pyproject.toml`](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/)  (from [`packaging.python.org`](https://packaging.python.org/))
 - [Packaging Python Projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/) (from [`packaging.python.org`](https://packaging.python.org/en/latest/), including uploading to PyPI/`pip`)
 - [`pip install`](https://pip.pypa.io/en/stable/cli/pip_install/) (from [`pip.pypa.io`](https://pip.pypa.io/))
+
+### Uploading a new package to PyPI
+
+To upload to [PyPI](https://pypi.org/), install and update appropriate packages with the following commands:
+
+```
+python -m pip install -U pip
+python -m pip install -U build
+python -m pip install -U twine
+python -m pip install -U setuptools
+python -m pip install -U pkginfo
+python -m pip install -U packaging
+```
+
+Verify package versions with the following command:
+
+```
+python -m pip show pip build twine setuptools pkginfo packaging
+```
+
+Go to [https://pypi.org/manage/account/](https://pypi.org/manage/account/), click ["Add API token"](https://pypi.org/manage/account/token/), and add a new token (for a new project it may be necessary to initially set the scope to "Entire account", then later delete that token and add a new token for the new project after it has been created).
+
+Install the package locally with the following command and check it is working:
+
+```
+python -m pip install -e .
+```
+
+Upload the package to PyPI with the following commands:
+
+```
+python -m build
+python -m twine upload dist/*
+```
+
+If `twine` asks for a username, use `__token__` as the username, and use the PyPI API token as the password (including the `pypi-` prefix).
+
+Useful links:
+
+- [Packaging Python Projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/) (from [packaging.python.org](https://packaging.python.org/en/latest/))
 
 ## Profiling Python code
 
