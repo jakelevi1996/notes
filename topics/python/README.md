@@ -173,6 +173,18 @@ __pycache__
 dist
 ```
 
+If there are errors with `build` or `twine upload` commands, it may be necessary to upgrade/downgrade versions of packages such as `twine`, `packaging`, etc ([source 1](https://github.com/pypi/warehouse/issues/15611#issuecomment-2608722983), [source 2](https://github.com/pypa/twine/issues/1216#issuecomment-2629069669)), for example:
+
+```
+python -m pip install -U packaging
+```
+
+Or alternatively:
+
+```
+python -m pip install twine==6.0.1
+```
+
 Useful links:
 
 - [Packaging Python Projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/) (from [packaging.python.org](https://packaging.python.org/en/latest/))
