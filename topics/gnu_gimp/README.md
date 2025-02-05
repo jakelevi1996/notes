@@ -11,8 +11,7 @@
 - Open in GNU Image Manipulation System:
   - Option 1:
     - Click the screenshot notification to open the image in "Image Viewer"
-    - Click the "hamburger" (menu button with 3 horizontal lines)
-    - Select "Open With...", "GNU Image Manipulation System"
+    - Click the "hamburger" (menu button with 3 horizontal lines), "Open With...", "GNU Image Manipulation System"
   - Option 2:
     - Open GIMP
     - Press `ctrl+v`
