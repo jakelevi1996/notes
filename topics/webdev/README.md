@@ -24,6 +24,7 @@ Source code: [github.com/jakelevi1996/jakelevi1996.github.io](https://github.com
     - [Trending colour palettes](https://coolors.co/palettes/trending)
     - [Example green palette](https://coolors.co/palette/606c38-283618-fefae0-dda15e-bc6c25)
     - [Example blue palette](https://coolors.co/palette/03045e-023e8a-0077b6-0096c7-00b4d8-48cae4-90e0ef-ade8f4-caf0f8)
+- [Online HTML Formatter](https://webformatter.com/html) (useful for example for reading the source of [`bettermotherfuckingwebsite.com`](http://bettermotherfuckingwebsite.com/))
 - Website design examples:
   - [`motherfuckingwebsite.com`](https://motherfuckingwebsite.com/)
   - [`bettermotherfuckingwebsite.com`](http://bettermotherfuckingwebsite.com/)
