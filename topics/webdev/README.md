@@ -9,7 +9,6 @@ Source code: [github.com/jakelevi1996/jakelevi1996.github.io](https://github.com
 - [Web development](#web-development)
   - [Contents](#contents)
   - [Useful links](#useful-links)
-  - [Examples](#examples)
   - [Tips](#tips)
   - [Getting started](#getting-started)
 
@@ -20,14 +19,12 @@ Source code: [github.com/jakelevi1996/jakelevi1996.github.io](https://github.com
   - [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
   - [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
   - [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-
-## Examples
-
-- [`motherfuckingwebsite.com`](https://motherfuckingwebsite.com/)
-- [`bettermotherfuckingwebsite.com`](http://bettermotherfuckingwebsite.com/)
-- [`evenbettermotherfucking.website`](https://evenbettermotherfucking.website/)
-- [`thebestmotherfuckingwebsite.co`](https://thebestmotherfuckingwebsite.co/)
-- [`github.com/lyoshenka/awesome-motherfucking-website`](https://github.com/lyoshenka/awesome-motherfucking-website)
+- Website design examples:
+  - [`motherfuckingwebsite.com`](https://motherfuckingwebsite.com/)
+  - [`bettermotherfuckingwebsite.com`](http://bettermotherfuckingwebsite.com/)
+  - [`evenbettermotherfucking.website`](https://evenbettermotherfucking.website/)
+  - [`thebestmotherfuckingwebsite.co`](https://thebestmotherfuckingwebsite.co/)
+  - [`github.com/lyoshenka/awesome-motherfucking-website`](https://github.com/lyoshenka/awesome-motherfucking-website)
 
 ## Tips
 
