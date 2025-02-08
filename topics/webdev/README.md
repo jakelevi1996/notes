@@ -28,6 +28,7 @@ Source code: [github.com/jakelevi1996/jakelevi1996.github.io](https://github.com
 - Open graph:
   - [The Open Graph protocol (`ogp.me`)](https://ogp.me/)
   - [Facebook guide](https://developers.facebook.com/docs/sharing/webmasters/)
+  - [WhatsApp link previews](https://developers.facebook.com/docs/whatsapp/link-previews/)
 - Website design examples:
   - [`motherfuckingwebsite.com`](https://motherfuckingwebsite.com/)
   - [`bettermotherfuckingwebsite.com`](http://bettermotherfuckingwebsite.com/)
