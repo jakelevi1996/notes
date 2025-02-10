@@ -29,6 +29,7 @@ Source code: [github.com/jakelevi1996/jakelevi1996.github.io](https://github.com
   - [The Open Graph protocol (`ogp.me`)](https://ogp.me/)
   - [Facebook guide](https://developers.facebook.com/docs/sharing/webmasters/)
   - [WhatsApp link previews](https://developers.facebook.com/docs/whatsapp/link-previews/)
+  - ["Sharing debugger" (for testing website preview and viewing error messages)](https://developers.facebook.com/tools/debug/)
 - Website design examples:
   - [`motherfuckingwebsite.com`](https://motherfuckingwebsite.com/)
   - [`bettermotherfuckingwebsite.com`](http://bettermotherfuckingwebsite.com/)
