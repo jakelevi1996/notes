@@ -46,9 +46,6 @@
     "files.trimTrailingWhitespace": true,
     "debug.onTaskErrors": "abort",
     "explorer.copyRelativePathSeparator": "/",
-    "files.associations": {
-        "*.vhd": "sql",
-    },
     "workbench.colorTheme": "Default Dark+",
     "workbench.editor.wrapTabs": true,
     "workbench.editorAssociations": {
@@ -118,6 +115,10 @@
     },
     "files.autoSave": "off",
     "editor.stickyScroll.enabled": true,
+    "files.associations": {
+        "**/vscode/*.json": "jsonc",
+        "**/vscode/snippets/*.json": "jsonc",
+    },
     "json.schemas": [
         {
             "fileMatch": [
@@ -144,4 +145,5 @@
     },
     // "editor.accessibilitySupport": "on",
     "editor.accessibilitySupport": "off",
+    "git.openRepositoryInParentFolders": "never",
 }
