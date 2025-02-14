@@ -38,6 +38,24 @@
 		],
 		"description": "def main",
 	},
+	"def function/method": {
+		"prefix": "def ",
+		"body": [
+			"def function_name(",
+			"    $0",
+			"):",
+			"    ...",
+		],
+		"description": "def function/method",
+	},
+	"with util.Timer": {
+		"prefix": "with util Timer",
+		"body": [
+			"with util.Timer(\"$0\"):",
+			"    ...",
+		],
+		"description": "with util.Timer",
+	},
 	"if-name-main block": {
 		"prefix": "if __name__ == \"__main__\":",
 		"body": [
