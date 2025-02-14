@@ -122,6 +122,7 @@
         {
             "fileMatch": [
                 "topics/vscode/*.json",
+                "topics/vscode/snippets/*.json",
             ],
             "schema": {
                 "allowTrailingCommas": true,

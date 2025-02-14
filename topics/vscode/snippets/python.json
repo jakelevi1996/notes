@@ -1,0 +1,54 @@
+{
+	// Place your snippets for python here. Each snippet is defined under a snippet name and has a prefix, body and
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the
+	// same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	"import numpy as np": {
+		"prefix": "import numpy as np",
+		"body": [ "import numpy as np"],
+		"description": "import numpy as np",
+	},
+	"import matplotlib.pyplot as plt": {
+		"prefix": "import matplotlib.pyplot as plt",
+		"body": [ "import matplotlib.pyplot as plt"],
+		"description": "import matplotlib.pyplot as plt",
+	},
+	"jutility imports": {
+		"prefix": "from jutility import plotting, util, cli",
+		"body": [ "from jutility import plotting, $0util, cli"],
+		"description": "jutility imports",
+	},
+	"def main": {
+		"prefix": "def main",
+		"body": [
+			"def main(",
+			"    args: cli.ParsedArgs,",
+			"    $0",
+			"):",
+		],
+		"description": "def main",
+	},
+	"if-name-main block": {
+		"prefix": "if __name__ == \"__main__\":",
+		"body": [
+			"if __name__ == \"__main__\":",
+			"    parser = cli.Parser(",
+			"        cli.Arg($0),",
+			"    )",
+			"    args = parser.parse_args()",
+			"",
+			"    with util.Timer(\"main\"):",
+			"        main(args, **args.get_kwargs())",
+		],
+		"description": "if-name-main block",
+	},
+}

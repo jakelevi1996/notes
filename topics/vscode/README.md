@@ -7,6 +7,7 @@
   - [Useful links](#useful-links)
   - [Installed extensions](#installed-extensions)
   - [Settings files](#settings-files)
+  - [Snippets](#snippets)
 
 ## Useful links
 
@@ -75,3 +76,16 @@ Useful commands using the "Markdown All in One" extension:
   - Debugging configurations, including for Python and for C
 - [`./.vscode/tasks.json`](tasks.json)
   - Task configurations, used as build commands for debugging configurations
+
+## Snippets
+
+- To configure snippets (for a particular language):
+  - Open command palette (`ctrl+shift+p`)
+  - Select "Snippets: Configure Snippets"
+  - Select language (EG `python`)
+  - A `json` file in `~/.config/Code/User/snippets/` will be created (if it doesn't already exist) and opened
+- Useful links:
+  - [Snippets in Visual Studio Code](https://code.visualstudio.com/docs/editor/userdefinedsnippets)
+  - [Stack Overflow: "Visual Studio Code snippet invalid control character"](https://stackoverflow.com/q/46345154)
+- Snippet files:
+  - [`python.json`](snippets/python.json)
