@@ -34,6 +34,7 @@
 			"    args: cli.ParsedArgs,",
 			"    $0",
 			"):",
+			"    ...",
 		],
 		"description": "def main",
 	},
