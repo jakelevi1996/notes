@@ -75,4 +75,14 @@
 		],
 		"description": "if-name-main block",
 	},
+	"pytest.mark.parametrize": {
+		"prefix": "@pytest mark parametrize",
+		"body": [
+			"@pytest.mark.parametrize(",
+			"    \"${1:arg_names}\",",
+			"    [${2:arg_vals}],",
+			")",
+		],
+		"description": "pytest.mark.parametrize",
+	},
 }
