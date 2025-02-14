@@ -56,6 +56,11 @@
 		],
 		"description": "with util.Timer",
 	},
+	"rng = np.random.default_rng": {
+		"prefix": "rng = np.random.default_rng",
+		"body": [ "rng = np.random.default_rng(${1:0})"],
+		"description": "rng = np.random.default_rng",
+	},
 	"if-name-main block": {
 		"prefix": "if __name__ == \"__main__\":",
 		"body": [
