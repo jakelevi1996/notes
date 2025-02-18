@@ -4,7 +4,7 @@ import time
 import datetime
 
 def main(
-    args_list: list[list[int]], # or whatever
+    args_list: list,
     devices: list[int],
 ):
     q = mp.Queue()
@@ -38,15 +38,15 @@ def run_jobs_gpu(
             return
 
 def train(
-    args: list[int],
+    args: int,
     device: int,
 ):
     timestamp = datetime.datetime.now()
     print("%s [train]: Device = %s, args = %s" % (timestamp, device, args))
-    time.sleep(1)
+    time.sleep(args)
 
 if __name__ == "__main__":
     main(
-        args_list=[[1, 2], [3, 4, 5], [6, 7, 8, 9]],
+        args_list=[3, 2, 2, 3, 2],
         devices=[3, 7],
     )
