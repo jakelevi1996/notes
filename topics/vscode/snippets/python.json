@@ -38,15 +38,26 @@
 		],
 		"description": "def main",
 	},
-	"def function/method": {
-		"prefix": "def ",
+	"def function": {
+		"prefix": "def function",
 		"body": [
 			"def ${1:function_name}(",
 			"    ${2:arg_name},",
 			"):",
 			"    ...$0",
 		],
-		"description": "def function/method",
+		"description": "def function",
+	},
+	"def method": {
+		"prefix": "def method",
+		"body": [
+			"def ${1:method_name}(",
+			"    self,",
+			"    ${2:arg_name},",
+			"):",
+			"    ...$0",
+		],
+		"description": "def method",
 	},
 	"with util.Timer": {
 		"prefix": "with util Timer",
