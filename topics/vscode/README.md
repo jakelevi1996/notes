@@ -8,6 +8,7 @@
   - [Installed extensions](#installed-extensions)
   - [Settings files](#settings-files)
   - [Snippets](#snippets)
+  - [Synchronise settings](#synchronise-settings)
 
 ## Useful links
 
@@ -95,3 +96,11 @@ Useful commands using the "Markdown All in One" extension:
   - Solutions:
     - (1) After typing `import m`, press `esc`/`backspace`, then continue typing
     - (2) When typing `import`, press `enter`/`tab` to autocomplete "`import`", then continue typing
+
+## Synchronise settings
+
+```
+cp ~/.config/Code/User/snippets/python.json topics/vscode/snippets/python.json
+cp ~/.config/Code/User/keybindings.json     topics/vscode/keybindings.json
+cp ~/.config/Code/User/settings.json        topics/vscode/settings.json
+```
