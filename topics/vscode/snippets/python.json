@@ -24,7 +24,7 @@
 	},
 	"jutility imports": {
 		"prefix": "from jutility import plotting, util, cli",
-		"body": [ "from jutility import plotting, $0util, cli"],
+		"body": [ "from jutility import ${0:plotting, }util, cli"],
 		"description": "jutility imports",
 	},
 	"def main": {
@@ -32,30 +32,25 @@
 		"body": [
 			"def main(",
 			"    args: cli.ParsedArgs,",
-			"    ${1:arg_name},",
+			"    ${0:arg_name},",
 			"):",
-			"    ${0:...}",
+			"    ...",
 		],
 		"description": "def main",
 	},
 	"def function": {
 		"prefix": "def function",
 		"body": [
-			"def ${1:function_name}(",
-			"    ${2:arg_name},",
-			"):",
-			"    ${0:...}",
+			"def ${0:function_name}():",
+			"    ...",
 		],
 		"description": "def function",
 	},
 	"def method": {
 		"prefix": "def method",
 		"body": [
-			"def ${1:method_name}(",
-			"    self,",
-			"    ${2:arg_name},",
-			"):",
-			"    ${0:...}",
+			"def ${0:method_name}(self):",
+			"    ...",
 		],
 		"description": "def method",
 	},
@@ -83,14 +78,14 @@
 	"with util.Timer": {
 		"prefix": "with util Timer",
 		"body": [
-			"with util.Timer(\"${1:name}\"):",
-			"    ${0:...}",
+			"with util.Timer(\"${0:name}\"):",
+			"    ...",
 		],
 		"description": "with util.Timer",
 	},
 	"rng = np.random.default_rng": {
 		"prefix": "rng = np random default_rng",
-		"body": [ "rng = np.random.default_rng(${1:0})"],
+		"body": [ "rng = np.random.default_rng(${0:0})"],
 		"description": "rng = np.random.default_rng",
 	},
 	"if-name-main block": {
@@ -98,7 +93,7 @@
 		"body": [
 			"if __name__ == \"__main__\":",
 			"    parser = cli.Parser(",
-			"        cli.Arg($0),",
+			"        cli.Arg(\"${0:arg_name}\", type=str, default=None),",
 			"    )",
 			"    args = parser.parse_args()",
 			"",
@@ -111,8 +106,8 @@
 		"prefix": "@pytest mark parametrize",
 		"body": [
 			"@pytest.mark.parametrize(",
-			"    \"${1:arg_names}\",",
-			"    [${2:arg_vals}],",
+			"    \"${0:arg_name_1, arg_name_2}\",",
+			"    [],",
 			")",
 		],
 		"description": "pytest.mark.parametrize",
