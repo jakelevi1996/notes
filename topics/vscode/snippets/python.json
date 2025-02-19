@@ -54,6 +54,15 @@
 		],
 		"description": "def method(...) ...",
 	},
+	"class ClassName: ...": {
+		"prefix": "class ClassName: ...",
+		"body": [
+			"class ${0:ClassName}:",
+			"    def __init__(self):",
+			"        ...",
+		],
+		"description": "class ClassName: ...",
+	},
 	"rng = np.random.default_rng(...)": {
 		"prefix": "rng = np.random.default_rng(...)",
 		"body": [ "rng = np.random.default_rng(${0:0})"],
