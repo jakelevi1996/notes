@@ -59,6 +59,27 @@
 		],
 		"description": "def method",
 	},
+	"plotting.plot(plotting.Line(x))": {
+		"prefix": "plotting.plot(plotting.Line(x))",
+		"body": [
+			"plotting.plot(",
+			"    plotting.Line(${0:x}),",
+			")",
+		],
+		"description": "plotting.plot(plotting.Line(x))",
+	},
+	"mp = plotting.MultiPlot": {
+		"prefix": "mp = plotting.MultiPlot(...)",
+		"body": [
+			"mp = plotting.MultiPlot(",
+			"    plotting.Subplot(",
+			"        plotting.Line(${0:x}),",
+			"    ),",
+			")",
+			"mp.save()",
+		],
+		"description": "mp = plotting.MultiPlot",
+	},
 	"with util.Timer": {
 		"prefix": "with util Timer",
 		"body": [
