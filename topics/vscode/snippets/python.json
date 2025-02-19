@@ -59,14 +59,14 @@
 		"body": [ "rng = np.random.default_rng(${0:0})"],
 		"description": "rng = np.random.default_rng(...)",
 	},
-	"plotting.plot(plotting.Line(x))": {
-		"prefix": "plotting.plot(plotting.Line(x))",
+	"plotting.plot(plotting.Line(...))": {
+		"prefix": "plotting.plot(plotting.Line(...))",
 		"body": [
 			"plotting.plot(",
 			"    plotting.Line(${0:x}),",
 			")",
 		],
-		"description": "plotting.plot(plotting.Line(x))",
+		"description": "plotting.plot(plotting.Line(...))",
 	},
 	"mp = plotting.MultiPlot(...) ...": {
 		"prefix": "mp = plotting.MultiPlot(...) ...",
