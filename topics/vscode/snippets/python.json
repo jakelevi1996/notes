@@ -54,6 +54,11 @@
 		],
 		"description": "def method(...) ...",
 	},
+	"rng = np.random.default_rng(...)": {
+		"prefix": "rng = np.random.default_rng(...)",
+		"body": [ "rng = np.random.default_rng(${0:0})"],
+		"description": "rng = np.random.default_rng(...)",
+	},
 	"plotting.plot(plotting.Line(x))": {
 		"prefix": "plotting.plot(plotting.Line(x))",
 		"body": [
@@ -82,11 +87,6 @@
 			"    ...",
 		],
 		"description": "with util.Timer(...) ...",
-	},
-	"rng = np.random.default_rng(...)": {
-		"prefix": "rng = np.random.default_rng(...)",
-		"body": [ "rng = np.random.default_rng(${0:0})"],
-		"description": "rng = np.random.default_rng(...)",
 	},
 	"if __name__ == \"__main__\": ...": {
 		"prefix": "if __name__ == \"__main__\": ...",
