@@ -18,17 +18,17 @@
 		"description": "import numpy as np",
 	},
 	"import matplotlib.pyplot as plt": {
-		"prefix": "import matplotlib pyplot as plt",
+		"prefix": "import matplotlib.pyplot as plt",
 		"body": [ "import matplotlib.pyplot as plt"],
 		"description": "import matplotlib.pyplot as plt",
 	},
-	"jutility imports": {
+	"from jutility import plotting, util, cli": {
 		"prefix": "from jutility import plotting, util, cli",
 		"body": [ "from jutility import ${0:plotting, }util, cli"],
-		"description": "jutility imports",
+		"description": "from jutility import plotting, util, cli",
 	},
-	"def main": {
-		"prefix": "def main",
+	"def main(...) ...": {
+		"prefix": "def main(...) ...",
 		"body": [
 			"def main(",
 			"    args: cli.ParsedArgs,",
@@ -36,23 +36,23 @@
 			"):",
 			"    ...",
 		],
-		"description": "def main",
+		"description": "def main(...) ...",
 	},
-	"def function": {
-		"prefix": "def function",
+	"def function(...) ...": {
+		"prefix": "def function(...) ...",
 		"body": [
 			"def ${0:function_name}():",
 			"    ...",
 		],
-		"description": "def function",
+		"description": "def function(...) ...",
 	},
-	"def method": {
-		"prefix": "def method",
+	"def method(...) ...": {
+		"prefix": "def method(...) ...",
 		"body": [
 			"def ${0:method_name}(self):",
 			"    ...",
 		],
-		"description": "def method",
+		"description": "def method(...) ...",
 	},
 	"plotting.plot(plotting.Line(x))": {
 		"prefix": "plotting.plot(plotting.Line(x))",
@@ -63,8 +63,8 @@
 		],
 		"description": "plotting.plot(plotting.Line(x))",
 	},
-	"mp = plotting.MultiPlot": {
-		"prefix": "mp = plotting.MultiPlot(...)",
+	"mp = plotting.MultiPlot(...) ...": {
+		"prefix": "mp = plotting.MultiPlot(...) ...",
 		"body": [
 			"mp = plotting.MultiPlot(",
 			"    plotting.Subplot(",
@@ -73,23 +73,23 @@
 			")",
 			"mp.save()",
 		],
-		"description": "mp = plotting.MultiPlot",
+		"description": "mp = plotting.MultiPlot(...) ...",
 	},
-	"with util.Timer": {
-		"prefix": "with util Timer",
+	"with util.Timer(...) ...": {
+		"prefix": "with util.Timer(...) ...",
 		"body": [
 			"with util.Timer(\"${0:name}\"):",
 			"    ...",
 		],
-		"description": "with util.Timer",
+		"description": "with util.Timer(...) ...",
 	},
-	"rng = np.random.default_rng": {
-		"prefix": "rng = np random default_rng",
+	"rng = np.random.default_rng(...)": {
+		"prefix": "rng = np.random.default_rng(...)",
 		"body": [ "rng = np.random.default_rng(${0:0})"],
-		"description": "rng = np.random.default_rng",
+		"description": "rng = np.random.default_rng(...)",
 	},
-	"if-name-main block": {
-		"prefix": "if __name__ == \"__main__\":",
+	"if __name__ == \"__main__\": ...": {
+		"prefix": "if __name__ == \"__main__\": ...",
 		"body": [
 			"if __name__ == \"__main__\":",
 			"    parser = cli.Parser(",
@@ -100,16 +100,16 @@
 			"    with util.Timer(\"main\"):",
 			"        main(args, **args.get_kwargs())",
 		],
-		"description": "if-name-main block",
+		"description": "if __name__ == \"__main__\": ...",
 	},
-	"pytest.mark.parametrize": {
-		"prefix": "@pytest mark parametrize",
+	"pytest.mark.parametrize(...)": {
+		"prefix": "pytest.mark.parametrize(...)",
 		"body": [
 			"@pytest.mark.parametrize(",
 			"    \"${0:arg_name_1, arg_name_2}\",",
 			"    [],",
 			")",
 		],
-		"description": "pytest.mark.parametrize",
+		"description": "pytest.mark.parametrize(...)",
 	},
 }
