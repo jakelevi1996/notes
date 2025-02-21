@@ -27,6 +27,15 @@
 		"body": [ "from jutility import ${0:plotting, }util, cli"],
 		"description": "from jutility import plotting, util, cli",
 	},
+	"CURRENT_DIR = os.path.dirname(os.path.abspath(__file__)) ...": {
+		"prefix": "CURRENT_DIR = os.path.dirname(os.path.abspath(__file__)) ...",
+		"body": [
+			"${0:import os}",
+			"CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))",
+			"SOURCE_DIR  = os.path.abspath(os.path.join(CURRENT_DIR, \"..\", \"..\"))",
+		],
+		"description": "CURRENT_DIR = os.path.dirname(os.path.abspath(__file__)) ...",
+	},
 	"def main(...) ...": {
 		"prefix": "def main(...) ...",
 		"body": [
