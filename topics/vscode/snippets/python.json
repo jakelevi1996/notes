@@ -137,4 +137,12 @@
 		],
 		"description": "pytest.mark.parametrize(...)",
 	},
+	"with pytest.raises(ValueError): ...": {
+		"prefix": "with pytest.raises(ValueError): ...",
+		"body": [
+			"with pytest.raises(${0:ValueError}):",
+			"    ...",
+		],
+		"description": "with pytest.raises(ValueError): ...",
+	},
 }
