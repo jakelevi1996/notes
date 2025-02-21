@@ -77,6 +77,13 @@
 		"body": [ "rng = np.random.default_rng(${0:0})"],
 		"description": "rng = np.random.default_rng(...)",
 	},
+	"printer = util.Printer(\"file_name\", dir_name=\".\")": {
+		"prefix": "printer = util.Printer(\"file_name\", dir_name=\".\")",
+		"body": [
+			"printer = util.Printer(\"${0:file_name}\", dir_name=\".\")",
+		],
+		"description": "printer = util.Printer(\"file_name\", dir_name=\".\")",
+	},
 	"plotting.plot(plotting.Line(...))": {
 		"prefix": "plotting.plot(plotting.Line(...))",
 		"body": [
