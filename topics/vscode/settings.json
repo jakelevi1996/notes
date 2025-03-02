@@ -8,6 +8,12 @@
     "[python]": {
         "editor.showUnused": false, // Disable greying out code which Pylance mistakenly thinks is unreachable
     },
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.testing.pytestArgs": [
+        "tests",
+        "--durations=10",
+    ],
     "python.linting.pylintArgs": [
         "--disable", "E1130", // Thinking numpy array doesn't support unary operator
         "--disable", "E0401", // Can't find modules that exist
