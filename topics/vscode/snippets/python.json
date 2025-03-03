@@ -113,17 +113,30 @@
 		],
 		"description": "with util.Timer(...) ...",
 	},
+	"parser = cli.Parser(...)": {
+		"prefix": "parser = cli.Parser(...)",
+		"body": [
+			"parser = cli.Parser(",
+			"    ${0:...}",
+			")",
+			"args = parser.parse_args()",
+			"",
+		],
+		"description": "parser = cli.Parser(...)",
+	},
+	"cli Arg(...),": {
+		"prefix": "cli Arg(...),",
+		"body": [
+			"cli.Arg(\"${0:arg_name}\", type=str, default=None),",
+		],
+		"description": "cli Arg(...),",
+	},
 	"if __name__ == \"__main__\": ...": {
 		"prefix": "if __name__ == \"__main__\": ...",
 		"body": [
 			"if __name__ == \"__main__\":",
-			"    parser = cli.Parser(",
-			"        cli.Arg(\"${0:arg_name}\", type=str, default=None),",
-			"    )",
-			"    args = parser.parse_args()",
-			"",
 			"    with util.Timer(\"main\"):",
-			"        main(args, **args.get_kwargs())",
+			"        ${0:main}()",
 		],
 		"description": "if __name__ == \"__main__\": ...",
 	},
