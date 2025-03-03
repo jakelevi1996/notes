@@ -17,24 +17,24 @@
 		"body": [ "import numpy as np"],
 		"description": "import numpy as np",
 	},
-	"import matplotlib.pyplot as plt": {
-		"prefix": "import matplotlib.pyplot as plt",
+	"import matplotlib pyplot as plt": {
+		"prefix": "import matplotlib pyplot as plt",
 		"body": [ "import matplotlib.pyplot as plt"],
-		"description": "import matplotlib.pyplot as plt",
+		"description": "import matplotlib pyplot as plt",
 	},
 	"from jutility import plotting, util, cli": {
 		"prefix": "from jutility import plotting, util, cli",
 		"body": [ "from jutility import ${0:plotting, }util, cli"],
 		"description": "from jutility import plotting, util, cli",
 	},
-	"CURRENT_DIR = os.path.dirname(os.path.abspath(__file__)) ...": {
-		"prefix": "CURRENT_DIR = os.path.dirname(os.path.abspath(__file__)) ...",
+	"CURRENT_DIR = os path dirname(os path abspath(__file__)) ...": {
+		"prefix": "CURRENT_DIR = os path dirname(os path abspath(__file__)) ...",
 		"body": [
 			"${0:import os}",
 			"CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))",
 			"SOURCE_DIR  = os.path.abspath(os.path.join(CURRENT_DIR, \"..\", \"..\"))",
 		],
-		"description": "CURRENT_DIR = os.path.dirname(os.path.abspath(__file__)) ...",
+		"description": "CURRENT_DIR = os path dirname(os path abspath(__file__)) ...",
 	},
 	"def main(...) ...": {
 		"prefix": "def main(...) ...",
@@ -72,49 +72,49 @@
 		],
 		"description": "class ClassName: ...",
 	},
-	"rng = np.random.default_rng(...)": {
-		"prefix": "rng = np.random.default_rng(...)",
+	"rng = np random default_rng(...)": {
+		"prefix": "rng = np random default_rng(...)",
 		"body": [ "rng = np.random.default_rng(${0:0})"],
-		"description": "rng = np.random.default_rng(...)",
+		"description": "rng = np random default_rng(...)",
 	},
-	"printer = util.Printer(file_name, dir_name=OUTPUT_DIR)": {
-		"prefix": "printer = util.Printer(file_name, dir_name=OUTPUT_DIR)",
+	"printer = util Printer(file_name, dir_name=OUTPUT_DIR)": {
+		"prefix": "printer = util Printer(file_name, dir_name=OUTPUT_DIR)",
 		"body": [
 			"printer = util.Printer(${0:file_name}, dir_name=OUTPUT_DIR)",
 		],
-		"description": "printer = util.Printer(file_name, dir_name=OUTPUT_DIR)",
+		"description": "printer = util Printer(file_name, dir_name=OUTPUT_DIR)",
 	},
-	"plotting.plot(plotting.Line(...))": {
-		"prefix": "plotting.plot(plotting.Line(...))",
+	"plotting plot(plotting Line(...))": {
+		"prefix": "plotting plot(plotting Line(...))",
 		"body": [
 			"plotting.plot(",
-			"    plotting.Line(${0:x}),",
+			"    plotting.Line(${0:...}),",
 			")",
 		],
-		"description": "plotting.plot(plotting.Line(...))",
+		"description": "plotting plot(plotting Line(...))",
 	},
-	"mp = plotting.MultiPlot(...) ...": {
-		"prefix": "mp = plotting.MultiPlot(...) ...",
+	"mp = plotting MultiPlot(...) ...": {
+		"prefix": "mp = plotting MultiPlot(...) ...",
 		"body": [
 			"mp = plotting.MultiPlot(",
 			"    plotting.Subplot(",
-			"        plotting.Line(${0:x}),",
+			"        plotting.Line(${0:...}),",
 			"    ),",
 			")",
 			"mp.save()",
 		],
-		"description": "mp = plotting.MultiPlot(...) ...",
+		"description": "mp = plotting MultiPlot(...) ...",
 	},
-	"with util.Timer(...) ...": {
-		"prefix": "with util.Timer(...) ...",
+	"with util Timer(...) ...": {
+		"prefix": "with util Timer(...) ...",
 		"body": [
 			"with util.Timer(\"${0:name}\"):",
 			"    ...",
 		],
-		"description": "with util.Timer(...) ...",
+		"description": "with util Timer(...) ...",
 	},
-	"parser = cli.Parser(...)": {
-		"prefix": "parser = cli.Parser(...)",
+	"parser = cli Parser(...)": {
+		"prefix": "parser = cli Parser(...)",
 		"body": [
 			"parser = cli.Parser(",
 			"    ${0:...}",
@@ -122,7 +122,7 @@
 			"args = parser.parse_args()",
 			"",
 		],
-		"description": "parser = cli.Parser(...)",
+		"description": "parser = cli Parser(...)",
 	},
 	"cli Arg(...),": {
 		"prefix": "cli Arg(...),",
@@ -131,31 +131,31 @@
 		],
 		"description": "cli Arg(...),",
 	},
-	"if __name__ == \"__main__\": ...": {
-		"prefix": "if __name__ == \"__main__\": ...",
+	"if __name__ == __main__: ...": {
+		"prefix": "if __name__ == __main__: ...",
 		"body": [
 			"if __name__ == \"__main__\":",
 			"    with util.Timer(\"main\"):",
 			"        ${0:main}()",
 		],
-		"description": "if __name__ == \"__main__\": ...",
+		"description": "if __name__ == __main__: ...",
 	},
-	"pytest.mark.parametrize(...)": {
-		"prefix": "pytest.mark.parametrize(...)",
+	"pytest mark parametrize(...)": {
+		"prefix": "pytest mark parametrize(...)",
 		"body": [
 			"@pytest.mark.parametrize(",
 			"    \"${0:arg_name_1, arg_name_2}\",",
 			"    [],",
 			")",
 		],
-		"description": "pytest.mark.parametrize(...)",
+		"description": "pytest mark parametrize(...)",
 	},
-	"with pytest.raises(ValueError): ...": {
-		"prefix": "with pytest.raises(ValueError): ...",
+	"with pytest raises(ValueError): ...": {
+		"prefix": "with pytest raises(ValueError): ...",
 		"body": [
 			"with pytest.raises(${0:ValueError}):",
 			"    ...",
 		],
-		"description": "with pytest.raises(ValueError): ...",
+		"description": "with pytest raises(ValueError): ...",
 	},
 }
