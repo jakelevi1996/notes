@@ -1,6 +1,6 @@
 import math
 import torch
-from jutility import util
+from jutility import util, cli
 
 torch.set_printoptions(
     precision=3,
@@ -9,14 +9,17 @@ torch.set_printoptions(
     threshold=9000,
 )
 
-printer = util.Printer(
-    "demo_torch_unfold",
-    "topics/pytorch/scripts/results",
-    print_to_console=False,
-)
-
-def main():
-    n, c, h, w = [2, 3, 7, 10]
+def main(
+    n: int,
+    c: int,
+    h: int,
+    w: int,
+):
+    printer = util.Printer(
+        "demo_torch_unfold",
+        "topics/pytorch/scripts/results",
+        print_to_console=False,
+    )
 
     nchw = [n, c, h, w]
     k = 3
@@ -59,15 +62,23 @@ def main():
     printer(y[1, 2, 3,   4+1, :, :])
     printer.hline()
 
-    display_tensor(x)
-    display_tensor(y)
+    display_tensor(x, printer)
+    display_tensor(y, printer)
 
-def display_tensor(x: torch.Tensor):
+def display_tensor(x: torch.Tensor, printer: util.Printer):
     printer(x)
     printer(x.shape)
     printer(x.numel())
     printer.hline()
 
 if __name__ == "__main__":
+    parser = cli.Parser(
+        cli.Arg("n", type=int, default=2),
+        cli.Arg("c", type=int, default=3),
+        cli.Arg("h", type=int, default=7),
+        cli.Arg("w", type=int, default=10),
+    )
+    args = parser.parse_args()
+
     with util.Timer("main"):
-        main()
+        main(**args.get_kwargs())
