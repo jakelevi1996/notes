@@ -32,7 +32,6 @@
 
 *- [Cosmo Kramer - S06E07 "The Soup", Seinfeld, 1994](https://www.seinfeldscripts.com/TheSoup.html)*
 
-
 > Mileage makes champions
 
 *- [Steve Fairbairn](https://en.wikipedia.org/wiki/Steve_Fairbairn)*
