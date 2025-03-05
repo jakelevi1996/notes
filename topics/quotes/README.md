@@ -54,8 +54,8 @@
 
 ---
 
-*"I found an insurmountable aversion to every thing but the pursuits of philosophy and general learning; and while they fancied I was poring upon Voet and Vinius, Cicero and Virgil were the authors which I was secretly devouring."*
+*"I found an insurmountable aversion to every thing but the pursuits of philosophy and general learning; and while they fancied I was poring upon [Voet](https://en.wikipedia.org/wiki/Johannes_Voet) and [Vinius](https://en.wikipedia.org/wiki/Arnold_Vinnius), [Cicero](https://en.wikipedia.org/wiki/Cicero) and [Virgil](https://en.wikipedia.org/wiki/Virgil) were the authors which I was secretly devouring."*
 
-> [David Hume (1711 - 1776)](https://en.wikipedia.org/wiki/David_Hume), ["My Own Life", from "The History of England", 1778](https://web.archive.org/web/20180116061536/http://andromeda.rutgers.edu/~jlynch/Texts/humelife.html)
+> [David Hume (1711 - 1776)](https://en.wikipedia.org/wiki/David_Hume), [My Own Life](https://web.archive.org/web/20180116061536/http://andromeda.rutgers.edu/~jlynch/Texts/humelife.html), from [The History of England (1778)](https://en.wikipedia.org/wiki/The_History_of_England_(Hume_book))
 
 ---
