@@ -36,3 +36,7 @@
 > Mileage makes champions
 
 *- [Steve Fairbairn](https://en.wikipedia.org/wiki/Steve_Fairbairn)*
+
+> I found an insurmountable aversion to every thing but the pursuits of philosophy and general learning; and while they fancied I was poring upon Voet and Vinius, Cicero and Virgil were the authors which I was secretly devouring.
+
+*- [David Hume (1711 - 1776)](https://en.wikipedia.org/wiki/David_Hume), ["My Own Life", from "The History of England", 1778](https://web.archive.org/web/20180116061536/http://andromeda.rutgers.edu/~jlynch/Texts/humelife.html)*
