@@ -26,7 +26,7 @@
 
 *"What's really going on?"*
 
-> Danny Shine
+> [Danny Shine](https://www.youtube.com/watch?v=UHnyRRpgVFc)
 
 ---
 
