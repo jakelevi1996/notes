@@ -13,5 +13,6 @@
 *.out
 *.synctex(busy)
 
+data
 *-ubyte
 *.gz
