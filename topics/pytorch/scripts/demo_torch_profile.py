@@ -22,7 +22,8 @@ with util.Timer("model"):
         pooler=juml.models.pool.Average2d(),
     )
 
-x, t = next(iter(dataset.get_data_loader("train", 100)))
+batch_size = 100
+x, t = next(iter(dataset.get_data_loader("train", batch_size)))
 
 with torch.profiler.profile(
     activities=[
@@ -36,3 +37,10 @@ with torch.profiler.profile(
         y = model.forward(x)
 
 printer(prof.key_averages().table(sort_by="cpu_time_total"))
+
+util.hline()
+
+time_batch_us = max(i.cpu_time for i in prof.key_averages())
+time_batch = time_batch_us * 1e-6
+time_element = time_batch / batch_size
+print("Time per element = %s seconds" % time_element)
