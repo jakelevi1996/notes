@@ -1,6 +1,17 @@
 import torch
-from jutility import util
+from torch.autograd.profiler_util import FunctionEventAvg
+from jutility import util, units
 import juml
+
+def get_max_flops_event(
+    event_list: list[FunctionEventAvg],
+) -> FunctionEventAvg:
+    return max(event_list, key=(lambda i: i.flops))
+
+def get_max_time_event(
+    event_list: list[FunctionEventAvg],
+) -> FunctionEventAvg:
+    return max(event_list, key=(lambda i: i.cpu_time))
 
 printer = util.Printer(
     filename="demo_torch_profile",
@@ -40,7 +51,12 @@ printer(prof.key_averages().table(sort_by="cpu_time_total"))
 
 util.hline()
 
-time_batch_us = max(i.cpu_time for i in prof.key_averages())
-time_batch = time_batch_us * 1e-6
-time_element = time_batch / batch_size
-print("Time per element = %s seconds" % time_element)
+time_batch_s = get_max_time_event(prof.key_averages()).cpu_time * 1e-6
+time_element_s = time_batch_s / batch_size
+print("Time per element = %s seconds" % time_element_s)
+
+max_flops_event = get_max_flops_event(prof.key_averages())
+flops_per_s = max_flops_event.flops / (max_flops_event.cpu_time * 1e-6)
+flops_per_element = flops_per_s * time_element_s
+print("FLOPS per second = %s"  % units.metric.format(flops_per_s))
+print("FLOPS per element = %s" % units.metric.format(flops_per_element))
