@@ -13,6 +13,29 @@ def get_max_time_event(
 ) -> FunctionEventAvg:
     return max(event_list, key=(lambda i: i.cpu_time))
 
+x = torch.rand([5000, 5000])
+y = torch.rand([5000, 5000])
+with torch.profiler.profile(
+    activities=[
+        torch.profiler.ProfilerActivity.CPU,
+        torch.profiler.ProfilerActivity.CUDA,
+    ],
+    profile_memory=True,
+    with_flops=True,
+) as prof:
+    with torch.profiler.record_function("matmul"):
+        z = x @ y
+
+max_flops_event = get_max_flops_event(prof.key_averages())
+matmul_t = max_flops_event.cpu_time * 1e-6
+matmul_f = max_flops_event.flops
+matmul_flops_per_s = matmul_f / matmul_t
+util.hline()
+print("Time  (matmul)   = %.6f seconds" % (matmul_t))
+print("FLOPS (matmul)   = %s" % units.metric.format(matmul_f))
+print("FLOPS per second = %s" % units.metric.format(matmul_flops_per_s))
+util.hline()
+
 printer = util.Printer(
     filename="demo_torch_profile",
     dir_name="topics/pytorch/scripts/results",
@@ -53,10 +76,16 @@ util.hline()
 
 time_batch_s = get_max_time_event(prof.key_averages()).cpu_time * 1e-6
 time_element_s = time_batch_s / batch_size
-print("Time per element = %s seconds" % time_element_s)
+print("Time per element = %.6f seconds" % time_element_s)
+
+flops_per_element = matmul_flops_per_s * time_element_s
+print("FLOPS per element = %s" % units.metric.format(flops_per_element))
 
 max_flops_event = get_max_flops_event(prof.key_averages())
-flops_per_s = max_flops_event.flops / (max_flops_event.cpu_time * 1e-6)
-flops_per_element = flops_per_s * time_element_s
-print("FLOPS per second = %s"  % units.metric.format(flops_per_s))
-print("FLOPS per element = %s" % units.metric.format(flops_per_element))
+forward_t = max_flops_event.cpu_time * 1e-6
+forward_f = max_flops_event.flops
+forward_flops_per_s = forward_f / forward_t
+print("FLOPS per second = %s" % units.metric.format(forward_flops_per_s))
+
+efficiency = forward_flops_per_s / matmul_flops_per_s
+print("Efficiency (forward vs matmul) = %.5f"  % efficiency)
