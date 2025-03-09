@@ -55,13 +55,13 @@
 		],
 		"description": "def function(...) ...",
 	},
-	"def method(...) ...": {
-		"prefix": "def method(...) ...",
+	"def method(self, ...) ...": {
+		"prefix": "def method(self, ...) ...",
 		"body": [
 			"def ${0:method_name}(self):",
 			"    ...",
 		],
-		"description": "def method(...) ...",
+		"description": "def method(self, ...) ...",
 	},
 	"@classmethod def classmethod_name(cls, ...) ...": {
 		"prefix": "@classmethod def classmethod_name(cls, ...) ...",
