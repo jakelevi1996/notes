@@ -63,6 +63,15 @@
 		],
 		"description": "def method(...) ...",
 	},
+	"@classmethod def classmethod_name(cls, ...) ...": {
+		"prefix": "@classmethod def classmethod_name(cls, ...) ...",
+		"body": [
+			"@classmethod",
+			"def ${0:classmethod_name}(cls):",
+			"    ...",
+		],
+		"description": "@classmethod def classmethod_name(cls, ...) ...",
+	},
 	"class ClassName: ...": {
 		"prefix": "class ClassName: ...",
 		"body": [
