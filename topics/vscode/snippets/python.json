@@ -72,6 +72,17 @@
 		],
 		"description": "@classmethod def classmethod_name(cls, ...) ...",
 	},
+	"def __repr__(self) -> str: return util format_type(type(self), ...)": {
+		"prefix": "def __repr__(self) -> str: return util format_type(type(self), ...)",
+		"body": [
+			"def __repr__(self) -> str:",
+			"    return util.format_type(",
+			"        type(self),",
+			"        ${0:kwarg_name}=...,",
+			"    )",
+		],
+		"description": "def __repr__(self) -> str: return util format_type(type(self), ...)",
+	},
 	"class ClassName: ...": {
 		"prefix": "class ClassName: ...",
 		"body": [
