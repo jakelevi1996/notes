@@ -118,6 +118,16 @@
         "when": "inDebugMode",
     },
     {
+        "key": "alt+k",
+        "command": "workbench.action.terminal.kill",
+        "when": "!inDebugMode",
+    },
+    {
+        "key": "alt+k",
+        "command": "workbench.action.debug.stop",
+        "when": "inDebugMode",
+    },
+    {
         "key": "alt+t",
         "command": "workbench.action.terminal.toggleTerminal",
     },
@@ -228,10 +238,6 @@
     {
         "key": "ctrl+alt+m",
         "command": "workbench.action.toggleEditorWidths",
-    },
-    {
-        "key": "alt+k",
-        "command": "workbench.action.terminal.kill",
     },
     {
         "key": "alt+a",
