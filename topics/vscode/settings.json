@@ -2,7 +2,6 @@
     "python.defaultInterpreterPath": "python",
     "explorer.confirmDelete": false,
     "git.enableSmartCommit": true,
-    "debug.console.historySuggestions": false,
     "editor.rulers": [79, 160],
     "explorer.confirmDragAndDrop": false,
     "[python]": {
@@ -152,4 +151,8 @@
     // "editor.accessibilitySupport": "on",
     "editor.accessibilitySupport": "off",
     "git.openRepositoryInParentFolders": "never",
+    // "editor.acceptSuggestionOnEnter": "off",
+    // "editor.tabCompletion": "onlySnippets",
+    "debug.console.acceptSuggestionOnEnter": "on",
+    "debug.console.historySuggestions": false,
 }
