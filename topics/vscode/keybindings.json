@@ -263,6 +263,12 @@
     {
         "key": "alt+g",
         "command": "git.openChange",
+        "when": "!inDiffEditor",
+    },
+    {
+        "key": "alt+g",
+        "command": "git.viewStagedChanges",
+        "when": "inDiffEditor",
     },
     {
         "key": "ctrl+g",
