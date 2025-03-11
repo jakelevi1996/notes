@@ -110,13 +110,11 @@
     {
         "key": "shift+alt+d",
         "command": "workbench.action.debug.start",
-        // "when": "debuggersAvailable && debugState == 'inactive'"
         "when": "!inDebugMode",
     },
     {
         "key": "shift+alt+d",
         "command": "workbench.debug.action.toggleRepl",
-        // "when": "debugState != 'inactive'"
         "when": "inDebugMode",
     },
     {
