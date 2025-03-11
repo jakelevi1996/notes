@@ -109,7 +109,14 @@
     },
     {
         "key": "shift+alt+d",
-        "command": "workbench.action.debug.start",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "workbench.action.debug.start",
+                "workbench.debug.action.focusCallStackView",
+                "workbench.debug.action.focusRepl",
+            ],
+        },
         "when": "!inDebugMode",
     },
     {
@@ -124,7 +131,14 @@
     },
     {
         "key": "alt+k",
-        "command": "workbench.action.debug.stop",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "workbench.action.debug.stop",
+                "workbench.action.terminal.focus",
+                "workbench.files.action.showActiveFileInExplorer",
+            ],
+        },
         "when": "inDebugMode",
     },
     {
