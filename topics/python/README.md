@@ -453,8 +453,15 @@ Now, running `other.py` will print the expected output: `C.run(p=P(c=C(x=3)))` (
 
 With these changes applied to `c.py`, there are several different ways that this working code can be broken again. Here are a couple of them:
 
-- Change order of import statements in `other.py`: raises `ImportError: cannot import name 'C' from partially initialized module 'c' (most likely due to a circular import)`
-- Remove the quotations around `"p.P"` in `c.py`: raises `AttributeError: partially initialized module 'p' has no attribute 'P' (most likely due to a circular import)`
+- Change order of import statements in `other.py`:
+  - Raises `ImportError: cannot import name 'C' from partially initialized module 'c' (most likely due to a circular import)`
+  - This can be fixed again by making analogous changes in `p.py`:
+    - Replace `from c import C` with `import c`
+    - Replace `def __init__(self, c: C)` with `def __init__(self, c: "c.C")`
+    - Replace `def get_c(self) -> C` with `def get_c(self) -> "c.C"`
+  - Now the import statements in `other.py` can be written in either order
+- Remove the quotes around `"p.P"` in `c.py`:
+  - Raises `AttributeError: partially initialized module 'p' has no attribute 'P' (most likely due to a circular import)`
 
 ## `.temp.py`
 
