@@ -15,7 +15,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
     - [Update an existing package on PyPI](#update-an-existing-package-on-pypi)
     - [Package naming (`pip install` vs `import` names)](#package-naming-pip-install-vs-import-names)
   - [Profiling Python code](#profiling-python-code)
-  - [Fixing type hints with circular imports](#fixing-type-hints-with-circular-imports)
+  - [Type hints with circular imports](#type-hints-with-circular-imports)
     - [TLDR](#tldr)
     - [A broken example](#a-broken-example)
     - [How to fix it](#how-to-fix-it)
@@ -366,13 +366,13 @@ python -c "import pstats; p = pstats.Stats('.profile_output.bin'); p.sort_stats(
 
 Note that errors can occur when trying to profile code which uses the `pickle` module. The explanation and a workaround are provided in [this StackOverflow answer](https://stackoverflow.com/a/53890887/8477566). A simple solution is the modify the code being profiled such that it has an option to run without using `pickle`.
 
-## Fixing type hints with circular imports
+## Type hints with circular imports
 
 See also [my Stack Overflow answer](https://stackoverflow.com/a/79504471/8477566).
 
 ### TLDR
 
-Use `import x` instead of `from x import y`.
+Use `import x` and `x.Y` instead of `from x import y`.
 
 ### A broken example
 
@@ -419,7 +419,7 @@ p = P(c)
 p.get_c().run(p)
 ```
 
-As shown above, running/importing `other.py` will raise `ImportError: cannot import name 'P' from partially initialized module 'p' (most likely due to a circular import)`.
+Without further changes, running/importing `other.py` will raise `ImportError: cannot import name 'P' from partially initialized module 'p' (most likely due to a circular import)`.
 
 ### How to fix it
 
