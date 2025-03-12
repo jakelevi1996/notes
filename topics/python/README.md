@@ -20,6 +20,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
     - [A broken example](#a-broken-example)
     - [How to fix it](#how-to-fix-it)
     - [How to break it again](#how-to-break-it-again)
+  - [Type hints with unions and quotes](#type-hints-with-unions-and-quotes)
   - [`.temp.py`](#temppy)
   - [Useful Python snippets](#useful-python-snippets)
     - [Print estimated finish time of experiments](#print-estimated-finish-time-of-experiments)
@@ -462,6 +463,52 @@ With these changes applied to `c.py`, there are several different ways that this
   - Now the import statements in `other.py` can be written in either order
 - Remove the quotes around `"p.P"` in `c.py`:
   - Raises `AttributeError: partially initialized module 'p' has no attribute 'P' (most likely due to a circular import)`
+
+## Type hints with unions and quotes
+
+TLDR: use `"C | None"` instead of `"C" | None`.
+
+```python
+def f(b) -> "C" | None:
+    if b:
+        return C()
+    else:
+        return None
+
+class C:
+    def __init__(self):
+        ...
+
+print(f(True))
+print(f(False))
+```
+
+```txt
+TypeError: unsupported operand type(s) for |: 'str' and 'NoneType'
+```
+
+Replace `"C" | None` with `"C | None"`:
+
+```python
+# def f(b) -> "C" | None:    <- this was removed
+def f(b) -> "C | None":
+    if b:
+        return C()
+    else:
+        return None
+
+class C:
+    def __init__(self):
+        ...
+
+print(f(True))
+print(f(False))
+```
+
+```txt
+<__main__.C object at 0x712d33e5fd90>
+None
+```
 
 ## `.temp.py`
 
