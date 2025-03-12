@@ -15,6 +15,11 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
     - [Update an existing package on PyPI](#update-an-existing-package-on-pypi)
     - [Package naming (`pip install` vs `import` names)](#package-naming-pip-install-vs-import-names)
   - [Profiling Python code](#profiling-python-code)
+  - [Fixing type hints with circular imports](#fixing-type-hints-with-circular-imports)
+    - [TLDR](#tldr)
+    - [A broken example](#a-broken-example)
+    - [How to fix it](#how-to-fix-it)
+    - [How to break it again](#how-to-break-it-again)
   - [`.temp.py`](#temppy)
   - [Useful Python snippets](#useful-python-snippets)
     - [Print estimated finish time of experiments](#print-estimated-finish-time-of-experiments)
@@ -360,6 +365,96 @@ python -c "import pstats; p = pstats.Stats('.profile_output.bin'); p.sort_stats(
 ```
 
 Note that errors can occur when trying to profile code which uses the `pickle` module. The explanation and a workaround are provided in [this StackOverflow answer](https://stackoverflow.com/a/53890887/8477566). A simple solution is the modify the code being profiled such that it has an option to run without using `pickle`.
+
+## Fixing type hints with circular imports
+
+See also [my Stack Overflow answer](https://stackoverflow.com/a/79504471/8477566).
+
+### TLDR
+
+Use `import x` instead of `from x import y`.
+
+### A broken example
+
+Suppose we have modules `p.py`, `c.py`, `other.py`:
+
+```python
+# c.py
+from p import P
+
+class C:
+    def __init__(self, x):
+        self.x = x
+
+    def run(self, p: P):
+        print("C.run(p=%r)" % p)
+
+    def __repr__(self) -> str:
+        return "C(x=%s)" % self.x
+```
+
+```python
+# p.py
+from c import C
+
+class P:
+    def __init__(self, c: C):
+        self.c = c
+
+    def get_c(self) -> C:
+        return self.c
+
+    def __repr__(self) -> str:
+        return "P(c=%s)" % self.c
+```
+
+```python
+# other.py
+from p import P
+from c import C
+
+c = C(3)
+p = P(c)
+
+p.get_c().run(p)
+```
+
+As shown above, running/importing `other.py` will raise `ImportError: cannot import name 'P' from partially initialized module 'p' (most likely due to a circular import)`.
+
+### How to fix it
+
+The code can be fixed with the following simple changes in `c.py`:
+
+- Replace `from p import P` with `import p`
+- Replace `def run(self, p: P)` with `def run(self, p: "p.P")`
+
+`c.py` now looks like this:
+
+```python
+# c.py + changes
+# from p import P    <- this was removed
+import p
+
+class C:
+    def __init__(self, x):
+        self.x = x
+
+    # def run(self, p: P):    <- this was removed
+    def run(self, p: "p.P"):
+        print("C.run(p=%r)" % p)
+
+    def __repr__(self) -> str:
+        return "C(x=%s)" % self.x
+```
+
+Now, running `other.py` will print the expected output: `C.run(p=P(c=C(x=3)))` (tested with Python 3.10.12).
+
+### How to break it again
+
+With these changes applied to `c.py`, there are several different ways that this working code can be broken again. Here are a couple of them:
+
+- Change order of import statements in `other.py`: raises `ImportError: cannot import name 'C' from partially initialized module 'c' (most likely due to a circular import)`
+- Remove the quotations around `"p.P"` in `c.py`: raises `AttributeError: partially initialized module 'p' has no attribute 'P' (most likely due to a circular import)`
 
 ## `.temp.py`
 
