@@ -10,6 +10,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [Contents](#contents)
   - [Useful links](#useful-links)
   - [Packaging](#packaging)
+    - [Useful links (packaging)](#useful-links-packaging)
     - [Local installation](#local-installation)
     - [Upload a new package to PyPI](#upload-a-new-package-to-pypi)
     - [Update an existing package on PyPI](#update-an-existing-package-on-pypi)
@@ -64,6 +65,22 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
 - [Project Euler](https://projecteuler.net/archives) (useful and interesting problems for practising numerical programming, and well-suited to Python)
 
 ## Packaging
+
+### Useful links (packaging)
+
+- From [`setuptools.pypa.io`](https://setuptools.pypa.io/):
+  - [Configuring `setuptools` using `pyproject.toml` files](https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html)
+  - [Configuring `setuptools` using `setup.cfg` files](https://setuptools.pypa.io/en/latest/userguide/declarative_config.html)
+  - [Package Discovery and Namespace Packages](https://setuptools.pypa.io/en/latest/userguide/package_discovery.html)
+  - [Development Mode (AKA “Editable Installs”)](https://setuptools.pypa.io/en/latest/userguide/development_mode.html)
+- From [`packaging.python.org`](https://packaging.python.org/):
+  - [Writing your `pyproject.toml`](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/)
+  - [Packaging Python Projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/) (including uploading to PyPI/`pip`)
+- From [`pip.pypa.io`](https://pip.pypa.io/):
+  - [`pip install`](https://pip.pypa.io/en/stable/cli/pip_install/)
+- From [`pypi.org`](https://pypi.org/) (note `pypi` = Python Package Index vs `pypa` = Python Packaging Authority):
+  - [Manage account](https://pypi.org/manage/account/)
+  - [Add API token](https://pypi.org/manage/account/token/)
 
 ### Local installation
 
@@ -125,16 +142,6 @@ To make the function `mypackage.mymodule1.myfunction()` available from the comma
 my-command = "mypackage.mymodule1:myfunction"
 ```
 
-Below are some useful links for writing `pyproject.toml` files and packaging in general (from [`setuptools.pypa.io`](https://setuptools.pypa.io) unless otherwise specified):
-
-- [Configuring `setuptools` using `pyproject.toml` files](https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html)
-- [Configuring `setuptools` using `setup.cfg` files](https://setuptools.pypa.io/en/latest/userguide/declarative_config.html)
-- [Package Discovery and Namespace Packages](https://setuptools.pypa.io/en/latest/userguide/package_discovery.html)
-- [Development Mode (AKA “Editable Installs”)](https://setuptools.pypa.io/en/latest/userguide/development_mode.html)
-- [Writing your `pyproject.toml`](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/)  (from [`packaging.python.org`](https://packaging.python.org/))
-- [Packaging Python Projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/) (from [`packaging.python.org`](https://packaging.python.org/en/latest/), including uploading to PyPI/`pip`)
-- [`pip install`](https://pip.pypa.io/en/stable/cli/pip_install/) (from [`pip.pypa.io`](https://pip.pypa.io/))
-
 ### Upload a new package to PyPI
 
 To upload to [PyPI](https://pypi.org/), install and update appropriate packages with the following commands:
@@ -190,10 +197,6 @@ Or alternatively:
 ```
 python -m pip install twine==6.0.1
 ```
-
-Useful links:
-
-- [Packaging Python Projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/) (from [packaging.python.org](https://packaging.python.org/en/latest/))
 
 ### Update an existing package on PyPI
 
