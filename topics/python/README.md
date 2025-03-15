@@ -76,6 +76,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
 - From [`packaging.python.org`](https://packaging.python.org/):
   - [Writing your `pyproject.toml`](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/)
   - [Packaging Python Projects](https://packaging.python.org/en/latest/tutorials/packaging-projects/) (including uploading to PyPI/`pip`)
+  - [`pyproject.toml` specification](https://packaging.python.org/en/latest/specifications/pyproject-toml/) (FULL specification, including [`authors`/`maintainers`](https://packaging.python.org/en/latest/specifications/pyproject-toml/#authors-maintainers) specification)
 - From [`pip.pypa.io`](https://pip.pypa.io/):
   - [`pip install`](https://pip.pypa.io/en/stable/cli/pip_install/)
 - From [`pypi.org`](https://pypi.org/) (note `pypi` = Python Package Index vs `pypa` = Python Packaging Authority):
