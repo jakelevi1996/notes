@@ -34,7 +34,13 @@
     },
     {
         "key": "ctrl+alt+r",
-        "command": "workbench.files.action.showActiveFileInExplorer",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "workbench.files.action.collapseExplorerFolders",
+                "workbench.files.action.showActiveFileInExplorer",
+            ],
+        },
     },
     {
         "key": "alt+s",
