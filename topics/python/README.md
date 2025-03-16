@@ -204,7 +204,7 @@ python -m pip install twine==6.0.1
 After following the instructions to ["Upload a new package to PyPI"](#upload-a-new-package-to-pypi) above, to update the version of the package on PyPI, update the `version` tag in `pyproject.toml`, and then use the following commands:
 
 ```
-rm -rf dist/*
+rm -rf dist
 python -m build
 python -m twine upload dist/*
 ```
