@@ -241,9 +241,11 @@
         "command": "runCommands",
         "args": {
             "commands": [
-                "saveAll",
+                "workbench.action.files.saveFiles",
                 "workbench.view.testing.focus",
                 "testing.refreshTests",
+                "widgetNavigation.focusNext",
+                "list.focusFirst",
             ],
         },
     },
