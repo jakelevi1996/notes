@@ -396,4 +396,11 @@
         "command": "editor.action.revealDefinition",
         "when": "editorHasDefinitionProvider && editorTextFocus",
     },
+    {
+        "key": "alt+j",
+        "command": "editor.action.insertSnippet",
+        "args": {
+            "snippet": "jaaaAAAaaake ",
+        },
+    },
 ]
