@@ -543,20 +543,14 @@ printer = util.Printer(
 
 # import torch
 # import torchvision
+# import juml
 
-# torch.set_printoptions(
-#     precision=3,
-#     linewidth=10000,
-#     sci_mode=False,
-#     threshold=int(1e9),
-# )
-# torch.set_printoptions(
-#     precision=3,
-#     linewidth=10000,
-#     sci_mode=False,
-#     threshold=1000,
-# )
+# juml.test_utils.torch_set_print_options()
+# juml.test_utils.torch_set_print_options(threshold=9000)
 # torch.manual_seed(0)
+
+###############################################################################
+
 ```
 
 ## Useful Python snippets
