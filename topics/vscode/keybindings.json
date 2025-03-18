@@ -243,11 +243,29 @@
             "commands": [
                 "workbench.action.files.saveFiles",
                 "workbench.view.testing.focus",
-                "testing.refreshTests",
                 "widgetNavigation.focusNext",
+                "list.collapseAll",
+                "list.focusFirst",
+                "list.expand",
+                "list.focusDown",
+                "list.expand",
+                "list.focusDown",
+            ],
+        },
+        "when": "editorFocus || filesExplorerFocus",
+    },
+    {
+        "key": "shift+alt+5",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "workbench.action.files.saveFiles",
+                "workbench.view.testing.focus",
+                "testing.refreshTests",
                 "list.focusFirst",
             ],
         },
+        "when": "!(editorFocus || filesExplorerFocus)",
     },
     {
         "key": "shift+alt+t",
