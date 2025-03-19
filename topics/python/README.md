@@ -24,6 +24,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [Type hints with unions and quotes](#type-hints-with-unions-and-quotes)
   - [`.temp.py`](#temppy)
   - [Useful Python snippets](#useful-python-snippets)
+    - [Chaining iterators](#chaining-iterators)
     - [Print estimated finish time of experiments](#print-estimated-finish-time-of-experiments)
     - [Multi-headed matrix multiplication](#multi-headed-matrix-multiplication)
     - [Make a list of prime numbers](#make-a-list-of-prime-numbers)
@@ -554,6 +555,29 @@ printer = util.Printer(
 ```
 
 ## Useful Python snippets
+
+### Chaining iterators
+
+```py
+class ChainIter:
+    def __init__(self, sub_iters):
+        self._sub_iters = sub_iters
+
+    def __iter__(self):
+        return (
+            x
+            for sub_iter in self._sub_iters
+            for x in sub_iter
+        )
+
+# Example:
+for x in ChainIter([range(10), range(20, 40, 2), range(-10, -20, -1)]):
+    print(x, end=", ")
+
+print(end="\n")
+# 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, -10,
+# -11, -12, -13, -14, -15, -16, -17, -18, -19,
+```
 
 ### Print estimated finish time of experiments
 
