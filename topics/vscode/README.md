@@ -100,7 +100,8 @@ Useful commands using the "Markdown All in One" extension:
 ## Synchronise settings
 
 ```
-cp ~/.config/Code/User/snippets/python.json topics/vscode/snippets/python.json
-cp ~/.config/Code/User/keybindings.json     topics/vscode/keybindings.json
-cp ~/.config/Code/User/settings.json        topics/vscode/settings.json
+cp ~/.config/Code/User/snippets/python.json   topics/vscode/snippets/python.json
+cp ~/.config/Code/User/snippets/markdown.json topics/vscode/snippets/markdown.json
+cp ~/.config/Code/User/keybindings.json       topics/vscode/keybindings.json
+cp ~/.config/Code/User/settings.json          topics/vscode/settings.json
 ```
