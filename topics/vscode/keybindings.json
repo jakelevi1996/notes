@@ -421,6 +421,27 @@
         "command": "workbench.action.showAllSymbols",
     },
     {
+        "key": "ctrl+alt+p",
+        "command": "workbench.action.pinEditor",
+        "when": "!activeEditorIsPinned"
+    },
+    {
+        "key": "ctrl+alt+p",
+        "command": "workbench.action.files.setActiveEditorReadonlyInSession",
+        "when": "activeEditorIsPinned && !activeEditorIsReadonly"
+    },
+    {
+        "key": "ctrl+alt+p",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "workbench.action.unpinEditor",
+                "workbench.action.files.resetActiveEditorReadonlyInSession",
+            ]
+        },
+        "when": "activeEditorIsReadonly"
+    },
+    {
         "key": "alt+j",
         "command": "editor.action.insertSnippet",
         "args": {
