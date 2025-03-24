@@ -417,6 +417,10 @@
         "when": "editorHasDefinitionProvider && editorTextFocus",
     },
     {
+        "key": "alt+o",
+        "command": "workbench.action.showAllSymbols",
+    },
+    {
         "key": "alt+j",
         "command": "editor.action.insertSnippet",
         "args": {
