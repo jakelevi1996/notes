@@ -25,6 +25,7 @@ This is just a random collection of commands which I have found useful in Bash. 
   - [Use `git push` with an authentication token](#use-git-push-with-an-authentication-token)
   - [View the Linux distribution name and version number using `lsb_release`](#view-the-linux-distribution-name-and-version-number-using-lsb_release)
   - [Download VSCode](#download-vscode)
+  - [Multiline `bash` commands](#multiline-bash-commands)
   - [Get the current date and time and generate timestamped filenames with `date`](#get-the-current-date-and-time-and-generate-timestamped-filenames-with-date)
   - [Display date and time in `bash` history using `HISTTIMEFORMAT`](#display-date-and-time-in-bash-history-using-histtimeformat)
   - [Calculate running times of commands using `time`](#calculate-running-times-of-commands-using-time)
@@ -555,6 +556,36 @@ Codename:       bionic
 sudo apt update
 sudo apt upgrade
 sudo snap install --classic code # or code-insiders
+```
+
+## Multiline `bash` commands
+
+Option 1: backticks
+
+```bash
+# Run command
+cmd_name        \
+  subcmd_name   \
+  --arg1 v1     \
+  --arg2 v2 v3  \
+  --flag
+```
+
+Option 2: [`bash` arrays](https://www.gnu.org/software/bash/manual/html_node/Arrays.html) ([source](https://superuser.com/a/1711721/1098000))
+
+```bash
+# Define command
+cmd=(
+  cmd_name
+  subcmd_name
+  --arg1 v1
+  --arg2 "v2 v3"
+  --flag
+)
+# Display command
+echo "${cmd[@]}"
+# Run command
+"${cmd[@]}"
 ```
 
 ## Get the current date and time and generate timestamped filenames with `date`
