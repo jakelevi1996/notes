@@ -68,10 +68,12 @@ Open keyboard shortcuts   | `alt+e`, `k`
 ## Set options for highlighting
 
 - Press `shift+b` to select "Bucket Fill Tool"
-- Set "Opacity" to 50.0 (25.0 might look better on dark backgrounds)
+- Set "Opacity" to 50.0 (25.0 might look better on dark backgrounds, 75.0 might look better on light backgrounds)
 - Set "Fill Type" to "FG colour fill"
 - Set "Affected Area" to "Fill whole selection"
-- Set "Bucket Fill" to "Darken only" (light background) or "Lighten only" (dark background)
+- Set "Bucket Fill" to:
+  - "Darken only" for light backgrounds
+  - "Lighten only" for dark backgrounds
 
 ## Highlight an area
 
