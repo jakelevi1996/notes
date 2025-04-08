@@ -13,6 +13,7 @@
   - [Outline an area](#outline-an-area)
   - [Highlight/outline multiple areas simultaneously](#highlightoutline-multiple-areas-simultaneously)
   - [Move an area](#move-an-area)
+  - [Expand canvas size](#expand-canvas-size)
   - [Copy edited image](#copy-edited-image)
 
 ## Configure shortcuts
@@ -37,6 +38,7 @@ Layers/anchor layer       | `shift+a`
 Image/crop to selection   | `shift+c`
 Edit/fill with FG colour  | `shift+f`
 Layers/new layer          | `shift+n`
+Layers/merge down         | `shift+m`
 
 ### Default shortcuts
 
@@ -110,6 +112,15 @@ Open keyboard shortcuts   | `alt+e`, `k`
 - Select an area (drag left mouse button)
 - Hold `ctrl+alt` and drag selected area while holding left mouse button
 - Press `shift+a` to anchor layer
+
+## Expand canvas size
+
+- Select "Crop Tool"
+- Select "Delete cropped pixels"
+- Select "Allow growing" and set "Fill with" to "white"
+- Select an area (drag left mouse button)
+- Press `enter` or click selected area
+- Press `shift+n`, `shift+m` to create a new layer and merge it down (in order to make new canvas space editable)
 
 ## Copy edited image
 
