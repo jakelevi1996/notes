@@ -36,12 +36,14 @@ Select/stroke selection   | `shift+s`
 Layers/anchor layer       | `shift+a`
 Image/crop to selection   | `shift+c`
 Edit/fill with FG colour  | `shift+f`
+Layers/new layer          | `shift+n`
 
 ### Default shortcuts
 
 Action                    | Shortcut
 ---                       | ---
 Tools/bucket fill         | `shift+b`
+Select all                | `ctrl+a`
 Open keyboard shortcuts   | `alt+e`, `k`
 
 ## Open screenshot in GIMP (Ubuntu 22.04.1 LTS)
