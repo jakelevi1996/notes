@@ -4,13 +4,44 @@
 
 - [GNU Image Manipulation System](#gnu-image-manipulation-system)
   - [Contents](#contents)
+  - [Configure shortcuts](#configure-shortcuts)
+    - [Custom shortcuts](#custom-shortcuts)
+    - [Default shortcuts](#default-shortcuts)
   - [Open screenshot in GIMP (Ubuntu 22.04.1 LTS)](#open-screenshot-in-gimp-ubuntu-22041-lts)
   - [Set options for highlighting](#set-options-for-highlighting)
-  - [Set shortcut for "Stroke Selection"](#set-shortcut-for-stroke-selection)
   - [Highlight an area](#highlight-an-area)
   - [Outline an area](#outline-an-area)
   - [Highlight/outline multiple areas simultaneously](#highlightoutline-multiple-areas-simultaneously)
   - [Copy edited image](#copy-edited-image)
+
+## Configure shortcuts
+
+- Click "Edit", "Keyboard Shortcuts"
+- Search for action name (EG "Stroke Selection")
+- Click the "Shortcut" field next to the action name
+- Press desired shortcut (EG `shift+s`)
+- If a "Conflicting Shortcuts" box appears, click "Reassign Shotcut"
+- Click "Save", "Close"
+- To reset all keyboard shortcuts to default:
+  - Click "Edit", "Preferences", "Interface", "Reset Keyboard Shortcuts to Default Values", "OK", "OK"
+  - Restart GIMP
+
+### Custom shortcuts
+
+Action                    | Shortcut
+---                       | ---
+Tools/rectangle select    | `shift+r`
+Select/stroke selection   | `shift+s`
+Layers/anchor layer       | `shift+a`
+Image/crop to selection   | `shift+c`
+Edit/fill with FG colour  | `shift+f`
+
+### Default shortcuts
+
+Action                    | Shortcut
+---                       | ---
+Tools/bucket fill         | `shift+b`
+Open keyboard shortcuts   | `alt+e`, `k`
 
 ## Open screenshot in GIMP (Ubuntu 22.04.1 LTS)
 
@@ -41,18 +72,6 @@
 - Set "Fill Type" to "FG colour fill"
 - Set "Affected Area" to "Fill whole selection"
 - Set "Bucket Fill" to "Darken only" (light background) or "Lighten only" (dark background)
-
-## Set shortcut for "Stroke Selection"
-
-- Click "Edit", "Keyboard Shortcuts"
-- Search for "Stroke Selection"
-- Click the "Shortcut" field next to "Stroke Selection"
-- Press `shift+s`
-- If a "Conflicting Shortcuts" box appears, click "Reassign Shotcut"
-- Click "Save", "Close"
-- To reset all keyboard shortcuts to default:
-  - Click "Edit", "Preferences", "Interface", "Reset Keyboard Shortcuts to Default Values", "OK", "OK"
-  - Restart GIMP
 
 ## Highlight an area
 
