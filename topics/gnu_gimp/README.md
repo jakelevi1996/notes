@@ -76,7 +76,7 @@ Open keyboard shortcuts   | `alt+e`, `k`
 ## Highlight an area
 
 - Change foreground colour to yellow (HTML `ffff00`)
-- Press `r` to select "Rectangle Select Tool"
+- Press `shift+r` to select "Rectangle Select Tool"
 - Select an area (drag left mouse button)
 - Press `shift+b` to select "Bucket Fill Tool"
 - Set "Bucket Fill" to "Darken only" (light background) or "Lighten only" (dark background)
@@ -85,12 +85,13 @@ Open keyboard shortcuts   | `alt+e`, `k`
 ## Outline an area
 
 - Change foreground colour to red (HTML `ff0000`)
-- Press `r` to select "Rectangle Select Tool"
+- Press `shift+r` to select "Rectangle Select Tool"
 - Select an area (drag left mouse button)
 - Press `shift+s` to apply "Stroke Selection" (assuming custom shortcut has been set, see above)
 
 ## Highlight/outline multiple areas simultaneously
 
+- Press `shift+r` to select "Rectangle Select Tool"
 - Select an area (drag left mouse button)
 - Hold `shift` and select multiple additional areas
 - To highlight:
