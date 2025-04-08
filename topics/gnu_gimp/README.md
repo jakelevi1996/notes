@@ -12,6 +12,7 @@
   - [Highlight an area](#highlight-an-area)
   - [Outline an area](#outline-an-area)
   - [Highlight/outline multiple areas simultaneously](#highlightoutline-multiple-areas-simultaneously)
+  - [Move an area](#move-an-area)
   - [Copy edited image](#copy-edited-image)
 
 ## Configure shortcuts
@@ -100,6 +101,13 @@ Open keyboard shortcuts   | `alt+e`, `k`
   - Press `shift+b` and click inside one of the selected areas
 - To outline:
   - Press `shift+s`
+
+## Move an area
+
+- Press `shift+r` to select "Rectangle Select Tool"
+- Select an area (drag left mouse button)
+- Hold `ctrl+alt` and drag selected area while holding left mouse button
+- Press `shift+a` to anchor layer
 
 ## Copy edited image
 
