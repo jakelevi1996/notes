@@ -89,7 +89,7 @@ Open keyboard shortcuts   | `alt+e`, `k`
 - Change foreground colour to red (HTML `ff0000`)
 - Press `shift+r` to select "Rectangle Select Tool"
 - Select an area (drag left mouse button)
-- Press `shift+s` to apply "Stroke Selection" (assuming custom shortcut has been set, see above)
+- Press `shift+s` to apply "Stroke Selection"
 
 ## Highlight/outline multiple areas simultaneously
 
