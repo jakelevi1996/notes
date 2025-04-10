@@ -1,4 +1,5 @@
 import os
+import math
 import urllib.request
 import torch
 from jutility import plotting, util
@@ -41,9 +42,14 @@ x = torch.arange(0, 600, 50) * 1.0
 y_exp = c_exp * (m_exp ** x)
 y_lin = c_lin + (m_lin *  x)
 
+dp_m = math.log(2) / math.log(m_exp)
+dp_y = dp_m / 12
+util.hline()
 print("Inferred lines:")
 print("y = %10.3f * (%10.6f ^ x)" % (c_exp, m_exp))
 print("y = %10.3f + (%10.6f * x)" % (c_lin, m_lin))
+print("Exponential doubling period = %.1f months = %.3f years" % (dp_m, dp_y))
+util.hline()
 
 lines = [
     plotting.Line(t, n, c="k", label="Data"),
