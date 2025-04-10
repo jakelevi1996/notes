@@ -48,7 +48,7 @@ print("y = %10.3f + (%10.6f * x)" % (c_lin, m_lin))
 lines = [
     plotting.Line(t, n, c="k", label="Data"),
     plotting.Line(x, y_lin, c="r", m="o", ls="--", label="Linear"),
-    plotting.Line(x, y_exp, c="g", m="o", ls="--", label="Exponential"),
+    plotting.Line(x, y_exp, c="c", m="o", ls="--", label="Exponential"),
 ]
 kwargs = {
     "xticks": t[offset::step],
