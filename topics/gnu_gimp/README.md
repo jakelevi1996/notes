@@ -36,6 +36,7 @@ Tools/rectangle select    | `shift+r`
 Select/stroke selection   | `shift+s`
 Layers/anchor layer       | `shift+a`
 Image/crop to selection   | `shift+c`
+Tools/crop                | `shift+e`
 Edit/fill with FG colour  | `shift+f`
 Layers/new layer          | `shift+n`
 Layers/merge down         | `shift+m`
