@@ -116,7 +116,7 @@ Open keyboard shortcuts   | `alt+e`, `k`
 
 ## Expand canvas size
 
-- Select "Crop Tool"
+- Press `shift+e` to select "Crop Tool"
 - Select "Delete cropped pixels"
 - Select "Allow growing" and set "Fill with" to "white"
 - Select an area (drag left mouse button)
