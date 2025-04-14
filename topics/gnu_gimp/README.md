@@ -30,16 +30,17 @@
 
 ### Custom shortcuts
 
-Action                    | Shortcut
----                       | ---
-Tools/rectangle select    | `shift+r`
-Select/stroke selection   | `shift+s`
-Layers/anchor layer       | `shift+a`
-Image/crop to selection   | `shift+c`
-Tools/crop                | `shift+e`
-Edit/fill with FG colour  | `shift+f`
-Layers/new layer          | `shift+n`
-Layers/merge down         | `shift+m`
+Action                      | Shortcut
+---                         | ---
+Tools/rectangle select      | `shift+r`
+Select/stroke selection     | `shift+s`
+Layers/anchor layer         | `shift+a`
+Image/crop to selection     | `shift+c`
+Tools/crop                  | `shift+e`
+Layers/layer to image size  | `shift+i`
+Edit/fill with FG colour    | `shift+f`
+Layers/new layer            | `shift+n`
+Layers/merge down           | `shift+m`
 
 ### Default shortcuts
 
@@ -121,7 +122,7 @@ Open keyboard shortcuts   | `alt+e`, `k`
 - Select "Allow growing" and set "Fill with" to "white"
 - Select an area (drag left mouse button)
 - Press `enter` or click selected area
-- Press `shift+n`, `shift+m` to create a new layer and merge it down (in order to make new canvas space editable)
+- Press `shift+i` to expand layer size to canvas size
 
 ## Copy edited image
 
