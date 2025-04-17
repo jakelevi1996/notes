@@ -5,6 +5,7 @@
 - [`topics/pytorch/scripts/README.md`](#topicspytorchscriptsreadmemd)
   - [Contents](#contents)
   - [`topics/pytorch/scripts/demo_double_descent.py`](#topicspytorchscriptsdemo_double_descentpy)
+  - [`topics/pytorch/scripts/demo_quantile.py`](#topicspytorchscriptsdemo_quantilepy)
 
 ## `topics/pytorch/scripts/demo_double_descent.py`
 
@@ -28,3 +29,11 @@ python topics/pytorch/scripts/demo_double_descent.py --input_dim 1000
 ```
 
 ![](../img/demo_double_descent_i1000n10,30,100,300,1000,3000,10000o10r5se0st0.001.png)
+
+## `topics/pytorch/scripts/demo_quantile.py`
+
+```
+topics/pytorch/scripts/demo_quantile.py
+```
+
+![](../img/demo_quantile.png)
