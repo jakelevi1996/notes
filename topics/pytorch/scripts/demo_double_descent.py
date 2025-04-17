@@ -7,6 +7,7 @@ def main(
     repeats:    int,
     input_dim:  int,
     output_dim: int,
+    std:        float,
     n_list:     list[int],
 ):
     torch.manual_seed(seed)
@@ -15,20 +16,23 @@ def main(
 
     for n in n_list:
         for _ in range(repeats):
-            x = torch.rand([n, input_dim])
-            t = torch.rand([n, output_dim])
+            x = torch.normal(0, 1, [n, input_dim])
+            w = torch.normal(0, 1, [input_dim, output_dim])
+            t = x @ w + torch.normal(0, std, [n, output_dim])
+            x_test = torch.normal(0, 1, [n, input_dim])
+            t_test = x_test @ w + torch.normal(0, std, [n, output_dim])
 
             u, sd, v = torch.linalg.svd(x)
             s_inv = torch.zeros(x.T.shape)
-            s_inv.diagonal().copy_(1/sd)
+            s_inv.diagonal().copy_(1 / sd)
             w = v.T @ s_inv @ u.T @ t
-            results.update("svd", n, w, x, t)
+            results.update("svd", n, w, x, t, x_test, t_test)
 
             w, _, _, _ = torch.linalg.lstsq(x, t)
-            results.update("lstsq", n, w, x, t)
+            results.update("lstsq", n, w, x, t, x_test, t_test)
 
             w, _, _, _ = torch.linalg.lstsq(x, t, driver="gelsd")
-            results.update("lstsq_gelsd", n, w, x, t)
+            results.update("lstsq_gelsd", n, w, x, t, x_test, t_test)
 
     results.plot(input_dim, name)
 
@@ -44,13 +48,18 @@ class Results:
             wt: plotting.NoisyData(log_x=True, log_y=True)
             for wt in w_types
         }
+        self.mse_test_results = {
+            wt: plotting.NoisyData(log_x=True, log_y=True)
+            for wt in w_types
+        }
         self.table = util.Table(
             util.TimeColumn(),
             util.CountColumn(),
             util.Column("n"),
             util.Column("w_type", width=15),
-            util.Column("norm", ".5f"),
-            util.Column("mse",  ".5f"),
+            util.Column("norm",         ".5f"),
+            util.Column("mse",          ".5f"),
+            util.Column("mse_test",     ".5f"),
         )
 
     def update(
@@ -60,16 +69,48 @@ class Results:
         w:      torch.Tensor,
         x:      torch.Tensor,
         t:      torch.Tensor,
+        x_test: torch.Tensor,
+        t_test: torch.Tensor,
     ):
-        norm    = w.square().mean().item()
-        mse     = ((x @ w) - t).square().mean().item()
-        self.norm_results[w_type    ].update(n, norm)
-        self.mse_results[w_type     ].update(n, mse)
-        self.table.update(n=n, w_type=w_type, norm=norm, mse=mse)
+        norm = w.square().mean().item()
+        mse  = ((x @ w) - t).square().mean().item()
+        mse_test = ((x_test @ w) - t_test).square().mean().item()
+        self.norm_results[w_type].update(n, norm)
+        self.mse_results[w_type ].update(n, mse)
+        self.mse_test_results[w_type].update(n, mse_test)
+        self.table.update(
+            n=n,
+            w_type=w_type,
+            norm=norm,
+            mse=mse,
+            mse_test=mse_test,
+        ),
 
     def plot(self, input_dim: int, name: str):
         cp = plotting.ColourPicker(self.num_w, cyclic=True)
         mp = plotting.MultiPlot(
+            plotting.Subplot(
+                *[
+                    nd.plot(c=cp.next(), label=wt)
+                    for wt, nd in self.mse_results.items()
+                ],
+                plotting.VLine(input_dim, c="k", ls="--"),
+                log_x=True,
+                log_y=True,
+                xlabel="Train sample size",
+                title="MSE (train)",
+            ),
+            plotting.Subplot(
+                *[
+                    nd.plot(c=cp.next(), label=wt)
+                    for wt, nd in self.mse_test_results.items()
+                ],
+                plotting.VLine(input_dim, c="k", ls="--"),
+                log_x=True,
+                log_y=True,
+                xlabel="Train sample size",
+                title="MSE (test)",
+            ),
             plotting.Subplot(
                 *[
                     nd.plot(c=cp.next(), label=wt)
@@ -81,18 +122,7 @@ class Results:
                 xlabel="Train sample size",
                 title="Parameter norm",
             ),
-            plotting.Subplot(
-                *[
-                    nd.plot(c=cp.next(), label=wt)
-                    for wt, nd in self.mse_results.items()
-                ],
-                plotting.VLine(input_dim, c="k", ls="--"),
-                log_x=True,
-                log_y=True,
-                xlabel="Train sample size",
-                title="MSE",
-            ),
-            figsize=[10, 4],
+            figsize=[10, 8],
             legend=plotting.FigureLegend(
                 *[
                     plotting.NoisyData().plot(c=cp.next(), label=wt)
@@ -105,10 +135,11 @@ class Results:
 
 if __name__ == "__main__":
     parser = cli.Parser(
-        cli.Arg("seed",         type=int, default=0),
-        cli.Arg("repeats",      type=int, default=5),
-        cli.Arg("input_dim",    type=int, default=300),
-        cli.Arg("output_dim",   type=int, default=10),
+        cli.Arg("seed",         type=int,   default=0),
+        cli.Arg("repeats",      type=int,   default=5),
+        cli.Arg("input_dim",    type=int,   default=300),
+        cli.Arg("output_dim",   type=int,   default=10),
+        cli.Arg("std",          type=float, default=1e-3),
         cli.Arg(
             "n_list",
             type=int,
