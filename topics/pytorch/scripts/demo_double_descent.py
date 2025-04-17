@@ -58,7 +58,7 @@ class Results:
             wt: plotting.NoisyData(log_x=True, log_y=True)
             for wt in w_types
         }
-        self.rmse_test_results = {
+        self.test_results = {
             wt: plotting.NoisyData(log_x=True, log_y=True)
             for wt in w_types
         }
@@ -75,10 +75,10 @@ class Results:
             util.CountColumn(),
             util.Column("n"),
             util.Column("w_type", width=15),
-            util.Column("rmse",         ".5f"),
-            util.Column("rmse_test",    ".5f"),
-            util.Column("time",         ".5f"),
-            util.Column("norm",         ".5f"),
+            util.Column("rmse", ".5f"),
+            util.Column("test", ".5f"),
+            util.Column("time", ".5f"),
+            util.Column("norm", ".5f"),
         )
 
     def update(
@@ -94,16 +94,16 @@ class Results:
     ):
         norm = w.square().mean().item()
         rmse = ((x @ w) - y).square().mean().sqrt().item()
-        rmse_test = ((x_test @ w) - y_test).square().mean().sqrt().item()
+        test = ((x_test @ w) - y_test).square().mean().sqrt().item()
         self.rmse_results[w_type].update(n, rmse)
-        self.rmse_test_results[w_type].update(n, rmse_test)
+        self.test_results[w_type].update(n, test)
         self.time_results[w_type].update(n, t)
         self.norm_results[w_type].update(n, norm)
         self.table.update(
             n=n,
             w_type=w_type,
             rmse=rmse,
-            rmse_test=rmse_test,
+            test=test,
             time=t,
             norm=norm,
         ),
@@ -132,7 +132,7 @@ class Results:
             plotting.Subplot(
                 *[
                     nd.plot(c=cp.next(), label=wt)
-                    for wt, nd in self.rmse_test_results.items()
+                    for wt, nd in self.test_results.items()
                 ],
                 plotting.VLine(input_dim,   c="k", ls="--"),
                 plotting.HLine(std,         c="k", ls="--"),
