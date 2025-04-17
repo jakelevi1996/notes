@@ -13,32 +13,40 @@ def main(
     torch.manual_seed(seed)
 
     results = Results("svd", "lstsq", "lstsq_gelsd", "solve")
+    timer   = util.Timer(verbose=False)
 
     for n in n_list:
         for _ in range(repeats):
             x = torch.normal(0, 1, [n, input_dim])
             w = torch.normal(0, 1, [input_dim, output_dim])
-            t = x @ w + torch.normal(0, std, [n, output_dim])
+            y = x @ w + torch.normal(0, std, [n, output_dim])
             x_test = torch.normal(0, 1, [n, input_dim])
-            t_test = x_test @ w + torch.normal(0, std, [n, output_dim])
+            y_test = x_test @ w + torch.normal(0, std, [n, output_dim])
+            args = [n, x, y, x_test, y_test]
 
-            cov_xt_io = x.T @ t
-            cov_xx_ii = x.T @ x
-            cov_xx_ii.diagonal().add_(1e-3)
-            w = torch.linalg.solve(cov_xx_ii, cov_xt_io)
-            results.update("solve", n, w, x, t, x_test, t_test)
+            with timer:
+                cov_xy_io = x.T @ y
+                cov_xx_ii = x.T @ x
+                cov_xx_ii.diagonal().add_(1e-3)
+                w = torch.linalg.solve(cov_xx_ii, cov_xy_io)
+            results.update("solve", w, timer.get_last(), *args)
 
-            u, sd, v = torch.linalg.svd(x)
-            s_inv = torch.zeros(x.T.shape)
-            s_inv.diagonal().copy_(1 / sd)
-            w = v.T @ s_inv @ u.T @ t
-            results.update("svd", n, w, x, t, x_test, t_test)
+            with timer:
+                u, sd, v = torch.linalg.svd(x)
+                s_inv = torch.zeros(x.T.shape)
+                s_inv.diagonal().copy_(1 / sd)
+                w = v.T @ s_inv @ u.T @ y
+            results.update("svd", w, timer.get_last(), *args)
 
-            w, _, _, _ = torch.linalg.lstsq(x, t)
-            results.update("lstsq", n, w, x, t, x_test, t_test)
+            with timer:
+                w, _, _, _ = torch.linalg.lstsq(x, y)
+            results.update("lstsq", w, timer.get_last(), *args)
 
-            w, _, _, _ = torch.linalg.lstsq(x, t, driver="gelsd")
-            results.update("lstsq_gelsd", n, w, x, t, x_test, t_test)
+            with timer:
+                w, _, _, _ = torch.linalg.lstsq(x, y, driver="gelsd")
+            results.update("lstsq_gelsd", w, timer.get_last(), *args)
+
+        print(results.table.format_header())
 
     results.plot(input_dim, std, name)
 
@@ -46,10 +54,6 @@ class Results:
     def __init__(self, *w_types: str):
         self.w_types = w_types
         self.num_w = len(w_types)
-        self.norm_results = {
-            wt: plotting.NoisyData(log_x=True, log_y=True)
-            for wt in w_types
-        }
         self.rmse_results = {
             wt: plotting.NoisyData(log_x=True, log_y=True)
             for wt in w_types
@@ -58,38 +62,50 @@ class Results:
             wt: plotting.NoisyData(log_x=True, log_y=True)
             for wt in w_types
         }
+        self.time_results = {
+            wt: plotting.NoisyData(log_x=True, log_y=True)
+            for wt in w_types
+        }
+        self.norm_results = {
+            wt: plotting.NoisyData(log_x=True, log_y=True)
+            for wt in w_types
+        }
         self.table = util.Table(
             util.TimeColumn(),
             util.CountColumn(),
             util.Column("n"),
             util.Column("w_type", width=15),
-            util.Column("norm",         ".5f"),
             util.Column("rmse",         ".5f"),
             util.Column("rmse_test",    ".5f"),
+            util.Column("time",         ".5f"),
+            util.Column("norm",         ".5f"),
         )
 
     def update(
         self,
         w_type: str,
-        n:      int,
         w:      torch.Tensor,
+        t:      float,
+        n:      int,
         x:      torch.Tensor,
-        t:      torch.Tensor,
+        y:      torch.Tensor,
         x_test: torch.Tensor,
-        t_test: torch.Tensor,
+        y_test: torch.Tensor,
     ):
         norm = w.square().mean().item()
-        rmse = ((x @ w) - t).square().mean().sqrt().item()
-        rmse_test = ((x_test @ w) - t_test).square().mean().sqrt().item()
-        self.norm_results[w_type].update(n, norm)
+        rmse = ((x @ w) - y).square().mean().sqrt().item()
+        rmse_test = ((x_test @ w) - y_test).square().mean().sqrt().item()
         self.rmse_results[w_type].update(n, rmse)
         self.rmse_test_results[w_type].update(n, rmse_test)
+        self.time_results[w_type].update(n, t)
+        self.norm_results[w_type].update(n, norm)
         self.table.update(
             n=n,
             w_type=w_type,
-            norm=norm,
             rmse=rmse,
             rmse_test=rmse_test,
+            time=t,
+            norm=norm,
         ),
 
     def plot(
@@ -124,6 +140,17 @@ class Results:
                 log_y=True,
                 xlabel="Train sample size",
                 title="RMSE (test)",
+            ),
+            plotting.Subplot(
+                *[
+                    nd.plot(c=cp.next(), label=wt)
+                    for wt, nd in self.time_results.items()
+                ],
+                plotting.VLine(input_dim, c="k", ls="--"),
+                log_x=True,
+                log_y=True,
+                xlabel="Train sample size",
+                title="Time taken",
             ),
             plotting.Subplot(
                 *[
