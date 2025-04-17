@@ -40,7 +40,7 @@ def main(
             w, _, _, _ = torch.linalg.lstsq(x, t, driver="gelsd")
             results.update("lstsq_gelsd", n, w, x, t, x_test, t_test)
 
-    results.plot(input_dim, name)
+    results.plot(input_dim, std, name)
 
 class Results:
     def __init__(self, *w_types: str):
@@ -50,11 +50,11 @@ class Results:
             wt: plotting.NoisyData(log_x=True, log_y=True)
             for wt in w_types
         }
-        self.mse_results = {
+        self.rmse_results = {
             wt: plotting.NoisyData(log_x=True, log_y=True)
             for wt in w_types
         }
-        self.mse_test_results = {
+        self.rmse_test_results = {
             wt: plotting.NoisyData(log_x=True, log_y=True)
             for wt in w_types
         }
@@ -64,8 +64,8 @@ class Results:
             util.Column("n"),
             util.Column("w_type", width=15),
             util.Column("norm",         ".5f"),
-            util.Column("mse",          ".5f"),
-            util.Column("mse_test",     ".5f"),
+            util.Column("rmse",         ".5f"),
+            util.Column("rmse_test",    ".5f"),
         )
 
     def update(
@@ -79,43 +79,51 @@ class Results:
         t_test: torch.Tensor,
     ):
         norm = w.square().mean().item()
-        mse  = ((x @ w) - t).square().mean().item()
-        mse_test = ((x_test @ w) - t_test).square().mean().item()
+        rmse = ((x @ w) - t).square().mean().sqrt().item()
+        rmse_test = ((x_test @ w) - t_test).square().mean().sqrt().item()
         self.norm_results[w_type].update(n, norm)
-        self.mse_results[w_type ].update(n, mse)
-        self.mse_test_results[w_type].update(n, mse_test)
+        self.rmse_results[w_type].update(n, rmse)
+        self.rmse_test_results[w_type].update(n, rmse_test)
         self.table.update(
             n=n,
             w_type=w_type,
             norm=norm,
-            mse=mse,
-            mse_test=mse_test,
+            rmse=rmse,
+            rmse_test=rmse_test,
         ),
 
-    def plot(self, input_dim: int, name: str):
+    def plot(
+        self,
+        input_dim:  int,
+        std:        float,
+        name:       str,
+    ):
+        hv = "$(d_{in}, \\sigma)$"
         cp = plotting.ColourPicker(self.num_w, cyclic=True)
         mp = plotting.MultiPlot(
             plotting.Subplot(
                 *[
                     nd.plot(c=cp.next(), label=wt)
-                    for wt, nd in self.mse_results.items()
+                    for wt, nd in self.rmse_results.items()
                 ],
-                plotting.VLine(input_dim, c="k", ls="--"),
+                plotting.VLine(input_dim,   c="k", ls="--"),
+                plotting.HLine(std,         c="k", ls="--"),
                 log_x=True,
                 log_y=True,
                 xlabel="Train sample size",
-                title="MSE (train)",
+                title="RMSE (train)",
             ),
             plotting.Subplot(
                 *[
                     nd.plot(c=cp.next(), label=wt)
-                    for wt, nd in self.mse_test_results.items()
+                    for wt, nd in self.rmse_test_results.items()
                 ],
-                plotting.VLine(input_dim, c="k", ls="--"),
+                plotting.VLine(input_dim,   c="k", ls="--"),
+                plotting.HLine(std,         c="k", ls="--"),
                 log_x=True,
                 log_y=True,
                 xlabel="Train sample size",
-                title="MSE (test)",
+                title="RMSE (test)",
             ),
             plotting.Subplot(
                 *[
@@ -134,7 +142,7 @@ class Results:
                     plotting.NoisyData().plot(c=cp.next(), label=wt)
                     for wt in self.w_types
                 ],
-                plotting.Line([], c="k", ls="--", label="Input dim"),
+                plotting.Line([], c="k", ls="--", label=hv),
             ),
         )
         mp.save(name, "topics/pytorch/img")
