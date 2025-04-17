@@ -10,21 +10,21 @@
 
 ```sh
 python topics/pytorch/scripts/demo_double_descent.py
-# Time taken for `main` = 7.3201 seconds
+# Time taken for `main` = 6.8436 seconds
 ```
 
-![](../img/demo_double_descent_i300n10,30,100,300,1000,3000,10000o10r5s0.png)
+![](../img/demo_double_descent_i300n10,30,100,300,1000,3000,10000o10r5se0st0.001.png)
 
 ```sh
 python topics/pytorch/scripts/demo_double_descent.py --input_dim 100
-# Time taken for `main` = 20.0856 seconds
+# Time taken for `main` = 21.5127 seconds
 ```
 
-![](../img/demo_double_descent_i100n10,30,100,300,1000,3000,10000o10r5s0.png)
+![](../img/demo_double_descent_i100n10,30,100,300,1000,3000,10000o10r5se0st0.001.png)
 
 ```sh
 python topics/pytorch/scripts/demo_double_descent.py --input_dim 1000
-# Time taken for `main` = 16.4307 seconds
+# Time taken for `main` = 18.2575 seconds
 ```
 
-![](../img/demo_double_descent_i1000n10,30,100,300,1000,3000,10000o10r5s0.png)
+![](../img/demo_double_descent_i1000n10,30,100,300,1000,3000,10000o10r5se0st0.001.png)
