@@ -12,7 +12,7 @@ def main(
 ):
     torch.manual_seed(seed)
 
-    results = Results("svd", "lstsq", "lstsq_gelsd")
+    results = Results("svd", "lstsq", "lstsq_gelsd", "solve")
 
     for n in n_list:
         for _ in range(repeats):
@@ -21,6 +21,12 @@ def main(
             t = x @ w + torch.normal(0, std, [n, output_dim])
             x_test = torch.normal(0, 1, [n, input_dim])
             t_test = x_test @ w + torch.normal(0, std, [n, output_dim])
+
+            cov_xt_io = x.T @ t
+            cov_xx_ii = x.T @ x
+            cov_xx_ii.diagonal().add_(1e-3)
+            w = torch.linalg.solve(cov_xx_ii, cov_xt_io)
+            results.update("solve", n, w, x, t, x_test, t_test)
 
             u, sd, v = torch.linalg.svd(x)
             s_inv = torch.zeros(x.T.shape)
