@@ -6,6 +6,7 @@
   - [Contents](#contents)
   - [`topics/pytorch/scripts/demo_double_descent.py`](#topicspytorchscriptsdemo_double_descentpy)
   - [`topics/pytorch/scripts/demo_quantile.py`](#topicspytorchscriptsdemo_quantilepy)
+  - [`topics/pytorch/scripts/demo_conv_vs_linear.py`](#topicspytorchscriptsdemo_conv_vs_linearpy)
 
 ## `topics/pytorch/scripts/demo_double_descent.py`
 
@@ -37,3 +38,16 @@ topics/pytorch/scripts/demo_quantile.py
 ```
 
 ![](../img/demo_quantile.png)
+
+## `topics/pytorch/scripts/demo_conv_vs_linear.py`
+
+```
+python topics/pytorch/scripts/demo_conv_vs_linear.py
+```
+
+![](../img/demo_conv_vs_linear_iFn100,64,80,60r5.png)
+```
+python topics/pytorch/scripts/demo_conv_vs_linear.py --include_reshape
+```
+
+![](../img/demo_conv_vs_linear_iTn100,64,80,60r5.png)
