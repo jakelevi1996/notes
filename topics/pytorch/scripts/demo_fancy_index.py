@@ -12,6 +12,41 @@ print_tensor = juml.test_utils.TensorPrinter(printer)
 juml.test_utils.torch_set_print_options(threshold=1e5)
 
 printer.title("`demo_fancy_index`")
+printer.contents(
+    "# `demo_fancy_index`",
+    "## Contents",
+    "## NHW",
+    "### INPUT",
+    "### IDENTITY",
+    "### TRANSPOSE",
+    "### UNFLATTEN",
+    "### UNFLATTEN + TRANSPOSE",
+    "### INPUT",
+    "### UNFLATTEN + FLATTEN",
+    "### UNFOLD",
+    "### UNFOLD + FLATTEN",
+    "## Q",
+    "### INPUT",
+    "### FLATTEN",
+    "### FLATTEN + TRANSPOSE",
+    "### FLATTEN + TRANSPOSE + UNFLATTEN",
+    "### FLATTEN + TRANSPOSE + UNFLATTEN + FLATTEN",
+    "## K",
+    "### INPUT",
+    "### UNFOLD",
+    "### UNFOLD + TRANSPOSE",
+    "### UNFOLD + TRANSPOSE + RESHAPE",
+    "## V",
+    "### INPUT",
+    "### UNFOLD + TRANSPOSE + RESHAPE + TRANSPOSE",
+    "## O",
+    "### INPUT",
+    "### UNFLATTEN",
+    "### UNFLATTEN + FLATTEN",
+    "### UNFLATTEN + FLATTEN + TRANSPOSE",
+    "### UNFLATTEN + FLATTEN + TRANSPOSE + UNFLATTEN",
+)
+
 printer.heading("NHW")
 
 printer.heading("INPUT", level=3)
@@ -76,7 +111,7 @@ iw = (iw + dx) % w
 y = x[..., ih, iw]
 print_tensor(y)
 
-printer.heading("NCHW")
+printer.heading("Q")
 
 printer.heading("INPUT", level=3)
 nchw = [2, 8, 3, 5]
@@ -127,6 +162,8 @@ assert list(y.shape) == [2, 30, 1, 4]
 assert list(y.shape) == list(q.shape)
 assert torch.all(y == q).item()
 
+printer.heading("K")
+
 printer.heading("INPUT", level=3)
 print_tensor(x)
 
@@ -169,6 +206,8 @@ assert list(y.shape) == [2, 30, 4, 9]
 assert list(y.shape) == list(v.mT.shape)
 assert torch.all(y == v.mT).item()
 
+printer.heading("V")
+
 printer.heading("INPUT", level=3)
 print_tensor(x)
 
@@ -187,7 +226,7 @@ assert list(y.shape) == [2, 30, 9, 4]
 assert list(y.shape) == list(v.shape)
 assert torch.all(y == v).item()
 
-printer.heading("NI1V")
+printer.heading("O")
 
 printer.heading("INPUT", level=3)
 ni1v = [2, h*w*heads, 1, d_qkv]

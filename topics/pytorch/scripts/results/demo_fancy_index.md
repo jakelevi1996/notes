@@ -1,5 +1,39 @@
 # `demo_fancy_index`
 
+## Contents
+- [`demo_fancy_index`](#demo_fancy_index)
+  - [Contents](#contents)
+  - [NHW](#nhw)
+    - [INPUT](#input)
+    - [IDENTITY](#identity)
+    - [TRANSPOSE](#transpose)
+    - [UNFLATTEN](#unflatten)
+    - [UNFLATTEN + TRANSPOSE](#unflatten--transpose)
+    - [INPUT](#input-1)
+    - [UNFLATTEN + FLATTEN](#unflatten--flatten)
+    - [UNFOLD](#unfold)
+    - [UNFOLD + FLATTEN](#unfold--flatten)
+  - [Q](#q)
+    - [INPUT](#input-2)
+    - [FLATTEN](#flatten)
+    - [FLATTEN + TRANSPOSE](#flatten--transpose)
+    - [FLATTEN + TRANSPOSE + UNFLATTEN](#flatten--transpose--unflatten)
+    - [FLATTEN + TRANSPOSE + UNFLATTEN + FLATTEN](#flatten--transpose--unflatten--flatten)
+  - [K](#k)
+    - [INPUT](#input-3)
+    - [UNFOLD](#unfold-1)
+    - [UNFOLD + TRANSPOSE](#unfold--transpose)
+    - [UNFOLD + TRANSPOSE + RESHAPE](#unfold--transpose--reshape)
+  - [V](#v)
+    - [INPUT](#input-4)
+    - [UNFOLD + TRANSPOSE + RESHAPE + TRANSPOSE](#unfold--transpose--reshape--transpose)
+  - [O](#o)
+    - [INPUT](#input-5)
+    - [UNFLATTEN](#unflatten-1)
+    - [UNFLATTEN + FLATTEN](#unflatten--flatten-1)
+    - [UNFLATTEN + FLATTEN + TRANSPOSE](#unflatten--flatten--transpose)
+    - [UNFLATTEN + FLATTEN + TRANSPOSE + UNFLATTEN](#unflatten--flatten--transpose--unflatten)
+
 ## NHW
 
 ### INPUT
@@ -399,7 +433,7 @@ tensor([[[45., 41., 42.,  5.,  1.,  2., 10.,  6.,  7.],
          [84., 85., 81., 89., 90., 86., 49., 50., 46.]]])
 ```
 
-## NCHW
+## Q
 
 ### INPUT
 
@@ -816,6 +850,8 @@ tensor([[[[  1.,  16.,  31.,  46.]],
 
          [[195., 210., 225., 240.]]]])
 ```
+
+## K
 
 ### INPUT
 
@@ -1787,6 +1823,8 @@ tensor([[[[ 15.,  11.,  12.,   5.,   1.,   2.,  10.,   6.,   7.],
           [234., 235., 231., 239., 240., 236., 229., 230., 226.]]]])
 ```
 
+## V
+
 ### INPUT
 
 ```
@@ -2465,7 +2503,7 @@ tensor([[[[ 15.,  30.,  45.,  60.],
           [181., 196., 211., 226.]]]])
 ```
 
-## NI1V
+## O
 
 ### INPUT
 
