@@ -123,9 +123,9 @@ y = x[..., ic, ih, iw]
 print_tensor(y)
 
 q = x.flatten(-2, -1).mT.unflatten(-1, [heads, 1, d_qkv]).flatten(-4, -3)
-printer(list(y.shape) == [2, 30, 1, 4])
-printer(list(y.shape) == list(q.shape))
-printer(torch.all(y == q).item())
+assert list(y.shape) == [2, 30, 1, 4]
+assert list(y.shape) == list(q.shape)
+assert torch.all(y == q).item()
 
 printer.heading("INPUT", level=3)
 print_tensor(x)
@@ -165,9 +165,9 @@ print_tensor(y)
 v = torch.nn.functional.pad(x, [1, 1, 1, 1], "circular")
 v = torch.nn.functional.unfold(v, 3)
 v = v.mT.unflatten(-1, [2, 4, 9]).flatten(-4, -3).mT
-printer(list(y.shape) == [2, 30, 4, 9])
-printer(list(y.shape) == list(v.mT.shape))
-printer(torch.all(y == v.mT).item())
+assert list(y.shape) == [2, 30, 4, 9]
+assert list(y.shape) == list(v.mT.shape)
+assert torch.all(y == v.mT).item()
 
 printer.heading("INPUT", level=3)
 print_tensor(x)
@@ -183,9 +183,9 @@ iw = (iw + dx) % w
 y = x[..., ic, ih, iw]
 print_tensor(y)
 
-printer(list(y.shape) == [2, 30, 9, 4])
-printer(list(y.shape) == list(v.shape))
-printer(torch.all(y == v).item())
+assert list(y.shape) == [2, 30, 9, 4]
+assert list(y.shape) == list(v.shape)
+assert torch.all(y == v).item()
 
 printer.heading("NI1V")
 
@@ -233,12 +233,12 @@ y = x[..., ii, i1, iv]
 print_tensor(y)
 
 o = x.unflatten(-3, [h*w, heads]).flatten(-3, -1).mT.unflatten(-1, [h, w])
-printer(list(y.shape) == [2, 8, 3, 5])
-printer(list(y.shape) == list(o.shape))
-printer(torch.all(y == o).item())
+assert list(y.shape) == [2, 8, 3, 5]
+assert list(y.shape) == list(o.shape)
+assert torch.all(y == o).item()
 
 y = q[..., ii, i1, iv]
 q_inv = torch.arange(math.prod(nchw)).reshape(nchw) + 1.0
-printer(list(y.shape) == [2, 8, 3, 5])
-printer(list(y.shape) == list(q_inv.shape))
-printer(torch.all(y == q_inv).item())
+assert list(y.shape) == [2, 8, 3, 5]
+assert list(y.shape) == list(q_inv.shape)
+assert torch.all(y == q_inv).item()
