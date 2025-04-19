@@ -98,8 +98,8 @@ print_tensor(y)
 
 printer.heading("UNFOLD", level=3)
 k = 3
-ih = torch.arange(h).reshape(h, 1).expand(h, w).reshape(h, w, 1)
-iw = torch.arange(w).reshape(1, w).expand(h, w).reshape(h, w, 1)
+ih = torch.arange(h).reshape(h, 1, 1)
+iw = torch.arange(w).reshape(1, w, 1)
 dy = torch.arange(k).reshape(k, 1).expand(k, k).flatten() - (k//2)
 dx = torch.arange(k).reshape(1, k).expand(k, k).flatten() - (k//2)
 ih = (ih + dy) % h
