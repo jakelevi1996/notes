@@ -20,6 +20,7 @@ printer.contents(
     "### IDENTITY",
     "### TRANSPOSE",
     "### UNFLATTEN",
+    "### TRANSPOSE + UNFLATTEN",
     "### UNFLATTEN + TRANSPOSE",
     "### INPUT",
     "### UNFLATTEN + FLATTEN",
@@ -71,6 +72,12 @@ print_tensor(y)
 printer.heading("UNFLATTEN", level=3)
 ih = torch.arange(h).reshape(3, 3, 1)
 iw = torch.arange(w).reshape(1, 1, w)
+y = x[..., ih, iw]
+print_tensor(y)
+
+printer.heading("TRANSPOSE + UNFLATTEN", level=3)
+ih = torch.arange(h).reshape(1, 3, 3)
+iw = torch.arange(w).reshape(w, 1, 1)
 y = x[..., ih, iw]
 print_tensor(y)
 
@@ -128,6 +135,7 @@ ac = torch.arange(c)
 ah = torch.arange(h)
 aw = torch.arange(w)
 ak = torch.arange(k)
+ahw = torch.arange(h*w)
 
 printer.heading("FLATTEN", level=3)
 ic = ac.reshape(c, 1)
@@ -263,9 +271,11 @@ print_tensor(y)
 
 printer.heading("UNFLATTEN + FLATTEN + TRANSPOSE + UNFLATTEN", level=3)
 # ii = ai.reshape(h*w, heads).repeat_interleave(d_qkv, 1).mT.reshape(c, h, w)
-# ^ Alternative (correct)
+# ii = ai.reshape(h*w, heads, 1).expand(h*w, heads, d_qkv).reshape(h*w, c)
+#      .mT.reshape(c, h, w)
+# ^ Alternatives (correct)
 ii = ai.reshape(h*w, heads, 1).expand(h*w, heads, d_qkv).reshape(h*w, c)
-ii = ii.mT.reshape(c, h, w)
+ii = ii[ahw.reshape(h, w), ac.reshape(c, 1, 1)]
 i1 = a1
 iv = av.reshape(1, d_qkv).expand(heads, d_qkv).reshape(c, 1, 1)
 y = x[..., ii, i1, iv]
