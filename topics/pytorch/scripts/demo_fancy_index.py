@@ -161,9 +161,9 @@ iw = (iw + dx) % w
 y = x[..., ic, ih, iw]
 print_tensor(y)
 
-k = torch.nn.functional.pad(x, [1, 1, 1, 1], "circular")
-k = torch.nn.functional.unfold(k, 3)
-k = k.mT.unflatten(-1, [2, 4, 9]).flatten(-4, -3)
+v = torch.nn.functional.pad(x, [1, 1, 1, 1], "circular")
+v = torch.nn.functional.unfold(v, 3)
+v = v.mT.unflatten(-1, [2, 4, 9]).flatten(-4, -3).mT
 printer(list(y.shape) == [2, 30, 4, 9])
-printer(list(y.shape) == list(k.shape))
-printer(torch.all(y == k).item())
+printer(list(y.shape) == list(v.mT.shape))
+printer(torch.all(y == v.mT).item())
