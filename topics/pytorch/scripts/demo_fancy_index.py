@@ -9,6 +9,7 @@ printer = util.Printer(
     print_to_console=False,
 )
 print_tensor = juml.test_utils.TensorPrinter(printer)
+juml.test_utils.torch_set_print_options()
 
 printer("INPUT:")
 x_shape = [2, 9, 5]
@@ -43,6 +44,12 @@ print_tensor(y)
 
 printer("INPUT:")
 print_tensor(x)
+
+printer("UNFLATTEN + FLATTEN:")
+ih = torch.arange(h).reshape(3, 3, 1).expand(3, 3, w).reshape(3, 3*w)
+iw = torch.arange(w).reshape(1, 1, w).expand(1, 3, w).reshape(1, 3*w)
+y = x[..., ih, iw]
+print_tensor(y)
 
 printer("UNFOLD:")
 k = 3
