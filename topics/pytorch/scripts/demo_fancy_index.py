@@ -11,6 +11,8 @@ printer = util.Printer(
 print_tensor = juml.test_utils.TensorPrinter(printer)
 juml.test_utils.torch_set_print_options()
 
+printer.heading("NHW")
+
 printer("INPUT:")
 x_shape = [2, 9, 5]
 x = torch.arange(math.prod(x_shape)).reshape(x_shape) + 1.0
@@ -72,3 +74,52 @@ ih = (ih + dy) % h
 iw = (iw + dx) % w
 y = x[..., ih, iw]
 print_tensor(y)
+
+printer.heading("NCHW")
+
+printer("INPUT:")
+nchw = [2, 8, 3, 5]
+x = torch.arange(math.prod(nchw)).reshape(nchw) + 1.0
+print_tensor(x)
+
+c, h, w = x.shape[-3:]
+ac = torch.arange(c)
+ah = torch.arange(h)
+aw = torch.arange(w)
+
+heads = 2
+d_qkv = c // heads
+k = 3
+
+printer("FLATTEN:")
+ih = ah.reshape(h, 1).expand(h, w).reshape(h*w)
+iw = aw.reshape(1, w).expand(h, w).reshape(h*w)
+y = x[..., ih, iw]
+print_tensor(y)
+
+printer("FLATTEN + TRANSPOSE:")
+ic = ac
+ih = ah.reshape(h, 1).expand(h, w).reshape(h*w, 1)
+iw = aw.reshape(1, w).expand(h, w).reshape(h*w, 1)
+y = x[..., ic, ih, iw]
+print_tensor(y)
+
+printer("FLATTEN + TRANSPOSE + UNFLATTEN:")
+ic = ac.reshape(heads, 1, d_qkv)
+ih = ah.reshape(h, 1).expand(h, w).reshape(h*w, 1, 1, 1)
+iw = aw.reshape(1, w).expand(h, w).reshape(h*w, 1, 1, 1)
+y = x[..., ic, ih, iw]
+print_tensor(y)
+
+printer("FLATTEN + TRANSPOSE + UNFLATTEN + FLATTEN:")
+ic = ac.reshape(1, c).expand(h*w, c).reshape(h*w*heads, 1, d_qkv)
+ih = ah.reshape(h, 1, 1).expand(h, w, heads).reshape(h*w*heads, 1, 1)
+iw = aw.reshape(1, w, 1).expand(h, w, heads).reshape(h*w*heads, 1, 1)
+y = x[..., ic, ih, iw]
+print_tensor(y)
+
+q = x.flatten(-2, -1).mT.unflatten(-1, [heads, 1, d_qkv]).flatten(-4, -3)
+printer(list(y.shape) == [2, 30, 1, 4])
+printer(list(y.shape) == list(q.shape))
+printer(torch.all(y == q).item())
+printer.hline()
