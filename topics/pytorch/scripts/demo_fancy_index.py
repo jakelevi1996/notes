@@ -95,9 +95,10 @@ aw = torch.arange(w)
 ak = torch.arange(k)
 
 printer.heading("FLATTEN", level=3)
+ic = ac.reshape(c, 1)
 ih = ah.reshape(h, 1).expand(h, w).reshape(h*w)
 iw = aw.reshape(1, w).expand(h, w).reshape(h*w)
-y = x[..., ih, iw]
+y = x[..., ic, ih, iw]
 print_tensor(y)
 
 printer.heading("FLATTEN + TRANSPOSE", level=3)
@@ -185,3 +186,59 @@ print_tensor(y)
 printer(list(y.shape) == [2, 30, 9, 4])
 printer(list(y.shape) == list(v.shape))
 printer(torch.all(y == v).item())
+
+printer.heading("NI1V")
+
+printer.heading("INPUT", level=3)
+ni1v = [2, h*w*heads, 1, d_qkv]
+x = torch.arange(math.prod(ni1v)).reshape(ni1v) + 1.0
+print_tensor(x)
+
+i = h*w*heads
+ai = torch.arange(i)
+a1 = torch.arange(1)
+av = torch.arange(d_qkv)
+
+printer.heading("UNFLATTEN", level=3)
+ii = ai.reshape(h*w, heads, 1, 1)
+i1 = a1
+iv = av
+y = x[..., ii, i1, iv]
+print_tensor(y)
+
+printer.heading("UNFLATTEN + FLATTEN", level=3)
+ii = ai.reshape(h*w, heads, 1).expand(h*w, heads, d_qkv).reshape(h*w, c)
+i1 = a1
+iv = av.reshape(1, d_qkv).expand(heads, d_qkv).reshape(c)
+y = x[..., ii, i1, iv]
+print_tensor(y)
+
+printer.heading("UNFLATTEN + FLATTEN + TRANSPOSE", level=3)
+# ii = ai.reshape(heads, 1, h*w).expand(heads, d_qkv, h*w).reshape(c, h*w)
+# ^ WRONG
+ii = ai.reshape(h*w, heads, 1).expand(h*w, heads, d_qkv).reshape(h*w, c).mT
+i1 = a1
+iv = av.reshape(1, d_qkv).expand(heads, d_qkv).reshape(c, 1)
+y = x[..., ii, i1, iv]
+print_tensor(y)
+
+printer.heading("UNFLATTEN + FLATTEN + TRANSPOSE + UNFLATTEN", level=3)
+# ii = ai.reshape(h*w, heads).repeat_interleave(d_qkv, 1).mT.reshape(c, h, w)
+# ^ Alternative (correct)
+ii = ai.reshape(h*w, heads, 1).expand(h*w, heads, d_qkv).reshape(h*w, c)
+ii = ii.mT.reshape(c, h, w)
+i1 = a1
+iv = av.reshape(1, d_qkv).expand(heads, d_qkv).reshape(c, 1, 1)
+y = x[..., ii, i1, iv]
+print_tensor(y)
+
+o = x.unflatten(-3, [h*w, heads]).flatten(-3, -1).mT.unflatten(-1, [h, w])
+printer(list(y.shape) == [2, 8, 3, 5])
+printer(list(y.shape) == list(o.shape))
+printer(torch.all(y == o).item())
+
+y = q[..., ii, i1, iv]
+q_inv = torch.arange(math.prod(nchw)).reshape(nchw) + 1.0
+printer(list(y.shape) == [2, 8, 3, 5])
+printer(list(y.shape) == list(q_inv.shape))
+printer(torch.all(y == q_inv).item())
