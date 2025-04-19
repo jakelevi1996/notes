@@ -167,3 +167,21 @@ v = v.mT.unflatten(-1, [2, 4, 9]).flatten(-4, -3).mT
 printer(list(y.shape) == [2, 30, 4, 9])
 printer(list(y.shape) == list(v.mT.shape))
 printer(torch.all(y == v.mT).item())
+
+printer.heading("INPUT", level=3)
+print_tensor(x)
+
+printer.heading("UNFOLD + TRANSPOSE + RESHAPE + TRANSPOSE", level=3)
+ic = ac.reshape(1, c).expand(h*w, c).reshape(h*w*heads, 1, d_qkv)
+ih = ah.reshape(h, 1, 1).expand(h, w, heads).reshape(h*w*heads, 1, 1)
+iw = aw.reshape(1, w, 1).expand(h, w, heads).reshape(h*w*heads, 1, 1)
+dy = ak.reshape(k, 1).expand(k, k).reshape(k*k, 1) - (k//2)
+dx = ak.reshape(1, k).expand(k, k).reshape(k*k, 1) - (k//2)
+ih = (ih + dy) % h
+iw = (iw + dx) % w
+y = x[..., ic, ih, iw]
+print_tensor(y)
+
+printer(list(y.shape) == [2, 30, 9, 4])
+printer(list(y.shape) == list(v.shape))
+printer(torch.all(y == v).item())
