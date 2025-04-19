@@ -9,7 +9,7 @@ printer = util.Printer(
     print_to_console=False,
 )
 print_tensor = juml.test_utils.TensorPrinter(printer)
-juml.test_utils.torch_set_print_options()
+juml.test_utils.torch_set_print_options(threshold=1e5)
 
 printer.heading("NHW")
 
@@ -83,13 +83,15 @@ x = torch.arange(math.prod(nchw)).reshape(nchw) + 1.0
 print_tensor(x)
 
 c, h, w = x.shape[-3:]
-ac = torch.arange(c)
-ah = torch.arange(h)
-aw = torch.arange(w)
 
 heads = 2
 d_qkv = c // heads
 k = 3
+
+ac = torch.arange(c)
+ah = torch.arange(h)
+aw = torch.arange(w)
+ak = torch.arange(k)
 
 printer("FLATTEN:")
 ih = ah.reshape(h, 1).expand(h, w).reshape(h*w)
@@ -122,4 +124,47 @@ q = x.flatten(-2, -1).mT.unflatten(-1, [heads, 1, d_qkv]).flatten(-4, -3)
 printer(list(y.shape) == [2, 30, 1, 4])
 printer(list(y.shape) == list(q.shape))
 printer(torch.all(y == q).item())
+printer.hline()
+
+printer("INPUT:")
+print_tensor(x)
+
+printer("UNFOLD:")
+ih = ah.reshape(h, 1).expand(h, w).reshape(h, w, 1)
+iw = aw.reshape(1, w).expand(h, w).reshape(h, w, 1)
+dy = ak.reshape(k, 1).expand(k, k).flatten() - (k//2)
+dx = ak.reshape(1, k).expand(k, k).flatten() - (k//2)
+ih = (ih + dy) % h
+iw = (iw + dx) % w
+y = x[..., ih, iw]
+print_tensor(y)
+
+printer("UNFOLD + TRANSPOSE:")
+ic = ac.reshape(c, 1)
+ih = ah.reshape(h, 1).expand(h, w).reshape(h, w, 1, 1)
+iw = aw.reshape(1, w).expand(h, w).reshape(h, w, 1, 1)
+dy = ak.reshape(k, 1).expand(k, k).flatten() - (k//2)
+dx = ak.reshape(1, k).expand(k, k).flatten() - (k//2)
+ih = (ih + dy) % h
+iw = (iw + dx) % w
+y = x[..., ic, ih, iw]
+print_tensor(y)
+
+printer("UNFOLD + TRANSPOSE + RESHAPE:")
+ic = ac.reshape(1, c).expand(h*w, c).reshape(h*w*heads, d_qkv, 1)
+ih = ah.reshape(h, 1, 1).expand(h, w, heads).reshape(h*w*heads, 1, 1)
+iw = aw.reshape(1, w, 1).expand(h, w, heads).reshape(h*w*heads, 1, 1)
+dy = ak.reshape(k, 1).expand(k, k).flatten() - (k//2)
+dx = ak.reshape(1, k).expand(k, k).flatten() - (k//2)
+ih = (ih + dy) % h
+iw = (iw + dx) % w
+y = x[..., ic, ih, iw]
+print_tensor(y)
+
+k = torch.nn.functional.pad(x, [1, 1, 1, 1], "circular")
+k = torch.nn.functional.unfold(k, 3)
+k = k.mT.unflatten(-1, [2, 4, 9]).flatten(-4, -3)
+printer(list(y.shape) == [2, 30, 4, 9])
+printer(list(y.shape) == list(k.shape))
+printer(torch.all(y == k).item())
 printer.hline()
