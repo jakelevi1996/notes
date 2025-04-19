@@ -155,4 +155,5 @@
     // "editor.tabCompletion": "onlySnippets",
     "debug.console.acceptSuggestionOnEnter": "on",
     "debug.console.historySuggestions": false,
+    "editor.minimap.showSlider": "always",
 }
