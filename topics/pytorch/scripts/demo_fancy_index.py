@@ -19,6 +19,7 @@ printer.contents(
     "### INPUT",
     "### IDENTITY",
     "### TRANSPOSE",
+    "### FLATTEN",
     "### UNFLATTEN",
     "### TRANSPOSE + UNFLATTEN",
     "### UNFLATTEN + TRANSPOSE",
@@ -66,6 +67,12 @@ print_tensor(y)
 printer.heading("TRANSPOSE", level=3)
 ih = torch.arange(h).reshape(1, h)
 iw = torch.arange(w).reshape(w, 1)
+y = x[..., ih, iw]
+print_tensor(y)
+
+printer.heading("FLATTEN", level=3)
+ih = torch.arange(h).reshape(h, 1).expand(h, w).reshape(h*w)
+iw = torch.arange(w).reshape(1, w).expand(h, w).reshape(h*w)
 y = x[..., ih, iw]
 print_tensor(y)
 
