@@ -122,18 +122,18 @@ The following is a sensible, minimal example of a document template for a `tex` 
 
 \title{
     \rule{\linewidth}{1pt}
-    Main document title \\
-    \large Document subtitle
+    \textbf{Main document title} \\
+    \textbf{\large Document subtitle}
 }
 \author{
-    Jake Levi \\
-    University of Oxford
+    \textbf{Jake Levi} \\
+    \textbf{University of Oxford}
     \and
-    Author Two \\
-    Institute of Universities
+    \textbf{Author Two} \\
+    \textbf{Institute of Universities}
 }
 \date{
-    \today \\
+    \textbf{\today} \\
     \rule{\linewidth}{1pt}
 }
 
