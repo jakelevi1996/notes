@@ -102,7 +102,7 @@ Below is a side-by-side comparison of the 2 images with different resolutions:
 
 The following is a sensible, minimal example of a document template for a `tex` document. It assumes the existence of certain files and directories (these can be created with the commands shown after the template):
 
-- Sections are contained in dedicated `tex` files in a subdirectory called `Sections`
+- Sections are contained in dedicated `tex` files in a subdirectory called `sections`
 - Images are contained in a parallel directory called `Results`
 - References are contained in a file in the current directory called `references.bib`
 
@@ -147,23 +147,23 @@ Place holder for abstract, delete if necessary, otherwise summarise document her
 
 \section{Introduction}
 \label{section:intro}
-\input{Sections/intro.tex}
+\input{sections/intro.tex}
 
 \section{Related work}
 \label{section:related}
-\input{Sections/related_work.tex}
+\input{sections/related_work.tex}
 
 \section{Methods}
 \label{section:methods}
-\input{Sections/methods.tex}
+\input{sections/methods.tex}
 
 \section{Results}
 \label{section:results}
-\input{Sections/results.tex}
+\input{sections/results.tex}
 
 \section{Discussion}
 \label{section:discussion}
-\input{Sections/discussion.tex}
+\input{sections/discussion.tex}
 
 \bibliographystyle{plain}
 \bibliography{references}
@@ -172,7 +172,7 @@ Place holder for abstract, delete if necessary, otherwise summarise document her
 
 \section{Additional results}
 \label{appendix:additional results}
-\input{Sections/additional_results.tex}
+\input{sections/additional_results.tex}
 
 \end{document}
 ```
@@ -181,8 +181,8 @@ The `.tex` and `.bib` files included in the template can be created if they don'
 
 ```
 touch   references.bib
-mkdir   Sections
-cd      Sections
+mkdir   sections
+cd      sections
 touch   intro.tex related_work.tex methods.tex results.tex discussion.tex additional_results.tex
 ```
 
