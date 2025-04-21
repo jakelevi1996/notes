@@ -280,6 +280,10 @@
         "command": "workbench.action.toggleEditorWidths",
     },
     {
+        "key": "ctrl+alt+space",
+        "command": "workbench.action.toggleEditorWidths",
+    },
+    {
         "key": "alt+a",
         "command": "git.stageSelectedRanges",
     },
