@@ -389,6 +389,21 @@
         "when": "!notebookEditorFocused && editorLangId == 'markdown'",
     },
     {
+        "key": "ctrl+v",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "editor.action.insertFinalNewLine",
+                "cursorBottom",
+                "editor.action.clipboardPasteAction",
+                "editor.action.insertFinalNewLine",
+                "cursorBottom",
+                "workbench.action.files.save",
+            ],
+        },
+        "when": "editorLangId == 'bibtex'",
+    },
+    {
         "key": "alt+f",
         "command": "workbench.action.openRecent",
     },
