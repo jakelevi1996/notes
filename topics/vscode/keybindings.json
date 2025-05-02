@@ -177,7 +177,7 @@
         },
     },
     {
-        "key": "ctrl+=",
+        "key": "ctrl+shift+-",
         "command": "runCommands",
         "args": {
             "commands": [
