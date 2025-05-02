@@ -177,7 +177,7 @@
         },
     },
     {
-        "key": "ctrl+-",
+        "key": "ctrl+=",
         "command": "runCommands",
         "args": {
             "commands": [
@@ -192,7 +192,7 @@
         },
     },
     {
-        "key": "ctrl+shift+-",
+        "key": "ctrl+shift+=",
         "command": "runCommands",
         "args": {
             "commands": [
