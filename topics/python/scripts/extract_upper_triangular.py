@@ -3,15 +3,15 @@ import juml
 
 juml.test_utils.torch_set_print_options()
 
-n = 7
+n = 5
 
 x = torch.arange(n*n).reshape(n, n) + 1.0
 print(x)
 
 rc = [
-    [row, row + col]
+    [row, col]
     for row in range(n)
-    for col in range(n - row)
+    for col in range(row, n)
 ]
 r, c = zip(*rc)
 
