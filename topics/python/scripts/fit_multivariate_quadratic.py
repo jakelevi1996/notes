@@ -36,7 +36,7 @@ class Quadratic:
         xxut = xx[:, row, col]
         d = torch.cat([xxut, x, torch.ones(n, 1)], dim=1)
 
-        s = torch.linalg.solve(d, y)
+        s, _, _, _ = torch.linalg.lstsq(d, y)
 
         hut, b, c = torch.split(s, [len(rc), m, 1])
         h = torch.zeros([m, m])
@@ -75,5 +75,6 @@ print(x.shape)
 print(y.shape)
 print(q)
 print(q2)
+print("repr(Quadratic) matches:", repr(q) == repr(q2))
 print(x_opt)
 print(x_opt.grad)
