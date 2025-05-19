@@ -15,6 +15,7 @@
   - [Move an area](#move-an-area)
   - [Expand canvas size](#expand-canvas-size)
   - [Copy edited image](#copy-edited-image)
+  - [Make speech bubble](#make-speech-bubble)
 
 ## Configure shortcuts
 
@@ -33,6 +34,8 @@
 Action                      | Shortcut
 ---                         | ---
 Tools/rectangle select      | `shift+r`
+Tools/free select           | `shift+l`
+Layers/alpha to selection   | `shift+z`
 Select/stroke selection     | `shift+s`
 Layers/anchor layer         | `shift+a`
 Image/crop to selection     | `shift+c`
@@ -41,6 +44,7 @@ Layers/layer to image size  | `shift+i`
 Edit/fill with FG colour    | `shift+f`
 Layers/new layer            | `shift+n`
 Layers/merge down           | `shift+m`
+Tools/text                  | `shift+t`
 
 ### Default shortcuts
 
@@ -48,7 +52,10 @@ Action                    | Shortcut
 ---                       | ---
 Tools/bucket fill         | `shift+b`
 Select all                | `ctrl+a`
+Paste in new image        | `ctrl+shift+v`
 Open keyboard shortcuts   | `alt+e`, `k`
+Reset FG/BG colours       | `d`
+Swap FG/BG colours        | `x`
 
 ## Open screenshot in GIMP (Ubuntu 22.04.1 LTS)
 
@@ -127,3 +134,28 @@ Open keyboard shortcuts   | `alt+e`, `k`
 ## Copy edited image
 
 - Press `ctrl+a`, `ctrl+c` (do not close GIMP until the image has been pasted, otherwise the image will be lost from the clipboard)
+
+## Make speech bubble
+
+- Press `d` to reset foreground/background colour to black/white
+- Press `shift+t` to select "Text Tool"
+- Click on the image where the top-left of the text should be inserted
+- Set font size (EG to 30)
+- Press `tab` to focus the text box
+- Enter text
+- Press `esc` to unfocus the text box
+- Press `shift+n` to create new layer
+- Drag new layer below text layer
+- Press `shift+r` to select "Rectangle Select Tool"
+- Draw a rectangle around the text
+- Press `x` to swap foreground colour to white
+- Press `shift+f` to fill in the rectangle
+- Increase layer opacity to 100
+- Press `shift+l` to select "Free Select Tool"
+- Click 3 points to make 3 corners of a triangle, then click the first corner to close the selection
+- Press `shift+f` to fill in the triangle
+- Press `shift+z` to select the transparent background
+- Press `x` to swap foreground colour to black
+- Press `shift+s` to add a black outline to the speech bubble
+- Select the top layer (containing the text)
+- Press `shift+m` twice to merge all layers down
