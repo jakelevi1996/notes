@@ -16,6 +16,7 @@
   - [Expand canvas size](#expand-canvas-size)
   - [Copy edited image](#copy-edited-image)
   - [Make speech bubble](#make-speech-bubble)
+  - [Export as PNG](#export-as-png)
 
 ## Configure shortcuts
 
@@ -56,6 +57,7 @@ Paste in new image        | `ctrl+shift+v`
 Open keyboard shortcuts   | `alt+e`, `k`
 Reset FG/BG colours       | `d`
 Swap FG/BG colours        | `x`
+Export image to PNG       | `ctrl+shift+e`
 
 ## Open screenshot in GIMP (Ubuntu 22.04.1 LTS)
 
@@ -159,3 +161,10 @@ Swap FG/BG colours        | `x`
 - Press `shift+s` to add a black outline to the speech bubble
 - Select the top layer (containing the text)
 - Press `shift+m` twice to merge all layers down
+
+## Export as PNG
+
+- Press `ctrl+shift+e` to export image to PNG
+- Select folder and enter filename
+- Press `enter` or click "Export"
+- Press `enter` or click "Export" again to save with default settings
