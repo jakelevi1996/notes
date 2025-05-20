@@ -107,18 +107,25 @@ The following is a sensible, minimal example of a document template for a `tex` 
 - References are contained in a file in the current directory called `references.bib`
 
 ```latex
-\documentclass{article}
-
-\usepackage[a4paper, total={7in, 10in}]{geometry}
+\documentclass[12pt]{article}
 
 \usepackage[backref=page]{hyperref}
+\usepackage{geometry}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{subcaption}
+\usepackage{multirow}
 \usepackage{parskip}
 \usepackage{xcolor}
 \usepackage{graphicx}
-\graphicspath{{../Results/}}
+\usepackage{breakcites}
+
+\geometry{a4paper, margin=1in}
+\graphicspath{{../..}}
+\hbadness 10000
+\vbadness 10000
+\hfuzz 100pt
+\vfuzz 100pt
 
 \title{
     \rule{\linewidth}{1pt}
@@ -142,37 +149,37 @@ The following is a sensible, minimal example of a document template for a `tex` 
 \maketitle
 
 \begin{abstract}
-Place holder for abstract, delete if necessary, otherwise summarise document here
+Place holder for abstract. Delete if necessary, otherwise summarise document here.
 \end{abstract}
 
 \section{Introduction}
-\label{section:intro}
-\input{sections/intro.tex}
+\label{section:Introduction}
+% \input{sections/intro.tex}
 
 \section{Related work}
-\label{section:related}
-\input{sections/related_work.tex}
+\label{section:Related work}
+% \input{sections/related_work.tex}
 
 \section{Methods}
-\label{section:methods}
-\input{sections/methods.tex}
+\label{section:Methods}
+% \input{sections/methods.tex}
 
 \section{Results}
-\label{section:results}
-\input{sections/results.tex}
+\label{section:Results}
+% \input{sections/results.tex}
 
 \section{Discussion}
-\label{section:discussion}
-\input{sections/discussion.tex}
+\label{section:Discussion}
+% \input{sections/discussion.tex}
 
-\bibliographystyle{plain}
+\bibliographystyle{apalike}
 \bibliography{references}
 
 \appendix
 
 \section{Additional results}
-\label{appendix:additional results}
-\input{sections/additional_results.tex}
+\label{appendix:Additional results}
+% \input{sections/additional_results.tex}
 
 \end{document}
 ```
