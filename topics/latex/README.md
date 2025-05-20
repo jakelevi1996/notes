@@ -6,9 +6,9 @@
   - [Contents](#contents)
   - [Installation](#installation)
   - [Useful links](#useful-links)
+  - [Document template](#document-template)
   - [Compiling a PDF](#compiling-a-pdf)
   - [Compiling to PNG](#compiling-to-png)
-  - [Document template](#document-template)
   - [Figures and subfigures](#figures-and-subfigures)
   - [Tables and subtables](#tables-and-subtables)
   - [Algorithms](#algorithms)
@@ -32,71 +32,6 @@
 - ["Learn LaTeX in 30 minutes" on Overleaf](https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes)
 - [CodeCogs equation editor (generates links to equations)](https://editor.codecogs.com/)
   - [Alternative CodeCogs equation editor](https://latex.codecogs.com/eqneditor/editor.php)
-
-## Compiling a PDF
-
-The following code represents an almost-[minimal reproducable example](https://en.wikipedia.org/wiki/Minimal_reproducible_example) of a Latex document (almost in the sense that the `\pagestyle{empty}` command which removes page numbers is not strictly necessary, although it will produce a nicer looking output when cropped and converted into an image in the next section):
-
-```tex
-\documentclass{article}
-\pagestyle{empty}
-
-\begin{document}
-Blah blah blah
-\end{document}
-```
-
-The above code is saved in the file [`latex_mre.tex`](./Examples/latex_mre/latex_mre.tex). If this file is open in a VS Code window with the [Visual Studio Code LaTeX Workshop Extension](https://github.com/James-Yu/LaTeX-Workshop) installed, then simply either saving the file or pressing the build button (which looks like a hollow green play button, next to open tabs) or its shortcut (by default `ctrl+alt+b`) will compile the document into a PDF document called `latex_mre.pdf`.
-
-Inspecting the `LaTeX Compiler` option of the VS Code `Output` pane reveals that the command performed when saving the document in VS Code is equivalent to performing the following command (in a terminal open in the same directory as the `tex` file):
-
-```
-pdflatex -synctex=1 -interaction=nonstopmode -file-line-error -recorder latex_mre.tex
-```
-
-Descriptions can be found online for the meanings of [`-file-line-error` and `-recorder`](https://linux.die.net/man/1/pdflatex), [`-synctex=1`](https://tex.stackexchange.com/a/118491/266921) and [-interaction=nonstopmode](https://tex.stackexchange.com/a/258816/266921).
-
-Equivalently, this file can be compiled simply using the following command (again, in a terminal open in the same directory as the `tex` file):
-
-```
-pdflatex latex_mre.tex
-```
-
-## Compiling to PNG
-
-The file [`latex_mre.tex`](./Examples/latex_mre/latex_mre.tex) can be compiled into a PDF, cropped, and then converted into a PNG in Windows using the following Powershell commands (in a terminal open in the same directory as the `tex` file):
-
-```
-pdflatex latex_mre.tex
-pdfcrop --margins 10 latex_mre.pdf latex_mre_crop.pdf
-$env:GS_LIB="C:/texlive/2022/tlpkg/tlgs/Resource/Init;C:/texlive/2022/tlpkg/tlgs/lib;C:/texlive/2022/tlpkg/tlgs/kanji"
-C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r1000 -sOutputFile="../../Images/latex_mre.png" latex_mre_crop.pdf
-```
-
-The resulting image is shown below:
-
-![](./Images/latex_mre.png)
-
-Explanation:
-
-- `pdfcrop` is used to crop `latex_mre.pdf` to remove whitespace, and appears to be installed as part of Tex Live and be on the system path by default
-- The `$env:GS_LIB` command only needs to be used once per terminal session, in order to set the `GS_LIB` environment variable, so that `gswin32c` knows where to find the files `gs_init.ps`, `cidfmap`, and `kfwin32.ps` respectively
-- The path names in this command as well as the full path of `gswin32c.exe` may need to modified depending on the location of these files in a given installation of Tex Live
-- Alternatively (IE instead of setting the `GS_LIB` environment variable) these paths can be included in the `gswin32c.exe` command (without needing to first set any environment variables) by specifying the `-I` flag individually before each path ([source](https://stackoverflow.com/a/12876349/8477566))
-- `gswin32c` is a wrapper for the [Ghostscript](https://www.ghostscript.com/index.html) program for converting a PDF to an image file, and appears to be installed as part of Tex Live by default, although its location does not appear on the system path by default (hence it is specified with its full path)
-- The double quotes around `../../Images/latex_mre.png` appear to be necessary to prevent `gswin32c` returning an error
-
-To change the resolution of the output image, change the value which is provided to the `gswin32c` `-r` flag (1000 in the example above), which according to `C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -h` specifies "pixels/inch resolution" (DPI). The equivalent image with 3000 DPI can be produced as follows:
-
-```
-C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r3000 -sOutputFile="../../Images/latex_mre_3000.png" latex_mre_crop.pdf
-```
-
-Below is a side-by-side comparison of the 2 images with different resolutions:
-
-![](./Images/latex_mre.png)
-
-![](./Images/latex_mre_3000.png)
 
 ## Document template
 
@@ -183,6 +118,71 @@ Place holder for abstract. Delete if necessary, otherwise summarise document her
 
 \end{document}
 ```
+
+## Compiling a PDF
+
+The following code represents an almost-[minimal reproducable example](https://en.wikipedia.org/wiki/Minimal_reproducible_example) of a Latex document (almost in the sense that the `\pagestyle{empty}` command which removes page numbers is not strictly necessary, although it will produce a nicer looking output when cropped and converted into an image in the next section):
+
+```tex
+\documentclass{article}
+\pagestyle{empty}
+
+\begin{document}
+Blah blah blah
+\end{document}
+```
+
+The above code is saved in the file [`latex_mre.tex`](./Examples/latex_mre/latex_mre.tex). If this file is open in a VS Code window with the [Visual Studio Code LaTeX Workshop Extension](https://github.com/James-Yu/LaTeX-Workshop) installed, then simply either saving the file or pressing the build button (which looks like a hollow green play button, next to open tabs) or its shortcut (by default `ctrl+alt+b`) will compile the document into a PDF document called `latex_mre.pdf`.
+
+Inspecting the `LaTeX Compiler` option of the VS Code `Output` pane reveals that the command performed when saving the document in VS Code is equivalent to performing the following command (in a terminal open in the same directory as the `tex` file):
+
+```
+pdflatex -synctex=1 -interaction=nonstopmode -file-line-error -recorder latex_mre.tex
+```
+
+Descriptions can be found online for the meanings of [`-file-line-error` and `-recorder`](https://linux.die.net/man/1/pdflatex), [`-synctex=1`](https://tex.stackexchange.com/a/118491/266921) and [-interaction=nonstopmode](https://tex.stackexchange.com/a/258816/266921).
+
+Equivalently, this file can be compiled simply using the following command (again, in a terminal open in the same directory as the `tex` file):
+
+```
+pdflatex latex_mre.tex
+```
+
+## Compiling to PNG
+
+The file [`latex_mre.tex`](./Examples/latex_mre/latex_mre.tex) can be compiled into a PDF, cropped, and then converted into a PNG in Windows using the following Powershell commands (in a terminal open in the same directory as the `tex` file):
+
+```
+pdflatex latex_mre.tex
+pdfcrop --margins 10 latex_mre.pdf latex_mre_crop.pdf
+$env:GS_LIB="C:/texlive/2022/tlpkg/tlgs/Resource/Init;C:/texlive/2022/tlpkg/tlgs/lib;C:/texlive/2022/tlpkg/tlgs/kanji"
+C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r1000 -sOutputFile="../../Images/latex_mre.png" latex_mre_crop.pdf
+```
+
+The resulting image is shown below:
+
+![](./Images/latex_mre.png)
+
+Explanation:
+
+- `pdfcrop` is used to crop `latex_mre.pdf` to remove whitespace, and appears to be installed as part of Tex Live and be on the system path by default
+- The `$env:GS_LIB` command only needs to be used once per terminal session, in order to set the `GS_LIB` environment variable, so that `gswin32c` knows where to find the files `gs_init.ps`, `cidfmap`, and `kfwin32.ps` respectively
+- The path names in this command as well as the full path of `gswin32c.exe` may need to modified depending on the location of these files in a given installation of Tex Live
+- Alternatively (IE instead of setting the `GS_LIB` environment variable) these paths can be included in the `gswin32c.exe` command (without needing to first set any environment variables) by specifying the `-I` flag individually before each path ([source](https://stackoverflow.com/a/12876349/8477566))
+- `gswin32c` is a wrapper for the [Ghostscript](https://www.ghostscript.com/index.html) program for converting a PDF to an image file, and appears to be installed as part of Tex Live by default, although its location does not appear on the system path by default (hence it is specified with its full path)
+- The double quotes around `../../Images/latex_mre.png` appear to be necessary to prevent `gswin32c` returning an error
+
+To change the resolution of the output image, change the value which is provided to the `gswin32c` `-r` flag (1000 in the example above), which according to `C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -h` specifies "pixels/inch resolution" (DPI). The equivalent image with 3000 DPI can be produced as follows:
+
+```
+C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r3000 -sOutputFile="../../Images/latex_mre_3000.png" latex_mre_crop.pdf
+```
+
+Below is a side-by-side comparison of the 2 images with different resolutions:
+
+![](./Images/latex_mre.png)
+
+![](./Images/latex_mre_3000.png)
 
 ## Figures and subfigures
 
