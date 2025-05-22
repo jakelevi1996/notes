@@ -16,6 +16,9 @@ class StrGen:
     def sample(self, rng: np.random.Generator) -> str:
         raise NotImplementedError()
 
+    def get_char_range(self, c1: str, c2: str) -> list[str]:
+        return [chr(i) for i in range(ord(c1), ord(c2)+1)]
+
 class Block:
     def __init__(self, char_list: list[str], n: int):
         self.char_list = char_list
@@ -23,6 +26,32 @@ class Block:
 
     def sample(self, rng: np.random.Generator) -> str:
         return "".join(rng.choice(self.char_list, self.n, replace=False))
+
+class AlphaNum(StrGen):
+    def __init__(
+        self,
+        lower:      int,
+        numeric:    int,
+        prefix:     int,
+    ):
+        self.prefix = prefix
+        self.blocks = [
+            Block(self.get_char_range("a", "z"), lower),
+            Block(self.get_char_range("0", "9"), numeric),
+        ]
+
+    def sample(self, rng: np.random.Generator) -> str:
+        s = "".join(b.sample(rng) for b in self.blocks)
+        return self.prefix + "".join(rng.permutation(list(s)))
+
+    @classmethod
+    def get_cli_arg(cls) -> cli.ObjectArg:
+        return cli.ObjectArg(
+            cls,
+            cli.Arg("lower",    type=int, default=4),
+            cli.Arg("numeric",  type=int, default=4),
+            cli.Arg("prefix",   type=str, default="_"),
+        )
 
 class AlphaNumSpecial(StrGen):
     def __init__(
@@ -42,9 +71,6 @@ class AlphaNumSpecial(StrGen):
     def sample(self, rng: np.random.Generator) -> str:
         s = "".join(b.sample(rng) for b in self.blocks)
         return "".join(rng.permutation(list(s)))
-
-    def get_char_range(self, c1: str, c2: str) -> list[str]:
-        return [chr(i) for i in range(ord(c1), ord(c2)+1)]
 
     @classmethod
     def get_cli_arg(cls) -> cli.ObjectArg:
@@ -75,6 +101,7 @@ if __name__ == "__main__":
         cli.Arg("seed", type=int, default=None),
         cli.ObjectChoice(
             "strgen",
+            AlphaNum.get_cli_arg(),
             AlphaNumSpecial.get_cli_arg(),
             Xx.get_cli_arg(),
             default="Xx",
