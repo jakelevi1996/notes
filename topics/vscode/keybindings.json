@@ -41,6 +41,18 @@
                 "workbench.files.action.showActiveFileInExplorer",
             ],
         },
+        "when": "!filesExplorerFocus",
+    },
+    {
+        "key": "ctrl+alt+r",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "workbench.action.toggleSidebarVisibility",
+                "workbench.action.focusActiveEditorGroup",
+            ],
+        },
+        "when": "filesExplorerFocus",
     },
     {
         "key": "alt+s",
