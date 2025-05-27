@@ -156,4 +156,6 @@
     "debug.console.acceptSuggestionOnEnter": "on",
     "debug.console.historySuggestions": false,
     "editor.minimap.showSlider": "always",
+    "workbench.editor.empty.hint": "hidden",
+    "terminal.integrated.initialHint": false,
 }
