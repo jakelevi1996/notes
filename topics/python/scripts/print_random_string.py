@@ -2,15 +2,30 @@ from jutility import util, cli
 import numpy as np
 
 def main(
-    args: cli.ParsedArgs,
-    seed: int,
+    seed:       (int | None),
+    n:          int,
+    lower:      int,
+    upper:      int,
+    numeric:    int,
+    special:    int,
+    prefix:     str,
 ):
     rng = np.random.default_rng(seed)
-    with cli.verbose:
-        sg = args.init_object("strgen")
-        assert isinstance(sg, StrGen)
 
-    print("```\n%s\n```" % sg.sample(rng))
+    table = util.Table.key_value()
+    table.update(
+        k="AlphaNum",
+        v=AlphaNum(lower, numeric, prefix).sample(rng),
+    )
+    table.update(
+        k="AlphaNumSpecial",
+        v=AlphaNumSpecial(lower, upper, numeric, special).sample(rng),
+    )
+    table.update(
+        k="Xx",
+        v="`%s`" % Xx(n).sample(rng),
+    )
+    util.hline()
 
 class StrGen:
     def sample(self, rng: np.random.Generator) -> str:
@@ -44,15 +59,6 @@ class AlphaNum(StrGen):
         s = "".join(b.sample(rng) for b in self.blocks)
         return self.prefix + "".join(rng.permutation(list(s)))
 
-    @classmethod
-    def get_cli_arg(cls) -> cli.ObjectArg:
-        return cli.ObjectArg(
-            cls,
-            cli.Arg("lower",    type=int, default=4),
-            cli.Arg("numeric",  type=int, default=4),
-            cli.Arg("prefix",   type=str, default="_"),
-        )
-
 class AlphaNumSpecial(StrGen):
     def __init__(
         self,
@@ -72,16 +78,6 @@ class AlphaNumSpecial(StrGen):
         s = "".join(b.sample(rng) for b in self.blocks)
         return "".join(rng.permutation(list(s)))
 
-    @classmethod
-    def get_cli_arg(cls) -> cli.ObjectArg:
-        return cli.ObjectArg(
-            cls,
-            cli.Arg("lower",    type=int, default=4),
-            cli.Arg("upper",    type=int, default=4),
-            cli.Arg("numeric",  type=int, default=4),
-            cli.Arg("special",  type=int, default=4),
-        )
-
 class Xx(StrGen):
     def __init__(self, n: int):
         self.n = n
@@ -89,26 +85,17 @@ class Xx(StrGen):
     def sample(self, rng: np.random.Generator) -> str:
         return "".join(rng.choice(["X", "x", " "], self.n))
 
-    @classmethod
-    def get_cli_arg(cls) -> cli.ObjectArg:
-        return cli.ObjectArg(
-            cls,
-            cli.Arg("n", type=int, default=50),
-        )
-
 if __name__ == "__main__":
     parser = cli.Parser(
-        cli.Arg("seed", type=int, default=None),
-        cli.ObjectChoice(
-            "strgen",
-            AlphaNum.get_cli_arg(),
-            AlphaNumSpecial.get_cli_arg(),
-            Xx.get_cli_arg(),
-            default="Xx",
-            is_group=True,
-        )
+        cli.Arg("seed",     type=int, default=None),
+        cli.Arg("n",        type=int, default=50),
+        cli.Arg("lower",    type=int, default=4),
+        cli.Arg("upper",    type=int, default=4),
+        cli.Arg("numeric",  type=int, default=4),
+        cli.Arg("special",  type=int, default=4),
+        cli.Arg("prefix",   type=str, default="_"),
     )
     args = parser.parse_args()
 
     with util.Timer("main"):
-        main(args, **args.get_kwargs())
+        main(**args.get_kwargs())
