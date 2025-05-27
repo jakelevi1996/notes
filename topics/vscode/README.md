@@ -35,6 +35,7 @@ ms-vscode-remote.remote-ssh
 ms-vscode-remote.remote-ssh-edit
 ms-vscode.cpptools
 ms-vscode.hexeditor
+ms-vscode.live-server
 ms-vscode.remote-explorer
 oliversturm.fix-json
 pkief.material-icon-theme
