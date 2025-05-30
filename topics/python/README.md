@@ -24,6 +24,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
   - [Type hints with unions and quotes](#type-hints-with-unions-and-quotes)
   - [`.temp.py`](#temppy)
   - [Useful Python snippets](#useful-python-snippets)
+    - [Defining iterators with `__iter__`](#defining-iterators-with-__iter__)
     - [Chaining iterators](#chaining-iterators)
     - [Print estimated finish time of experiments](#print-estimated-finish-time-of-experiments)
     - [Multi-headed matrix multiplication](#multi-headed-matrix-multiplication)
@@ -555,6 +556,83 @@ printer = util.Printer(
 ```
 
 ## Useful Python snippets
+
+### Defining iterators with `__iter__`
+
+Iterators can be defined in several different ways, including using `yield`, generator expressions, and `iter`:
+
+```python
+from jutility import util
+
+class C1:
+    def __init__(self, start: int):
+        self.start = start
+
+    def __iter__(self):
+        count = self.start
+        while True:
+            yield count
+            count += 1
+
+class C2:
+    def __init__(self, start: int, end: int):
+        self.start = start
+        self.end = end
+
+    def __iter__(self):
+        return (x*x for x in range(self.start, self.end))
+
+class C3:
+    def __init__(self, s: str):
+        self.s = s
+
+    def __iter__(self):
+        return iter(self.s.split())
+
+for i in C1(7):
+    print(i)
+    if i >= 20:
+        break
+
+util.hline()
+
+for i in C2(-4, 3):
+    print(i)
+
+util.hline()
+
+for i in C3("an example of a string"):
+    print(i)
+
+# 7
+# 8
+# 9
+# 10
+# 11
+# 12
+# 13
+# 14
+# 15
+# 16
+# 17
+# 18
+# 19
+# 20
+# -------------------------------------------------------------------------------
+# 16
+# 9
+# 4
+# 1
+# 0
+# 1
+# 4
+# -------------------------------------------------------------------------------
+# an
+# example
+# of
+# a
+# string
+```
 
 ### Chaining iterators
 
