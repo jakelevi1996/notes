@@ -7,6 +7,7 @@
   - [Installation](#installation)
   - [Useful links](#useful-links)
   - [Document template](#document-template)
+  - [Compact title template](#compact-title-template)
   - [Compiling a PDF](#compiling-a-pdf)
   - [Compiling to PNG](#compiling-to-png)
   - [Figures and subfigures](#figures-and-subfigures)
@@ -115,6 +116,31 @@ Place holder for abstract. Delete if necessary, otherwise summarise document her
 \section{Additional results}
 \label{appendix:Additional results}
 % \input{sections/additional_results.tex}
+
+\end{document}
+```
+
+## Compact title template
+
+```tex
+\documentclass{article}
+
+% ...
+
+\usepackage{lipsum}
+
+\begin{document}
+\begin{center}
+    \textbf{\LARGE Document Title \\ \medskip That Spans Multiple Lines}
+
+    \medskip
+
+    Jake Levi $\cdot$ \today
+\end{center}
+
+\lipsum[1]
+
+% ...
 
 \end{document}
 ```
