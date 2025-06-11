@@ -127,18 +127,14 @@ Place holder for abstract. Delete if necessary, otherwise summarise document her
 
 % ...
 
-\usepackage{lipsum}
-
 \begin{document}
 \begin{center}
     \textbf{\LARGE Document Title \\ \medskip That Spans Multiple Lines}
 
-    \medskip
-
-    Jake Levi $\cdot$ \today
+    \medskip Jake Levi $\cdot$ \today
 \end{center}
 
-\lipsum[1]
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
 
 % ...
 
