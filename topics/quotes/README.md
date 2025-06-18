@@ -59,3 +59,11 @@
 > [David Hume (1711 - 1776)](https://en.wikipedia.org/wiki/David_Hume), [My Own Life](https://web.archive.org/web/20180116061536/http://andromeda.rutgers.edu/~jlynch/Texts/humelife.html), from [The History of England (1778)](https://en.wikipedia.org/wiki/The_History_of_England_(Hume_book))
 
 ---
+
+*"If you crave to prove your beloved hypothesis, you'll always find a way to do so - and you'll *almost* always be wrong."*
+
+> [@AdrianoAguzzi](https://x.com/AdrianoAguzzi), [4:39 PM, Apr 11, 2025](https://x.com/AdrianoAguzzi/status/1910719311586488791). See also attached [picture](img/hypothesis.png):
+>
+> ![](img/hypothesis.png)
+
+---
