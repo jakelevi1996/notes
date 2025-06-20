@@ -521,19 +521,27 @@ ls ~/screen_output -halt
 
 ## Use `git push` with an authentication token
 
-- Use the command `git remote get-url origin` to view the remote URL, which should be in the form `https://github.com/${USERNAME}/${REPO_NAME}.git`
-- Use the command `git remote set-url origin https://git:${TOKEN_STR}@github.com/${USERNAME}/${REPO_NAME}.git`, replacing `${TOKEN_STR}` with the authentication token, and `${USERNAME}` and `${REPO_NAME}` with the appropriate values from the output of `git remote get-url origin`
-- `git push` and other `git` commands requiring authentication should now work without requiring authentication
+```sh
+git remote get-url origin
+# https://github.com/${USERNAME}/${REPO_NAME}.git
+git remote set-url origin https://git:${TOKEN_STR}@github.com/${USERNAME}/${REPO_NAME}.git
+git push
+```
+
+To generate an authentication token for a GitHub repository:
+
+- Go to account settings (not repistory settings) by clicking profile picture in top right corner, then "Settings"
+- Click "Developer settings", "Personal access tokens", "Fine-grained tokens", "Generate new token"
+- Enter "Token name"
+- Optional: change "Expiration" to a date or "No expiration"
+- Under "Repository access", select either "All repositories" or "Only select repositories"
+- Click "Repository permissions", and next to "Contents", change "Access:" to "Read and write"
+- Click "Generate token" and "Generate token"
+- Copy and use the token
+
+Notes:
+
 - For setting authentication tokens to use with GitHub, `git:${TOKEN_STR}` can be replaced with `${USERNAME}:${TOKEN_STR}`, where `${USERNAME}` is the GitHub username, however using `git` instead of `${USERNAME}` works for GitHub, and also generalises to other remote repositories, EG those hosted on Overleaf, for which the username is an email address, which is not a valid URL component
-
-Summary:
-
-```
-$ git remote get-url origin
-https://github.com/${USERNAME}/${REPO_NAME}.git
-$ git remote set-url origin https://git:${TOKEN_STR}@github.com/${USERNAME}/${REPO_NAME}.git
-$ git push
-```
 
 ## View the Linux distribution name and version number using `lsb_release`
 
