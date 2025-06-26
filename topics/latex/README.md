@@ -172,7 +172,13 @@ pdflatex latex_mre.tex
 
 ## Compiling to PNG
 
-The file [`latex_mre.tex`](./Examples/latex_mre/latex_mre.tex) can be compiled into a PDF, cropped, and then converted into a PNG in Windows using the following Powershell commands (in a terminal open in the same directory as the `tex` file):
+In Linux, after compiling to a PDF (see above), convert PDF to PNG using the following command:
+
+```
+gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r1000 -sOutputFile=path/to/output/image.png path/to/input/doc.pdf
+```
+
+In Windows, the file [`latex_mre.tex`](./Examples/latex_mre/latex_mre.tex) can be compiled into a PDF, cropped, and then converted into a PNG using the following Powershell commands (in a terminal open in the same directory as the `tex` file):
 
 ```
 pdflatex latex_mre.tex
