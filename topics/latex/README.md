@@ -19,6 +19,8 @@
   - [Formatting colours](#formatting-colours)
   - [Formatting equations](#formatting-equations)
   - [Formatting text](#formatting-text)
+  - [Tips and tricks](#tips-and-tricks)
+    - [Fractionally reduce line spacing](#fractionally-reduce-line-spacing)
 
 ## Installation
 
@@ -521,3 +523,17 @@ Command | Meaning
 `\href{https://www.google.com/}{abc}` | Make text link to [google.com](https://www.google.com/) (requires `\usepackage{hyperref}` in preamble)
 `\texttt{abc}` | Put text in fixed width font (optionally include `\usepackage{courier}` in preamble to use Courier as fixed width font)
 `\centering` | Make the following paragraph centre-justified (instead of left-justified by default)
+
+## Tips and tricks
+
+### Fractionally reduce line spacing
+
+```tex
+\setlength{\baselineskip}{0.9\baselineskip}
+```
+
+EG to increase font size without increasing line spacing:
+
+```tex
+\LARGE \setlength{\baselineskip}{0.9\baselineskip} Lorem ipsum ...
+```
