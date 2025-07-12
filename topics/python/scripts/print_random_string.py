@@ -71,7 +71,7 @@ class AlphaNumSpecial(StrGen):
             Block(self.get_char_range("a", "z"), lower),
             Block(self.get_char_range("A", "Z"), upper),
             Block(self.get_char_range("0", "9"), numeric),
-            Block(list("!£$%_-+="), special),
+            Block(list("!?%_-+="), special),
         ]
 
     def sample(self, rng: np.random.Generator) -> str:
