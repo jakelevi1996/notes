@@ -26,8 +26,8 @@ for d, n in [[5, 1e3], [20, 1e3], [5, 1e7], [10, 5e6], [20, 1e6]]:
     plot_name = "Gaussian moments (d = %s, n = %s)" % (d, n)
 
     mp = plotting.MultiPlot(
-        plotting.Subplot(plotting.ImShow(pm)),
-        plotting.ColourBar(lo, hi, ticks=[lo, hi, (lo + hi)/2]),
+        plotting.Subplot(plotting.ImShow(pm, vmin=lo, vmax=hi)),
+        plotting.ColourBar(lo, hi, ticks=[0, d+2]),
         width_ratios=[1, 0.1],
         title=plot_name,
         title_font_size=12,
