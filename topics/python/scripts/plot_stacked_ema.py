@@ -10,8 +10,8 @@ threshold_str = "Threshold = %s" % threshold
 x = np.zeros([depth, t])
 x[0] = 1
 
-for di in range(1, depth):
-    for ti in range(1, t):
+for ti in range(1, t):
+    for di in range(1, depth):
         x[di, ti] = (1 - alpha) * x[di, ti-1] + alpha * x[di-1, ti-1]
 
 x_masked = np.where(x < threshold, x.max(), x)
