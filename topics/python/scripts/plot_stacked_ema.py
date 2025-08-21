@@ -1,5 +1,5 @@
 import numpy as np
-from jutility import plotting
+from jutility import plotting, util
 
 t = 1500
 depth = 100
@@ -9,11 +9,14 @@ threshold_str = "Threshold = %s" % threshold
 
 x = np.zeros([depth, t])
 x[0] = 1
+x = x.tolist()
 
-for ti in range(1, t):
-    for di in range(1, depth):
-        x[di, ti] = (1 - alpha) * x[di, ti-1] + alpha * x[di-1, ti-1]
+with util.Timer():
+    for ti in range(1, t):
+        for di in range(1, depth):
+            x[di][ti] = (1 - alpha) * x[di][ti-1] + alpha * x[di-1][ti-1]
 
+x = np.array(x)
 x_masked = np.where(x < threshold, x.max(), x)
 a = np.argmin(x_masked, 1)
 
