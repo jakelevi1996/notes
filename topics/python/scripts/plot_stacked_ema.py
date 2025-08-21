@@ -1,9 +1,9 @@
 import numpy as np
 from jutility import plotting, util
 
-t = 1500
+t = 15000
 depth = 100
-alpha = 0.1
+alpha = 0.01
 threshold = 0.5
 threshold_str = "Threshold = %s" % threshold
 
