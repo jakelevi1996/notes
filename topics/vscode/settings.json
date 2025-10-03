@@ -118,6 +118,8 @@
             ["(", ")"],
         ],
     },
+    "markdown.preview.scrollEditorWithPreview": false,
+    "markdown.preview.scrollPreviewWithEditor": false,
     "files.autoSave": "off",
     "editor.stickyScroll.enabled": true,
     "files.associations": {
