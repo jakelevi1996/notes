@@ -82,4 +82,5 @@ plotting.plot(
     log_y=True,
     xlabel="t",
     ylabel="$y_t$",
+    plot_name="adam_vs_lbfgs",
 )
