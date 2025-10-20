@@ -18,7 +18,6 @@
 			"mkdir ./.screen_output",
 			"screen -S ${0:TEST_NAME} -L -Logfile ./.screen_output/${0:TEST_NAME}.txt command_name subcommand_name --arg1 v1 --arg2 v2 v3",
 		],
-		"description": "screen -S TEST_NAME -L -Logfile ...",
 	},
 	"```bash python command_name```": {
 		"prefix": "```bash python command_name```",
