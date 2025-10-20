@@ -20,4 +20,14 @@
 		],
 		"description": "screen -S TEST_NAME -L -Logfile ...",
 	},
+	"```bash python command_name```": {
+		"prefix": "```bash python command_name```",
+		"body": [
+			"```bash",
+			"python ${0:command_name --arg1 val1}",
+			"```",
+			"",
+			"![]()",
+		],
+	},
 }
