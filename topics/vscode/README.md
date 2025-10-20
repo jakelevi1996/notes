@@ -91,6 +91,7 @@ Useful commands using the "Markdown All in One" extension:
   - [Stack Overflow: "Visual Studio Code snippet invalid control character"](https://stackoverflow.com/q/46345154)
 - Snippet files:
   - [`python.json`](snippets/python.json)
+  - [`markdown.json`](snippets/markdown.json)
 - Notes:
   - There seems to be a quirk when typing `import m` (`...`)
   - Only matching snippets are provided as a suggestion, but not other valid modules that could be imported (EG `math`)
