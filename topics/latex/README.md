@@ -13,6 +13,7 @@
   - [Figures and subfigures](#figures-and-subfigures)
   - [Tables and subtables](#tables-and-subtables)
   - [Algorithms](#algorithms)
+  - [Posters](#posters)
   - [Description of packages](#description-of-packages)
   - [`.gitignore`](#gitignore)
   - [Changing document style for a particular publication](#changing-document-style-for-a-particular-publication)
@@ -425,6 +426,19 @@ C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -dSAFER -dBATCH -dNOPAUSE -sDEVICE=p
 The resulting image is shown below:
 
 ![](Images/algorithm.png)
+
+## Posters
+
+See template in [`topics/latex/Examples/poster/poster.tex`](topics/latex/Examples/poster/poster.tex), which produces the following output:
+
+```
+cd topics/latex/Examples/poster
+pdflatex poster.tex
+pdflatex poster.tex
+gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r200 -sOutputFile=poster.png poster.pdf
+```
+
+![](Examples/poster/poster.png)
 
 ## Description of packages
 

@@ -12,6 +12,9 @@
 *.blg
 *.out
 *.synctex(busy)
+*.nav
+*.snm
+*.toc
 
 data
 *-ubyte

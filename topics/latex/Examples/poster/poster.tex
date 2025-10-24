@@ -1,0 +1,200 @@
+\documentclass{beamer}
+
+\usepackage[size=a1,scale=1.5,orientation=portrait]{beamerposter}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{subcaption}
+\usepackage{multirow}
+\usepackage{parskip}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{breakcites}
+
+\graphicspath{{..}}
+\hbadness 10000
+\vbadness 10000
+\hfuzz 100pt
+\vfuzz 100pt
+
+\definecolor{oxblue}{RGB}{0, 33, 71}
+\definecolor{oxred}{RGB}{190, 15, 52}
+\definecolor{oxgreen}{RGB}{149, 193, 31}
+\definecolor{oxceru}{RGB}{73, 182, 255}
+\definecolor{oxorange}{RGB}{251, 86, 7}
+
+\setbeamercolor{frametitle}{fg=white,bg=oxblue}
+\setbeamercolor{block title}{fg=white,bg=oxblue}
+\setbeamercolor{block  body}{fg=black,bg=oxblue!15}
+\setbeamercolor{block title alerted}{fg=white,bg=oxred}
+\setbeamercolor{block  body alerted}{fg=black,bg=oxred!15}
+\setbeamercolor{block title example}{fg=black,bg=oxgreen}
+\setbeamercolor{block  body example}{fg=black,bg=oxgreen!15}
+
+\setbeamerfont{block title}{size=\large}
+\setbeamerfont{block  body}{size=\normalsize}
+
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{footline}{}
+\setbeamertemplate{navigation symbols}{}
+
+\begin{document}
+\begin{frame}[t]
+
+\frametitle{
+    \begin{columns}
+        \hspace{10mm}
+        \begin{column}{0.65\textwidth}
+            \fontsize{50}{50}\selectfont \textbf{Blah: blah blah blah blah} \\
+            \vspace{10mm}
+            \fontsize{40}{50}\selectfont \textsl{Jake Levi, Mark van der Wilk \\
+            Department of Computer Science, University of Oxford} \\
+            \href{mailto:jake.levi@stcatz.ox.ac.uk}{\texttt{jake.levi@stcatz.ox.ac.uk}}
+        \end{column}
+        \begin{column}{0.32\textwidth}
+            \centering
+            \includegraphics[height=4cm]{poster/img/canva_epsrc_trimmed.png} \\
+            \vspace{10mm}
+            \includegraphics[height=4cm]{poster/img/canva_aims_trimmed.png}
+            \hfill
+            \includegraphics[height=4cm]{poster/img/canva_cs_trimmed.png}
+        \end{column}
+    \end{columns}
+}
+
+    \hspace{1cm}
+    \begin{minipage}[t][.8\textheight]{0.45\textwidth}
+
+        \begin{block}{Introduction}
+            \begin{itemize}
+                \item Blah blah blah
+                \item Blah blah blah blah
+            \end{itemize}
+        \end{block}
+
+        \vfill
+
+        \setbeamercolor{block title}{fg=black,bg=oxceru}
+        \setbeamercolor{block  body}{fg=black,bg=oxceru!15}
+
+        \begin{block}{Methods: blah}
+            \begin{itemize}
+                \item Blah blah blah
+                \item Blah blah blah blah
+                \begin{enumerate}
+                    \normalsize
+                    \item Blah blah blah
+                    \item Blah blah blah blah
+                \end{enumerate}
+            \end{itemize}
+        \end{block}
+
+        \vfill
+
+        \begin{block}{Methods: blah blah}
+            \begin{itemize}
+                \item Blah blah blah
+                \item Blah blah blah blah
+                \begin{enumerate}
+                    \normalsize
+                    \item Blah blah blah
+                    \item Blah blah blah blah
+                \end{enumerate}
+                \item[\checkmark] Blah
+            \end{itemize}
+        \end{block}
+
+        \vfill
+
+        \begin{figure}
+            \centering
+            \includegraphics[width=\textwidth]{example-image-a}
+            \caption{Blah blah. \textbf{Top row}: blah. \textbf{Middle row}: blah blah. \textbf{Bottom row}: blah blah blah.}
+            \label{fig:blah}
+        \end{figure}
+
+        \vfill
+
+        \setbeamercolor{block title}{fg=black,bg=oxgreen}
+        \setbeamercolor{block  body}{fg=black,bg=oxgreen!15}
+
+        \begin{block}{Experiments: blah}
+            \begin{itemize}
+                \item Blah blah blah
+                \item Blah blah blah blah
+            \end{itemize}
+        \end{block}
+
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t][.8\textheight]{0.45\textwidth}
+
+        \setbeamercolor{block title}{fg=black,bg=oxgreen}
+        \setbeamercolor{block  body}{fg=black,bg=oxgreen!15}
+
+        \begin{block}{Experiments: blah blah}
+            \begin{itemize}
+                \item[\boxed{\;?\;}] Blah? $\rightarrow$ \\
+                \begin{enumerate}
+                    \normalsize
+                    \item Blah blah blah
+                    \item Blah blah blah blah
+                \end{enumerate}
+                \item[$\Rightarrow$] \textbf{\underline{Conclusions:}} \\
+                \begin{enumerate}
+                    \normalsize
+                    \item Blah blah blah
+                    \item Blah blah blah blah
+                \end{enumerate}
+            \end{itemize}
+        \end{block}
+
+        \vfill
+
+        \begin{figure}
+            \centering
+            \includegraphics[width=\textwidth]{example-image-b}
+            \caption{Blah blah. \textbf{Top row}: blah. \textbf{Middle row}: blah blah. \textbf{Bottom row}: blah blah blah.}
+            \label{fig:blah blah}
+        \end{figure}
+
+        \vfill
+
+        \begin{block}{Experiments: blah blah blah}
+            \begin{itemize}
+                \item[\boxed{\;?\;}] Blah? $\rightarrow$ \\
+                \begin{enumerate}
+                    \normalsize
+                    \item Blah blah blah
+                    \item Blah blah blah blah
+                \end{enumerate}
+                \item[$\Rightarrow$] \textbf{\underline{Conclusions:}} \\
+                \begin{enumerate}
+                    \normalsize
+                    \item Blah blah blah
+                    \item Blah blah blah blah
+                    \item See Figure \ref{fig:blah blah}
+                \end{enumerate}
+            \end{itemize}
+        \end{block}
+
+        \vfill
+
+        \setbeamercolor{block title}{fg=white,bg=oxblue}
+        \setbeamercolor{block  body}{fg=black,bg=oxblue!15}
+
+        \begin{block}{Links}
+            \begin{itemize}
+                \item \url{https://arxiv.org/pdf/blah.blah}
+                \item \url{https://github.com/jakelevi1996/blah}
+                \item \url{https://jakelevi1996.github.io/}
+                \item \url{https://mvdw.uk/}
+            \end{itemize}
+        \end{block}
+
+    \end{minipage}
+    \hspace{1cm}
+
+\end{frame}
+\end{document}
