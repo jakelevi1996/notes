@@ -429,7 +429,7 @@ The resulting image is shown below:
 
 ## Posters
 
-See template in [`topics/latex/Examples/poster/poster.tex`](topics/latex/Examples/poster/poster.tex), which produces the following output:
+See template in [`topics/latex/Examples/poster/poster.tex`](Examples/poster/poster.tex), which produces the following output:
 
 ```
 cd topics/latex/Examples/poster
