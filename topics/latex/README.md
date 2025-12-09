@@ -65,6 +65,7 @@ The following is a sensible, minimal example of a document template for a `tex` 
 \vbadness 10000
 \hfuzz 100pt
 \vfuzz 100pt
+\righthyphenmin 100
 
 \title{
     \rule{\linewidth}{1pt}
