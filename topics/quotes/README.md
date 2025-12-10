@@ -67,3 +67,12 @@
 > ![](img/hypothesis.png)
 
 ---
+
+*"There is no hippopotamus in this room at present."*
+
+> [Bertrand Russell](https://en.wikipedia.org/wiki/Bertrand_Russell), [addressed](https://en.wikipedia.org/wiki/Ludwig_Wittgenstein#Arrival_at_Cambridge) to [22-year-old](https://www.basicincome.com/bp/probablythetwo.htm) [Ludwig Wittgenstein
+](https://en.wikipedia.org/wiki/Ludwig_Wittgenstein), whose response "nothing empirical is knowable" [has been connected](https://philosophy.stackexchange.com/a/41416/94293) to "David Hume and the problem of induction":
+>
+> > *When e.g. Russell looked under one table, it is perfectly possible (that is, logically possible) that the rhinoceros popped up under the other table, and vice versa. The rhinoceros could have been on the ceiling, it could have been very small, it could have been invisible, etc. There would be no way to know otherwise.*
+
+---
