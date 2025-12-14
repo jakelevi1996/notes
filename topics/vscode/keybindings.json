@@ -528,4 +528,22 @@
             "snippet": "jaaaAAAaaake ",
         },
     },
+    {
+        "key": "ctrl+-",
+        "command": "workbench.action.zoomOut",
+        "when": "editorLangId == 'pdf'"
+    },
+    {
+        "key": "ctrl+-",
+        "command": "-workbench.action.zoomOut"
+    },
+    {
+        "key": "ctrl+=",
+        "command": "workbench.action.zoomIn",
+        "when": "editorLangId == 'pdf'"
+    },
+    {
+        "key": "ctrl+=",
+        "command": "-workbench.action.zoomIn"
+    },
 ]
