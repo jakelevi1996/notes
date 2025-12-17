@@ -78,7 +78,8 @@ This is just a random collection of commands which I have found useful in Bash. 
   - [Find CPU details (including model name) using `lscpu`](#find-cpu-details-including-model-name-using-lscpu)
   - [Change default shell](#change-default-shell)
   - [Add directory to the `$PATH` environment variable](#add-directory-to-the-path-environment-variable)
-- [Alias `python` to `python3`](#alias-python-to-python3)
+  - [Alias `python` to `python3`](#alias-python-to-python3)
+  - [Download Youtube to MP3/MP4](#download-youtube-to-mp3mp4)
 
 ## Run, control and view detached processes using `screen`
 
@@ -1413,10 +1414,38 @@ Then run the command `source ~/.bashrc` to reload the `~/.bashrc` profile in the
 
 [As explained here](https://superuser.com/a/18990/1098000), the reason for using the `export` command rather than just `PATH=...` is that `export` sets an environment variable, which will be available in subprocesses of the current shell process, whereas just setting `PATH=...` in general creates a shell variable, which is not necessarily available to subprocesses of the current shell process.
 
-# Alias `python` to `python3`
+## Alias `python` to `python3`
 
 Add the following line to the end of `~/.bashrc` ([source](https://askubuntu.com/a/1216095/1078405)):
 
 ```
 alias python='python3'
+```
+
+## Download Youtube to MP3/MP4
+
+Install [`yt-dlp`](https://github.com/yt-dlp/yt-dlp) using `pip`:
+
+```
+python -m pip install -U pip
+python -m pip install -U yt-dlp
+```
+
+Download video:
+
+```
+yt-dlp https://www.youtube.com/watch?v=5iDqNAuPF0o
+```
+
+Download audio:
+
+```
+yt-dlp https://www.youtube.com/watch?v=5iDqNAuPF0o --extract-audio --audio-format mp3 --audio-quality 128k
+```
+
+To fix warnings/errors, it may help to download `deno`, and/or use the `--remote-components ejs:github` flag:
+
+```
+curl -fsSL https://deno.land/install.sh | sh
+syt-dlp https://www.youtube.com/watch?v=5iDqNAuPF0o --remote-components ejs:github
 ```
