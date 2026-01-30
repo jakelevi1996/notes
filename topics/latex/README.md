@@ -128,14 +128,16 @@ Place holder for abstract. Delete if necessary, otherwise summarise document her
 
 ```tex
 \documentclass{article}
+\usepackage{setspace}
 
 % ...
 
 \begin{document}
-\begin{center}
-    \textbf{\LARGE Document Title \\ \medskip That Spans Multiple Lines}
 
-    \medskip Jake Levi $\cdot$ \today
+\begin{center}
+    \doublespacing
+    \textbf{\LARGE Document Title \\ That Spans Multiple Lines} \\
+    Jake Levi $\cdot$ \today
 \end{center}
 
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
