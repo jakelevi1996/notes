@@ -546,4 +546,8 @@
         "key": "ctrl+=",
         "command": "-workbench.action.zoomIn"
     },
+    {
+        "key": "insert",
+        "command": "-editor.action.toggleOvertypeInsertMode"
+    },
 ]

@@ -137,7 +137,7 @@
             },
         },
     ],
-    "debugpy.debugJustMyCode": false,
+    "debugpy.debugJustMyCode": true,
     "gitlens.views.scm.grouped.views": {
         "commits": true,
         "branches": true,
