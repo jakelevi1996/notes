@@ -151,6 +151,25 @@
 		],
 		"description": "cli Arg(...),",
 	},
+	"table = util Table(...)": {
+		"prefix": "table = util Table(...)",
+		"body": [
+			"table = util.Table(",
+			"    util.CountColumn(),",
+			"    util.TimeColumn(),",
+			"    util.Column(\"${1:column_name}\", \"${2:s}\", width=${3:10}),",
+			")",
+			"",
+		],
+		"description": "table = util Table(...)",
+	},
+	"util Column(...)": {
+		"prefix": "util Column(...)",
+		"body": [
+			"util.Column(\"${1:column_name}\", \"${2:s}\", width=${3:10}),",
+		],
+		"description": "util Column(...)",
+	},
 	"if __name__ == __main__: ...": {
 		"prefix": "if __name__ == __main__: ...",
 		"body": [
