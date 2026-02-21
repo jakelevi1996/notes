@@ -76,3 +76,17 @@
 > > *When e.g. Russell looked under one table, it is perfectly possible (that is, logically possible) that the rhinoceros popped up under the other table, and vice versa. The rhinoceros could have been on the ceiling, it could have been very small, it could have been invisible, etc. There would be no way to know otherwise.*
 
 ---
+
+*"Ah, you were consciously extending the evolutionary tendency inherent in Being; one manifestation of which is exploration."*
+
+> [Ursula K. Le Guin](https://en.wikipedia.org/wiki/Ursula_K._Le_Guin), [The Left Hand of Darkness](https://en.wikipedia.org/wiki/The_Left_Hand_of_Darkness), page 211-212, spoken by Genly Ai
+
+---
+
+---
+
+*"LEEERRROOOYYY JEEENNNKKKIIINNNSSS"*
+
+> [Leeroy Jenkins](https://www.youtube.com/watch?v=mLyOj_QD4a4)
+
+---
