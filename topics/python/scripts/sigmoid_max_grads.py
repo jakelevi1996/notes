@@ -11,6 +11,7 @@ ddq = dq * (1 - 2 * q)
 dq_max = 1/4
 dq_max_q = 1/2
 dq_max_x = 0
+dq_max_ddq = 0
 
 ddq_max = 1/4 * (2 / math.sqrt(27))
 ddq_max_q = 1/2 - 1 / (2 * math.sqrt(3))
@@ -30,6 +31,7 @@ mp = plotting.MultiPlot(
             ls="--",
         ),
         plotting.Scatter(dq_max_x, dq_max_q, c="r"),
+        plotting.Scatter(ddq_max_x, ddq_max_q, c="g"),
     ),
     plotting.Subplot(
         plotting.Line(x, dq),
@@ -46,23 +48,26 @@ mp = plotting.MultiPlot(
     plotting.Subplot(
         plotting.Line(x, ddq),
         plotting.HLine(ddq_max, c="g", ls="--"),
+        plotting.Scatter(dq_max_x, dq_max_ddq, c="r"),
         plotting.Scatter(ddq_max_x, ddq_max, c="g"),
     ),
     plotting.LegendSubplot(
         plotting.Line(label="$\\sigma(x)$"),
         plotting.Scatter(None, None, label="$(0, 1/2)$", c="r"),
+        plotting.Scatter([], [], label="$(x^*, q^*)$", c="g"),
+        plotting.Line(label="$q^* = (1 - 1/\\sqrt{3})$", a=0),
+        plotting.Line(label="$x^* = \\sigma^{-1}(q^*)$", a=0),
         loc="upper center"
     ),
     plotting.LegendSubplot(
         plotting.Line(label="$\\sigma^\prime(x)$"),
         plotting.Scatter([], [], label="$(0, 1/4)$", c="r"),
         plotting.Scatter([], [], label="$(x^*, \\sigma^\prime(x^*))$", c="g"),
-        plotting.Line(label="$q^* = (1 - 1/\\sqrt{3})$", a=0),
-        plotting.Line(label="$x^* = \\sigma^{-1}(q^*)$", a=0),
         loc="upper center"
     ),
     plotting.LegendSubplot(
         plotting.Line(label="$\\sigma^{\prime\prime}(x)$"),
+        plotting.Scatter([], [], label="$(0, 0)$", c="r"),
         plotting.Scatter([], [], label="$(x^*, (1/4)(2/\\sqrt{27}))$", c="g"),
         loc="upper center"
     ),
