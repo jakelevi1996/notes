@@ -28,7 +28,7 @@ mp = plotting.MultiPlot(
             [dq_max_x, dq_max_q],
             slope=dq_max,
             c="r",
-            ls="--",
+            ls=":",
         ),
         plotting.Scatter(dq_max_x, dq_max_q, c="r"),
         plotting.Scatter(ddq_max_x, ddq_max_q, c="g"),
@@ -40,7 +40,7 @@ mp = plotting.MultiPlot(
             [ddq_max_x, ddq_max_dq],
             slope=ddq_max,
             c="g",
-            ls="--",
+            ls=":",
         ),
         plotting.Scatter(dq_max_x, dq_max, c="r"),
         plotting.Scatter(ddq_max_x, ddq_max_dq, c="g"),
@@ -63,6 +63,8 @@ mp = plotting.MultiPlot(
         plotting.Line(label="$\\sigma^\prime(x)$"),
         plotting.Scatter([], [], label="$(0, 1/4)$", c="r"),
         plotting.Scatter([], [], label="$(x^*, \\sigma^\prime(x^*))$", c="g"),
+        plotting.Line(label="Max gradient", ls=":", c="k"),
+        plotting.Line(label="Max value", ls="--", c="k"),
         loc="upper center"
     ),
     plotting.LegendSubplot(
