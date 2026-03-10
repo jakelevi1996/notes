@@ -17,6 +17,9 @@ ddq_max_q = 1/2 - 1 / (2 * math.sqrt(3))
 ddq_max_dq = ddq_max_q * (1 - ddq_max_q)
 ddq_max_x = math.log(ddq_max_q / (1 - ddq_max_q))
 
+print("Empirical max:   ", ddq.max().item())
+print("Theoretical max: ", ddq_max)
+
 mp = plotting.MultiPlot(
     plotting.Subplot(
         plotting.Line(x, q),
