@@ -20,8 +20,18 @@
     },
     {
         "key": "alt+r",
-        "command": "python.execInTerminal",
-        "when": "editorTextFocus",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "workbench.action.files.save",
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "python ${relativeFile}\u000d",
+                    },
+                },
+            ],
+        },
     },
     {
         "key": "ctrl+r",
