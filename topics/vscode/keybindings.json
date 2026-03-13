@@ -277,6 +277,8 @@
         "command": "runCommands",
         "args": {
             "commands": [
+                "workbench.view.testing.focus",
+                "saveAll",
                 "testing.reRunLastRun",
             ],
         },
@@ -286,6 +288,8 @@
         "command": "runCommands",
         "args": {
             "commands": [
+                "workbench.view.testing.focus",
+                "saveAll",
                 "testing.reRunFailTests",
             ],
         },
@@ -295,6 +299,8 @@
         "command": "runCommands",
         "args": {
             "commands": [
+                "workbench.view.testing.focus",
+                "saveAll",
                 "testing.runAll",
             ],
         },
