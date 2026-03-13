@@ -1,5 +1,4 @@
 {
-    "python.defaultInterpreterPath": "python",
     "explorer.confirmDelete": false,
     "git.enableSmartCommit": true,
     "editor.rulers": [79, 160],
