@@ -455,7 +455,17 @@
     {
         "key": "ctrl+alt+v",
         "command": "markdown.showPreviewToSide",
-        "when": "!notebookEditorFocused && editorLangId == 'markdown'",
+        "when": "resourceExtname == '.md'",
+    },
+    {
+        "key": "ctrl+alt+v",
+        "command": "livePreview.start.preview.atFile",
+        "when": "resourceExtname == '.html'",
+    },
+    {
+        "key": "ctrl+alt+v",
+        "command": "latex-workshop.view",
+        "when": "resourceExtname == '.tex'",
     },
     {
         "key": "ctrl+v",
