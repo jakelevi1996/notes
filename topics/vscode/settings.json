@@ -159,4 +159,5 @@
     "editor.minimap.showSlider": "always",
     "workbench.editor.empty.hint": "hidden",
     "terminal.integrated.initialHint": false,
+    "python.testing.autoTestDiscoverOnSaveEnabled": false,
 }
