@@ -13,6 +13,7 @@
   - [Figures and subfigures](#figures-and-subfigures)
   - [Tables and subtables](#tables-and-subtables)
   - [Algorithms](#algorithms)
+  - [Beamer presentations](#beamer-presentations)
   - [Posters](#posters)
   - [Description of packages](#description-of-packages)
   - [`.gitignore`](#gitignore)
@@ -429,6 +430,25 @@ C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -dSAFER -dBATCH -dNOPAUSE -sDEVICE=p
 The resulting image is shown below:
 
 ![](Images/algorithm.png)
+
+## Beamer presentations
+
+See template in [`topics/latex/Examples/presentation/slides.tex`](Examples/presentation/slides.tex), which produces the following output:
+
+```
+cd topics/latex/Examples/presentation
+pdflatex slides.tex
+pdflatex slides.tex
+gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r1000 -sOutputFile=slides_%d.png slides.pdf
+```
+
+![](Examples/presentation/slides_1.png)
+![](Examples/presentation/slides_2.png)
+![](Examples/presentation/slides_3.png)
+![](Examples/presentation/slides_4.png)
+![](Examples/presentation/slides_5.png)
+![](Examples/presentation/slides_6.png)
+![](Examples/presentation/slides_7.png)
 
 ## Posters
 

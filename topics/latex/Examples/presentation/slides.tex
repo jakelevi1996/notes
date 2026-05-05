@@ -1,0 +1,85 @@
+\documentclass{beamer}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+
+\title{Example Beamer presentation}
+\author{Jake Levi}
+\date{\today}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{itemize items}[default]
+\setbeamertemplate{enumerate items}[default]
+\setbeamertemplate{section in toc}[circle]
+
+\AtBeginSection{
+    \begin{frame}
+        \frametitle{Table of Contents}
+        \tableofcontents[currentsection]
+    \end{frame}
+}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents
+\end{frame}
+
+\section{Section 1}
+
+\begin{frame}
+    \frametitle{Frame title 1}
+    Blah blah
+
+    \begin{itemize}
+        \item Blah blah blah
+        \item Blah blah blah
+        \item Blah blah blah
+        \item Blah blah blah
+        \begin{enumerate}
+            \item Blah
+            \item Blah
+            \item Blah
+        \end{enumerate}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Frame title 2}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \item Blah blah blah
+                \item Blah blah blah
+                \item Blah blah blah
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \includegraphics[width=\textwidth]{example-image-a}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{Section 2}
+
+\begin{frame}
+    \frametitle{Frame title 3}
+    Blah blah:
+    \vfill
+    \begin{columns}
+        \begin{column}{0.45\textwidth}
+            \includegraphics[width=\textwidth]{example-image-b}
+        \end{column}
+        \hfill
+        \begin{column}{0.45\textwidth}
+            \includegraphics[width=\textwidth]{example-image-c}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\end{document}
