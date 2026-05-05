@@ -14,6 +14,8 @@
   - [Tables and subtables](#tables-and-subtables)
   - [Algorithms](#algorithms)
   - [Beamer presentations](#beamer-presentations)
+    - [Template](#template)
+    - [Example title page formatting](#example-title-page-formatting)
   - [Posters](#posters)
   - [Description of packages](#description-of-packages)
   - [`.gitignore`](#gitignore)
@@ -433,6 +435,8 @@ The resulting image is shown below:
 
 ## Beamer presentations
 
+### Template
+
 See template in [`topics/latex/Examples/presentation/slides.tex`](Examples/presentation/slides.tex), which produces the following output:
 
 ```
@@ -449,6 +453,27 @@ gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r1000 -sOutputFile=slides_%d.png s
 ![](Examples/presentation/slides_5.png)
 ![](Examples/presentation/slides_6.png)
 ![](Examples/presentation/slides_7.png)
+
+### Example title page formatting
+
+```tex
+\hbadness 10000
+\vbadness 10000
+\hfuzz 1000pt
+\vfuzz 1000pt
+\righthyphenmin 100
+
+\setbeamertemplate{title page}{
+    \ttfamily \color{blue}
+    \scalebox{2}{
+        \begin{minipage}{0.5\textwidth}
+            \Huge \setlength{\baselineskip}{0.9em} \inserttitle \par
+            \vspace{0.05\textheight}
+            \scriptsize \insertauthor \\ \insertdate
+        \end{minipage}
+    }
+}
+```
 
 ## Posters
 
