@@ -131,15 +131,20 @@ Place holder for abstract. Delete if necessary, otherwise summarise document her
 
 ```tex
 \documentclass{article}
-\usepackage{setspace}
 
 % ...
 
 \begin{document}
 
 \begin{center}
-    \doublespacing
-    \textbf{\LARGE Document Title \\ That Spans Multiple Lines} \\
+    \LARGE
+    \setlength{\baselineskip}{25pt}
+    \textbf{
+        Document Title \\
+        That Spans Multiple Lines \\
+    }
+    \normalsize
+    \setlength{\baselineskip}{25pt}
     Jake Levi $\cdot$ \today
 \end{center}
 
