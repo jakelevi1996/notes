@@ -88,3 +88,9 @@
 > [Leeroy Jenkins](https://www.youtube.com/watch?v=mLyOj_QD4a4)
 
 ---
+
+*"The top-down belief is the thing that sustains you when the experiments contradict you."*
+
+> [Ilya Sutskever, Dwarkesh Podcast, 1:34:53](https://youtu.be/aR20FWCCjAs?t=5693)
+
+---
