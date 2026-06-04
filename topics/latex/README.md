@@ -139,10 +139,10 @@ Place holder for abstract. Delete if necessary, otherwise summarise document her
 
 \begin{center}
     \LARGE
-    \setlength{\baselineskip}{25pt}
+    \setlength{\baselineskip}{1.4em}
     \textbf{Document Title \\ That Spans Multiple Lines} \\
+    \vspace{12pt}
     \normalsize
-    \setlength{\baselineskip}{25pt}
     Jake Levi $\cdot$ \today
 \end{center}
 
