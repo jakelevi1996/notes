@@ -69,6 +69,7 @@ The following is a sensible, minimal example of a document template for a `tex` 
 \hfuzz 100pt
 \vfuzz 100pt
 \righthyphenmin 100
+\emergencystretch 1em
 \allowdisplaybreaks
 
 \title{
