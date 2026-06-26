@@ -527,11 +527,8 @@ None
 A useful trick I have found is to keep a Python file called `.temp.py` in the top level directory of any repository (ignored by the pattern `.*` in `.gitignore`), which I use as a temporary scratchpad for quickly writing and running short snippets of code, often as a "first draft" before moving that code into a permanent module or script (I also use it for storing some common commands I may want to paste into a debug terminal, EG setting different print options for PyTorch). Below is a template I use for `.temp.py`:
 
 ```python
-import os
-import numpy as np
-from jutility import plotting, util
+from jutility import plotting, util, cli
 
-rng = np.random.default_rng(0)
 util.numpy_set_print_options()
 printer = util.Printer(
     # ".temp",
@@ -539,18 +536,17 @@ printer = util.Printer(
     # print_to_console=False,
 )
 
-# TEMPORARY CODE GOES HERE
-
 ###############################################################################
 
-# import torch
-# import juml
+import torch
+import juml
 
-# juml.test_utils.torch_set_print_options()
-# juml.test_utils.torch_set_print_options(threshold=int(1e9))
-# torch.manual_seed(0)
+juml.util.torch_set_print_options(
+    # threshold=int(1e9),
+)
+torch.manual_seed(0)
 
-# print_tensor = juml.test_utils.TensorPrinter(printer)
+print_tensor = juml.util.TensorPrinter(printer)
 
 ###############################################################################
 
