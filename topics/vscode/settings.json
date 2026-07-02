@@ -50,7 +50,7 @@
     "files.trimTrailingWhitespace": true,
     "debug.onTaskErrors": "abort",
     "explorer.copyRelativePathSeparator": "/",
-    "workbench.colorTheme": "Default Dark+",
+    "workbench.colorTheme": "Dark+",
     "workbench.editor.wrapTabs": true,
     "workbench.editorAssociations": {
         "*.ipynb": "jupyter-notebook",
@@ -160,4 +160,9 @@
     "workbench.editor.empty.hint": "hidden",
     "terminal.integrated.initialHint": false,
     "python.testing.autoTestDiscoverOnSaveEnabled": false,
+    "git.autoRepositoryDetection": false,
+    "latex-workshop.latex.autoBuild.run": "onSave",
+    "livePreview.autoRefreshPreview": "On Changes to Saved Files",
+    "explorer.sortOrder": "filesFirst",
+    "workbench.editor.useModal": "off",
 }
