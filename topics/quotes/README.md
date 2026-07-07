@@ -94,3 +94,9 @@
 > [Ilya Sutskever, Dwarkesh Podcast, 1:34:53](https://youtu.be/aR20FWCCjAs?t=5693)
 
 ---
+
+*"In the beginner's mind there are many possibilities; in the expert's mind there are few."*
+
+> [Shunryu Suzuki, Zen Mind, Beginner's Mind: Informal Talks on Zen Meditation and Practice](https://www.goodreads.com/quotes/285436-in-the-beginner-s-mind-there-are-many-possibilities-but-in), mentioned by Jack Morris in blog post [Zen and the Art of AI Research](https://x.com/jxmnop/status/2066668040557867368)
+
+---
