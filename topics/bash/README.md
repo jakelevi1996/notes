@@ -23,6 +23,7 @@ This is just a random collection of commands which I have found useful in Bash. 
     - [Uninstalling packages and their dependencies](#uninstalling-packages-and-their-dependencies)
   - [List files in a directory ordered by date with `ls -halt`](#list-files-in-a-directory-ordered-by-date-with-ls--halt)
   - [Use `git push` with an authentication token](#use-git-push-with-an-authentication-token)
+  - [`pip install` from a private GitHub repository](#pip-install-from-a-private-github-repository)
   - [View the Linux distribution name and version number using `lsb_release`](#view-the-linux-distribution-name-and-version-number-using-lsb_release)
   - [Download VSCode](#download-vscode)
   - [Multiline `bash` commands](#multiline-bash-commands)
@@ -543,6 +544,14 @@ To generate an authentication token for a GitHub repository:
 Notes:
 
 - For setting authentication tokens to use with GitHub, `git:${TOKEN_STR}` can be replaced with `${USERNAME}:${TOKEN_STR}`, where `${USERNAME}` is the GitHub username, however using `git` instead of `${USERNAME}` works for GitHub, and also generalises to other remote repositories, EG those hosted on Overleaf, for which the username is an email address, which is not a valid URL component
+
+## `pip install` from a private GitHub repository
+
+Generate an authentication token as described above in section ["Use `git push` with an authentication token"](#use-git-push-with-an-authentication-token) (optionally for "Contents" keep "Access:" as "Read-only" instead of changing to "Read and write"), copy the token, and use the following command:
+
+```
+python -m pip install git+https://git:${TOKEN_STR}@github.com/${USERNAME}/${REPO_NAME}.git
+```
 
 ## View the Linux distribution name and version number using `lsb_release`
 
