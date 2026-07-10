@@ -23,6 +23,7 @@ TODO: migrate existing Python-related Gists into subsections of this Gist
     - [How to break it again](#how-to-break-it-again)
   - [Type hints with unions and quotes](#type-hints-with-unions-and-quotes)
   - [`.temp.py`](#temppy)
+  - [Virtual environments with `venv`](#virtual-environments-with-venv)
   - [Useful Python snippets](#useful-python-snippets)
     - [Defining iterators with `__iter__`](#defining-iterators-with-__iter__)
     - [Chaining iterators](#chaining-iterators)
@@ -550,6 +551,17 @@ print_tensor = juml.util.TensorPrinter(printer)
 
 ###############################################################################
 
+```
+
+## Virtual environments with `venv`
+
+A simple recipe, courtesy of [Amgadoz on Reddit](https://www.reddit.com/r/Python/comments/1caflkr/comment/l0rz36c/):
+
+```
+cd my_project
+python -m venv .venv
+source .venv/bin/activate
+pip install requirements.txt
 ```
 
 ## Useful Python snippets
