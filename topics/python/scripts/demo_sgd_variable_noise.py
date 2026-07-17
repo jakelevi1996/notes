@@ -36,7 +36,7 @@ def main():
 
     lines = ncs.plot(
         list(range(n_steps + 1)),
-        cp=plotting.ColourPicker(n_lr, cyclic=False),
+        cp=plotting.ColourPicker.cool(n_lr),
         label_fmt=util.FloatFormatter(4),
         alpha_fill=0,
     )
