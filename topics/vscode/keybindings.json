@@ -176,13 +176,7 @@
     },
     {
         "key": "ctrl+t",
-        "command": "runCommands",
-        "args": {
-            "commands": [
-                "workbench.action.terminal.new",
-                "workbench.action.terminal.runSelectedText",
-            ],
-        },
+        "command": "workbench.action.terminal.new",
     },
     {
         "key": "shift+alt+v",
