@@ -100,3 +100,15 @@
 > [Shunryu Suzuki, Zen Mind, Beginner's Mind: Informal Talks on Zen Meditation and Practice](https://www.goodreads.com/quotes/285436-in-the-beginner-s-mind-there-are-many-possibilities-but-in), mentioned by Jack Morris in blog post [Zen and the Art of AI Research](https://x.com/jxmnop/status/2066668040557867368)
 
 ---
+
+*"If you're going through hell, keep going."*
+
+> [Winston Churchill](https://www.goodreads.com/quotes/689845-if-you-re-going-through-hell-keep-going) ([falsely attributed?](https://winstonchurchill.org/resources/quotes/quotes-falsely-attributed/))
+
+---
+
+*"You may encounter many defeats, but you must not be defeated."*
+
+> [Maya Angelou](https://www.goodreads.com/quotes/93512-you-may-encounter-many-defeats-but-you-must-not-be)
+
+---
