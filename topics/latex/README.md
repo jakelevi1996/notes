@@ -11,6 +11,7 @@
   - [Compiling a PDF](#compiling-a-pdf)
   - [Compiling to PNG](#compiling-to-png)
   - [Figures and subfigures](#figures-and-subfigures)
+    - [Tikz figures](#tikz-figures)
   - [Tables and subtables](#tables-and-subtables)
   - [Algorithms](#algorithms)
   - [Beamer presentations](#beamer-presentations)
@@ -289,6 +290,47 @@ C:/texlive/2022/tlpkg/tlgs/bin/gswin32c.exe -dSAFER -dBATCH -dNOPAUSE -sDEVICE=p
 The resulting image is shown below:
 
 ![](Images/figures.png)
+
+### Tikz figures
+
+Example figure:
+
+```tex
+\documentclass{article}
+
+% ...
+
+\usepackage{tikz}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\graphicspath{{path/to/image/folder}}
+\usetikzlibrary{arrows.meta}
+
+\begin{document}
+
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+
+% ...
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}[
+        node/.style={circle, draw, minimum size=1cm, inner sep=0pt, font=\Large},
+        arrow/.style={-{Triangle[length=4mm,width=3mm]}, thick}
+    ]
+        \node[node] (x) at (0,0) {$x$};
+        \node[node] (z) at (2.5,0) {$z$};
+        \node[node] (y) at (5,0) {$y$};
+
+        \draw[arrow] (x) -- (z);
+        \draw[arrow] (z) -- (y);
+    \end{tikzpicture}
+    \caption{Example figure}
+    \label{fig:example}
+\end{figure}
+
+\end{document}
+```
 
 ## Tables and subtables
 
