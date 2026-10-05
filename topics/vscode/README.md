@@ -92,6 +92,7 @@ Useful commands using the "Markdown All in One" extension:
 - Snippet files:
   - [`python.json`](snippets/python.json)
   - [`markdown.json`](snippets/markdown.json)
+  - [`latex.json`](snippets/latex.json)
 - Notes:
   - There seems to be a quirk when typing `import m` (`...`)
   - Only matching snippets are provided as a suggestion, but not other valid modules that could be imported (EG `math`)
