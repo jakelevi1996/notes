@@ -25,4 +25,8 @@
 		"prefix": "equation",
 		"body": "$$0$",
 	},
+	"partial derivative fraction": {
+		"prefix": "partial derivative fraction",
+		"body": "\\frac{\\partial${1:}}{\\partial ${2:x}}$0",
+	},
 }
