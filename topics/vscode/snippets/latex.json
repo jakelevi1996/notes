@@ -45,15 +45,15 @@
 	},
 
 	"Equation \\ref{eq:<equation label>}": {
-		"prefix": "equation ref label",
+		"prefix": "equation ref",
 		"body": "Equation \\ref{eq:${1:<equation label>}}",
 	},
 	"Figure \\ref{fig:<figure label>}": {
-		"prefix": "figure ref label",
+		"prefix": "figure ref",
 		"body": "Figure \\ref{fig:${1:<figure label>}}",
 	},
 	"\\S\\ref{section:<section label>}": {
-		"prefix": "section ref label",
+		"prefix": "section ref",
 		"body": "\\S\\ref{section:${1:<section label>}}",
 	},
 }
