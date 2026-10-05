@@ -21,12 +21,39 @@
 	// 	"exclude": ["**/temp/*.ts"],
 	// 	"description": "Insert test block"
 	// }
-	"equation": {
-		"prefix": "equation $$",
+	"$f(x)$": {
+		"prefix": "equation $f(x)$",
 		"body": "$$0$",
 	},
 	"partial derivative fraction": {
 		"prefix": "partial derivative fraction",
 		"body": "\\frac{\\partial${1:}}{\\partial ${2:x}}$0",
+	},
+
+
+	"\\label{eq:<equation label>}": {
+		"prefix": "label equation",
+		"body": "\\label{eq:${1:<equation label>}}",
+	},
+	"\\label{fig:<figure label>}": {
+		"prefix": "label figure",
+		"body": "\\label{fig:${1:<figure label>}}",
+	},
+	"\\label{section:<section label>}": {
+		"prefix": "label section",
+		"body": "\\label{section:${1:<section label>}}",
+	},
+
+	"Equation \\ref{eq:<equation label>}": {
+		"prefix": "equation ref label",
+		"body": "Equation \\ref{eq:${1:<equation label>}}",
+	},
+	"Figure \\ref{fig:<figure label>}": {
+		"prefix": "figure ref label",
+		"body": "Figure \\ref{fig:${1:<figure label>}}",
+	},
+	"\\S\\ref{section:<section label>}": {
+		"prefix": "section ref label",
+		"body": "\\S\\ref{section:${1:<section label>}}",
 	},
 }
