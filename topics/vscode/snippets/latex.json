@@ -22,7 +22,7 @@
 	// 	"description": "Insert test block"
 	// }
 	"equation": {
-		"prefix": "equation",
+		"prefix": "equation $$",
 		"body": "$$0$",
 	},
 	"partial derivative fraction": {
