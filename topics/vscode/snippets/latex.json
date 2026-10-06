@@ -22,12 +22,12 @@
 	// 	"description": "Insert test block"
 	// }
 	"$f(x)$": {
-		"prefix": "equation $f(x)$",
-		"body": "$$0$",
+		"prefix": ["@$", "equation"],
+		"body": "$$1$",
 	},
-	"partial derivative fraction": {
+	"\\frac{\\partial}{\\partial x}": {
 		"prefix": "partial derivative fraction",
-		"body": "\\frac{\\partial${1:}}{\\partial ${2:x}}$0",
+		"body": "\\frac{\\partial${1:}}{\\partial ${2:x}}",
 	},
 
 
@@ -55,5 +55,14 @@
 	"\\S\\ref{section:<section label>}": {
 		"prefix": "section ref",
 		"body": "\\S\\ref{section:${1:<section label>}}",
+	},
+
+	"\\mathbb{E}[ f(x) ]": {
+		"prefix": "expectation",
+		"body": "\\mathbb{E}\\left[ ${1:f(x)} \\right]",
+	},
+	"\\mathcal{N}( x | \\mu, \\sigma^2 )": {
+		"prefix": ["normal", "gaussian"],
+		"body": "\\mathcal{N}\\left( ${1:x} \\,\\middle|\\, ${2:\\mu}, ${3:\\sigma^2} \\right)",
 	},
 }
