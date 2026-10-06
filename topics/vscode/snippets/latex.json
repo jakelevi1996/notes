@@ -61,8 +61,20 @@
 		"prefix": "expectation",
 		"body": "\\mathbb{E}\\left[ ${1:f(x)} \\right]",
 	},
+	"\\text{Var}[ f(x) ]": {
+		"prefix": "variance",
+		"body": "\\text{Var}\\left[ ${1:f(x)} \\right]",
+	},
 	"\\mathcal{N}( x | \\mu, \\sigma^2 )": {
 		"prefix": ["normal", "gaussian"],
 		"body": "\\mathcal{N}\\left( ${1:x} \\,\\middle|\\, ${2:\\mu}, ${3:\\sigma^2} \\right)",
+	},
+	"\\text{where}\\quad ": {
+		"prefix": "where",
+		"body": "\\text{where}\\quad ",
+	},
+	"\\Rightarrow\\quad ": {
+		"prefix": "rightarrow",
+		"body": "\\Rightarrow\\quad ",
 	},
 }
