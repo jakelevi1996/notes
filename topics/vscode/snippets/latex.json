@@ -21,15 +21,6 @@
 	// 	"exclude": ["**/temp/*.ts"],
 	// 	"description": "Insert test block"
 	// }
-	"$f(x)$": {
-		"prefix": ["@$", "equation"],
-		"body": "$$1$",
-	},
-	"\\frac{\\partial}{\\partial x}": {
-		"prefix": "partial derivative fraction",
-		"body": "\\frac{\\partial${1:}}{\\partial ${2:x}}",
-	},
-
 
 	"\\label{eq:<equation label>}": {
 		"prefix": "label equation",
@@ -45,18 +36,30 @@
 	},
 
 	"Equation \\ref{eq:<equation label>}": {
-		"prefix": "equation ref",
+		"prefix": "ref equation",
 		"body": "Equation \\ref{eq:${1:<equation label>}}",
 	},
 	"Figure \\ref{fig:<figure label>}": {
-		"prefix": "figure ref",
+		"prefix": "ref figure",
 		"body": "Figure \\ref{fig:${1:<figure label>}}",
 	},
 	"\\S\\ref{section:<section label>}": {
-		"prefix": "section ref",
+		"prefix": "ref section",
 		"body": "\\S\\ref{section:${1:<section label>}}",
 	},
 
+	"$...$": {
+		"prefix": ["@$", "equation"],
+		"body": "$${1:\\dots}$",
+	},
+	"\\begin{align} ... \\end{align}": {
+		"prefix": "begin align",
+		"body": "\\begin{align}\n    ${1:\\dots}\n\\end{align}",
+	},
+	"\\frac{\\partial f}{\\partial x}\\Bigl[ \\Bigr]": {
+		"prefix": "partial derivative fraction",
+		"body": "\\frac{\\partial${1: f}}{\\partial ${2:x}}\\Bigl[ $3 \\Bigr]",
+	},
 	"\\mathbb{E}[ f(x) ]": {
 		"prefix": "expectation",
 		"body": "\\mathbb{E}\\left[ ${1:f(x)} \\right]",
@@ -76,5 +79,17 @@
 	"\\Rightarrow\\quad ": {
 		"prefix": "rightarrow",
 		"body": "\\Rightarrow\\quad ",
+	},
+	"\\mathbb{R}^D": {
+		"prefix": "reals",
+		"body": "\\mathbb{R}${1:^D}",
+	},
+	"\\sum_i\\Bigl[  \\Bigr]": {
+		"prefix": "sum",
+		"body": "\\sum_${1:i}\\Bigl[ $2 \\Bigr]",
+	},
+	"\\nonumber \\\\\n&\\quad ": {
+		"prefix": "nonumber newline",
+		"body": "\\nonumber \\\\\\\n&\\quad ",
 	},
 }
