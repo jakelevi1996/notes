@@ -101,7 +101,7 @@
     },
     // "terminal.integrated.defaultProfile.windows": "Ubuntu (WSL)",
     // "terminal.integrated.defaultProfile.windows": "Ubuntu-18.04 (WSL)",
-    "terminal.integrated.scrollback": 1200,
+    "terminal.integrated.scrollback": 5000,
 	"terminal.integrated.wordSeparators": " []{}',\"`─",
     "[plaintext]": {
         "editor.language.colorizedBracketPairs": [
@@ -165,4 +165,5 @@
     "livePreview.autoRefreshPreview": "On Changes to Saved Files",
     "explorer.sortOrder": "filesFirst",
     "workbench.editor.useModal": "off",
+    "security.workspace.trust.untrustedFiles": "open",
 }
