@@ -166,4 +166,5 @@
     "explorer.sortOrder": "filesFirst",
     "workbench.editor.useModal": "off",
     "security.workspace.trust.untrustedFiles": "open",
+    "terminal.integrated.gpuAcceleration": "off",
 }
