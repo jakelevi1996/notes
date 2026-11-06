@@ -102,10 +102,22 @@ Useful commands using the "Markdown All in One" extension:
 
 ## Synchronise settings
 
+Synchronise local configuration to VS Code:
+
 ```
 cp ~/.config/Code/User/snippets/python.json   topics/vscode/snippets/python.json
 cp ~/.config/Code/User/snippets/markdown.json topics/vscode/snippets/markdown.json
 cp ~/.config/Code/User/snippets/latex.json    topics/vscode/snippets/latex.json
 cp ~/.config/Code/User/keybindings.json       topics/vscode/keybindings.json
 cp ~/.config/Code/User/settings.json          topics/vscode/settings.json
+```
+
+Synchronise VS Code to local configuration:
+
+```
+cp topics/vscode/snippets/python.json   ~/.config/Code/User/snippets/python.json
+cp topics/vscode/snippets/markdown.json ~/.config/Code/User/snippets/markdown.json
+cp topics/vscode/snippets/latex.json    ~/.config/Code/User/snippets/latex.json
+cp topics/vscode/keybindings.json       ~/.config/Code/User/keybindings.json
+cp topics/vscode/settings.json          ~/.config/Code/User/settings.json
 ```
