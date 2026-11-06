@@ -12,6 +12,7 @@
         "tests",
         "--durations=10",
     ],
+    "python.defaultInterpreterPath": "/home/jake/venv/default_venv/bin/python",
     "python.linting.pylintArgs": [
         "--disable", "E1130", // Thinking numpy array doesn't support unary operator
         "--disable", "E0401", // Can't find modules that exist
@@ -167,4 +168,5 @@
     "workbench.editor.useModal": "off",
     "security.workspace.trust.untrustedFiles": "open",
     "terminal.integrated.gpuAcceleration": "off",
+    "chat.disableAIFeatures": true,
 }
