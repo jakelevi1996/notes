@@ -105,21 +105,21 @@
                 {
                     "command": "workbench.action.terminal.sendSequence",
                     "args": {
-                        "text": "python -c \"from jutility import util; util.save_image_diff(\\\"${relativeFile}\\\", ",
+                        "text": "jutility ImageDiff \"${relativeFile}\" ",
                     },
                 },
                 "workbench.action.openPreviousRecentlyUsedEditor",
                 {
                     "command": "workbench.action.terminal.sendSequence",
                     "args": {
-                        "text": "\\\"${relativeFile}\\\", ",
+                        "text": "\"${relativeFile}\" ",
                     },
                 },
                 "workbench.action.openNextRecentlyUsedEditor",
                 {
                     "command": "workbench.action.terminal.sendSequence",
                     "args": {
-                        "text": "\\\"vscode_diff\\\")\" && code \"${relativeFileDirname}/vscode_diff.png\"\u000d",
+                        "text": "\"vscode_diff\" && code \"${relativeFileDirname}/vscode_diff.png\"\u000d",
                     },
                 },
             ],
@@ -336,6 +336,13 @@
         "command": "workbench.action.terminal.sendSequence",
         "args": {
             "text": "git add -f \"${relativeFile}\"\u000D",
+        },
+    },
+    {
+        "key": "ctrl+shift+alt+a",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "jutility GitAddReadmeImages\u000D",
         },
     },
     {
