@@ -105,7 +105,7 @@
                 {
                     "command": "workbench.action.terminal.sendSequence",
                     "args": {
-                        "text": "jutility ImageDiff \"${relativeFile}\" ",
+                        "text": "jutility imagediff \"${relativeFile}\" ",
                     },
                 },
                 "workbench.action.openPreviousRecentlyUsedEditor",
@@ -129,7 +129,7 @@
         "key": "ctrl+shift+v",
         "command": "workbench.action.terminal.sendSequence",
         "args": {
-            "text": "jutility Git RevertCopy \"${relativeFile}\"\u000d",
+            "text": "jutility git revertcopy \"${relativeFile}\"\u000d",
         },
     },
     {
@@ -349,7 +349,7 @@
         "key": "ctrl+shift+alt+a",
         "command": "workbench.action.terminal.sendSequence",
         "args": {
-            "text": "jutility Git AddReadmeImages\u000D",
+            "text": "jutility git addreadmeimages\u000D",
         },
     },
     {
