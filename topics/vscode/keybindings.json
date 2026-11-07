@@ -126,6 +126,13 @@
         },
     },
     {
+        "key": "ctrl+shift+v",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "jutility Git RevertCopy \"${relativeFile}\"\u000d",
+        },
+    },
+    {
         "key": "ctrl+shift+alt+d",
         "command": "workbench.files.action.compareNewUntitledTextFiles",
     },
@@ -342,7 +349,7 @@
         "key": "ctrl+shift+alt+a",
         "command": "workbench.action.terminal.sendSequence",
         "args": {
-            "text": "jutility GitAddReadmeImages\u000D",
+            "text": "jutility Git AddReadmeImages\u000D",
         },
     },
     {
