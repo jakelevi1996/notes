@@ -131,6 +131,7 @@
         "args": {
             "text": "jutility git revertcopy \"${relativeFile}\"\u000d",
         },
+        "when": "editorFocus",
     },
     {
         "key": "ctrl+shift+alt+d",
