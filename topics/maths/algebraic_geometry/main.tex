@@ -1,64 +1,57 @@
-% Options for packages loaded elsewhere
-\PassOptionsToPackage{unicode}{hyperref}
-\PassOptionsToPackage{hyphens}{url}
-%
-\documentclass[
-]{article}
-\usepackage{amsmath,amssymb}
-\usepackage{iftex}
-\ifPDFTeX
-  \usepackage[T1]{fontenc}
-  \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provide euro and other symbols
-\else % if luatex or xetex
-  \usepackage{unicode-math} % this also loads fontspec
-  \defaultfontfeatures{Scale=MatchLowercase}
-  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
-\fi
-\usepackage{lmodern}
-\ifPDFTeX\else
-  % xetex/luatex font selection
-\fi
-% Use upquote if available, for straight quotes in verbatim environments
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-\IfFileExists{microtype.sty}{% use microtype if available
-  \usepackage[]{microtype}
-  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
-}{}
-\makeatletter
-\@ifundefined{KOMAClassName}{% if non-KOMA class
-  \IfFileExists{parskip.sty}{%
-    \usepackage{parskip}
-  }{% else
-    \setlength{\parindent}{0pt}
-    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
-}{% if KOMA class
-  \KOMAoptions{parskip=half}}
-\makeatother
-\usepackage{xcolor}
-\setlength{\emergencystretch}{3em} % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
-\usepackage{bookmark}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same}
-\hypersetup{
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
+\documentclass[12pt]{article}
 
-\author{}
-\date{}
+\usepackage[backref=page]{hyperref}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{subcaption}
+\usepackage{multirow}
+\usepackage{parskip}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{breakcites}
+\usepackage{tikz}
+
+\geometry{a4paper, margin=1in}
+\graphicspath{{../..}}
+\usetikzlibrary{arrows.meta}
+\hbadness 10000
+\vbadness 10000
+\hfuzz 100pt
+\vfuzz 100pt
+\righthyphenmin 100
+\emergencystretch 1em
+\allowdisplaybreaks
 
 \begin{document}
 
-\section{Glossary: Blow-ups and Resolution of
-Singularities}\label{glossary-blow-ups-and-resolution-of-singularities}
+\begin{center}
+    \Large
+    \setlength{\baselineskip}{1.4em}
+    \textbf{Glossary: Blow-ups and Resolution of Singularities} \\
+    \vspace{12pt}
+    \normalsize
+    Jake Levi + ChatGPT $\cdot$ \today
+\end{center}
 
-\subsection{1. Vanishing locus (zero
+\begin{abstract}
+\noindent\begin{itemize}
+    \item The key idea behind this lecture is surprisingly geometric.
+    \item A singularity is often difficult to understand because several branches of a curve meet at the same point, or because a curve meets another curve in a complicated way.
+    \item A \textbf{blow-up} is a geometric operation that replaces a point with a collection of directions, allowing us to separate these branches and examine how they meet.
+    \item We can repeat this operation until the geometry becomes sufficiently simple.
+    \item This process is called \textbf{resolution of singularities}.
+    \item The reason this is useful for singular learning theory is that complicated polynomial functions can then be transformed into much simpler ones: locally, products of powers of individual coordinates.
+    \item Such expressions are considerably easier to analyse, particularly when calculating integrals.
+    \item The glossary below builds up the necessary intuition in the order in which you need it, using the cusp as a running example.
+\end{itemize}
+\end{abstract}
+
+\setcounter{tocdepth}{1}
+\tableofcontents
+
+\newpage
+\section{Vanishing locus (zero
 set)}\label{vanishing-locus-zero-set}
 
 The \textbf{vanishing locus} of a polynomial is simply the set of points
@@ -81,7 +74,8 @@ line.
 
 This distinction becomes important when studying blow-ups.
 
-\subsection{2. Ideal}\label{ideal}
+\newpage
+\section{Ideal}\label{ideal}
 
 An \textbf{ideal} is a collection of polynomials that is closed under
 addition and multiplication by arbitrary polynomials.
@@ -111,7 +105,8 @@ higher-order vanishing of the equations.
 
 That extra information is what schemes allow us to preserve.
 
-\subsection{3. Scheme}\label{scheme}
+\newpage
+\section{Scheme}\label{scheme}
 
 A \textbf{scheme} is a geometric object that retains not just the points
 satisfying a collection of polynomial equations, but also the algebraic
@@ -120,7 +115,6 @@ information contained in those equations.
 A useful way to think about it is:
 
 \begin{itemize}
-\tightlist
 \item
   The vanishing locus tells us which points exist.
 \item
@@ -162,7 +156,8 @@ attached to it.
 lost if we looked only at the underlying geometric set. In particular,
 they preserve multiplicities and higher-order vanishing.
 
-\subsection{4. Reduced and non-reduced}\label{reduced-and-non-reduced}
+\newpage
+\section{Reduced and non-reduced}\label{reduced-and-non-reduced}
 
 A scheme is \textbf{reduced} if its equations contain no hidden
 higher-order vanishing in the form of nonzero nilpotent elements.
@@ -195,7 +190,8 @@ is a line counted twice, rather than an ordinary line.
 
 This distinction will reappear when we introduce divisors.
 
-\subsection{5. Singularities, smooth curves and
+\newpage
+\section{Singularities, smooth curves and
 cusps}\label{singularities-smooth-curves-and-cusps}
 
 A \textbf{smooth curve} is one that locally looks like an ordinary
@@ -236,7 +232,8 @@ well-defined smooth tangent direction there in the usual sense.
 
 The cusp will be our main example when studying blow-ups.
 
-\subsection{6. Divisor and multiplicity}\label{divisor-and-multiplicity}
+\newpage
+\section{Divisor and multiplicity}\label{divisor-and-multiplicity}
 
 A \textbf{divisor} is a formal sum of curves, each assigned a
 multiplicity.
@@ -271,7 +268,6 @@ corresponds to the divisor
 This is useful because it lets us separate two kinds of information:
 
 \begin{itemize}
-\tightlist
 \item
   Which curves are present?
 \item
@@ -284,7 +280,8 @@ locus.
 \textbf{The object we ultimately want to resolve is a divisor, not
 merely a set of points.}
 
-\subsection{7. Simple normal crossings
+\newpage
+\section{Simple normal crossings
 (SNC)}\label{simple-normal-crossings-snc}
 
 A divisor has \textbf{simple normal crossings} if, locally around every
@@ -295,7 +292,6 @@ In two dimensions, this means:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\tightlist
 \item
   Every individual curve is smooth.
 \item
@@ -317,7 +313,6 @@ By contrast, the following situations do not have simple normal
 crossings:
 
 \begin{itemize}
-\tightlist
 \item
   Two curves touching tangentially rather than crossing.
 \item
@@ -346,7 +341,8 @@ This is precisely the kind of expression we want to obtain through
 blow-ups. Monomials are particularly convenient because their integrals
 can be separated into independent one-dimensional integrals.
 
-\subsection{8. Projective line}\label{projective-line}
+\newpage
+\section{Projective line}\label{projective-line}
 
 The \textbf{projective line}, denoted \(\mathbb P^1\), is the collection
 of all possible directions through the origin in a two-dimensional
@@ -382,7 +378,8 @@ circle.
 collection of all possible directions through a point. It is exactly
 what will replace the origin in a blow-up.
 
-\subsection{9. Blow-up}\label{blow-up}
+\newpage
+\section{Blow-up}\label{blow-up}
 
 A \textbf{blow-up} is a geometric operation that replaces a point with
 the projective line of directions through that point.
@@ -424,7 +421,7 @@ Consequently, the origin is replaced by an entire projective line.
 
 This new line is called the \textbf{exceptional divisor}.
 
-\subsubsection{What does this achieve?}\label{what-does-this-achieve}
+\subsection{What does this achieve?}\label{what-does-this-achieve}
 
 Imagine several straight lines crossing at the origin.
 
@@ -439,7 +436,7 @@ This is the fundamental intuition behind blow-ups: replace a point where
 several things are tangled together with the collection of directions
 along which they approach that point.
 
-\subsubsection{How do we actually calculate a
+\subsection{How do we actually calculate a
 blow-up?}\label{how-do-we-actually-calculate-a-blow-up}
 
 We work in two coordinate charts.
@@ -473,7 +470,8 @@ plane.
 These substitutions are the practical tools we use to calculate
 blow-ups.
 
-\subsection{10. Exceptional divisor}\label{exceptional-divisor}
+\newpage
+\section{Exceptional divisor}\label{exceptional-divisor}
 
 The \textbf{exceptional divisor} is the new curve introduced when we
 blow up a point.
@@ -496,7 +494,8 @@ additional exceptional divisors. We must keep track of all of them,
 because the final objective is to make the original curve and all the
 exceptional divisors intersect with simple normal crossings.
 
-\subsection{11. Strict transform and total
+\newpage
+\section{Strict transform and total
 transform}\label{strict-transform-and-total-transform}
 
 Suppose we have a curve defined by
@@ -559,7 +558,6 @@ ab=u^2v.
 Therefore:
 
 \begin{itemize}
-\tightlist
 \item
   The exceptional divisor is \(u=0\), with multiplicity two.
 \item
@@ -580,7 +578,8 @@ An especially useful fact is that the strict transform meets the
 exceptional divisor precisely in the tangent directions of the original
 curve.
 
-\subsection{12. Resolution of
+\newpage
+\section{Resolution of
 singularities}\label{resolution-of-singularities}
 
 \textbf{Resolution of singularities} is the process of repeatedly
@@ -592,7 +591,7 @@ isolation. Rather, we want the original curve, together with all the
 exceptional divisors introduced along the way, to intersect in a simple,
 predictable fashion.
 
-\subsubsection{Example: resolving the
+\subsection{Example: resolving the
 cusp}\label{example-resolving-the-cusp}
 
 Consider
@@ -643,7 +642,6 @@ s^2-r=0.
 At this stage, three smooth curves meet at one point:
 
 \begin{itemize}
-\tightlist
 \item
   The first exceptional divisor.
 \item
@@ -696,7 +694,7 @@ The final transformed divisor is
 Notice that the multiplicities have been preserved throughout the
 process.
 
-\subsubsection{The general result}\label{the-general-result}
+\subsection{The general result}\label{the-general-result}
 
 Hironaka's resolution theorem tells us that, for a polynomial, finitely
 many suitable blow-ups suffice to obtain simple normal crossings.
