@@ -157,53 +157,117 @@ introduced next, allow us to preserve.
 \newpage
 \section{Scheme}\label{scheme}
 
-A \textbf{scheme} is a geometric object that retains not just the points
-satisfying a collection of polynomial equations, but also the algebraic
-information contained in those equations.
+A \textbf{scheme} is a way of describing a geometric object
+(such as a point, line, or curve) that retains not just its
+shape, but also information about the polynomial equations
+used to define it.
 
-A useful way to think about it is:
+\textbf{How does a scheme relate to an ideal?}
+An ideal is a collection of polynomials, whereas a scheme
+is the geometric object described by those polynomials,
+together with information about the equations themselves.
 
-\begin{itemize}
-\item
-  The vanishing locus tells us which points exist.
-\item
-  The scheme additionally tells us how the equations behave around those
-  points.
-\end{itemize}
+In our setting, each ideal defines a scheme. The difference
+is largely one of perspective: an ideal describes the
+equations, whereas a scheme describes the corresponding
+geometric object while retaining those equations.
 
-For example, consider the following two schemes:
+We write
+\[
+X=(f_1=\cdots=f_n=0)
+\]
+for the scheme defined by the ideal $I=(f_1,\ldots,f_n)$.
+Unlike an ordinary set of solutions, this notation specifies
+not just which points satisfy the equations, but also which
+equations were used to define the scheme.
 
+For example, consider two schemes in the plane with
+coordinates $(a,b)$:
 \[
 X_1=(a=0), \qquad X_2=(a^2=0).
 \]
+Both have the same underlying set of points: the vertical
+line $a=0$, with $b$ free to take any value.
 
-Both have exactly the same underlying set of points: the line \(a=0\).
+However, they are different schemes, because their defining
+ideals $(a)$ and $(a^2)$ are different. The second retains
+the fact that the equation vanishes to second order.
+We can think of $X_2$ as a line counted twice, or a
+\textbf{double line}.
 
-However, they are different schemes. The second retains the fact that
-the equation vanishes to second order.
+\textbf{How does a scheme retain information about its defining equations?} Consider the two schemes $X_1=(a=0)$ and $X_2=(a^2=0)$.
+Both describe the same line, but we want to preserve the fact
+that their defining equations are different.
 
-A particularly simple example is the \textbf{double point}:
+One way to do this is to consider what happens to other
+polynomials when we impose these equations.
 
+For example, take
+\[
+f(a,b)=a^2+3a+2.
+\]
+On $X_1$, where we impose $a=0$, this becomes $f=2$.
+On $X_2$, where we impose $a^2=0$ but not $a=0$,
+it becomes $f=3a+2$.
+
+So the two schemes treat the same polynomial differently:
+one retains the term $3a$, while the other does not. The second scheme \emph{retains information} that is \emph{lost} by the first scheme.
+More generally, this illustrates how a scheme retains information that
+would be lost by considering only its geometric points (in this case, the line $a=0$).
+
+We formalise this using the \textbf{ring of functions}
+of a scheme: the collection of all polynomials in its
+variables, where we simplify them using the defining
+equations.
+
+\newpage
+For a scheme $X$ defined by an ideal $I$ in variables
+$a,b$, we write
+\[
+\mathcal{O}_X=\mathbb{R}[a,b]/I.
+\]
+Here $\mathbb{R}[a,b]$ denotes all polynomials in $a,b$,
+and dividing by $I$ means treating every polynomial
+in $I$ as zero. Two polynomials in $\mathcal{O}_X$ are therefore treated
+as equivalent if their difference is a polynomial in $I$.
+For example, if $I=(a^2)$, then the polynomials
+$f(a,b)=a^2+3a+2$ and $g(a,b)=3a+2$ are equivalent
+in $\mathcal{O}_X$, because their difference
+$f-g=a^2$ belongs to $I$.
+
+\textbf{The double point.}
+An especially simple example uses just one variable $a$:
 \[
 D=(a^2=0).
 \]
+Its underlying set consists of the single point $a=0$.
+However, in its ring of functions, $a^2=0$ while
+$a\neq 0$.
 
-Although its support consists of just one point, its functions behave as
-though they have both a value and a first derivative at that point.
-Algebraically, its ring of functions is
-
+To see why this matters, consider any polynomial $f(a)$.
+We can write
 \[
-k[\varepsilon]/(\varepsilon^2).
+f(a)=f(0)+f'(0)a+a^2h(a)
 \]
+for some polynomial $h$. Since $a^2=0$ on $D$, this
+reduces to
+\[
+f(a)=f(0)+f'(0)a.
+\]
+Thus, a function on the double point retains both its
+value and its first derivative at the origin, unlike
+an ordinary point, which retains only its value.
 
-Here \(\varepsilon\) is nonzero, but \(\varepsilon^2=0\).
+This motivates the intuition of a point with an
+\emph{infinitesimal direction} attached to it: although
+the underlying set contains only one point, its functions
+retain information about how they change in a direction
+away from that point.
 
-You can think of this as a point with an infinitesimal direction
-attached to it.
-
-\textbf{Why this matters:} Schemes preserve information that would be
-lost if we looked only at the underlying geometric set. In particular,
-they preserve multiplicities and higher-order vanishing.
+\textbf{Why this matters:} Schemes preserve algebraic
+information, particularly multiplicities and higher-order
+vanishing, that would be lost if we considered only the
+vanishing locus.
 
 \newpage
 \section{Reduced and non-reduced}\label{reduced-and-non-reduced}
