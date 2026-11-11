@@ -26,17 +26,20 @@
 \begin{document}
 
 \begin{center}
-    \Large
+    \LARGE
     \setlength{\baselineskip}{1.4em}
     \textbf{Algebraic Geometry For SLT: \\ Blow-Ups And Resolution Of Singularities} \\
     \vspace{12pt}
     \normalsize
     Jake Levi + ChatGPT $\cdot$ \today
 \end{center}
-
+\vfill
+\begin{center}
+    \large\textbf{Abstract}
+\end{center}
+\vspace{0.5em}
 \begin{itemize}
-    \small
-    \item A singularity is often difficult to understand because several branches of a curve meet at the same point, or because a curve meets another curve in a complicated way.
+    \item A singularity is often difficult to analyse because several branches of a curve meet at the same point, or because a curve meets another curve in a complicated way.
     \item A \textbf{blow-up} is a geometric operation that replaces a point with a collection of directions, allowing us to separate these branches and examine how they meet.
     \item We can repeat this operation until the geometry becomes sufficiently simple.
     \item This process is called \textbf{resolution of singularities}.
@@ -44,7 +47,53 @@
     \item Such expressions are easier to analyse, particularly when calculating integrals.
     \item The notes below build up the necessary intuition in the order in which you need it, using the cusp as a running example.
 \end{itemize}
+\vfill
+\begin{figure}[b]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=1]
+            \draw[->] (-1.5,0) -- (1.6,0) node[right] {$a$};
+            \draw[->] (0,-1.5) -- (0,1.6) node[above] {$b$};
+            \fill (0,0) circle (1.5pt);
+            \draw[thick, domain=1:1.5, samples=100]
+                plot (\x, {\x*sqrt(\x-1)});
+            \draw[thick, domain=1:1.5, samples=100]
+                plot (\x, {-\x*sqrt(\x-1)});
+        \end{tikzpicture}
+        \caption{$t=-1$ (isolated point)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=1]
+            \draw[->] (-1.5,0) -- (1.6,0) node[right] {$a$};
+            \draw[->] (0,-1.5) -- (0,1.6) node[above] {$b$};
+            \draw[thick, domain=0:1.3, samples=100]
+                plot (\x, {\x*sqrt(\x)});
+            \draw[thick, domain=0:1.3, samples=100]
+                plot (\x, {-\x*sqrt(\x)});
+        \end{tikzpicture}
+        \caption{$t=0$ (cusp)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=1]
+            \draw[->] (-1.5,0) -- (1.6,0) node[right] {$a$};
+            \draw[->] (0,-1.5) -- (0,1.6) node[above] {$b$};
+            \draw[thick, domain=-1:1.1, samples=150]
+                plot (\x, {\x*sqrt(\x+1)});
+            \draw[thick, domain=-1:1.1, samples=150]
+                plot (\x, {-\x*sqrt(\x+1)});
+        \end{tikzpicture}
+        \caption{$t=1$ (node)}
+    \end{subfigure}
+    \caption{$b^2=a^3+ta^2$}
+    \label{fig:cusp-deformation}
+\end{figure}
 
+\newpage
 \setcounter{tocdepth}{1}
 \tableofcontents
 
