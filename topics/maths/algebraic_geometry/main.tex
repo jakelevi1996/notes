@@ -163,23 +163,19 @@ shape, but also information about the polynomial equations
 used to define it.
 
 \textbf{How does a scheme relate to an ideal?}
-An ideal is a collection of polynomials, whereas a scheme
-is the geometric object described by those polynomials,
-together with information about the equations themselves.
+An ideal is an \emph{algebraic} object (a collection of polynomials), and each ideal $I$ defines a scheme, which is a \emph{geometric} object defined by setting the polynomials in $I$ to zero.
 
-In our setting, each ideal defines a scheme. The difference
-is largely one of perspective: an ideal describes the
-equations, whereas a scheme describes the corresponding
-geometric object while retaining those equations.
+A scheme is also related to a vanishing locus. For an ideal $I$, the vanishing locus $V(I)$ is the \emph{set of points} at which all polynomials in $I$ are equal to zero. A vanishing locus does not contain information about \emph{multiplicity}. A scheme contains all the information in the vanishing locus, and also contains higher-order information about multiplicity.
 
-We write
+For an ideal $I=(f_1,\ldots,f_n)$ \emph{generated} by the set of polynomials $\{f_1, \dots, f_n\}$, we write
 \[
 X=(f_1=\cdots=f_n=0)
 \]
-for the scheme defined by the ideal $I=(f_1,\ldots,f_n)$.
-Unlike an ordinary set of solutions, this notation specifies
-not just which points satisfy the equations, but also which
+for the scheme defined by $I$. This notation does
+not just specify \emph{which points} satisfy the equations, but also which
 equations were used to define the scheme.
+
+We define the \textbf{support} of a scheme as the vanishing locus of its defining polynomials. If $X=(f_1=\cdots=f_n=0)$ and $I=(f_1,\ldots,f_n)$, the support of $X$ is $V(I)$.
 
 For example, consider two schemes in the plane with
 coordinates $(a,b)$:
@@ -200,7 +196,7 @@ Both describe the same line, but we want to preserve the fact
 that their defining equations are different.
 
 One way to do this is to consider what happens to other
-polynomials when we impose these equations.
+polynomials when we \emph{impose} these equations.
 
 For example, take
 \[
