@@ -235,34 +235,40 @@ $f(a,b)=a^2+3a+2$ and $g(a,b)=3a+2$ are equivalent
 in $\mathcal{O}_X$, because their difference
 $f-g=a^2$ belongs to $I$.
 
-\textbf{The double point.}
-An especially simple example uses just one variable $a$:
+\textbf{The double line.}
+Consider our previous example:
 \[
-D=(a^2=0).
+X_2=(a^2=0),
 \]
-Its underlying set consists of the single point $a=0$.
-However, in its ring of functions, $a^2=0$ while
-$a\neq 0$.
+where $a,b$ are the coordinates of the plane.
+Its underlying set of points is the line $a=0$,
+with $b$ unrestricted. However, in its ring of
+functions, $a^2=0$ while $a\neq 0$.
 
-To see why this matters, consider any polynomial $f(a)$.
+To see why this matters, consider any polynomial $f(a,b)$.
 We can write
 \[
-f(a)=f(0)+f'(0)a+a^2h(a)
+f(a,b)=f(0,b)+a\frac{\partial f}{\partial a}(0,b)
+       +a^2h(a,b)
 \]
-for some polynomial $h$. Since $a^2=0$ on $D$, this
-reduces to
+for some polynomial $h$. Since $a^2=0$ on $X_2$,
+this reduces to
 \[
-f(a)=f(0)+f'(0)a.
+f(a,b)=f(0,b)+a\frac{\partial f}{\partial a}(0,b).
 \]
-Thus, a function on the double point retains both its
-value and its first derivative at the origin, unlike
-an ordinary point, which retains only its value.
 
-This motivates the intuition of a point with an
-\emph{infinitesimal direction} attached to it: although
-the underlying set contains only one point, its functions
-retain information about how they change in a direction
-away from that point.
+
+Thus, a function in the ring of functions of the double
+line retains both its value and its first derivative in
+the $a$ direction at every point along the line, unlike
+an ordinary line, which retains only the values of the
+function along it.
+
+This motivates the intuition of a line with an
+\emph{infinitesimally close copy} attached to it:
+the underlying set is still just one line, but
+the additional copy measures how functions vary
+as we move away from that line in the $a$ direction.
 
 \textbf{Why this matters:} Schemes preserve algebraic
 information, particularly multiplicities and higher-order
