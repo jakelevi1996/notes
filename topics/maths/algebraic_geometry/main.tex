@@ -34,17 +34,16 @@
     Jake Levi + ChatGPT $\cdot$ \today
 \end{center}
 
-\begin{abstract}
-\noindent\begin{itemize}
+\begin{itemize}
+    \small
     \item A singularity is often difficult to understand because several branches of a curve meet at the same point, or because a curve meets another curve in a complicated way.
     \item A \textbf{blow-up} is a geometric operation that replaces a point with a collection of directions, allowing us to separate these branches and examine how they meet.
     \item We can repeat this operation until the geometry becomes sufficiently simple.
     \item This process is called \textbf{resolution of singularities}.
     \item The reason this is useful for singular learning theory is that complicated polynomial functions can then be transformed into much simpler ones: locally, products of powers of individual coordinates.
-    \item Such expressions are considerably easier to analyse, particularly when calculating integrals.
+    \item Such expressions are easier to analyse, particularly when calculating integrals.
     \item The notes below build up the necessary intuition in the order in which you need it, using the cusp as a running example.
 \end{itemize}
-\end{abstract}
 
 \setcounter{tocdepth}{1}
 \tableofcontents
@@ -186,8 +185,8 @@ Both have the same support: the vertical
 line $a=0$, with $b$ free to take any value.
 
 However, they are different schemes, because their defining
-ideals $(a)$ and $(a^2)$ are different. The second retains
-the fact that the equation vanishes to second order.
+ideals $(a)$ and $(a^2)$ are different. The second ideal retains
+the fact that the equation vanishes to second order near the support.
 We can think of $X_2$ as a line counted twice, or a
 \textbf{double line}.
 
@@ -207,16 +206,18 @@ On $X_2$, where we impose $a^2=0$ but not $a=0$,
 it becomes $f=3a+2$.
 
 So the two schemes treat the same polynomial differently:
-one retains the term $3a$, while the other does not. The second scheme \emph{retains information} that is \emph{lost} by the first scheme.
+one retains the term $3a$, while the other does not. The second scheme \emph{retains information that is lost} by the first scheme.
 More generally, this illustrates how a scheme retains information that
 would be lost by considering only its geometric points (in this case, the line $a=0$).
 
-We formalise this using the \textbf{ring of functions}
+\newpage
+\section{Ring of functions of a scheme}\label{Ring of functions of a scheme}
+
+The previous section showed that schemes retain information that is lost by just considering a set of points. We formalise this retention of information using the \textbf{ring of functions}
 of a scheme: the collection of all polynomials in its
-variables, where we simplify them using the defining
+variables, where we simplify polynomials by applying the defining
 equations.
 
-\newpage
 For a scheme $X$ defined by an ideal $I$ in variables
 $a,b$, we write
 \[
@@ -225,7 +226,7 @@ $a,b$, we write
 Here $\mathbb{R}[a,b]$ denotes all polynomials in $a,b$,
 and dividing by $I$ means treating every polynomial
 in $I$ as zero. Two polynomials in $\mathcal{O}_X$ are therefore treated
-as equivalent if their difference is a polynomial in $I$.
+as equivalent if their \emph{difference} is a polynomial in $I$.
 For example, if $I=(a^2)$, then the polynomials
 $f(a,b)=a^2+3a+2$ and $g(a,b)=3a+2$ are equivalent
 in $\mathcal{O}_X$, because their difference
@@ -254,8 +255,7 @@ f(a,b)=f(0,b)+a\frac{\partial f}{\partial a}(0,b).
 \]
 
 
-Thus, a function in the ring of functions of the double
-line retains both its value and its first derivative in
+Thus, a function in the double line's ring of functions retains both its value and its first derivative in
 the $a$ direction at every point along the line, unlike
 an ordinary line, which retains only the values of the
 function along it.
