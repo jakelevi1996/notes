@@ -41,13 +41,13 @@
 \end{center}
 \vspace{0.5em}
 \begin{itemize}
-    \item A singularity is often difficult to analyse because several branches of a curve meet at the same point, or because a curve meets another curve in a complicated way.
+    \item A \emph{singularity} is often difficult to analyse because several \emph{branches} of a curve meet at the same point, or because a curve meets another curve in a complicated way.
     \item A \textbf{blow-up} is a geometric operation that replaces a point with a collection of directions, allowing us to separate these branches and examine how they meet.
     \item We can repeat this operation until the geometry becomes sufficiently simple.
     \item This process is called \textbf{resolution of singularities}.
     \item The reason this is useful for singular learning theory is that complicated polynomial functions can then be transformed into much simpler ones: locally, products of powers of individual coordinates.
-    \item Such expressions are easier to analyse, particularly when calculating integrals.
-    \item The notes below build up the necessary intuition in the order in which you need it, using the cusp as a running example.
+    \item Such expressions are easier to analyse, particularly when calculating integrals, which are used to understand volume, which relates to \textbf{generalisation} in machine learning.
+    \item The notes below build up the necessary intuition in the order in which you need it, using the \emph{cusp} as a running example.
 \end{itemize}
 \vfill
 \begin{figure}[b]
@@ -63,7 +63,7 @@
             \draw[thick, domain=1:1.5, samples=100]
                 plot (\x, {-\x*sqrt(\x-1)});
         \end{tikzpicture}
-        \caption{$t=-1$ (isolated point)}
+        \caption{$t=-1$ (Isolated point)}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.32\textwidth}
@@ -76,7 +76,7 @@
             \draw[thick, domain=0:1.3, samples=100]
                 plot (\x, {-\x*sqrt(\x)});
         \end{tikzpicture}
-        \caption{$t=0$ (cusp)}
+        \caption{$t=0$ (Cusp)}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.32\textwidth}
@@ -89,7 +89,7 @@
             \draw[thick, domain=-1:1.1, samples=150]
                 plot (\x, {-\x*sqrt(\x+1)});
         \end{tikzpicture}
-        \caption{$t=1$ (node)}
+        \caption{$t=1$ (Node)}
     \end{subfigure}
     \caption{$b^2=a^3+ta^2$}
     \label{fig:cusp-deformation}
@@ -113,12 +113,10 @@ How do we communicate intuition while minimising cognitive burden?
     \item Ensure that definitions and explanations are not excessively verbose. Short is sweet. Taking 200 words to explain something that can be explained perfectly well in 20 words is a waste of time, which unnecessarily prolongs (and therefore increases) cognitive burden.
     \item Introduce new terminology when the value of doing so justifies its inclusion. If new terminology reduces overall cognitive burden by giving a more concrete name to hold in mind and reason about, keep it. If the cognitive burden required to introduce and remember this terminology outweighs the cognitive energy that it saves, don't bother.
     \item Use clear notation, and explain notation when it is helpful to do so. If some mathematical expression causes the reader to ask ``What the hell does this actually mean?'', something needs to change.
-    \item Use well-chosen examples, when doing so allows the introduction of a challenging new concept to become more concrete and intuitive.
-    \begin{itemize}
-        \item Unnecessarily complicated examples demand more effort and confusion from the reader, which increases cognitive burden.
-        \item Overly simple examples may have multiple alternative possible explanations, which forces the reader to try to rule out these alternatives, which increases cognitive burden (and risks giving the reader a false understanding).
-    \end{itemize}
+    \item Use well-chosen examples, when doing so allows the introduction of a challenging new concept to become more concrete and intuitive. A good example should \emph{rule out} possible misunderstandings and uncertainty in the mind of the reader, with as little cognitive burden as possible. Overly complicated examples may cause unnecessary cognitive burden. Overly simple examples may fail to rule out misunderstandings and uncertainty.
     \item Make sure all claims are justified by convincing evidence, explanation, or citation. Unjustified claims cause the reader to question whether those claims are true, which adds cognitive burden.
+    \item Use simple sentence structures. Overly complex sentence structures place excessive demands on the working memory of the reader, which adds unnecessary cognitive burden.
+    \item Speak at the right level of abstraction. Speaking too abstractly may be overly complicated and confusing, and add unnecessary cognitive burden.
 \end{itemize}
 
 In this way, we consider \textbf{technical communication as constrained energy minimisation}. The constraint is that, after reading these notes, the reader must understand the necessary intuition. Subject to this constraint, we want to minimise the cognitive energy that the reader must spend while reading these notes (the cognitive burden).
@@ -169,10 +167,10 @@ predictions about how well machine learning models generalise.
 \newpage
 \section{Vanishing locus}\label{vanishing-locus-zero-set}
 
-The \textbf{vanishing locus} of a polynomial is simply the set of points
+The \textbf{vanishing locus} of a polynomial is the set of points
 at which it evaluates to zero.
 
-For example, consider a polynomial in two variables, \(f(a,b)=b^2-a^3\).
+Consider a polynomial in two variables, \(f(a,b)=b^2-a^3\).
 Its vanishing locus is
 
 \[
@@ -191,7 +189,7 @@ The behaviour of these polynomials is different in terms of \emph{how quickly th
 
 This distinction becomes important when studying blow-ups.
 
-The vanishing locus of a \emph{set} of polynomials is the set of points at which \emph{every} polynomial in the set is zero. It is the intersection of the vanishing loci of all polynomials in the set.
+The vanishing locus of a \emph{set} of polynomials is the set of points at which every polynomial in the set is zero. It is the \emph{intersection} of the vanishing loci of the polynomials in the set.
 
 \newpage
 \section{Ideal}\label{ideal}
@@ -210,8 +208,8 @@ Formally, an \textbf{ideal} $I$ is a set of polynomials in which:
         1.\; $f,g\in I \Rightarrow f+g\in I$
         & sums of polynomials in the ideal stay in the ideal, \\[0.7em]
         2.\; $(\forall h)\; f\in I \Rightarrow fh\in I$
-        & products of a polynomial in the ideal and
-        \emph{any other polynomial} stay in the ideal.
+        & multiplication of a polynomial in the ideal with
+        \emph{any other polynomial} stays in the ideal.
     \end{tabular}
 \end{center}
 
@@ -377,6 +375,8 @@ the $a$ direction at every point along the line, unlike
 an ordinary line, which retains only the values of the
 function along it.
 
+The \emph{amount of information} in the double line's ring of functions (function value and first derivative) is \emph{double} that of a single line (only function value).
+
 This motivates the intuition of a line with an
 \emph{infinitesimally close copy} attached to it:
 the support is still just one line, but
@@ -387,6 +387,28 @@ as we move away from that line in the $a$ direction.
 information, particularly multiplicities and higher-order
 vanishing, that would be lost if we considered only the
 vanishing locus.
+
+\newpage
+\section{Repeated irreducible factors}\label{Repeated irreducible factors}
+
+We saw in the previous section that the schemes $(a^2)$ and $(a)$ contain different information, despite having the same vanishing locus. We formalise this idea in this section with repeated irreducible factors, and in the next section with reduced and non-reduced schemes.
+
+An \textbf{irreducible} polynomial is simply a polynomial that cannot be factorised down into lower order polynomial factors. For example, $a^2 + 3a + 2$ is not irreducible, because it can be factorised as $(a+1)(a+2)$. Both $a+1$ and $a+2$ are irreducible.
+
+Whether a polynomial is irreducible depends on the underlying field. For example, $x^2 + 1$ is irreducible as a polynomial over $\mathbb{R}$. Over $\mathbb{C}$, we can factorise $x^2+1=(x+i)(x-i)$, so in this case, $x^2+1$ is not irreducible.
+
+For univariate polynomials over $\mathbb{C}$, all irreducible polynomials are linear (this is the fundamental theorem of algebra). Irreducible univariate polynomials over $\mathbb{R}$ can be quadratic, as we saw above. The picture is different for multivariate polynomials. Even over $\mathbb{C}$, irreducible multivariate polynomials can have arbitrarily large degree, and we can prove this. Consider $b^2-a^3$, which is quadratic in $b$, and so if it was reducible, it must factorise as $(b+g(a))(b+h(a)) = b^2 + (g+h)b+gh$. Matching coefficients gives $g + h=0$ and $g(a)^2=a^3$, which is impossible when we consider the degree of $g(a)$, and that the degree of $a^3$ is odd. Therefore, $b^2-a^3$ is an irreducible polynomial, and has degree 3. We could repeat this example with any odd power of $a$.
+
+A \textbf{repeated irreducible factor} of a polynomial is simply a factor of a polynomial that is irreducible, and is raised to a power greater than 1, such as $a^2$, or $\left(b^2 - a^3\right)^4$.
+
+A polynomial with a repeated irreducible factor does not have to be \emph{written} as having a polynomial factor raised to a power. For example, $a^2 + 2a + 1$ has a repeated irreducible factor, as it is equivalent to $(a+1)^2$.
+
+Repeated irreducible factors are related to, but distinct from, repeated roots of a polynomial. For example, consider the polynomial $f(a,b)=ab$. The vanishing locus of this polynomial has two \emph{branches}, $a=0$ and $b=0$, which \emph{both} pass through the origin, so in a sense, the origin is ``doubly zero''. More formally, the polynomial $f$ \emph{vanishes to second order} at the origin. By this we mean that if we approach the origin from a point $(a, b)$ with $ab\ne 0$, such that $f(ta,tb)=t^2ab$ with parameter $t$, then the value of $f$ is quadratic in $t$, much like a repeated root of a univariate quadratic such as $x^2$. However, $ab$ has no repeated irreducible factors.
+
+For univariate polynomials over $\mathbb{C}$, repeated irreducible factors are equivalent to repeated roots. For univariate polynomials over $\mathbb{R}$, we can have repeated irreducible factors without having repeated roots, such as $\left(x^2+1\right)^2$, which has a repeated irreducible factor, but no roots in $\mathbb{R}$ (repeated or otherwise).
+
+As we saw in the previous section, schemes with the same vanishing locus can retain more or less information about functions evaluated on them. Repeated irreducible factors are important, because for schemes defined by a single polynomial $f$, the irreducible factors of $f$ determine which geometric
+components are present. The multiplicities of the irreducible factors of $f$ determine how much higher-order information is retained in each component.
 
 \newpage
 \section{Reduced and non-reduced}\label{reduced-and-non-reduced}
