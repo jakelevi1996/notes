@@ -100,6 +100,24 @@
 \tableofcontents
 
 \newpage
+\section*{Preface}
+
+What are these notes trying to achieve?
+
+The objective of these notes is to \textbf{communicate the intuition} necessary to understand blow-ups and resolution of singularities as they relate to Singular Learning Theory (SLT), while \textbf{minimising the cognitive burden} on the reader.
+
+How do we communicate intuition while minimising cognitive burden?
+\begin{itemize}
+    \item Not only introduce definitions, but (where reasonable) include the \emph{motivation} for each definition we introduce. Definitions without clear motivation cause the reader to ask ``Why is this definition being introduced?'', which adds unnecessary cognitive burden.
+    \item Ensure that definitions and explanations are not excessively concise. We want to avoid leaving unspoken \emph{open questions} in the mind of the reader. Holding such open questions in mind while simultaneously trying to absorb definitions and explanations adds unnecessary cognitive burden.
+    \item Ensure that definitions and explanations are not excessively verbose. Short is sweet. Taking 200 words to explain something that can be explained perfectly well in 20 words is a waste of time, which unnecessarily prolongs (and therefore increases) cognitive burden.
+    \item Introduce new terminology when the value of doing so justifies its inclusion. If new terminology reduces overall cognitive burden by giving a concrete name to hold in mind and reason about, rather than a larger group of related concepts, keep it. If the cognitive energy required to introduce and remember this terminology outweighs the cognitive energy that it saves, don't bother.
+    \item Use clear notation, and explain notation when it is helpful to do so. If some mathematical expression causes the reader to ask ``What the hell does this actually mean?'', something needs to change.
+\end{itemize}
+
+In this way, we consider \textbf{technical communication as constrained energy minimisation}. The constraint is that, after reading these notes, the reader must understand the necessary intuition. Subject to this constraint, we want to minimise the cognitive energy that the reader must spend while reading these notes (the cognitive burden).
+
+\newpage
 \section{Introduction}
 
 In machine learning we care about \textbf{generalisation}: train a model on a finite dataset, perform well on unseen data. Why do some models generalise better than others, even when they achieve similar training losses? One possible explanation concerns the \emph{geometry of the loss landscape}: not just how low the loss becomes at a minimum, but how much parameter space is occupied by low-loss solutions. Algebraic geometry can help us understand this local behaviour.
