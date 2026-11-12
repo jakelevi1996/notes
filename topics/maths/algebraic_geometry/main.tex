@@ -102,23 +102,27 @@
 
 In machine learning we care about \textbf{generalisation}: train a model on a finite dataset, perform well on unseen data. Why do some models generalise better than others, even when they achieve similar training losses? One possible explanation concerns the \emph{geometry of the loss landscape}: not just how low the loss becomes, but how much parameter space is occupied by low-loss solutions. How does this relate to singularities?
 
-Consider a polynomial $f(a, b)$ defining a curve by $f(a, b) = 0$. A root is simply a point $(a, b)$ satisfying $f(a, b)=0$. A \textbf{singular point} is where
+Consider a polynomial $f(\theta)$, which defines a curve by $f(\theta) = 0$. A root is simply a point $\theta$ satisfying $f(\theta)=0$. A \textbf{singular point} is where
 \[
-    f(a, b)=0, \qquad \frac{\partial f}{\partial a} = 0, \qquad \frac{\partial f}{\partial b} = 0.
+    f(\theta)=0, \qquad \nabla f(\theta)=0.
 \]
 In other words, a singularity is a root at which the gradient also vanishes. Why do we care about a function and its gradient being zero? How does this relate to generalisation?
 
-Suppose we are minimising a loss function $L(\theta)$. Define $K(\theta)=L(\theta)-L_{\min}\geq 0$. The \emph{roots} of $K$ are precisely the \emph{global minima} of $L$. The importance of the gradient comes from the \textbf{implicit function
-theorem}: if $\nabla f(a,b)\neq 0$, then locally $f(a,b)=0$ defines
-a smooth curve. When the gradient vanishes, this guarantee breaks
-down: the curve may have a cusp, cross itself, or contain an isolated
-point. These are different types of singularities.
+Suppose we are minimising a loss function
+$L(\theta)$. Define $K(\theta)=L(\theta)-L_{\min}\geq 0$.
+The \emph{roots} of $K$ are precisely the \emph{global minima} of $L$,
+where $\nabla K(\theta)=0$. Every global minimum
+is therefore a singular point of $K$!
+However, these conditions do not tell us how the loss
+\emph{behaves} near its minima: the gradient may vanish at different
+rates, and the set of minima may have complicated geometry.
+Algebraic geometry can help us understand this local behaviour.
 
 We are interested not only in
 where minima of the loss function occur, but in how the loss behaves near them.
 For example, $K_1(a,b)=a^2+b^2$ and $K_2(a,b)=a^4+b^4$ have
 the same unique minimum at the origin, but the second is much
-flatter. Consequently, the volume of parameter space with loss
+flatter. Consequently, the \emph{volume} of parameter space with loss
 less than $\varepsilon$ above the minimum,
 \[
     V(\varepsilon)
@@ -155,8 +159,7 @@ connection from the geometry of singularities (including their local volume) to 
 predictions about how well machine learning models generalise.
 
 \newpage
-\section{Vanishing locus (zero
-set)}\label{vanishing-locus-zero-set}
+\section{Vanishing locus}\label{vanishing-locus-zero-set}
 
 The \textbf{vanishing locus} of a polynomial is simply the set of points
 at which it evaluates to zero.
