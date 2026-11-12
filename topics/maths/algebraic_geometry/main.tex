@@ -98,6 +98,63 @@
 \tableofcontents
 
 \newpage
+\section{Introduction}
+
+In machine learning we care about \textbf{generalisation}: train a model on a finite dataset, perform well on unseen data. Why do some models generalise better than others, even when they achieve similar training losses? One possible explanation concerns the \emph{geometry of the loss landscape}: not just how low the loss becomes, but how much parameter space is occupied by low-loss solutions. How does this relate to singularities?
+
+Consider a polynomial $f(a, b)$ defining a curve by $f(a, b) = 0$. A root is simply a point $(a, b)$ satisfying $f(a, b)=0$. A \textbf{singular point} is where
+\[
+    f(a, b)=0, \qquad \frac{\partial f}{\partial a} = 0, \qquad \frac{\partial f}{\partial b} = 0.
+\]
+In other words, a singularity is a root at which the gradient also vanishes. Why do we care about a function and its gradient being zero? How does this relate to generalisation?
+
+Suppose we are minimising a loss function $L(\theta)$. Define $K(\theta)=L(\theta)-L_{\min}\geq 0$. The \emph{roots} of $K$ are precisely the \emph{global minima} of $L$. The importance of the gradient comes from the \textbf{implicit function
+theorem}: if $\nabla f(a,b)\neq 0$, then locally $f(a,b)=0$ defines
+a smooth curve. When the gradient vanishes, this guarantee breaks
+down: the curve may have a cusp, cross itself, or contain an isolated
+point. These are different types of singularities.
+
+We are interested not only in
+where minima of the loss function occur, but in how the loss behaves near them.
+For example, $K_1(a,b)=a^2+b^2$ and $K_2(a,b)=a^4+b^4$ have
+the same unique minimum at the origin, but the second is much
+flatter. Consequently, the volume of parameter space with loss
+less than $\varepsilon$ above the minimum,
+\[
+    V(\varepsilon)
+    = \operatorname{Vol}\{\theta:K(\theta)<\varepsilon\},
+\]
+scales as $\varepsilon$ for $K_1$ and $\sqrt{\varepsilon}$ for
+$K_2$. Thus, the \textbf{local geometry and order of vanishing}
+of the loss determine how much parameter space lies near its minima.
+
+For complicated loss functions, calculating this volume can be difficult, particularly near singularities. \textbf{Blow-ups} are geometric transformations used in
+\textbf{resolution of singularities}, which replaces complicated
+local geometry with simpler geometry. A sequence of blow-ups allows the loss to be expressed locally
+as a monomial (times a nonvanishing factor), making integrals
+over low-loss regions easier to evaluate. The resulting volume
+scaling is characterised by the \textbf{real log canonical
+threshold} (RLCT) $\lambda$, related to the volume by
+\[
+    V(\varepsilon)\asymp
+    \varepsilon^\lambda
+    \bigl(\log(1/\varepsilon)\bigr)^{m-1},
+\]
+where $m$ is a positive integer, and the volume may be weighted
+by a prior density.
+
+Why do we care about this volume? In Bayesian learning,
+the posterior distribution and marginal likelihood depend on
+integrating over parameter space, not just finding the
+minimum of the loss. The volume of low-loss regions therefore
+matters: broad regions contribute differently from narrow ones.
+In \textbf{singular learning theory}, the RLCT governs asymptotic expressions
+for Bayesian generalisation error, replacing the usual dependence
+on the number of parameters in regular models. Thus, blow-ups provide a
+connection from the geometry of singularities (including their local volume) to quantitative
+predictions about how well machine learning models generalise.
+
+\newpage
 \section{Vanishing locus (zero
 set)}\label{vanishing-locus-zero-set}
 
