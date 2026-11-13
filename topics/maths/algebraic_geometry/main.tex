@@ -411,38 +411,35 @@ As we saw in the previous section, schemes with the same vanishing locus can ret
 components are present. The multiplicities of the irreducible factors of $f$ determine how much higher-order information is retained in each component.
 
 \newpage
-\section{Reduced and non-reduced}\label{reduced-and-non-reduced}
+\section{Reduced and non-reduced schemes}\label{reduced-and-non-reduced}
 
-A scheme is \textbf{reduced} if its equations contain no hidden
-higher-order vanishing in the form of nonzero nilpotent elements.
-Otherwise, it is \textbf{non-reduced}.
+Recall the scheme $X_2=(a^2 = 0)$. In the ring of functions of $X_2$, the element $a$ is interesting. It is not equal to zero, but when raised to the power of 2 it \emph{becomes} zero, and stays there when raised to any further powers. This is an example of a \textbf{nonzero nilpotent element} of a ring of functions, which is any nonzero element which becomes zero when raised to some positive integer power.
 
-For example,
+A scheme is \textbf{reduced} if its ring of functions
+does not contain any nonzero nilpotent elements.
+A scheme is \textbf{non-reduced} if its ring of functions
+\emph{does} contain any nonzero nilpotent elements.
 
+For example, consider two schemes in the plane:
 \[
-(a=0)
+X_1=(a=0), \qquad X_2=(a^2=0).
 \]
+The scheme $X_1$ is reduced. The scheme $X_2$ is non-reduced, because in the ring of functions of $X_2$ we have $a\neq 0$
+but $a^2=0$, so $a$ is a nonzero nilpotent element.
 
-is reduced, whereas
+Both schemes have the same support, the line $a=0$,
+but the second describes it with multiplicity two.
+This is the intuition behind non-reduced schemes:
+they retain higher-order vanishing that is invisible
+if we only consider their support.
 
-\[
-(a^2=0)
-\]
+Nilpotent elements in a ring of functions are related to an important distinction. The ring of functions of the scheme $X_2=(a^2 = 0)$ contains the element $a$, which is nilpotent, linear, and retains first derivative information. However, we can have linear terms in the ring of functions that do not retain first derivative information. For example, the ring of functions of the cusp $(b^2-a^3=0)$ contains the elements $a$ and $b$, which are linear, but are not nilpotent, and do not retain first derivative information. These elements simply encode the value of functions evaluated on the support of the cusp. Similarly, for the scheme $X_2=(a^2 = 0)$ in the 2D plane, the ring of functions includes elements $b, b^2, b^3, \dots$ which do not encode derivative information, but rather the value of functions evaluated on the support (the line $a=0$) as a function of $b$. It is specifically the nonzero nilpotent elements in the ring of functions that encode derivative information.
 
-is non-reduced.
+Similarly, we can have higher order (nonlinear) nilpotent elements in a ring of functions encoding \emph{first} derivative information, such as the element $b^2-a^3$ in the ring of functions for the double cusp $\bigl( \left(b^2-a^3\right)^2=0 \bigr)$. The important distinction is that derivative information is not related to the polynomial degree of elements in the ring of functions, but rather to the nilpotent relations in the ring of functions.
 
-Both describe the same underlying line, but the second describes it with
-multiplicity two.
+This relates to why nonzero nilpotent elements (and by extension non-reduced schemes) are important, which is that they allow the ring of functions to retain additional derivative information. In contrast, a ring of functions containing no nonzero nilpotent elements (corresponding to a reduced scheme) retains no additional derivative information.
 
-Similarly, the curve
-
-\[
-b^2=0
-\]
-
-is a line counted twice, rather than an ordinary line.
-
-This distinction will reappear when we introduce divisors.
+A scheme defined by a \emph{single} polynomial is reduced if and only if the polynomial has no repeated irreducible factors. This is useful because it allows us to identify a reduced scheme without having to analyse its ring of functions. For example, we can immediately recognise that $X_3=(ab=0)$ is a reduced scheme, whereas $X_4=(a^2b=0)$ is non-reduced (because $a$ is a repeated irreducible factor). Therefore, we can immediately say that $X_4$ contains additional derivative information compared to $X_3$.
 
 \newpage
 \section{Singularities, smooth curves and
