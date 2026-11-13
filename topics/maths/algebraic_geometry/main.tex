@@ -391,7 +391,7 @@ vanishing locus.
 \newpage
 \section{Repeated irreducible factors}\label{Repeated irreducible factors}
 
-We saw in the previous section that the schemes $(a^2)$ and $(a)$ contain different information, despite having the same vanishing locus. We formalise this idea in this section with repeated irreducible factors, and in the next section with reduced and non-reduced schemes.
+We saw in the previous section that the schemes $(a^2)$ and $(a)$ contain different information, despite having the same vanishing locus. We formalise this idea in this section with repeated irreducible factors, and in the next section with reduced and non-reduced schemes. There are some nuances that can be understood about repeated irreducible factors, and we describe these nuances in order to build up a clearer picture.
 
 An \textbf{irreducible} polynomial is simply a polynomial that cannot be factorised down into lower order polynomial factors. For example, $a^2 + 3a + 2$ is not irreducible, because it can be factorised as $(a+1)(a+2)$. Both $a+1$ and $a+2$ are irreducible.
 
@@ -442,60 +442,127 @@ This relates to why nonzero nilpotent elements (and by extension non-reduced sch
 A scheme defined by a \emph{single} polynomial is reduced if and only if the polynomial has no repeated irreducible factors. This is useful because it allows us to identify a reduced scheme without having to analyse its ring of functions. For example, we can immediately recognise that $X_3=(ab=0)$ is a reduced scheme, whereas $X_4=(a^2b=0)$ is non-reduced (because $a$ is a repeated irreducible factor). Therefore, we can immediately say that $X_4$ contains additional derivative information compared to $X_3$.
 
 \newpage
-\section{Singularities, smooth curves and
-cusps}\label{singularities-smooth-curves-and-cusps}
+\section{Singularities, smooth curves and cusps}
+\label{singularities-smooth-curves-and-cusps}
 
 A \textbf{smooth curve} is one that locally looks like an ordinary
-straight line, possibly after changing coordinates.
+straight line, possibly after changing coordinates. A
+\textbf{singular point} is a point where this fails: for example,
+where two branches intersect, or where a curve has a cusp.
 
-TODO 1: what is the mathematical definition?
+TODO 0: singularity = singular point? If so, we should specify this. If not, then what?
 
-A \textbf{singular point} is a point where this fails: the curve might
-have a sharp point, intersect itself, or otherwise fail to look locally
-like a smooth curve.
+We can define this mathematically using the \textbf{tangent space}.
+For a scheme defined by polynomial equations
+$f_1=\cdots=f_n=0$, the tangent space at a point $P$ is
+\[
+T_PX=\{v:J(P)v=0\},
+\]
+where $J(P)$ is the Jacobian matrix of the polynomials evaluated
+at $P$. Intuitively, this contains all directions in which we
+can move infinitesimally from $P$ without violating the equations
+to first order.
 
-TODO 2: again, what is the mathematical definition? (presumably follows from TODO 1)
+TODO 1: separate tangent space section? Motivate *why* it is defined this way, EG is $J(P)v$ the change in the polynomial when we move from P in the direction v, and since the scheme is defined by $f_1 = \dots = f_n = 0$, we need this change to be zero when we move along the curve defined by the scheme (because the curve is exactly where the polynomials evaluate to zero, and they need to remain zero as we move along the curve)? Can we add 1 or more Tikz diagrams to visualise this intuition? Also can we have some worked examples of deriving tangent spaces, and their dimensions? Also, on notation, we need to define $X=(f_1=\dots=f_n=0)$, and ideally introduce the $T_PX$ notation before it appears in the definition, as this was kind of difficult for me to parse
 
-TODO 3: what about isolated points? Singular or smooth? Or it depends? How do we even specify an isolated point? $b^2 = a^3 - a^2$ *has* an isolated point, but also has other stuff. What about $b^2 = - a^2$? Can only be solved when $a = b = 0$ (in R). Is there a simpler example or is this the simplest?
+A point is \textbf{smooth} if the dimension of its tangent space
+equals the dimension of the scheme near that point. Otherwise,
+it is \textbf{singular}.
 
-Two useful examples:
+TODO 2: what does "near" mean in this context?
 
-\textbf{Node (self-intersection):}
+TODO 2.1: when singular, is the dimension of the tangent space larger or smaller, or can it be either? If either, are there different interpretations/implications in each case? On first reading I assumed smaller, but looking back at this, actually if the gradient is zero then we can move in ANY direction and the polynomial value remains zero, so the tangent space is bigger?
 
+TODO 3: why do we care if the dimension of the tangent space is equal to the dimension of the scheme or not? Intuitively, what are the implications? Is this related to the intuition of directions you can move in while remaining in the curve/scheme? And are there examples we can demonstrate where the dimension of the scheme is different in different places? (presumably yes, implied by "dimension of the scheme near that point", because if the scheme had the same dimension everywhere, we'd just say "dimension of the scheme"?)
+
+For a plane curve defined by a single polynomial $f(a,b)=0$,
+the curve has dimension one, so a point $P$ is smooth precisely
+when its tangent space has dimension one. Since
+
+TODO 4: is it true that the scheme defined by $N$ polynomials in $D$ variables has dimension $D-N$? If so, can we make this explicit first, and then say that a plane curve is $D=2$ variables by definition, and so a single polynomial $N=1$ defines a one dimensional curve, and therefore a point is smooth when its tangent space is one dimensional, and a point is singular when its tangent space is zero/two dimensional?
+
+\[
+T_PX=\left\{v:\nabla f(P)\cdot v=0\right\},
+\]
+this gives the particularly simple criterion
+\[
+\boxed{P\text{ is singular}\iff\nabla f(P)=0.}
+\]
+This criterion applies to plane curves considered algebraically,
+including non-reduced curves.
+
+\textbf{Node (self-intersection):} Consider the scheme
 \[
 ab=0.
 \]
+Its support consists of the two coordinate axes, which intersect
+at the origin. These are two distinct \textbf{branches}: locally
+distinct irreducible pieces of the curve. At the origin,
 
-This describes the two coordinate axes, which intersect at the origin.
-The origin is singular because two branches meet there.
+TODO 5: can we actually give branches its own separate definition in its own paragraph? Also, this definition "locally distinct irreducible pieces of the curve" isn't sufficient for me. I need a definition (or algorithm) such that I know how to look at the mathematical expression of a scheme and be able to determine which are the branches.
 
-TODO 4: "This describes": worth specifying "The vanishing locus of this polynomial describes"?
+\[
+\nabla(ab)=(b,a)=(0,0),
+\]
 
-TODO 5: can we define formally what actually is a branch? Does this need its own section, or can go in this section, or an earlier section?
+TODO 6: can we actually write out the derivation of the Jacobian using partial derivative notation? Would be a bit clearer to see how we get to (b, a). Maybe we could derive the gradients/tangent spaces/tangent space dimensions in the tangent space section, so that we can reuse them without having to rewrite them in the singularities section?
 
-\textbf{Cusp:}
+so the origin is singular. Everywhere else, the gradient is
+nonzero, so the curve is smooth.
 
+TODO 7: "so the origin is singular". Can we state explicitly that the tangent space is zero dimensional, include a reminder that for a plane curve, dimension 0 tangent space $\Rightarrow$ singular, and THEN conclude the origin is singular?
+
+TODO 8: "Everywhere else, ..." what is the tangent space everywhere else? It's ()
+
+TODO 9: also, feels like we've failed to include some obviously helpful intuition here. At the origin, you have a choice to move in 2 directions (up/down or left/right) along a 1D curve, and 2 directions is greater than the dimension (one) of the curve, whereas everywhere else in the curve you can only move in 1 direction, so the dimensions are the same.
+
+\textbf{Cusp:} Consider the scheme
 \[
 b^2=a^3.
 \]
-
-This describes a curve with a sharp point at the origin.
-
+Its support is a curve with a sharp point at the origin.
 A parametrisation is
-
 \[
 a=t^2,\qquad b=t^3.
 \]
+Unlike the node, the cusp has only one branch: it is locally
+irreducible, even though its real parametrisation has two halves
+corresponding to positive and negative $t$.
 
-Unlike the node, the cusp has just one branch. Nevertheless, that branch
-has a singular point at the origin because it does not have a
-well-defined smooth tangent direction there in the usual sense.
+Writing $f(a,b)=b^2-a^3$, we have
+\[
+\nabla f=(-3a^2,2b).
+\]
+At the origin, the gradient vanishes, so the cusp is singular.
+Interestingly, the cusp does have a well-defined tangent
+direction, namely the horizontal axis. However, its algebraic
+tangent space at the origin is two-dimensional, rather than
+one-dimensional, so it is not smooth.
+
+TODO 10: it seems kind of confusing to add this clarification about tangent direction. Is this intuition useful, or just interesting? If not useful, maybe better to remove, and just state singular
+
+\textbf{Isolated points:} An isolated point need not be singular.
+For example, the scheme $(a=b=0)$ consists of a single smooth
+point, with a zero-dimensional tangent space. In contrast,
+the scheme $(a^2+b^2=0)$ has the same support over $\mathbb R$,
+but its gradient vanishes at the origin, so it is singular.
+Thus, singularity depends on the scheme, not just its real
+vanishing locus.
+
+Finally, consider the family from Figure~1,
+\[
+b^2=a^3+ta^2.
+\]
+For $t>0$, the origin is a node with two distinct real branches.
+For $t=0$, these merge into a cusp with one branch.
+For $t<0$, the origin is an isolated real point, although
+the curve still has two branches over $\mathbb C$.
+In all three cases, the gradient vanishes at the origin,
+so it is singular.
+
+TODO 11: All examples so far are singular at the origin! Can we have an example that is singular somewhere else?
 
 The cusp will be our main example when studying blow-ups.
-
-TODO 6: what about cusp transformed to have a node (see fig 1)? Does this have 1 branch or 3? What actually is the definition of a branch?
-
-TODO 7: can we actually prove that the cusp has a singular point? (first we need the definition of singular point)
 
 \newpage
 \section{Divisor and multiplicity}\label{divisor-and-multiplicity}
