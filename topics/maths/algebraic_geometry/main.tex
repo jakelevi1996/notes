@@ -442,6 +442,41 @@ This relates to why nonzero nilpotent elements (and by extension non-reduced sch
 A scheme defined by a \emph{single} polynomial is reduced if and only if the polynomial has no repeated irreducible factors. This is useful because it allows us to identify a reduced scheme without having to analyse its ring of functions. For example, we can immediately recognise that $X_3=(ab=0)$ is a reduced scheme, whereas $X_4=(a^2b=0)$ is non-reduced (because $a$ is a repeated irreducible factor). Therefore, we can immediately say that $X_4$ contains additional derivative information compared to $X_3$.
 
 \newpage
+\section{Tangent spaces}\label{tangent-spaces}
+
+Consider a scheme $X=(f_1=\cdots=f_N=0)$ in $D$ variables. At a point $P$ in the support, we want to identify all possible directions $v$ in which we can move while all polynomials remain equal to zero (to first order). We care about this because there are certain points called \emph{singularities} at which there are more such directions than we would expect from the dimension of the scheme. Evaluating volume can be difficult in these situations, which we will eventually address using blow-ups.
+
+Suppose we move from $P$ to $P+\epsilon v$. The first-order Taylor expansion for the $i$th polynomial $f_i$ is
+\[
+f_i(P+\epsilon v)
+=f_i(P)+\epsilon\nabla f_i(P)\cdot v+O(\epsilon^2).
+\]
+If $P$ is in the support then $f_i(P)=0$, and if $f_i(P+\epsilon v)$ remains zero (to first order) then the coefficient of $\epsilon$ in its Taylor expansion must be zero. Therefore, $\nabla f_i(P)\cdot v=0$.
+
+Collecting these conditions for every $i$ into a matrix gives
+\[
+J(P)v=0,
+\]
+where $J(P)$ is the $N\times D$ Jacobian matrix,
+whose $i$th row is $\nabla f_i(P)^\top$.
+
+The \textbf{tangent space} of $X$ at $P$, denoted
+$T_PX$, is the \emph{set} of directions for which these conditions hold, which is equivalent to the kernel of the Jacobian:
+\[
+\boxed{T_PX=\{v:J(P)v=0\}=\ker J(P).}
+\]
+Thus, the tangent space contains all directions that
+preserve the defining equations to first order.
+Importantly, this does not guarantee that moving in
+these directions by a nonzero distance preserves the equations exactly.
+
+By the rank-nullity theorem,
+\[
+\boxed{\dim T_PX=D-\operatorname{rank}J(P).}
+\]
+If the rank of the Jacobian decreases when moving from one point in the scheme to another, then the dimension of the tangent space increases accordingly.
+
+\newpage
 \section{Singularities, smooth curves and cusps}
 \label{singularities-smooth-curves-and-cusps}
 
