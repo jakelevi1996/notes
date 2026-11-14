@@ -164,34 +164,28 @@ on the number of parameters in regular models. Thus, blow-ups provide a
 connection from the geometry of singularities (including their local volume) to quantitative
 predictions about how well machine learning models generalise.
 
-Why use algebraic geometry? Ultimately, we care about analysing equations, such as polynomials. These equations are \emph{algebraic} objects. These algebraic objects contain all the information we need, but they are hard to reason about. \emph{Geometric} objects, such as the set of points satisfying a given set of equations, can be easier to reason about, as they allow us to engage our spatial intuition that we develop by experiencing the physical world. However, geometric objects can often \emph{lose information} about the algebraic objects that define them. For example, multiple distinct algebraic objects can define the same geometric object, and if we only look at this geometric object, we might lose information that we actually care about. \textbf{Algebraic geometry} uses tools from algebra to define special geometric objects that preserve information about the algebraic objects that define them. We can then reason about these geometric objects to understand the algebraic objects that we ultimately care about.
+Why use algebraic geometry? In order to evaluate volumes, we need to be able to analyse equations, such as polynomials. These equations are \emph{algebraic} objects. These algebraic objects contain all the information we need, but they are hard to reason about. \emph{Geometric} objects, such as the set of points satisfying a given set of equations, can be easier to reason about, as they allow us to engage our spatial intuition that we develop by experiencing the physical world. However, geometric objects can often \emph{lose information} about the algebraic objects that define them. For example, multiple distinct algebraic objects can define the same geometric object, and if we only look at this geometric object, we might lose information that we actually care about. \textbf{Algebraic geometry} uses tools from algebra to define special geometric objects that preserve information about the algebraic objects that define them. We can then reason about these geometric objects to understand the algebraic objects that we ultimately care about.
 
 \newpage
 \section{Vanishing locus}\label{vanishing-locus-zero-set}
 
-The \textbf{vanishing locus} of a polynomial is the set of points
-at which it evaluates to zero.
+Suppose we have a loss function that can be expressed as a polynomial in several variables. The first-order optimality conditions for the loss function are given by setting the derivatives of the loss function with respect to each parameter to zero, which gives us a set of polynomial equations, $f_1=\dots=f_n=0$. If the optimum is not unique, then we get a \emph{set} of points satisfying these equations. In order to understand non-unique optima, we therefore need to understand sets of solutions to polynomial equations.
+
+Given a polynomial $f$, the \textbf{vanishing locus} $V(f)$ is the set of points
+at which $f=0$.
+
+Given a \emph{set} of polynomials $F=\{f_1, \cdots, f_n\}$, the vanishing locus $V(F)$ is the set of points at which every polynomial in the set is zero, $f_1=\dots=f_n=0$. It is the \emph{intersection} of the vanishing loci of the polynomials in the set, $V(F)=V(f_1)\cap \dots\cap V(f_n)$.
 
 Consider a polynomial in two variables, \(f(a,b)=b^2-a^3\).
 Its vanishing locus is
-
 \[
 V(f)=\{(a,b):b^2=a^3\}.
 \]
-
 Geometrically, this is a curve in the plane.
 
-An important distinction: the vanishing locus tells us \emph{where} a
-function is zero, but not \emph{how} it approaches zero. For example,
-the univariate polynomials \(x\), \(x^2\) and \(x^3\) all have exactly the same vanishing locus,
-namely the point \(x=0\), despite behaving very differently near that
-point.
-
-The behaviour of these polynomials is different in terms of \emph{how quickly they approach zero} near $x=0$: higher powers approach zero much faster. The important distinction is that these polynomials have the same zero set, but different multiplicities (or orders of vanishing). That's the information that the vanishing locus alone throws away.
+The vanishing locus \emph{loses information}, in that it tells us \emph{where} a function is zero, but not \emph{how} it approaches zero. For example, the univariate polynomials \(x\), \(x^2\) and \(x^3\) all have exactly the same vanishing locus, which is the point \(x=0\). However, these polynomials behave very differently near $x=0$ in terms of \emph{how quickly they approach zero}, with higher powers approaching zero much faster. The important distinction is that these polynomials have the same zero set, but different orders of vanishing. That's the information that the vanishing locus alone throws away.
 
 This distinction becomes important when studying blow-ups.
-
-The vanishing locus of a \emph{set} of polynomials is the set of points at which every polynomial in the set is zero. It is the \emph{intersection} of the vanishing loci of the polynomials in the set.
 
 \newpage
 \section{Ideal}\label{ideal}
