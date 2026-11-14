@@ -124,7 +124,7 @@
 \newpage
 \section{Introduction}
 
-In machine learning we care about \textbf{generalisation}: train a model on a finite dataset, perform well on unseen data. Why do some models generalise better than others, even when they achieve similar training losses? One possible explanation concerns the \emph{geometry of the loss landscape}: not just how low the loss becomes at a minimum, but how much parameter space is occupied by low-loss solutions. Algebraic geometry can help us understand this local behaviour.
+In machine learning we care about \textbf{generalisation}: train a model on a finite dataset, perform well on unseen data. Why do some models generalise better than others, even when they achieve similar training losses? One possible explanation concerns the \emph{geometry of the loss landscape}: not just how small the loss becomes at a minimum, but how much parameter space is occupied by low-loss solutions.
 
 For example, $K_1(a,b)=a^2+b^2$ and $K_2(a,b)=a^4+b^4$ have
 the same unique minimum at the origin, but the second is much
@@ -140,8 +140,8 @@ of the loss determine how much parameter space lies near its minima.
 
 For complicated loss functions, calculating this volume can be difficult, particularly near \emph{singularities}. \textbf{Blow-ups} are geometric transformations used in
 \textbf{resolution of singularities}, which replaces complicated
-local geometry with simpler geometry. A sequence of blow-ups allows the loss to be expressed locally
-as a monomial (times a nonvanishing factor), making integrals
+local geometry with simpler equivalent geometry. A sequence of blow-ups allows the loss to be expressed locally
+as a \emph{monomial} (times a nonvanishing factor), making integrals
 over low-loss regions easier to evaluate. The resulting volume
 scaling is characterised by the \textbf{real log canonical
 threshold} (RLCT) $\lambda$, related to the volume by
@@ -163,6 +163,8 @@ for Bayesian generalisation error, replacing the usual dependence
 on the number of parameters in regular models. Thus, blow-ups provide a
 connection from the geometry of singularities (including their local volume) to quantitative
 predictions about how well machine learning models generalise.
+
+Why use algebraic geometry? Ultimately, we care about analysing equations, such as polynomials. These equations are \emph{algebraic} objects. These algebraic objects contain all the information we need, but they are hard to reason about. \emph{Geometric} objects, such as the set of points satisfying a given set of equations, can be easier to reason about, as they allow us to engage our spatial intuition that we develop by experiencing the physical world. However, geometric objects can often \emph{lose information} about the algebraic objects that define them. For example, multiple distinct algebraic objects can define the same geometric object, and if we only look at this geometric object, we might lose information that we actually care about. \textbf{Algebraic geometry} uses tools from algebra to define special geometric objects that preserve information about the algebraic objects that define them. We can then reason about these geometric objects to understand the algebraic objects that we ultimately care about.
 
 \newpage
 \section{Vanishing locus}\label{vanishing-locus-zero-set}
