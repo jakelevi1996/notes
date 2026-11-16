@@ -480,7 +480,7 @@ V(I_1 \cap \dots \cap I_n) = V(I_1) \cup \dots \cup V(I_n)
 \]
 For example, $(ab)=(a)\cap(b)$ and $V(ab)=V(a)\cup V(b)$.
 
-Similarly, one vanishing locus $V(J)$ containing another vanishing locus $V(I)$ corresponds to a \emph{reversed inclusion relationship} on the ideals:
+Similarly, an inclusion relationship on vanishing loci (which specifies that one geometric object is part of another) corresponds to a \emph{reversed inclusion relationship} on the defining ideals:
 \[
 V(I) \subset V(J) \quad \Longleftrightarrow \quad J \subset I
 \]
@@ -491,6 +491,27 @@ These ideas relate to the previous section, where we mentioned that larger algeb
 Taken to the extremes, the smallest ideal of all is $(0)$, which contains only $0$, and defines the largest geometric object of all, which is the whole of space itself, because $0=0$ is satisfied everywhere. The largest ideal of all is $(1)$, which contains every polynomial, and defines the smallest geometric object of all, which is nothingness, as $1=0$ is not satisfied anywhere.
 
 Now we know how to compose geometric objects together. In the next section we address how to go in the opposite direction, by factorising geometric objects into their parts.
+
+\newpage
+\section{Prime ideals}\label{Prime ideals}
+
+We saw in the previous section how we can take geometric objects and \emph{compose} them together into larger geometric objects, such as composing $(a=0)$ and $(b=0)$ into $(ab=0)$. Given a geometric object (or its ideal), how do we break it down into parts?
+
+Before we answer this question, we must establish that not all geometric objects \emph{can} be broken down into smaller parts. Some geometric objects behave like \emph{building blocks}, out of which more complex geometric objects can be constructed, analogous to prime numbers or irreducible polynomials. For example, in 3D space with variables $a,b,c$, consider the ideal $(a)$ defining the plane $(a=0)$. The line $(a=b=0)$, the point $(a=b=c=0)$, and nothingness $(1=0)$ are all \emph{contained within} the plane $(a=0)$, in terms of the \emph{reversed inclusion relationships} on their defining ideals. But we cannot break the plane $(a=0)$ down into any of these parts, in the sense that we cannot express the plane $(a=0)$ as the union of these parts and another valid geometric object which is defined by some ideal, other than the plane itself. Roughly speaking, if we \emph{remove} any of these parts (other than nothingness) from the plane, we are not left with a valid geometric object which is defined by some ideal. In contrast, we \emph{can} break down $(ab=0)$ into parts $(a=0)$ and $(b=0)$. How do we determine which geometric objects can be broken down into parts?
+
+Consider the following analogy. The high-school definition of a prime number is any whole number which has two factors, 1 and itself. An equivalent definition is that a number $p$ is prime if and only if, for any numbers $a$ and $b$, if $p$ divides $ab$, then $p$ must divide $a$ or $b$ (or both). For example, 6 divides $8\times 9=72$, but does not divide 8 or 9, so 6 is not prime. A prime number is an \emph{indivisible} building block, and while it can be used to construct other integers, it can't somehow be split half-and-half between integers that it is used to construct.
+
+We can generalise this intuition to ideals. Consider the following ideals:
+\[
+I_1=(ab) \qquad I_2=(a^2) \qquad I_3=(b^2) \qquad I_4=(a^2b^2)
+\]
+Consider also their inclusion relationships (and recall that algebraic inclusion relationships reverse geometric inclusion relationships). We have that $I_4=I_2\cap I_3$ and $I_4\subset I_1$, but $I_2 \not\subset I_1$ and $I_3 \not\subset I_1$. Geometrically, $(a^2b^2)$ can be composed from $(a^2)$ and $(b^2)$, and $(ab)$ is part of $(a^2b^2)$, but does not belong to either of the components $(a^2)$ and $(b^2)$. We can factorise $(ab)$ further into parts $(a)$ and $(b)$ which \emph{are} indivisible components, but $(ab)$ itself is \emph{not} an indivisible component, because it \emph{can be divided} between different components $(a^2)$ and $(b^2)$ of a larger object $(a^2b^2)$. This leads us to our first definition of a \textbf{prime ideal}. An ideal $P$ is prime if and only if $P\ne (1)$ and, for any ideals $I,J$:
+\[
+(I\cap J)\subset P \qquad \Longrightarrow \qquad I\subset P \quad \text{or} \quad J\subset P
+\]
+This definition is correct, but not so convenient, because we don't want to have to consider all possible ideals $I,J$ to determine if an ideal $P$ is prime.
+
+Why can't prime ideals be defined analogously to the high-school definition of prime numbers? This relates to \dots , which is conceptually straightforward, but is not necessary to understand SLT, so we do not discuss it further.
 
 \newpage
 \section{Tangent spaces}\label{tangent-spaces}
